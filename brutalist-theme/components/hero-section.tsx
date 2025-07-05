@@ -25,65 +25,65 @@ export function HeroSection() {
   }, [words.length]);
 
   return (
-    <section id="home" className="brutal-section min-h-screen flex items-center justify-center bg-brutal-secondary">
-      <div className="brutal-container">
+    <section id="home" className="min-h-screen flex items-center justify-center bg-white p-4">
+      <div className="max-w-6xl mx-auto w-full">
         <div className="text-center space-y-8">
           {/* WARNING BANNER */}
-          <div className="brutal-card-red flex items-center justify-center space-x-4 mb-8">
-            <AlertTriangle size={32} />
-            <span className="brutal-heading text-2xl">UNDER CONSTRUCTION</span>
-            <AlertTriangle size={32} />
+          <div className="bg-red-500 border-4 border-black p-4 flex items-center justify-center space-x-4 shadow-lg">
+            <AlertTriangle size={32} className="text-white" />
+            <span className="text-white font-black text-lg md:text-2xl uppercase">⚠ UNDER CONSTRUCTION ⚠</span>
+            <AlertTriangle size={32} className="text-white" />
           </div>
 
           {/* MAIN TITLE */}
-          <div className="space-y-4">
-            <h1 className="brutal-title text-6xl md:text-8xl lg:text-9xl text-brutal-primary">YOUR NAME</h1>
-            <div className="brutal-divider-red"></div>
+          <div className="space-y-6">
+            <h1 className="font-black text-4xl md:text-6xl lg:text-8xl text-black uppercase tracking-tight leading-none">YOUR NAME</h1>
+            <div className="w-32 h-2 bg-red-500 mx-auto"></div>
           </div>
 
           {/* ROTATING TITLE */}
           <div className="flex items-center justify-center space-x-4">
-            <Hash size={40} className="text-brutal-primary" />
-            <h2 className="brutal-heading text-3xl md:text-4xl text-brutal-primary">
+            <Hash size={32} className="text-black" />
+            <h2 className="font-black text-2xl md:text-3xl lg:text-4xl text-black uppercase">
               {words[currentWord]}
-              <span className={`ml-2 ${blink ? "opacity-100" : "opacity-0"}`}>█</span>
+              <span className={`ml-2 ${blink ? "opacity-100" : "opacity-0"} transition-opacity`}>█</span>
             </h2>
-            <Hash size={40} className="text-brutal-primary" />
+            <Hash size={32} className="text-black" />
           </div>
 
           {/* DESCRIPTION BOX */}
-          <div className="brutal-card-yellow max-w-2xl mx-auto">
-            <p className="brutal-body text-lg">
+          <div className="bg-yellow-400 border-4 border-black p-6 max-w-4xl mx-auto shadow-lg">
+            <p className="font-bold text-black text-base md:text-lg leading-tight">
               WARNING: THIS PORTFOLIO CONTAINS EXTREME LEVELS OF CREATIVITY AND TECHNICAL SKILL. PROCEED WITH CAUTION. SIDE EFFECTS MAY
               INCLUDE: INCREASED HIRING INTEREST, SPONTANEOUS PROJECT COLLABORATION, AND GENERAL AMAZEMENT.
             </p>
           </div>
 
           {/* STATS GRID */}
-          <div className="brutal-grid grid-cols-1 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-            <div className="brutal-card-blue text-center">
-              <div className="brutal-heading text-3xl">5+</div>
-              <div className="brutal-body text-sm">YEARS</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+            <div className="bg-blue-500 border-4 border-black p-4 text-center shadow-lg">
+              <div className="font-black text-2xl md:text-3xl text-white">5+</div>
+              <div className="font-bold text-white text-sm uppercase">YEARS</div>
             </div>
-            <div className="brutal-card-red text-center">
-              <div className="brutal-heading text-3xl">50+</div>
-              <div className="brutal-body text-sm">PROJECTS</div>
+            <div className="bg-red-500 border-4 border-black p-4 text-center shadow-lg">
+              <div className="font-black text-2xl md:text-3xl text-white">50+</div>
+              <div className="font-bold text-white text-sm uppercase">PROJECTS</div>
             </div>
-            <div className="brutal-card-yellow text-center">
-              <div className="brutal-heading text-3xl">∞</div>
-              <div className="brutal-body text-sm">COFFEE</div>
+            <div className="bg-yellow-400 border-4 border-black p-4 text-center shadow-lg">
+              <div className="font-black text-2xl md:text-3xl text-black">∞</div>
+              <div className="font-bold text-black text-sm uppercase">COFFEE</div>
             </div>
-            <div className="brutal-card text-center">
-              <div className="brutal-heading text-3xl">100%</div>
-              <div className="brutal-body text-sm">EFFORT</div>
+            <div className="bg-white border-4 border-black p-4 text-center shadow-lg">
+              <div className="font-black text-2xl md:text-3xl text-black">100%</div>
+              <div className="font-bold text-black text-sm uppercase">EFFORT</div>
             </div>
           </div>
 
           {/* ACTION BUTTONS */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <button
-              onClick={() => document.getElementById("work")?.scrollIntoView()}
-              className="brutal-button-red flex items-center space-x-2"
+              onClick={() => document.getElementById("projects")?.scrollIntoView()}
+              className="bg-red-500 text-white border-4 border-black px-6 py-3 font-black uppercase shadow-lg hover:shadow-xl hover:bg-red-600 transition-all transform hover:-translate-y-1 flex items-center space-x-2"
             >
               <Zap size={20} />
               <span>SEE MY WORK</span>
@@ -92,7 +92,7 @@ export function HeroSection() {
 
             <button
               onClick={() => document.getElementById("contact")?.scrollIntoView()}
-              className="brutal-button-yellow flex items-center space-x-2"
+              className="bg-yellow-400 text-black border-4 border-black px-6 py-3 font-black uppercase shadow-lg hover:shadow-xl hover:bg-yellow-500 transition-all transform hover:-translate-y-1 flex items-center space-x-2"
             >
               <Square size={20} />
               <span>HIRE ME NOW</span>
@@ -101,20 +101,20 @@ export function HeroSection() {
           </div>
 
           {/* SKILLS MARQUEE */}
-          <div className="brutal-card bg-brutal-primary text-brutal-secondary overflow-hidden">
-            <div className="flex space-x-8 animate-pulse">
-              <span className="brutal-mono text-lg whitespace-nowrap">
+          <div className="bg-black text-white border-4 border-black p-4 overflow-hidden">
+            <div className="whitespace-nowrap animate-pulse">
+              <span className="font-mono text-sm md:text-base font-bold">
                 REACT.JS • TYPESCRIPT • NODE.JS • PYTHON • FIGMA • PHOTOSHOP • HTML • CSS • JAVASCRIPT • NEXT.JS • TAILWIND
               </span>
             </div>
           </div>
 
           {/* SCROLL INDICATOR */}
-          <div className="mt-16">
-            <div className="brutal-card-red inline-block">
-              <div className="brutal-heading text-sm">SCROLL DOWN FOR MORE</div>
+          <div className="mt-8">
+            <div className="bg-red-500 border-4 border-black inline-block px-4 py-2 shadow-lg">
+              <div className="font-black text-white text-sm uppercase">SCROLL DOWN FOR MORE</div>
               <div className="text-center mt-2">
-                <span className="brutal-blink text-2xl">↓</span>
+                <span className="text-white text-2xl animate-bounce">↓</span>
               </div>
             </div>
           </div>

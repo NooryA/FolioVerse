@@ -70,51 +70,51 @@ export function ProjectsSection() {
   };
 
   return (
-    <section id="projects" className="brutal-section bg-black relative overflow-hidden">
+    <section id="projects" className="brutal-section bg-black relative overflow-brutal">
       <div className="brutal-container">
         {/* BRUTAL TITLE */}
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial={{ scale: 0, rotate: -180 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: "spring", damping: 10 }}
         >
-          <h2 className="brutal-title text-6xl md:text-8xl lg:text-9xl text-white mb-4">PROJECTS</h2>
-          <div className="flex justify-center gap-4">
-            <div className="brutal-divider brutal-divider-yellow w-32" />
-            <div className="brutal-divider brutal-divider-red w-32" />
-            <div className="brutal-divider brutal-divider-blue w-32" />
+          <h2 className="brutal-title brutal-responsive-text text-white mb-4">PROJECTS</h2>
+          <div className="flex justify-center gap-2 md:gap-4 flex-wrap">
+            <div className="brutal-divider brutal-divider-yellow w-16 md:w-24" />
+            <div className="brutal-divider brutal-divider-red w-16 md:w-24" />
+            <div className="brutal-divider brutal-divider-blue w-16 md:w-24" />
           </div>
         </motion.div>
 
         {/* PROJECT STATS */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
-          <motion.div className="brutal-card brutal-card-red p-4 text-center" whileHover={{ scale: 1.1, rotate: -5 }}>
-            <div className="brutal-title text-4xl text-white">42</div>
-            <div className="brutal-mono text-white">DESTROYED</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-12">
+          <motion.div className="brutal-card brutal-card-red brutal-safe-spacing text-center" whileHover={{ scale: 1.05, rotate: -2 }}>
+            <div className="brutal-title text-2xl md:text-3xl text-white">42</div>
+            <div className="brutal-mono text-white text-xs md:text-sm">DESTROYED</div>
           </motion.div>
-          <motion.div className="brutal-card brutal-card-yellow p-4 text-center" whileHover={{ scale: 1.1, rotate: 5 }}>
-            <div className="brutal-title text-4xl">∞</div>
-            <div className="brutal-mono">BUGS</div>
+          <motion.div className="brutal-card brutal-card-yellow brutal-safe-spacing text-center" whileHover={{ scale: 1.05, rotate: 2 }}>
+            <div className="brutal-title text-2xl md:text-3xl">∞</div>
+            <div className="brutal-mono text-xs md:text-sm">BUGS</div>
           </motion.div>
-          <motion.div className="brutal-card brutal-card-blue p-4 text-center" whileHover={{ scale: 1.1, rotate: -5 }}>
-            <div className="brutal-title text-4xl text-white">0</div>
-            <div className="brutal-mono text-white">DOCUMENTATION</div>
+          <motion.div className="brutal-card brutal-card-blue brutal-safe-spacing text-center" whileHover={{ scale: 1.05, rotate: -2 }}>
+            <div className="brutal-title text-2xl md:text-3xl text-white">0</div>
+            <div className="brutal-mono text-white text-xs md:text-sm">DOCS</div>
           </motion.div>
-          <motion.div className="brutal-card p-4 text-center" whileHover={{ scale: 1.1, rotate: 5 }}>
-            <div className="brutal-title text-4xl text-red-500">666</div>
-            <div className="brutal-mono">COMMITS</div>
+          <motion.div className="brutal-card brutal-safe-spacing text-center" whileHover={{ scale: 1.05, rotate: 2 }}>
+            <div className="brutal-title text-2xl md:text-3xl text-red-500">666</div>
+            <div className="brutal-mono text-xs md:text-sm">COMMITS</div>
           </motion.div>
         </div>
 
         {/* BRUTAL PROJECT GRID */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="brutal-grid mb-12">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
               initial={{
-                x: index % 2 === 0 ? -1000 : 1000,
-                rotate: index % 2 === 0 ? -45 : 45,
+                x: index % 2 === 0 ? -300 : 300,
+                rotate: index % 2 === 0 ? -15 : 15,
               }}
               animate={{ x: 0, rotate: 0 }}
               transition={{
@@ -125,32 +125,37 @@ export function ProjectsSection() {
               className="relative"
             >
               <motion.div
-                className={`brutal-card p-6 h-full cursor-pointer ${selectedProject === project.id ? "brutal-card-red" : "bg-white"}`}
+                className={`brutal-card brutal-safe-spacing h-full cursor-pointer ${
+                  selectedProject === project.id ? "brutal-card-red" : "bg-white"
+                }`}
                 onClick={() => setSelectedProject(selectedProject === project.id ? null : project.id)}
                 whileHover={{
-                  scale: 1.05,
-                  rotate: Math.random() * 10 - 5,
-                  y: -10,
+                  scale: 1.02,
+                  rotate: Math.random() * 4 - 2,
+                  y: -5,
                 }}
-                whileTap={{ scale: 0.9 }}
+                whileTap={{ scale: 0.98 }}
               >
                 {/* Project Year Badge */}
-                <div className="absolute -top-4 -right-4 brutal-button px-4 py-2" style={{ backgroundColor: project.color }}>
-                  <span className="brutal-mono text-sm font-black">{project.year}</span>
+                <div
+                  className="absolute -top-2 -right-2 brutal-button px-2 py-1 md:px-3 md:py-2 text-xs md:text-sm"
+                  style={{ backgroundColor: project.color }}
+                >
+                  <span className="brutal-mono font-black">{project.year}</span>
                 </div>
 
                 {/* Project Title */}
-                <h3 className="brutal-heading text-3xl mb-4">{project.title}</h3>
+                <h3 className="brutal-heading text-lg md:text-xl lg:text-2xl mb-3 md:mb-4 pr-8">{project.title}</h3>
 
                 {/* Project Description */}
-                <p className="brutal-body text-lg mb-4">{project.description}</p>
+                <p className="brutal-body text-sm md:text-base mb-3 md:mb-4">{project.description}</p>
 
                 {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-1 md:gap-2 mb-4 md:mb-6">
                   {project.tech.map((tech) => (
                     <span
                       key={tech}
-                      className="brutal-mono text-sm px-2 py-1 border-2 border-black"
+                      className="brutal-mono text-xs px-2 py-1 border-2 border-black"
                       style={{
                         backgroundColor: project.color,
                         opacity: 0.8,
@@ -162,9 +167,9 @@ export function ProjectsSection() {
                 </div>
 
                 {/* Project Status */}
-                <div className="flex justify-between items-center">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                   <span
-                    className={`brutal-mono text-sm font-black ${
+                    className={`brutal-mono text-xs md:text-sm font-black ${
                       project.status === "COMPLETE"
                         ? "text-green-500"
                         : project.status === "ABANDONED"
@@ -177,9 +182,9 @@ export function ProjectsSection() {
                     {project.status}
                   </span>
                   <motion.button
-                    className="brutal-button brutal-button-yellow px-4 py-2 text-sm"
-                    whileHover={{ x: -2, y: -2 }}
-                    whileTap={{ x: 2, y: 2 }}
+                    className="brutal-button brutal-button-yellow px-3 py-2 text-xs md:text-sm"
+                    whileHover={{ x: -1, y: -1 }}
+                    whileTap={{ x: 1, y: 1 }}
                     onClick={(e) => {
                       e.stopPropagation();
                       triggerDestroy();
@@ -192,17 +197,17 @@ export function ProjectsSection() {
                 {/* Selected Project Indicator */}
                 {selectedProject === project.id && (
                   <motion.div className="absolute inset-0 pointer-events-none" initial={{ scale: 0 }} animate={{ scale: 1 }}>
-                    <div className="absolute inset-0 border-8 border-yellow-500" />
-                    <div className="absolute -inset-2 border-8 border-red-500 brutal-pulse" />
+                    <div className="absolute inset-0 border-4 md:border-6 border-yellow-500" />
+                    <div className="absolute -inset-1 border-4 md:border-6 border-red-500 brutal-pulse" />
                   </motion.div>
                 )}
               </motion.div>
 
-              {/* Random decorative elements */}
+              {/* Random decorative elements - only on larger screens */}
               {index % 3 === 0 && (
                 <motion.div
-                  className="absolute -z-10 top-4 left-4 w-full h-full bg-yellow-500"
-                  animate={{ rotate: [0, 5, 0] }}
+                  className="absolute -z-10 top-2 left-2 w-full h-full bg-yellow-500 hidden md:block"
+                  animate={{ rotate: [0, 2, 0] }}
                   transition={{ duration: 2, repeat: Infinity }}
                 />
               )}
@@ -211,11 +216,11 @@ export function ProjectsSection() {
         </div>
 
         {/* DESTROY ALL BUTTON */}
-        <motion.div className="text-center">
+        <motion.div className="text-center mb-12">
           <motion.button
-            className="brutal-button brutal-button-red text-2xl px-8 py-4"
-            whileHover={{ scale: 1.1, rotate: -5 }}
-            whileTap={{ scale: 0.9 }}
+            className="brutal-button brutal-button-red text-lg md:text-xl px-6 py-3 md:px-8 md:py-4"
+            whileHover={{ scale: 1.05, rotate: -2 }}
+            whileTap={{ scale: 0.95 }}
             onClick={triggerDestroy}
           >
             DESTROY ALL PROJECTS
@@ -237,20 +242,22 @@ export function ProjectsSection() {
               animate={{ scale: [0, 2, 0], rotate: 360 }}
               transition={{ duration: 0.5 }}
             >
-              <span className="brutal-title text-brutal text-white">DESTROYED!</span>
+              <span className="brutal-title text-4xl md:text-6xl text-white">DESTROYED!</span>
             </motion.div>
           </div>
         )}
 
         {/* ASCII Decoration */}
-        <pre className="brutal-mono text-xs text-center mt-16 text-gray-500">
-          {`
+        <div className="text-center">
+          <pre className="brutal-mono text-xs text-gray-500 overflow-x-auto">
+            {`
 ╔═══════════════════════════════════════════════════╗
 ║  WARNING: THESE PROJECTS MAY CAUSE SEVERE DAMAGE  ║
 ║           TO YOUR SENSE OF GOOD DESIGN            ║
 ╚═══════════════════════════════════════════════════╝
 `}
-        </pre>
+          </pre>
+        </div>
       </div>
     </section>
   );

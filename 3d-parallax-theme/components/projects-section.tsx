@@ -1,310 +1,275 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
-import { ExternalLink, Github, Play } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ExternalLink, Github, Zap, Palette, Code, Smartphone, Globe, Database } from "lucide-react";
 
 export function ProjectsSection() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [activeFilter, setActiveFilter] = useState("all");
 
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"],
-  });
+  useEffect(() => {
+    setMounted(true);
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [100, -100]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [150, -150]);
-  const y3 = useTransform(scrollYProgress, [0, 1], [200, -200]);
-  const rotate = useTransform(scrollYProgress, [0, 0.5, 1], [0, 180, 360]);
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (!mounted) return null;
+
+  const parallaxSpeed = scrollY * 0.2;
 
   const projects = [
     {
       id: 1,
-      title: "3D Product Visualizer",
-      description: "Interactive WebGL-powered product showcase with real-time customization",
-      tech: ["Three.js", "React", "WebGL", "GLSL"],
-      image: "/api/placeholder/600/400",
-      layer: 1,
-      color: "#6366f1",
-      github: "https://github.com/",
-      demo: "https://demo.com/",
+      title: "3D Product Configurator",
+      description: "Interactive 3D product visualization with real-time configuration and WebGL rendering.",
+      image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&h=300&fit=crop",
+      category: "web",
+      technologies: ["Three.js", "React", "WebGL", "TypeScript"],
+      demoUrl: "#",
+      codeUrl: "#",
+      featured: true,
     },
     {
       id: 2,
-      title: "Immersive Portfolio",
-      description: "Award-winning portfolio with parallax scrolling and 3D animations",
-      tech: ["Next.js", "Framer Motion", "TypeScript", "Tailwind"],
-      image: "/api/placeholder/600/400",
-      layer: 2,
-      color: "#ec4899",
-      github: "https://github.com/",
-      demo: "https://demo.com/",
+      title: "Immersive Portfolio Experience",
+      description: "A revolutionary portfolio website featuring parallax scrolling and 3D interactions.",
+      image: "https://images.unsplash.com/photo-1547658719-da2b51169166?w=500&h=300&fit=crop",
+      category: "web",
+      technologies: ["React", "Framer Motion", "CSS3", "JavaScript"],
+      demoUrl: "#",
+      codeUrl: "#",
+      featured: true,
     },
     {
       id: 3,
-      title: "AI-Powered Design Tool",
-      description: "Machine learning meets creative design in this innovative web app",
-      tech: ["Python", "TensorFlow", "React", "Node.js"],
-      image: "/api/placeholder/600/400",
-      layer: 3,
-      color: "#8b5cf6",
-      github: "https://github.com/",
-      demo: "https://demo.com/",
+      title: "AR Shopping Experience",
+      description: "Augmented reality shopping app with 3D product placement and real-time visualization.",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop",
+      category: "mobile",
+      technologies: ["React Native", "ARCore", "Three.js", "Node.js"],
+      demoUrl: "#",
+      codeUrl: "#",
+      featured: false,
     },
     {
       id: 4,
-      title: "Virtual Reality Experience",
-      description: "Browser-based VR experience using WebXR and custom shaders",
-      tech: ["A-Frame", "WebXR", "JavaScript", "GLSL"],
-      image: "/api/placeholder/600/400",
-      layer: 1,
-      color: "#10b981",
-      github: "https://github.com/",
-      demo: "https://demo.com/",
+      title: "Interactive Data Dashboard",
+      description: "Real-time data visualization with 3D charts and interactive analytics.",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=500&h=300&fit=crop",
+      category: "web",
+      technologies: ["D3.js", "React", "WebGL", "Python"],
+      demoUrl: "#",
+      codeUrl: "#",
+      featured: false,
     },
     {
       id: 5,
-      title: "Real-time Collaboration",
-      description: "Multiplayer creative platform with live synchronization",
-      tech: ["Socket.io", "Redis", "React", "Canvas API"],
-      image: "/api/placeholder/600/400",
-      layer: 2,
-      color: "#f59e0b",
-      github: "https://github.com/",
-      demo: "https://demo.com/",
+      title: "VR Museum Experience",
+      description: "Virtual reality museum tour with interactive exhibits and spatial audio.",
+      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500&h=300&fit=crop",
+      category: "vr",
+      technologies: ["A-Frame", "WebXR", "Three.js", "Spatial Audio"],
+      demoUrl: "#",
+      codeUrl: "#",
+      featured: false,
     },
     {
       id: 6,
-      title: "Generative Art Engine",
-      description: "Create unique algorithmic art pieces with custom parameters",
-      tech: ["p5.js", "GLSL", "React", "Web Workers"],
-      image: "/api/placeholder/600/400",
-      layer: 3,
-      color: "#ef4444",
-      github: "https://github.com/",
-      demo: "https://demo.com/",
+      title: "AI-Powered Design Tool",
+      description: "Machine learning-based design assistant with real-time 3D preview.",
+      image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=500&h=300&fit=crop",
+      category: "ai",
+      technologies: ["TensorFlow.js", "React", "Python", "WebGL"],
+      demoUrl: "#",
+      codeUrl: "#",
+      featured: false,
     },
   ];
 
-  const getLayerTransform = (layer: number) => {
-    switch (layer) {
-      case 1:
-        return y1;
-      case 2:
-        return y2;
-      case 3:
-        return y3;
-      default:
-        return y1;
-    }
-  };
+  const categories = [
+    { id: "all", name: "All Projects", icon: <Globe className="w-5 h-5" /> },
+    { id: "web", name: "Web Apps", icon: <Code className="w-5 h-5" /> },
+    { id: "mobile", name: "Mobile", icon: <Smartphone className="w-5 h-5" /> },
+    { id: "vr", name: "VR/AR", icon: <Zap className="w-5 h-5" /> },
+    { id: "ai", name: "AI/ML", icon: <Database className="w-5 h-5" /> },
+  ];
+
+  const filteredProjects = activeFilter === "all" ? projects : projects.filter((project) => project.category === activeFilter);
 
   return (
-    <section ref={containerRef} id="projects" className="relative min-h-screen py-20 px-4 overflow-hidden bg-parallax-dark preserve-3d">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        <motion.div style={{ rotate }} className="absolute top-1/4 -left-32 w-64 h-64">
-          <div className="w-full h-full bg-gradient-to-br from-parallax-primary/20 to-transparent rounded-full blur-3xl" />
-        </motion.div>
-        <motion.div style={{ rotate: rotate }} className="absolute bottom-1/4 -right-32 w-96 h-96">
-          <div className="w-full h-full bg-gradient-to-tl from-parallax-secondary/20 to-transparent rounded-full blur-3xl" />
-        </motion.div>
+    <section id="projects" className="py-32 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div
+          className="gradient-orb orb-secondary w-96 h-96 top-40 left-20 floating-element"
+          style={{ transform: `translateY(${parallaxSpeed}px) translateZ(200px)` }}
+        />
+        <div
+          className="gradient-orb orb-accent w-64 h-64 bottom-20 right-20 floating-element"
+          style={{ transform: `translateY(${parallaxSpeed * 1.3}px) translateZ(150px)` }}
+        />
       </div>
 
-      <div className="max-w-7xl mx-auto relative">
-        {/* Section Title with 3D Effect */}
-        <motion.div
-          initial={{ opacity: 0, y: 50, z: -100 }}
-          whileInView={{ opacity: 1, y: 0, z: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16 relative preserve-3d"
-        >
-          <h2 className="text-5xl md:text-7xl font-bold text-3d mb-4">Featured Projects</h2>
-          <p className="text-xl text-parallax-text-secondary max-w-2xl mx-auto">
-            Explore my latest work in 3D web development, creative coding, and interactive experiences
+      <div className="max-w-7xl mx-auto px-4 relative z-10">
+        {/* Section Title */}
+        <div className="text-center mb-20">
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 text-3d">
+            <span className="text-transparent bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text">My Projects</span>
+          </h2>
+          <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+            Explore my portfolio of innovative web experiences, 3D applications, and creative solutions
           </p>
+          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full" />
+        </div>
 
-          {/* Floating decorative elements */}
-          <motion.div
-            animate={{
-              y: [0, -20, 0],
-              rotateZ: [0, 180, 360],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute -top-10 right-10 w-20 h-20"
-          >
-            <div className="w-full h-full bg-gradient-to-br from-parallax-accent to-parallax-primary rounded-lg opacity-20 rotating-element" />
-          </motion.div>
-        </motion.div>
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-4 mb-16">
+          {categories.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setActiveFilter(category.id)}
+              className={`button-3d flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 ${
+                activeFilter === category.id
+                  ? "bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+                  : "bg-gray-800 text-gray-300 hover:bg-gray-700"
+              }`}
+            >
+              {category.icon}
+              <span>{category.name}</span>
+            </button>
+          ))}
+        </div>
 
-        {/* 3D Project Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000">
-          {projects.map((project, index) => {
-            const yTransform = getLayerTransform(project.layer);
-
-            return (
-              <motion.div
-                key={project.id}
-                style={{ y: yTransform }}
-                initial={{ opacity: 0, z: -200, rotateY: -30 }}
-                whileInView={{ opacity: 1, z: 0, rotateY: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.8 }}
-                className="relative preserve-3d"
-                onMouseEnter={() => setHoveredProject(project.id)}
-                onMouseLeave={() => setHoveredProject(null)}
-              >
-                <motion.div
-                  whileHover={{
-                    z: 100,
-                    rotateY: 5,
-                    rotateX: -5,
-                  }}
-                  transition={{ type: "spring", stiffness: 300 }}
-                  className="depth-card overflow-hidden group cursor-pointer h-full"
+        {/* Featured Projects */}
+        <div className="mb-20">
+          <div className="grid lg:grid-cols-2 gap-8">
+            {filteredProjects
+              .filter((project) => project.featured)
+              .map((project, index) => (
+                <div
+                  key={project.id}
+                  className="depth-card group relative overflow-hidden"
                   style={{
-                    transformStyle: "preserve-3d",
+                    transform: `translateZ(${index * 50}px)`,
+                    animationDelay: `${index * 0.2}s`,
                   }}
                 >
-                  {/* Project Image with Parallax */}
-                  <div className="relative h-48 overflow-hidden rounded-t-lg">
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br opacity-60 z-10"
-                      style={{
-                        backgroundImage: `linear-gradient(135deg, ${project.color}88, transparent)`,
-                      }}
-                    />
-                    <motion.img
+                  <div className="relative overflow-hidden rounded-lg mb-6">
+                    <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover"
-                      style={{
-                        transform: hoveredProject === project.id ? "scale(1.1)" : "scale(1)",
-                        transition: "transform 0.6s ease",
-                      }}
+                      className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
                     />
-
-                    {/* Hover Overlay with Actions */}
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: hoveredProject === project.id ? 1 : 0 }}
-                      className="absolute inset-0 bg-black/70 flex items-center justify-center gap-4 z-20"
-                    >
-                      <motion.a
-                        href={project.github}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="button-3d p-3 rounded-full"
-                      >
-                        <Github className="w-5 h-5" />
-                      </motion.a>
-                      <motion.a
-                        href={project.demo}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                        className="button-3d p-3 rounded-full"
-                      >
-                        <ExternalLink className="w-5 h-5" />
-                      </motion.a>
-                    </motion.div>
-
-                    {/* 3D Layer indicator */}
-                    <motion.div
-                      className="absolute top-2 right-2 w-12 h-12 z-30"
-                      animate={{
-                        rotateZ: hoveredProject === project.id ? 360 : 0,
-                      }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <div
-                        className="w-full h-full rounded-lg flex items-center justify-center font-bold text-white"
-                        style={{
-                          background: project.color,
-                          boxShadow: `0 0 20px ${project.color}66`,
-                        }}
-                      >
-                        {project.layer}D
-                      </div>
-                    </motion.div>
-                  </div>
-
-                  {/* Project Info */}
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 text-parallax-text-primary">{project.title}</h3>
-                    <p className="text-parallax-text-secondary mb-4 text-sm">{project.description}</p>
-
-                    {/* Tech Stack with 3D Pills */}
-                    <div className="flex flex-wrap gap-2">
-                      {project.tech.map((tech, techIndex) => (
-                        <motion.span
-                          key={tech}
-                          initial={{ opacity: 0, scale: 0 }}
-                          whileInView={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: index * 0.1 + techIndex * 0.05 }}
-                          whileHover={{ z: 20, scale: 1.1 }}
-                          className="px-3 py-1 text-xs rounded-full border border-parallax-primary/30 text-parallax-text-secondary preserve-3d"
-                          style={{
-                            background: `linear-gradient(135deg, ${project.color}11, transparent)`,
-                          }}
-                        >
-                          {tech}
-                        </motion.span>
-                      ))}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute top-4 right-4">
+                      <span className="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">Featured</span>
                     </div>
                   </div>
 
-                  {/* Floating particles on hover */}
-                  {hoveredProject === project.id && (
-                    <>
-                      {[...Array(5)].map((_, i) => (
-                        <motion.div
-                          key={i}
-                          className="absolute w-1 h-1 rounded-full"
-                          style={{
-                            background: project.color,
-                            left: `${20 + i * 15}%`,
-                            top: "50%",
-                          }}
-                          animate={{
-                            y: [0, -100],
-                            x: [0, i % 2 === 0 ? 50 : -50],
-                            opacity: [0, 1, 0],
-                          }}
-                          transition={{
-                            duration: 1.5,
-                            delay: i * 0.1,
-                            repeat: Infinity,
-                          }}
-                        />
+                  <div className="space-y-4">
+                    <h3 className="text-2xl font-bold text-white group-hover:text-purple-400 transition-colors">{project.title}</h3>
+                    <p className="text-gray-300 leading-relaxed">{project.description}</p>
+
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.technologies.map((tech, techIndex) => (
+                        <span key={techIndex} className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm">
+                          {tech}
+                        </span>
                       ))}
-                    </>
-                  )}
-                </motion.div>
-              </motion.div>
-            );
-          })}
+                    </div>
+
+                    <div className="flex gap-4">
+                      <a
+                        href={project.demoUrl}
+                        className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>Live Demo</span>
+                      </a>
+                      <a
+                        href={project.codeUrl}
+                        className="flex items-center gap-2 bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition-colors"
+                      >
+                        <Github className="w-4 h-4" />
+                        <span>Code</span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+          </div>
         </div>
 
-        {/* View All Projects Button */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
-          className="text-center mt-16"
-        >
-          <motion.button
-            whileHover={{ scale: 1.05, z: 50 }}
-            whileTap={{ scale: 0.95 }}
-            className="button-3d text-lg flex items-center gap-2 mx-auto"
-          >
-            View All Projects
-            <Play className="w-5 h-5" />
-          </motion.button>
-        </motion.div>
+        {/* Other Projects Grid */}
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {filteredProjects
+            .filter((project) => !project.featured)
+            .map((project, index) => (
+              <div
+                key={project.id}
+                className="depth-card group relative overflow-hidden"
+                style={{
+                  transform: `translateZ(${index * 25}px)`,
+                  animationDelay: `${index * 0.1}s`,
+                }}
+              >
+                <div className="relative overflow-hidden rounded-lg mb-4">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex gap-3">
+                      <a href={project.demoUrl} className="bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full transition-colors">
+                        <ExternalLink className="w-5 h-5" />
+                      </a>
+                      <a href={project.codeUrl} className="bg-gray-700 hover:bg-gray-600 text-white p-3 rounded-full transition-colors">
+                        <Github className="w-5 h-5" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <h3 className="text-xl font-bold text-white group-hover:text-purple-400 transition-colors">{project.title}</h3>
+                  <p className="text-gray-300 text-sm leading-relaxed">{project.description}</p>
+
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                      <span key={techIndex} className="bg-gray-700 text-gray-300 px-2 py-1 rounded-full text-xs">
+                        {tech}
+                      </span>
+                    ))}
+                    {project.technologies.length > 3 && (
+                      <span className="bg-gray-600 text-gray-300 px-2 py-1 rounded-full text-xs">
+                        +{project.technologies.length - 3} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+        </div>
+
+        {/* CTA Section */}
+        <div className="text-center mt-20">
+          <div className="depth-card max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold text-white mb-4">Ready to bring your ideas to life?</h3>
+            <p className="text-gray-300 mb-6">Let's collaborate on your next project and create something amazing together.</p>
+            <button
+              className="button-3d text-lg px-8 py-4"
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+            >
+              Start a Project
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   );
