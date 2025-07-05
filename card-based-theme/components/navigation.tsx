@@ -1,10 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Home, User, FolderOpen, Mail, Heart, Star, Menu, X } from "lucide-react";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const navItems = [
     { href: "#home", label: "Home", icon: Home, color: "blue", likes: 42 },
@@ -99,7 +104,7 @@ export function Navigation() {
                 </div>
               </div>
             </div>
-            <div className="text-gray-600 font-medium">{new Date().toLocaleDateString()}</div>
+            <div className="text-gray-600 font-medium">{mounted ? new Date().toLocaleDateString() : ""}</div>
           </div>
 
           {/* Mobile Menu Button */}
