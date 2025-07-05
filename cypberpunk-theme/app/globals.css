@@ -1,0 +1,248 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap");
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #00ff9f, #ff0080);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ff0080, #0080ff);
+}
+
+/* Custom cyberpunk effects */
+.cyber-text {
+  background: linear-gradient(45deg, #00ff9f, #ff0080, #0080ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: text-glow 2s ease-in-out infinite alternate;
+}
+
+.cyber-border {
+  border: 1px solid #00ff9f;
+  box-shadow: 0 0 10px rgba(0, 255, 159, 0.3), inset 0 0 10px rgba(0, 255, 159, 0.1);
+}
+
+.cyber-glow {
+  box-shadow: 0 0 20px rgba(0, 255, 159, 0.5), 0 0 40px rgba(0, 255, 159, 0.3), 0 0 60px rgba(0, 255, 159, 0.1);
+}
+
+.glitch-text {
+  position: relative;
+  animation: glitch 0.3s ease-in-out infinite;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text::before {
+  animation: glitch-1 0.5s ease-in-out infinite;
+  color: #ff0080;
+  z-index: -1;
+}
+
+.glitch-text::after {
+  animation: glitch-2 0.5s ease-in-out infinite;
+  color: #0080ff;
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes glitch-2 {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(2px, 2px);
+  }
+  40% {
+    transform: translate(2px, -2px);
+  }
+  60% {
+    transform: translate(-2px, 2px);
+  }
+  80% {
+    transform: translate(-2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+/* Matrix rain effect */
+.matrix-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, rgba(0, 255, 159, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Cyber grid background */
+.cyber-grid-bg {
+  background-image: linear-gradient(rgba(0, 255, 159, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 159, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Neon button effect */
+.neon-button {
+  position: relative;
+  background: transparent;
+  border: 2px solid #00ff9f;
+  color: #00ff9f;
+  text-shadow: 0 0 5px #00ff9f;
+  box-shadow: 0 0 10px rgba(0, 255, 159, 0.3);
+  transition: all 0.3s ease;
+}
+
+.neon-button:hover {
+  background: rgba(0, 255, 159, 0.1);
+  box-shadow: 0 0 20px rgba(0, 255, 159, 0.5), 0 0 40px rgba(0, 255, 159, 0.3), inset 0 0 20px rgba(0, 255, 159, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Typing effect */
+.typing-effect {
+  border-right: 3px solid #00ff9f;
+  animation: typing 3s steps(30, end), blink 1s infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    border-color: #00ff9f;
+  }
+  51%,
+  100% {
+    border-color: transparent;
+  }
+}
+
+/* Scan line effect */
+.scan-line {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-line::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00ff9f, transparent);
+  animation: scan 2s linear infinite;
+}
+
+/* Holographic effect */
+.holographic {
+  background: linear-gradient(
+    45deg,
+    rgba(0, 255, 159, 0.1) 0%,
+    rgba(255, 0, 128, 0.1) 25%,
+    rgba(0, 128, 255, 0.1) 50%,
+    rgba(191, 0, 255, 0.1) 75%,
+    rgba(0, 255, 159, 0.1) 100%
+  );
+  background-size: 200% 200%;
+  animation: holographic-shift 3s ease-in-out infinite;
+}
+
+@keyframes holographic-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(0, 255, 159, 0.3);
+  color: #fff;
+}
+
+/* Custom focus styles */
+*:focus {
+  outline: 2px solid #00ff9f;
+  outline-offset: 2px;
+}
+
+/* Dark mode optimizations */
+.dark {
+  color-scheme: dark;
+}
+
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "JetBrains Mono", monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

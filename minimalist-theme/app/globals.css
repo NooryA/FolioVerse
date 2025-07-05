@@ -1,0 +1,615 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Minimalist Theme - Clean & Refined */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Sans+Pro:wght@300;400;600;700&family=Fira+Code:wght@300;400;500&display=swap");
+
+:root {
+  /* Minimalist Color Palette */
+  --minimal-white: #ffffff;
+  --minimal-off-white: #fafafa;
+  --minimal-light-gray: #f5f5f5;
+  --minimal-gray: #e5e5e5;
+  --minimal-medium-gray: #a8a8a8;
+  --minimal-dark-gray: #4a4a4a;
+  --minimal-charcoal: #2d2d2d;
+  --minimal-black: #1a1a1a;
+  --minimal-accent: #0066cc;
+  --minimal-accent-light: #3388dd;
+  --minimal-accent-dark: #004499;
+  --minimal-success: #22c55e;
+  --minimal-warning: #f59e0b;
+  --minimal-error: #ef4444;
+  --minimal-shadow: rgba(0, 0, 0, 0.04);
+  --minimal-shadow-medium: rgba(0, 0, 0, 0.08);
+  --minimal-shadow-strong: rgba(0, 0, 0, 0.12);
+  --minimal-border: rgba(0, 0, 0, 0.06);
+  --minimal-hover: rgba(0, 0, 0, 0.02);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--minimal-charcoal);
+  background-color: var(--minimal-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Typography System */
+.minimal-heading-1 {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  color: var(--minimal-black);
+  letter-spacing: -0.02em;
+}
+
+.minimal-heading-2 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1.2;
+  color: var(--minimal-black);
+  letter-spacing: -0.01em;
+}
+
+.minimal-heading-3 {
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  line-height: 1.3;
+  color: var(--minimal-charcoal);
+  letter-spacing: -0.005em;
+}
+
+.minimal-heading-4 {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 1.125rem;
+  line-height: 1.4;
+  color: var(--minimal-charcoal);
+}
+
+.minimal-body-large {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: var(--minimal-dark-gray);
+}
+
+.minimal-body {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--minimal-dark-gray);
+}
+
+.minimal-body-small {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--minimal-medium-gray);
+}
+
+.minimal-code {
+  font-family: "Fira Code", monospace;
+  font-weight: 400;
+  font-size: 0.875rem;
+  background-color: var(--minimal-light-gray);
+  color: var(--minimal-charcoal);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Layout Components */
+.minimal-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.minimal-section {
+  padding: 6rem 0;
+}
+
+.minimal-section-small {
+  padding: 4rem 0;
+}
+
+/* Card Components */
+.minimal-card {
+  background-color: var(--minimal-white);
+  border: 1px solid var(--minimal-border);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px var(--minimal-shadow);
+  transition: all 0.2s ease;
+}
+
+.minimal-card:hover {
+  box-shadow: 0 4px 12px var(--minimal-shadow-medium);
+  transform: translateY(-2px);
+}
+
+.minimal-card-flat {
+  background-color: var(--minimal-off-white);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  transition: all 0.2s ease;
+}
+
+.minimal-card-flat:hover {
+  background-color: var(--minimal-light-gray);
+}
+
+.minimal-card-subtle {
+  background-color: var(--minimal-white);
+  border: 1px solid var(--minimal-gray);
+  border-radius: 0.75rem;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.minimal-card-subtle:hover {
+  border-color: var(--minimal-accent);
+  box-shadow: 0 8px 24px var(--minimal-shadow-medium);
+}
+
+/* Button Components */
+.minimal-button {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  background-color: var(--minimal-black);
+  color: var(--minimal-white);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.minimal-button:hover {
+  background-color: var(--minimal-charcoal);
+  transform: translateY(-1px);
+}
+
+.minimal-button:active {
+  transform: translateY(0);
+}
+
+.minimal-button-outline {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--minimal-border);
+  border-radius: 0.375rem;
+  background-color: transparent;
+  color: var(--minimal-charcoal);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.minimal-button-outline:hover {
+  border-color: var(--minimal-accent);
+  color: var(--minimal-accent);
+  background-color: var(--minimal-hover);
+}
+
+.minimal-button-ghost {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  background-color: transparent;
+  color: var(--minimal-medium-gray);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+}
+
+.minimal-button-ghost:hover {
+  background-color: var(--minimal-hover);
+  color: var(--minimal-charcoal);
+}
+
+/* Form Components */
+.minimal-input {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--minimal-border);
+  border-radius: 0.375rem;
+  background-color: var(--minimal-white);
+  color: var(--minimal-charcoal);
+  width: 100%;
+  transition: all 0.2s ease;
+}
+
+.minimal-input:focus {
+  outline: none;
+  border-color: var(--minimal-accent);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.minimal-input::placeholder {
+  color: var(--minimal-medium-gray);
+}
+
+.minimal-textarea {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 0.875rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--minimal-border);
+  border-radius: 0.375rem;
+  background-color: var(--minimal-white);
+  color: var(--minimal-charcoal);
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  transition: all 0.2s ease;
+}
+
+.minimal-textarea:focus {
+  outline: none;
+  border-color: var(--minimal-accent);
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.minimal-textarea::placeholder {
+  color: var(--minimal-medium-gray);
+}
+
+.minimal-label {
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--minimal-charcoal);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Utility Classes */
+.minimal-divider {
+  height: 1px;
+  background-color: var(--minimal-gray);
+  border: none;
+  margin: 2rem 0;
+}
+
+.minimal-divider-subtle {
+  height: 1px;
+  background-color: var(--minimal-border);
+  border: none;
+  margin: 1.5rem 0;
+}
+
+.minimal-spacer {
+  height: 2rem;
+}
+
+.minimal-spacer-large {
+  height: 4rem;
+}
+
+.minimal-text-center {
+  text-align: center;
+}
+
+.minimal-text-left {
+  text-align: left;
+}
+
+.minimal-text-right {
+  text-align: right;
+}
+
+/* Grid System */
+.minimal-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.minimal-grid-cols-1 {
+  grid-template-columns: 1fr;
+}
+
+.minimal-grid-cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.minimal-grid-cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.minimal-grid-cols-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Flexbox Utilities */
+.minimal-flex {
+  display: flex;
+}
+
+.minimal-flex-col {
+  flex-direction: column;
+}
+
+.minimal-flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.minimal-flex-between {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.minimal-flex-gap {
+  gap: 1rem;
+}
+
+.minimal-flex-gap-small {
+  gap: 0.5rem;
+}
+
+.minimal-flex-gap-large {
+  gap: 2rem;
+}
+
+/* Status Indicators */
+.minimal-status-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.minimal-status-success {
+  background-color: var(--minimal-success);
+}
+
+.minimal-status-warning {
+  background-color: var(--minimal-warning);
+}
+
+.minimal-status-error {
+  background-color: var(--minimal-error);
+}
+
+.minimal-status-neutral {
+  background-color: var(--minimal-medium-gray);
+}
+
+/* Tag Components */
+.minimal-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--minimal-light-gray);
+  color: var(--minimal-charcoal);
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.minimal-tag-outline {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  background-color: transparent;
+  color: var(--minimal-charcoal);
+  border: 1px solid var(--minimal-border);
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.minimal-tag-accent {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  background-color: var(--minimal-accent);
+  color: var(--minimal-white);
+  border-radius: 1rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Animation Utilities */
+.minimal-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.minimal-slide-up {
+  transform: translateY(20px);
+  opacity: 0;
+  animation: slideUp 0.6s ease forwards;
+}
+
+@keyframes slideUp {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.minimal-scale-in {
+  transform: scale(0.95);
+  opacity: 0;
+  animation: scaleIn 0.4s ease forwards;
+}
+
+@keyframes scaleIn {
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Hover Effects */
+.minimal-hover-lift {
+  transition: transform 0.2s ease;
+}
+
+.minimal-hover-lift:hover {
+  transform: translateY(-2px);
+}
+
+.minimal-hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.minimal-hover-scale:hover {
+  transform: scale(1.02);
+}
+
+/* Focus States */
+.minimal-focus-ring {
+  transition: all 0.2s ease;
+}
+
+.minimal-focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--minimal-accent);
+  color: var(--minimal-white);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--minimal-light-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--minimal-medium-gray);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--minimal-dark-gray);
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --minimal-white: #1a1a1a;
+    --minimal-off-white: #1f1f1f;
+    --minimal-light-gray: #252525;
+    --minimal-gray: #333333;
+    --minimal-medium-gray: #666666;
+    --minimal-dark-gray: #a8a8a8;
+    --minimal-charcoal: #d1d1d1;
+    --minimal-black: #ffffff;
+    --minimal-shadow: rgba(255, 255, 255, 0.04);
+    --minimal-shadow-medium: rgba(255, 255, 255, 0.08);
+    --minimal-shadow-strong: rgba(255, 255, 255, 0.12);
+    --minimal-border: rgba(255, 255, 255, 0.1);
+    --minimal-hover: rgba(255, 255, 255, 0.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .minimal-grid-cols-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .minimal-grid-cols-3 {
+    grid-template-columns: 1fr;
+  }
+
+  .minimal-grid-cols-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .minimal-section {
+    padding: 4rem 0;
+  }
+
+  .minimal-section-small {
+    padding: 3rem 0;
+  }
+
+  .minimal-card {
+    padding: 1rem;
+  }
+
+  .minimal-card-subtle {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .minimal-grid-cols-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .minimal-container {
+    padding: 0 0.75rem;
+  }
+
+  .minimal-button {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
+  }
+
+  .minimal-button-outline {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
+  }
+}
