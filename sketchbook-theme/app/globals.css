@@ -2,18 +2,336 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Caveat:wght@400;500;600;700&display=swap");
+
+/* Custom Properties */
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  --paper-white: #fefcf8;
+  --paper-cream: #fbf9f4;
+  --ink-black: #2a2a2a;
+  --ink-blue: #1e3a8a;
+  --pencil-gray: #6b7280;
+  --sketch-red: #dc2626;
+  --sketch-green: #059669;
+  --sketch-yellow: #f59e0b;
+  --line-blue: #3b82f6;
+}
+
+/* Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: "Kalam", cursive;
+  background: var(--paper-cream);
+  color: var(--ink-black);
+  overflow-x: hidden;
+}
+
+/* Paper Texture Background */
+.paper-texture {
+  background-image: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 48, 0.1) 0%, transparent 50%);
+  background-size: 200px 200px;
+  position: relative;
+}
+
+.paper-texture::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-opacity='0.03'%3E%3Cpolygon fill='%23000' points='50 0 60 40 100 50 60 60 50 100 40 60 0 50 40 40'/%3E%3C/g%3E%3C/svg%3E")
+    repeat;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* Handwritten Fonts */
+.handwritten {
+  font-family: "Caveat", cursive;
+  font-weight: 500;
+}
+
+.handwritten-bold {
+  font-family: "Caveat", cursive;
+  font-weight: 700;
+}
+
+/* Sketch Effects */
+.sketch-border {
+  border: 2px solid var(--ink-black);
+  border-radius: 8px;
+  position: relative;
+  background: var(--paper-white);
+}
+
+.sketch-border::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 1px solid var(--pencil-gray);
+  border-radius: 8px;
+  opacity: 0.3;
+  transform: rotate(-0.5deg);
+}
+
+/* Doodle Decorations */
+.doodle-heart {
+  position: relative;
+}
+
+.doodle-heart::after {
+  content: "♥";
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  color: var(--sketch-red);
+  font-size: 1.2rem;
+  animation: pulse 2s infinite;
+}
+
+.doodle-star {
+  position: relative;
+}
+
+.doodle-star::after {
+  content: "★";
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  color: var(--sketch-yellow);
+  font-size: 1rem;
+  animation: twinkle 3s infinite;
+}
+
+/* Notebook Lines */
+.notebook-lines {
+  background-image: linear-gradient(transparent 39px, var(--line-blue) 39px, var(--line-blue) 40px, transparent 40px),
+    linear-gradient(90deg, transparent 79px, #e5e7eb 79px, #e5e7eb 80px, transparent 80px);
+  background-size: 100% 40px, 80px 100%;
+  background-position: 0 0, 0 0;
+}
+
+/* Margin Lines */
+.margin-line {
+  position: relative;
+}
+
+.margin-line::before {
+  content: "";
+  position: absolute;
+  left: 80px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--sketch-red);
+  opacity: 0.3;
+}
+
+/* Scribble Underlines */
+.scribble-underline {
+  position: relative;
+}
+
+.scribble-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='3' viewBox='0 0 100 3'%3E%3Cpath d='M0,2 Q25,0 50,2 T100,2' stroke='%23dc2626' stroke-width='2' fill='none'/%3E%3C/svg%3E")
+    repeat-x;
+  opacity: 0.7;
+}
+
+/* Torn Paper Effect */
+.torn-paper {
+  position: relative;
+  background: var(--paper-white);
+}
+
+.torn-paper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='10' viewBox='0 0 20 10'%3E%3Cpath d='M0,5 Q5,0 10,5 T20,5 V10 H0 Z' fill='%23fbf9f4'/%3E%3C/svg%3E")
+    repeat-x;
+}
+
+/* Ink Splatter */
+.ink-splatter {
+  position: relative;
+}
+
+.ink-splatter::after {
+  content: "";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, var(--ink-black) 30%, transparent 30%);
+  background-size: 4px 4px;
+  opacity: 0.1;
+  border-radius: 50%;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+}
+
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.7;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes draw {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-1deg);
+  }
+  75% {
+    transform: rotate(1deg);
+  }
+}
+
+/* Sketch Animations */
+.sketch-draw {
+  animation: draw 3s ease-in-out infinite;
+}
+
+.sketch-wiggle {
+  animation: wiggle 4s ease-in-out infinite;
+}
+
+/* Hover Effects */
+.sketch-hover {
+  transition: transform 0.3s ease;
+}
+
+.sketch-hover:hover {
+  transform: rotate(-1deg) scale(1.05);
+}
+
+/* Sticky Notes */
+.sticky-note {
+  background: var(--sketch-yellow);
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 0 0 20px 0;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+  position: relative;
+  transform: rotate(-2deg);
+}
+
+.sticky-note::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Utility Classes */
+.text-handwritten {
+  font-family: "Caveat", cursive;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.text-sketch {
+  color: var(--ink-black);
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+}
+
+.bg-paper {
+  background: var(--paper-white);
+}
+
+.bg-paper-cream {
+  background: var(--paper-cream);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .margin-line::before {
+    left: 40px;
+  }
+
+  .notebook-lines {
+    background-size: 100% 35px, 40px 100%;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--pencil-gray);
+  border-radius: 6px;
+  border: 2px solid var(--paper-cream);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-black);
+}
+
+/* Print Styles */
+@media print {
+  .paper-texture::before {
+    display: none;
+  }
+
+  .notebook-lines {
+    background: none;
+  }
 }

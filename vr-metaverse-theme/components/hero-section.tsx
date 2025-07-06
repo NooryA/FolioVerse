@@ -1,40 +1,54 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Play, Download, Zap, Eye, Gamepad2, Globe, Cpu, Brain, Headphones, ChevronDown } from "lucide-react";
+
+const dimensions = ["VIRTUAL REALITY", "AUGMENTED REALITY", "MIXED REALITY", "METAVERSE", "DIGITAL TWIN"];
 
 export function HeroSection() {
   const [mounted, setMounted] = useState(false);
   const [currentDimension, setCurrentDimension] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  const dimensions = ["VIRTUAL REALITY", "AUGMENTED REALITY", "MIXED REALITY", "METAVERSE", "DIGITAL TWIN"];
+  // Memoize particles to prevent re-rendering
+  const particles = useMemo(() => {
+    return [...Array(20)].map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      duration: 3 + Math.random() * 4,
+      delay: Math.random() * 2,
+    }));
+  }, []);
 
   useEffect(() => {
     setMounted(true);
 
     // Simulate loading sequence
-    setTimeout(() => setIsLoading(false), 2000);
+    const loadingTimeout = setTimeout(() => setIsLoading(false), 2000);
 
     const interval = setInterval(() => {
       setCurrentDimension((prev) => (prev + 1) % dimensions.length);
     }, 2000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(loadingTimeout);
+      clearInterval(interval);
+    };
   }, []);
 
   if (!mounted) return null;
 
   return (
     <section id="home" className="min-h-screen relative overflow-hidden bg-black">
-      {/* Animated Background */}
+      {/* Animated Background - Static to prevent re-rendering */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-20 w-96 h-96 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full blur-3xl opacity-20 animate-pulse"></div>
         <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full blur-3xl opacity-20 animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-gradient-to-r from-green-400 to-cyan-500 rounded-full blur-3xl opacity-20 animate-pulse delay-2000"></div>
       </div>
 
-      {/* Neural Grid Overlay */}
+      {/* Neural Grid Overlay - Static */}
       <div className="absolute inset-0 opacity-10">
         <div
           className="w-full h-full"
@@ -197,7 +211,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Floating Elements */}
+          {/* Static Floating Elements */}
           <div className="absolute top-20 left-20 opacity-60">
             <div className="w-4 h-4 bg-cyan-400 rounded-full animate-ping"></div>
           </div>
@@ -224,17 +238,17 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* Particle System */}
+      {/* Memoized Particle System */}
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(20)].map((_, i) => (
+        {particles.map((particle) => (
           <div
-            key={i}
+            key={particle.id}
             className="absolute w-1 h-1 bg-cyan-400 rounded-full opacity-60"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
-              animationDelay: `${Math.random() * 2}s`,
+              left: `${particle.left}%`,
+              top: `${particle.top}%`,
+              animation: `float ${particle.duration}s ease-in-out infinite`,
+              animationDelay: `${particle.delay}s`,
             }}
           />
         ))}

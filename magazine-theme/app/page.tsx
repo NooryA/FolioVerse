@@ -572,7 +572,9 @@ export default function Home() {
 
                 <div className="mt-8 p-6 bg-white/10 rounded-lg">
                   <h3 className="font-bold mb-2">Ready to Start?</h3>
-                  <p className="text-gray-300 text-sm mb-4">I'm always excited to discuss new opportunities and challenging projects.</p>
+                  <p className="text-gray-300 text-sm mb-4">
+                    I&apos;m always excited to discuss new opportunities and challenging projects.
+                  </p>
                   <button className="bg-yellow-400 text-black px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors">
                     Let's Talk
                   </button>

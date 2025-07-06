@@ -7,12 +7,34 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isOnline, setIsOnline] = useState(true);
   const [neuralActivity, setNeuralActivity] = useState(0);
+  const [mounted, setMounted] = useState(false);
+  const [currentTime, setCurrentTime] = useState("");
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    setMounted(true);
+
+    const updateTime = () => {
+      setCurrentTime(
+        new Date().toLocaleTimeString("en-US", {
+          hour12: false,
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      );
+    };
+
+    updateTime();
+    const timeInterval = setInterval(updateTime, 1000);
+
+    const activityInterval = setInterval(() => {
       setNeuralActivity(Math.random() * 100);
     }, 1500);
-    return () => clearInterval(interval);
+
+    return () => {
+      clearInterval(timeInterval);
+      clearInterval(activityInterval);
+    };
   }, []);
 
   const navItems = [
@@ -108,7 +130,7 @@ export function Navigation() {
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                 <span className="text-green-400 font-mono text-xs">ONLINE</span>
               </div>
-              <div className="text-cyan-400 font-mono text-sm">{new Date().toLocaleTimeString()}</div>
+              <div className="text-cyan-400 font-mono text-sm">{mounted ? currentTime : "--:--:--"}</div>
             </div>
 
             {/* Mobile Menu Button */}

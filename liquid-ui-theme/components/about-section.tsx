@@ -5,15 +5,12 @@ export function AboutSection() {
         <h2 className="text-3xl md:text-4xl font-bold mb-8 text-center">About Me</h2>
         <div className="prose prose-lg mx-auto">
           <p>
-            Welcome to my liquid ui themed portfolio. I'm a passionate developer
-            who loves creating unique and engaging web experiences.
+            Welcome to my liquid ui themed portfolio. I&apos;m a passionate developer who loves creating unique and engaging web
+            experiences.
           </p>
-          <p>
-            This portfolio showcases my skills in modern web development, creative design,
-            and innovative problem-solving.
-          </p>
+          <p>This portfolio showcases my skills in modern web development, creative design, and innovative problem-solving.</p>
         </div>
       </div>
     </section>
-  )
+  );
 }

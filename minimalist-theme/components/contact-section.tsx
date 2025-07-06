@@ -87,7 +87,7 @@ export function ContactSection() {
         >
           <h2 className="minimal-heading-2 mb-4">Get In Touch</h2>
           <p className="minimal-body-large max-w-2xl mx-auto">
-            I'm always interested in new opportunities and collaborations. Let's discuss how we can work together.
+            I&apos;m always interested in new opportunities and collaborations. Let&apos;s discuss how we can work together.
           </p>
         </motion.div>
 

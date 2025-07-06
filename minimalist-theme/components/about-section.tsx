@@ -54,8 +54,8 @@ export function AboutSection() {
         >
           <h2 className="minimal-heading-2 mb-4">About Me</h2>
           <p className="minimal-body-large max-w-2xl mx-auto">
-            I'm a passionate developer who believes in creating beautiful, functional, and user-centered digital experiences through clean
-            code and thoughtful design.
+            I&apos;m a passionate developer who believes in creating beautiful, functional, and user-centered digital experiences through
+            clean code and thoughtful design.
           </p>
         </motion.div>
 
@@ -237,8 +237,8 @@ export function AboutSection() {
         >
           <h3 className="minimal-heading-3 mb-4">Let's Work Together</h3>
           <p className="minimal-body mb-6 max-w-2xl mx-auto">
-            I'm always interested in new opportunities and collaborations. Whether you have a project in mind or just want to chat about
-            technology, I'd love to hear from you.
+            I&apos;m always interested in new opportunities and collaborations. Whether you have a project in mind or just want to chat
+            about technology, I'd love to hear from you.
           </p>
           <motion.a href="#contact" className="minimal-button minimal-hover-lift" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
             Get In Touch

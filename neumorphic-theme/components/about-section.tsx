@@ -30,7 +30,7 @@ export function AboutSection() {
         >
           <h2 className="neuro-heading text-5xl md:text-6xl font-bold mb-6">About Me</h2>
           <p className="neuro-body text-xl max-w-3xl mx-auto">
-            I'm a passionate developer who believes in creating beautiful, intuitive, and user-centered digital experiences through
+            I&apos;m a passionate developer who believes in creating beautiful, intuitive, and user-centered digital experiences through
             thoughtful design and clean code.
           </p>
         </motion.div>
@@ -52,12 +52,12 @@ export function AboutSection() {
                   My approach combines technical expertise with design sensibility.
                 </p>
                 <p className="neuro-body">
-                  I believe that the best interfaces are the ones that feel effortless to use. That's why I'm drawn to neumorphic design -
-                  it creates interfaces that feel tactile and real, bridging the gap between digital and physical.
+                  I believe that the best interfaces are the ones that feel effortless to use. That&apos;s why I&apos;m drawn to neumorphic
+                  design - it creates interfaces that feel tactile and real, bridging the gap between digital and physical.
                 </p>
                 <p className="neuro-body">
-                  When I'm not coding, you'll find me exploring new design trends, contributing to open source projects, or mentoring
-                  aspiring developers.
+                  When I&apos;m not coding, you&apos;ll find me exploring new design trends, contributing to open source projects, or
+                  mentoring aspiring developers.
                 </p>
               </div>
             </div>
@@ -183,10 +183,10 @@ export function AboutSection() {
           transition={{ duration: 0.6 }}
           className="neuro-card text-center"
         >
-          <h3 className="neuro-heading text-2xl mb-4">Let's Work Together</h3>
+          <h3 className="neuro-heading text-2xl mb-4">Let&apos;s Work Together</h3>
           <p className="neuro-body mb-6 max-w-2xl mx-auto">
-            I'm always excited to work on new projects and collaborate with amazing people. Whether you have a specific project in mind or
-            just want to chat about technology, I'd love to hear from you.
+            I&apos;m always excited to work on new projects and collaborate with amazing people. Whether you have a specific project in mind
+            or just want to chat about technology, I&apos;d love to hear from you.
           </p>
           <motion.button whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="neuro-button-accent">
             Get In Touch

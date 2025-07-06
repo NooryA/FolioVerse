@@ -1,22 +1,22 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react'
-import { Monitor, Folder, Terminal, Settings, Wifi, Battery, Grid, X, Minus, Square } from 'lucide-react'
+import React, { useState } from "react";
+import { Monitor, Folder, Terminal, Settings, Wifi, Battery, Grid, X, Minus, Square } from "lucide-react";
 
 export function HeroSection() {
-  const [activeWindow, setActiveWindow] = useState('about')
-  const [time, setTime] = useState(new Date())
+  const [activeWindow, setActiveWindow] = useState<"about" | "projects" | "terminal">("about");
+  const [time, setTime] = useState(new Date());
 
   React.useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000)
-    return () => clearInterval(timer)
-  }, [])
+    const timer = setInterval(() => setTime(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const windows = {
-    about: { title: 'About Me', icon: Folder, minimized: false },
-    projects: { title: 'Projects', icon: Grid, minimized: false },
-    terminal: { title: 'Terminal', icon: Terminal, minimized: false }
-  }
+    about: { title: "About Me", icon: Folder, minimized: false },
+    projects: { title: "Projects", icon: Grid, minimized: false },
+    terminal: { title: "Terminal", icon: Terminal, minimized: false },
+  } as const;
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 overflow-hidden">
@@ -84,7 +84,7 @@ export function HeroSection() {
 
               {/* Window Content */}
               <div className="p-8 text-white">
-                {activeWindow === 'about' && (
+                {activeWindow === "about" && (
                   <div>
                     <h1 className="text-4xl font-bold mb-4">System Administrator</h1>
                     <div className="bg-black/50 rounded p-4 font-mono text-sm mb-6">
@@ -96,16 +96,12 @@ export function HeroSection() {
                       <p>5 years in production</p>
                     </div>
                     <p className="text-gray-300 mb-6">
-                      Building robust systems and elegant interfaces since 2019. 
-                      Specializing in scalable architectures and modern web technologies.
+                      Building robust systems and elegant interfaces since 2019. Specializing in scalable architectures and modern web
+                      technologies.
                     </p>
                     <div className="flex gap-4">
-                      <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">
-                        View Processes
-                      </button>
-                      <button className="border border-gray-600 hover:bg-gray-800 px-4 py-2 rounded">
-                        System Logs
-                      </button>
+                      <button className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">View Processes</button>
+                      <button className="border border-gray-600 hover:bg-gray-800 px-4 py-2 rounded">System Logs</button>
                     </div>
                   </div>
                 )}
@@ -120,12 +116,12 @@ export function HeroSection() {
                 <Grid className="w-4 h-4" />
                 Start
               </button>
-              {Object.entries(windows).map(([key, window]) => (
+              {(Object.entries(windows) as Array<[keyof typeof windows, (typeof windows)[keyof typeof windows]]>).map(([key, window]) => (
                 <button
                   key={key}
                   onClick={() => setActiveWindow(key)}
                   className={`px-3 py-1 rounded text-white text-sm flex items-center gap-2 ${
-                    activeWindow === key ? 'bg-gray-700' : 'bg-gray-800 hover:bg-gray-700'
+                    activeWindow === key ? "bg-gray-700" : "bg-gray-800 hover:bg-gray-700"
                   }`}
                 >
                   <window.icon className="w-4 h-4" />
@@ -137,5 +133,5 @@ export function HeroSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

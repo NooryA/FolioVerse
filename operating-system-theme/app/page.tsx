@@ -31,6 +31,10 @@ import {
   Twitter,
   Phone,
   MapPin,
+  MonitorSpeaker,
+  Gamepad2,
+  HelpCircle,
+  Power,
 } from "lucide-react";
 
 interface WindowProps {
@@ -63,11 +67,34 @@ export default function Home() {
   const [draggedWindow, setDraggedWindow] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [nextZIndex, setNextZIndex] = useState(100);
+  const [selectedIcon, setSelectedIcon] = useState<string | null>(null);
+  const [clickTimeout, setClickTimeout] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Enhanced click handler for desktop icons
+  const handleIconClick = (iconId: string, action: () => void) => {
+    setSelectedIcon(iconId);
+
+    if (clickTimeout) {
+      // Double click detected
+      clearTimeout(clickTimeout);
+      setClickTimeout(null);
+      action(); // Execute the action immediately on double click
+      setSelectedIcon(null);
+    } else {
+      // Single click - set a timeout for potential double click
+      const timeout = setTimeout(() => {
+        action(); // Execute action after delay if no second click
+        setSelectedIcon(null);
+        setClickTimeout(null);
+      }, 300);
+      setClickTimeout(timeout);
+    }
+  };
 
   const desktopIcons: DesktopIcon[] = [
     {
@@ -117,6 +144,38 @@ export default function Home() {
       type: "folder",
       position: { x: 150, y: 150 },
       action: () => openWindow("gallery"),
+    },
+    {
+      id: "calculator",
+      name: "Calculator",
+      icon: <Calculator className="w-8 h-8" />,
+      type: "app",
+      position: { x: 150, y: 250 },
+      action: () => openWindow("calculator"),
+    },
+    {
+      id: "browser",
+      name: "Web Browser",
+      icon: <Globe className="w-8 h-8" />,
+      type: "app",
+      position: { x: 150, y: 350 },
+      action: () => openWindow("browser"),
+    },
+    {
+      id: "music",
+      name: "Music Player",
+      icon: <Music className="w-8 h-8" />,
+      type: "app",
+      position: { x: 250, y: 50 },
+      action: () => openWindow("music"),
+    },
+    {
+      id: "help",
+      name: "Help & Tips",
+      icon: <HelpCircle className="w-8 h-8" />,
+      type: "app",
+      position: { x: 250, y: 150 },
+      action: () => openWindow("help"),
     },
   ];
 
@@ -362,6 +421,122 @@ export default function Home() {
         </div>
       ),
     },
+    calculator: {
+      title: "Calculator",
+      icon: <Calculator className="w-4 h-4" />,
+      size: { width: 300, height: 400 },
+      content: (
+        <div className="p-4 bg-gray-100 h-full">
+          <div className="bg-black text-white p-4 rounded mb-4 text-right text-2xl font-mono">0</div>
+          <div className="grid grid-cols-4 gap-2">
+            {["C", "±", "%", "÷", "7", "8", "9", "×", "4", "5", "6", "-", "1", "2", "3", "+", "0", "0", ".", "="].map((btn, i) => (
+              <button
+                key={i}
+                className={`p-3 rounded font-semibold transition-colors ${
+                  ["C", "±", "%"].includes(btn)
+                    ? "bg-gray-400 hover:bg-gray-500 text-black"
+                    : ["÷", "×", "-", "+", "="].includes(btn)
+                    ? "bg-orange-500 hover:bg-orange-600 text-white"
+                    : "bg-gray-600 hover:bg-gray-700 text-white"
+                }`}
+              >
+                {btn}
+              </button>
+            ))}
+          </div>
+        </div>
+      ),
+    },
+
+    browser: {
+      title: "Web Browser - Portfolio Website",
+      icon: <Globe className="w-4 h-4" />,
+      size: { width: 800, height: 600 },
+      content: (
+        <div className="h-full flex flex-col">
+          <div className="bg-gray-200 p-3 border-b flex items-center gap-2">
+            <div className="flex gap-1">
+              <div className="w-3 h-3 bg-red-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
+              <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+            </div>
+            <div className="flex-1 bg-white rounded px-3 py-1 text-sm">https://alexrodriguez.dev</div>
+          </div>
+          <div className="flex-1 p-6 bg-gradient-to-br from-blue-50 to-purple-50">
+            <div className="text-center">
+              <h1 className="text-4xl font-bold mb-4">Welcome to My Portfolio</h1>
+              <p className="text-xl text-gray-600 mb-8">Showcasing my journey as a full-stack developer</p>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-white p-4 rounded-lg shadow">
+                  <h3 className="font-semibold mb-2">Latest Project</h3>
+                  <p className="text-sm text-gray-600">E-Commerce Platform with React & Node.js</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow">
+                  <h3 className="font-semibold mb-2">Blog Post</h3>
+                  <p className="text-sm text-gray-600">Building Scalable Applications</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    music: {
+      title: "Music Player",
+      icon: <Music className="w-4 h-4" />,
+      size: { width: 400, height: 300 },
+      content: (
+        <div className="p-4 bg-gradient-to-br from-purple-900 to-blue-900 text-white h-full">
+          <div className="text-center mb-6">
+            <div className="w-32 h-32 bg-gradient-to-br from-pink-500 to-purple-600 rounded-lg mx-auto mb-4 flex items-center justify-center">
+              <Music className="w-16 h-16" />
+            </div>
+            <h3 className="text-lg font-semibold">Coding Playlist</h3>
+            <p className="text-sm text-gray-300">Lo-fi Hip Hop Beats</p>
+          </div>
+          <div className="space-y-4">
+            <div className="bg-white/10 rounded-full h-1">
+              <div className="bg-white rounded-full h-1 w-1/3"></div>
+            </div>
+            <div className="flex justify-center gap-4">
+              <button className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">⏮</button>
+              <button className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-purple-900">▶</button>
+              <button className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">⏭</button>
+            </div>
+          </div>
+        </div>
+      ),
+    },
+
+    help: {
+      title: "Help & Tips - How to Use",
+      icon: <HelpCircle className="w-4 h-4" />,
+      size: { width: 500, height: 400 },
+      content: (
+        <div className="p-6">
+          <h2 className="text-2xl font-bold mb-6">How to Use This OS Portfolio</h2>
+          <div className="space-y-4 text-sm">
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h3 className="font-semibold mb-2">🖱️ Desktop Icons</h3>
+              <p>Single-click or double-click any desktop icon to open applications and files.</p>
+            </div>
+            <div className="bg-green-50 p-4 rounded-lg">
+              <h3 className="font-semibold mb-2">🚀 Start Menu</h3>
+              <p>Click the Start button in the taskbar to access all applications and system functions.</p>
+            </div>
+            <div className="bg-purple-50 p-4 rounded-lg">
+              <h3 className="font-semibold mb-2">🪟 Windows</h3>
+              <p>Drag windows by their title bar to move them. Use the buttons to minimize, maximize, or close windows.</p>
+            </div>
+            <div className="bg-yellow-50 p-4 rounded-lg">
+              <h3 className="font-semibold mb-2">📊 Taskbar</h3>
+              <p>See running applications in the taskbar. Click on them to switch between windows.</p>
+            </div>
+          </div>
+        </div>
+      ),
+    },
   };
 
   const openWindow = (windowId: string) => {
@@ -482,9 +657,12 @@ export default function Home() {
         {desktopIcons.map((icon) => (
           <div
             key={icon.id}
-            className="absolute cursor-pointer hover:bg-white/20 rounded-lg p-2 transition-colors"
+            className={`absolute cursor-pointer rounded-lg p-2 transition-colors ${
+              selectedIcon === icon.id ? "bg-blue-500/30 border-2 border-blue-300" : "hover:bg-white/20"
+            }`}
             style={{ left: icon.position.x, top: icon.position.y }}
-            onDoubleClick={icon.action}
+            onClick={() => handleIconClick(icon.id, icon.action)}
+            onDoubleClick={() => handleIconClick(icon.id, icon.action)}
           >
             <div className="text-white flex flex-col items-center gap-1">
               {icon.icon}
