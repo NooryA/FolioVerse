@@ -1,122 +1,495 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react'
-import { FileCode, FolderOpen, Terminal, GitBranch, Bug, Search } from 'lucide-react'
+import { useState, useEffect } from "react";
+import {
+  Files,
+  Search,
+  GitBranch,
+  User,
+  Package,
+  Settings,
+  X,
+  Play,
+  Terminal,
+  Folder,
+  FileText,
+  Coffee,
+  Zap,
+  Heart,
+  Star,
+  ExternalLink,
+  Github,
+  ChevronRight,
+  ChevronDown,
+} from "lucide-react";
 
 export function HeroSection() {
-  const [activeTab, setActiveTab] = useState('portfolio.tsx')
-  const [typedCode, setTypedCode] = useState('')
-  
-  const codeSnippet = `const developer = {
-  name: 'Your Name',
-  role: 'Full-Stack Developer',
-  skills: ['React', 'TypeScript', 'Node.js'],
-  passion: 'Building amazing web experiences'
-};`
+  const [mounted, setMounted] = useState(false);
+  const [activeTab, setActiveTab] = useState("portfolio.tsx");
+  const [activePanel, setActivePanel] = useState("explorer");
+  const [terminalOutput, setTerminalOutput] = useState<string[]>([]);
+  const [currentLine, setCurrentLine] = useState(1);
+  const [isTyping, setIsTyping] = useState(false);
+  const [expandedFolders, setExpandedFolders] = useState<{ [key: string]: boolean }>({
+    src: true,
+    components: true,
+    pages: true,
+  });
 
   useEffect(() => {
-    let index = 0
+    setMounted(true);
+
+    // Simulate terminal output
+    const terminalMessages = [
+      "$ npm run dev",
+      "",
+      "> portfolio@1.0.0 dev",
+      "> next dev",
+      "",
+      "✓ Ready in 1.2s",
+      "✓ Local:    http://localhost:3000",
+      "✓ Network:  http://192.168.1.100:3000",
+      "",
+      "Portfolio server started successfully! 🚀",
+    ];
+
+    let index = 0;
     const interval = setInterval(() => {
-      if (index < codeSnippet.length) {
-        setTypedCode(codeSnippet.slice(0, index + 1))
-        index++
+      if (index < terminalMessages.length) {
+        setTerminalOutput((prev) => [...prev, terminalMessages[index]]);
+        index++;
+      } else {
+        clearInterval(interval);
       }
-    }, 50)
-    return () => clearInterval(interval)
-  }, [])
+    }, 200);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const fileStructure = [
+    {
+      name: "src",
+      type: "folder",
+      children: [
+        {
+          name: "components",
+          type: "folder",
+          children: [
+            { name: "Header.tsx", type: "file", ext: "ts" },
+            { name: "ProjectCard.tsx", type: "file", ext: "ts" },
+            { name: "SkillsBadge.tsx", type: "file", ext: "ts" },
+          ],
+        },
+        {
+          name: "pages",
+          type: "folder",
+          children: [
+            { name: "about.tsx", type: "file", ext: "ts" },
+            { name: "projects.tsx", type: "file", ext: "ts" },
+            { name: "contact.tsx", type: "file", ext: "ts" },
+          ],
+        },
+        { name: "portfolio.tsx", type: "file", ext: "ts" },
+        { name: "styles.css", type: "file", ext: "css" },
+      ],
+    },
+    { name: "package.json", type: "file", ext: "json" },
+    { name: "tsconfig.json", type: "file", ext: "json" },
+    { name: "README.md", type: "file", ext: "md" },
+  ];
+
+  const tabs = [
+    { name: "portfolio.tsx", icon: "ts", active: activeTab === "portfolio.tsx" },
+    { name: "package.json", icon: "json", active: activeTab === "package.json" },
+    { name: "README.md", icon: "md", active: activeTab === "README.md" },
+  ];
+
+  const portfolioCode = `import React from 'react'
+import { motion } from 'framer-motion'
+import { Github, ExternalLink, Coffee, Heart } from 'lucide-react'
+
+interface Project {
+  id: number
+  title: string
+  description: string
+  technologies: string[]
+  githubUrl?: string
+  liveUrl?: string
+  featured: boolean
+}
+
+const Portfolio: React.FC = () => {
+  const developer = {
+    name: "Alex Developer",
+    role: "Full Stack Developer & UI/UX Designer",
+    location: "San Francisco, CA",
+    experience: "5+ years",
+    status: "Available for hire",
+    skills: [
+      "React", "TypeScript", "Node.js", "Python",
+      "Next.js", "TailwindCSS", "PostgreSQL", "AWS"
+    ],
+    stats: {
+      projectsCompleted: 120,
+      happyClients: 50,
+      coffeeConsumed: "∞",
+      githubStars: 1200
+    }
+  }
+
+  const featuredProjects: Project[] = [
+    {
+      id: 1,
+      title: "E-Commerce Platform",
+      description: "Modern e-commerce solution with React & Node.js",
+      technologies: ["React", "Node.js", "PostgreSQL", "Stripe"],
+      githubUrl: "https://github.com/alexdev/ecommerce",
+      liveUrl: "https://shop-demo.alexdev.com",
+      featured: true
+    },
+    {
+      id: 2,
+      title: "Task Management App",
+      description: "Collaborative project management with real-time updates",
+      technologies: ["Next.js", "Socket.io", "MongoDB", "TailwindCSS"],
+      githubUrl: "https://github.com/alexdev/taskmanager",
+      liveUrl: "https://tasks.alexdev.com",
+      featured: true
+    },
+    {
+      id: 3,
+      title: "AI Chat Assistant",
+      description: "Intelligent chatbot with natural language processing",
+      technologies: ["Python", "OpenAI API", "FastAPI", "React"],
+      githubUrl: "https://github.com/alexdev/ai-chat",
+      featured: true
+    }
+  ]
 
   return (
-    <section className="min-h-screen bg-[#1e1e1e] text-gray-300">
-      {/* VS Code Header */}
-      <div className="bg-[#2d2d30] border-b border-[#3e3e42] px-4 py-2">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <span className="text-white font-medium">Portfolio - Visual Studio Code</span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800">
+      <header className="container mx-auto px-6 py-12">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-5xl font-bold text-white mb-4">
+            Hello, I'm {developer.name}
+          </h1>
+          <p className="text-xl text-blue-400 mb-6">{developer.role}</p>
+          <div className="flex items-center gap-4 text-gray-300">
+            <span>📍 {developer.location}</span>
+            <span>💼 {developer.experience}</span>
+            <span className="text-green-400">🟢 {developer.status}</span>
           </div>
-          <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-          </div>
-        </div>
-      </div>
+        </motion.div>
+      </header>
 
-      <div className="flex h-[calc(100vh-40px)]">
-        {/* Sidebar */}
-        <div className="w-12 bg-[#333333] flex flex-col items-center py-4 gap-4">
-          <FileCode className="w-6 h-6 text-white" />
-          <Search className="w-6 h-6 text-gray-500 hover:text-white cursor-pointer" />
-          <GitBranch className="w-6 h-6 text-gray-500 hover:text-white cursor-pointer" />
-          <Bug className="w-6 h-6 text-gray-500 hover:text-white cursor-pointer" />
-        </div>
-
-        {/* File Explorer */}
-        <div className="w-64 bg-[#252526] border-r border-[#3e3e42] p-4">
-          <div className="flex items-center gap-2 mb-4">
-            <FolderOpen className="w-4 h-4" />
-            <span className="text-sm uppercase text-gray-400">Explorer</span>
-          </div>
-          <div className="space-y-1 text-sm">
-            <div className="flex items-center gap-2 hover:bg-[#2a2d2e] px-2 py-1 cursor-pointer">
-              <FolderOpen className="w-4 h-4 text-yellow-600" />
-              <span>src</span>
-            </div>
-            <div className="ml-4 space-y-1">
-              <div 
-                className={`flex items-center gap-2 px-2 py-1 cursor-pointer ${activeTab === 'portfolio.tsx' ? 'bg-[#37373d]' : 'hover:bg-[#2a2d2e]'}`}
-                onClick={() => setActiveTab('portfolio.tsx')}
-              >
-                <FileCode className="w-4 h-4 text-blue-400" />
-                <span>portfolio.tsx</span>
-              </div>
-              <div className="flex items-center gap-2 hover:bg-[#2a2d2e] px-2 py-1 cursor-pointer">
-                <FileCode className="w-4 h-4 text-yellow-400" />
-                <span>skills.ts</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Code Editor */}
-        <div className="flex-1 bg-[#1e1e1e] p-4">
-          {/* Tabs */}
-          <div className="flex items-center gap-1 mb-4 border-b border-[#3e3e42]">
-            <div className="bg-[#2d2d30] px-4 py-2 text-sm flex items-center gap-2">
-              <FileCode className="w-4 h-4 text-blue-400" />
-              <span>portfolio.tsx</span>
-              <span className="text-gray-500">×</span>
-            </div>
-          </div>
-
-          {/* Code Content */}
-          <div className="font-mono text-sm">
-            <div className="flex">
-              <div className="text-[#858585] pr-4 select-none">
-                {[1,2,3,4,5,6,7].map(n => (
-                  <div key={n}>{n}</div>
+      <section className="container mx-auto px-6 py-12">
+        <h2 className="text-3xl font-bold text-white mb-8">Featured Projects</h2>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {featuredProjects.map((project) => (
+            <div
+              key={project.id}
+              className="bg-slate-800 rounded-lg p-6 border border-slate-700 hover:border-blue-500 transition-colors"
+            >
+              <h3 className="text-xl font-semibold text-white mb-3">
+                {project.title}
+              </h3>
+              <p className="text-gray-300 mb-4">{project.description}</p>
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="bg-blue-600 text-white px-2 py-1 rounded text-sm"
+                  >
+                    {tech}
+                  </span>
                 ))}
               </div>
-              <div>
-                <pre className="text-[#d4d4d4]">
-                  <span className="text-[#569cd6]">const</span> <span className="text-[#9cdcfe]">developer</span> = {typedCode}<span className="animate-pulse">|</span>
-                </pre>
+              <div className="flex gap-2">
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    className="flex items-center gap-1 text-gray-300 hover:text-white"
+                  >
+                    <Github size={16} />
+                    Code
+                  </a>
+                )}
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    className="flex items-center gap-1 text-gray-300 hover:text-white"
+                  >
+                    <ExternalLink size={16} />
+                    Live
+                  </a>
+                )}
               </div>
             </div>
-          </div>
+          ))}
+        </div>
+      </section>
 
-          {/* Terminal */}
-          <div className="absolute bottom-0 left-0 right-0 h-48 bg-[#1e1e1e] border-t border-[#3e3e42]">
-            <div className="flex items-center gap-2 px-4 py-2 bg-[#2d2d30]">
-              <Terminal className="w-4 h-4" />
-              <span className="text-sm">Terminal</span>
+      <footer className="container mx-auto px-6 py-12 text-center">
+        <p className="text-gray-300 mb-4">
+          Built with <Heart className="inline w-4 h-4 text-red-500" /> and lots of{' '}
+          <Coffee className="inline w-4 h-4 text-brown-500" />
+        </p>
+        <p className="text-sm text-gray-500">
+          © 2024 {developer.name}. All rights reserved.
+        </p>
+      </footer>
+    </div>
+  )
+}
+
+export default Portfolio`;
+
+  const toggleFolder = (folderName: string) => {
+    setExpandedFolders((prev) => ({
+      ...prev,
+      [folderName]: !prev[folderName],
+    }));
+  };
+
+  const renderFileTree = (items: any[], level = 0) => {
+    return items.map((item, index) => (
+      <div key={index} style={{ marginLeft: `${level * 16}px` }}>
+        <div
+          className={`file-item ${activeTab === item.name ? "active" : ""}`}
+          onClick={() => {
+            if (item.type === "folder") {
+              toggleFolder(item.name);
+            } else {
+              setActiveTab(item.name);
+            }
+          }}
+        >
+          {item.type === "folder" ? (
+            <>
+              {expandedFolders[item.name] ? <ChevronDown className="w-4 h-4" /> : <ChevronRight className="w-4 h-4" />}
+              <Folder className="file-icon folder-icon" />
+            </>
+          ) : (
+            <>
+              <div className="w-4 h-4" />
+              <FileText className={`file-icon ${item.ext}`} />
+            </>
+          )}
+          <span>{item.name}</span>
+        </div>
+        {item.children && item.type === "folder" && expandedFolders[item.name] && <div>{renderFileTree(item.children, level + 1)}</div>}
+      </div>
+    ));
+  };
+
+  if (!mounted) return null;
+
+  return (
+    <div className="editor-layout">
+      {/* Activity Bar */}
+      <div className="activity-bar">
+        <div className={`activity-bar-item ${activePanel === "explorer" ? "active" : ""}`} onClick={() => setActivePanel("explorer")}>
+          <Files className="w-5 h-5" />
+        </div>
+        <div className={`activity-bar-item ${activePanel === "search" ? "active" : ""}`} onClick={() => setActivePanel("search")}>
+          <Search className="w-5 h-5" />
+        </div>
+        <div className={`activity-bar-item ${activePanel === "git" ? "active" : ""}`} onClick={() => setActivePanel("git")}>
+          <GitBranch className="w-5 h-5" />
+        </div>
+        <div className={`activity-bar-item ${activePanel === "extensions" ? "active" : ""}`} onClick={() => setActivePanel("extensions")}>
+          <Package className="w-5 h-5" />
+        </div>
+        <div className="mt-auto">
+          <div className="activity-bar-item">
+            <User className="w-5 h-5" />
+          </div>
+          <div className="activity-bar-item">
+            <Settings className="w-5 h-5" />
+          </div>
+        </div>
+      </div>
+
+      {/* Sidebar */}
+      <div className="sidebar">
+        <div className="sidebar-header">
+          {activePanel === "explorer" && "Explorer"}
+          {activePanel === "search" && "Search"}
+          {activePanel === "git" && "Source Control"}
+          {activePanel === "extensions" && "Extensions"}
+        </div>
+
+        <div className="sidebar-content">
+          {activePanel === "explorer" && (
+            <div>
+              <div className="text-xs font-semibold text-gray-400 mb-2 px-2">PORTFOLIO</div>
+              {renderFileTree(fileStructure)}
             </div>
-            <div className="p-4 font-mono text-sm">
-              <div className="text-green-400">$ npm run dev</div>
-              <div className="text-gray-400">🚀 Portfolio running on http://localhost:3000</div>
+          )}
+
+          {activePanel === "search" && (
+            <div>
+              <div className="search-panel">
+                <input type="text" placeholder="Search" className="search-input" />
+              </div>
+              <div className="p-4 text-sm text-gray-400">
+                <p>Search across files in your workspace</p>
+              </div>
+            </div>
+          )}
+
+          {activePanel === "git" && (
+            <div className="p-4">
+              <div className="text-sm text-gray-400 mb-4">
+                <div className="flex items-center gap-2 mb-2">
+                  <GitBranch className="w-4 h-4" />
+                  <span>main</span>
+                </div>
+                <div className="text-green-400">✓ Working tree clean</div>
+              </div>
+              <div className="text-xs">
+                <p className="mb-2">Recent commits:</p>
+                <div className="space-y-1">
+                  <div>• Add portfolio hero section</div>
+                  <div>• Update project cards layout</div>
+                  <div>• Fix responsive design issues</div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Main Editor */}
+      <div className="editor-main">
+        {/* Tab Bar */}
+        <div className="tab-bar">
+          {tabs.map((tab) => (
+            <div key={tab.name} className={`tab ${tab.active ? "active" : ""}`} onClick={() => setActiveTab(tab.name)}>
+              <FileText className={`w-4 h-4 file-icon ${tab.icon}`} />
+              <span>{tab.name}</span>
+              <div className="tab-close">
+                <X className="w-3 h-3" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Breadcrumb */}
+        <div className="breadcrumb">
+          <div className="breadcrumb-item">
+            <Folder className="w-3 h-3" />
+            <span>portfolio</span>
+          </div>
+          <div className="breadcrumb-separator">›</div>
+          <div className="breadcrumb-item">
+            <span>src</span>
+          </div>
+          <div className="breadcrumb-separator">›</div>
+          <div className="breadcrumb-item">
+            <span>{activeTab}</span>
+          </div>
+        </div>
+
+        {/* Editor Content */}
+        <div className="editor-content">
+          <div className="line-numbers">
+            {portfolioCode.split("\n").map((_, index) => (
+              <div key={index}>{index + 1}</div>
+            ))}
+          </div>
+          <div className="code-content">
+            <pre className="font-mono text-sm leading-6">
+              <code
+                dangerouslySetInnerHTML={{
+                  __html: portfolioCode
+                    .replace(/\bimport\b/g, '<span class="syntax-keyword">import</span>')
+                    .replace(/\bfrom\b/g, '<span class="syntax-keyword">from</span>')
+                    .replace(/\binterface\b/g, '<span class="syntax-keyword">interface</span>')
+                    .replace(/\bconst\b/g, '<span class="syntax-keyword">const</span>')
+                    .replace(/\breturn\b/g, '<span class="syntax-keyword">return</span>')
+                    .replace(/\bfunction\b/g, '<span class="syntax-keyword">function</span>')
+                    .replace(/\bif\b/g, '<span class="syntax-keyword">if</span>')
+                    .replace(/\belse\b/g, '<span class="syntax-keyword">else</span>')
+                    .replace(/"([^"]+)"/g, '<span class="syntax-string">"$1"</span>')
+                    .replace(/'([^']+)'/g, "<span class=\"syntax-string\">'$1'</span>")
+                    .replace(/\b(\d+)\b/g, '<span class="syntax-number">$1</span>')
+                    .replace(/\/\*[\s\S]*?\*\//g, '<span class="syntax-comment">$&</span>')
+                    .replace(/\/\/.*$/gm, '<span class="syntax-comment">$&</span>')
+                    .replace(/\b(React|Portfolio|Project)\b/g, '<span class="syntax-class">$1</span>')
+                    .replace(/\b(map|filter|reduce|forEach)\b/g, '<span class="syntax-function">$1</span>'),
+                }}
+              />
+            </pre>
+          </div>
+        </div>
+
+        {/* Terminal */}
+        <div className="terminal">
+          <div className="terminal-header">
+            <Terminal className="w-4 h-4 mr-2" />
+            <span>Terminal</span>
+            <div className="ml-auto flex gap-2">
+              <Play className="w-3 h-3 cursor-pointer hover:text-white" />
+              <X className="w-3 h-3 cursor-pointer hover:text-white" />
+            </div>
+          </div>
+          <div className="terminal-content">
+            {terminalOutput.map((line, index) => (
+              <div key={index} className="terminal-line">
+                {line.startsWith("$") ? (
+                  <>
+                    <span className="terminal-prompt">alexdev@portfolio:~</span>
+                    <span className="terminal-command">{line.substring(1).trim()}</span>
+                  </>
+                ) : line.includes("✓") ? (
+                  <span className="terminal-success">{line}</span>
+                ) : line.includes("Error") ? (
+                  <span className="terminal-error">{line}</span>
+                ) : (
+                  <span className="terminal-output">{line}</span>
+                )}
+              </div>
+            ))}
+            <div className="terminal-line">
+              <span className="terminal-prompt">alexdev@portfolio:~</span>
+              <span className="cursor">_</span>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  )
+
+      {/* Status Bar */}
+      <div className="status-bar">
+        <div className="flex items-center gap-4">
+          <div className="status-item">
+            <GitBranch className="w-3 h-3" />
+            <span>main</span>
+          </div>
+          <div className="status-item">
+            <span>TypeScript React</span>
+          </div>
+          <div className="status-item">
+            <span>UTF-8</span>
+          </div>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="status-item">
+            <span>Ln {currentLine}, Col 1</span>
+          </div>
+          <div className="status-item">
+            <span>100%</span>
+          </div>
+          <div className="status-item">
+            <Zap className="w-3 h-3" />
+            <span>Live</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
