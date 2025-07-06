@@ -397,11 +397,11 @@ export default function ContactSection() {
                   <div
                     key={index}
                     className={`${
-                      log.includes("SUCCESS") || log.includes("COMPLETE")
+                      log && log.includes && (log.includes("SUCCESS") || log.includes("COMPLETE"))
                         ? "text-green-400"
-                        : log.includes("ERROR") || log.includes("FAILED")
+                        : log && log.includes && (log.includes("ERROR") || log.includes("FAILED"))
                         ? "text-red-400"
-                        : log.includes("PROCESSING") || log.includes("ROUTING")
+                        : log && log.includes && (log.includes("PROCESSING") || log.includes("ROUTING"))
                         ? "text-yellow-400"
                         : "text-gray-300"
                     }`}

@@ -439,22 +439,20 @@ export default Portfolio`;
             </div>
           </div>
           <div className="terminal-content">
-            {terminalOutput.map((line, index) => (
-              <div key={index} className="terminal-line">
-                {line.startsWith("$") ? (
-                  <>
-                    <span className="terminal-prompt">alexdev@portfolio:~</span>
-                    <span className="terminal-command">{line.substring(1).trim()}</span>
-                  </>
-                ) : line.includes("✓") ? (
-                  <span className="terminal-success">{line}</span>
-                ) : line.includes("Error") ? (
-                  <span className="terminal-error">{line}</span>
-                ) : (
-                  <span className="terminal-output">{line}</span>
-                )}
-              </div>
-            ))}
+            <div className="code-terminal-output">
+              {terminalOutput.map((line, index) => (
+                <div key={index} className="terminal-line">
+                  {line && typeof line === "string" && line.startsWith("$") ? (
+                    <>
+                      <span className="terminal-prompt">alexdev@portfolio:~</span>
+                      <span className="terminal-command">{line.substring(1).trim()}</span>
+                    </>
+                  ) : (
+                    <span className="terminal-text">{line || ""}</span>
+                  )}
+                </div>
+              ))}
+            </div>
             <div className="terminal-line">
               <span className="terminal-prompt">alexdev@portfolio:~</span>
               <span className="cursor">_</span>

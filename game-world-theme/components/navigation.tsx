@@ -1,287 +1,276 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Gamepad2, Trophy, Map, Users, Heart, Zap, Star, Menu, X } from "lucide-react";
 
-export function Navigation() {
+// Gaming-themed SVG Icons
+const GamepadIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+  </svg>
+);
+
+const SwordIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M6.92 5L5 6.92 10.07 12 5 17.08 6.92 19 12 13.93 17.08 19 19 17.08 13.93 12 19 6.92 17.08 5 12 10.07 6.92 5Z" />
+  </svg>
+);
+
+const ShieldIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,7C13.4,7 14.8,8.6 14.8,10V11.5C15.4,12.1 16,12.8 16,13.5V17.5C16,18.3 15.3,19 14.5,19H9.5C8.7,19 8,18.3 8,17.5V13.5C8,12.8 8.6,12.1 9.2,11.5V10C9.2,8.6 10.6,7 12,7M12,8.2C11.2,8.2 10.5,8.9 10.5,10V11.5H13.5V10C13.5,8.9 12.8,8.2 12,8.2Z" />
+  </svg>
+);
+
+const QuestIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M19,3H5C3.9,3 3,3.9 3,5V19C3,20.1 3.9,21 5,21H19C20.1,21 21,20.1 21,19V5C21,3.9 20.1,3 19,3M7,7H17V9H7V7M7,11H17V13H7V11M7,15H14V17H7V15Z" />
+  </svg>
+);
+
+const TrophyIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M5,16L3,5H7L5,16M12,18.5A2.5,2.5 0 0,1 9.5,16A2.5,2.5 0 0,1 12,13.5A2.5,2.5 0 0,1 14.5,16A2.5,2.5 0 0,1 12,18.5M19,16L17,5H21L19,16Z" />
+  </svg>
+);
+
+export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [playerStats, setPlayerStats] = useState({
+    level: 42,
+    xp: 8750,
+    maxXp: 10000,
     health: 85,
     mana: 92,
-    xp: 67,
-    level: 42,
-    score: 15420,
+    coins: 15420,
   });
+  const [achievements, setAchievements] = useState([
+    { id: 1, title: "Code Master", desc: "Completed 100+ projects", unlocked: true },
+    { id: 2, title: "Bug Slayer", desc: "Fixed 500+ bugs", unlocked: true },
+    { id: 3, title: "Team Leader", desc: "Led 10+ successful teams", unlocked: false },
+  ]);
+  const [showAchievement, setShowAchievement] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPlayerStats((prev) => ({
-        ...prev,
-        health: Math.max(50, Math.min(100, prev.health + (Math.random() - 0.5) * 10)),
-        mana: Math.max(40, Math.min(100, prev.mana + (Math.random() - 0.5) * 15)),
-        xp: Math.max(0, Math.min(100, prev.xp + (Math.random() - 0.5) * 8)),
-        score: prev.score + Math.floor(Math.random() * 50),
-      }));
-    }, 2000);
-    return () => clearInterval(interval);
+    const timer = setInterval(() => {
+      setCurrentTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    // Simulate achievement unlock
+    const timer = setTimeout(() => {
+      setShowAchievement(true);
+      setTimeout(() => setShowAchievement(false), 4000);
+    }, 3000);
+    return () => clearTimeout(timer);
   }, []);
 
   const navItems = [
-    { href: "#home", label: "HOME BASE", icon: Gamepad2, hotkey: "H", color: "green" },
-    { href: "#about", label: "PLAYER INFO", icon: Users, hotkey: "P", color: "blue" },
-    { href: "#projects", label: "QUESTS", icon: Trophy, hotkey: "Q", color: "yellow" },
-    { href: "#contact", label: "GUILD HALL", icon: Map, hotkey: "G", color: "purple" },
+    { name: "Character Profile", href: "#about", icon: <ShieldIcon className="w-5 h-5" /> },
+    { name: "Quest Log", href: "#projects", icon: <QuestIcon className="w-5 h-5" /> },
+    { name: "Guild Hall", href: "#contact", icon: <TrophyIcon className="w-5 h-5" /> },
+    { name: "Inventory", href: "#skills", icon: <SwordIcon className="w-5 h-5" /> },
   ];
 
   return (
     <>
-      {/* Retro Scanlines */}
-      <div className="fixed inset-0 pointer-events-none z-30 opacity-20">
-        <div
-          className="w-full h-full"
-          style={{
-            background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,0,0.1) 2px, rgba(0,255,0,0.1) 4px)",
-          }}
-        ></div>
-      </div>
-
-      <nav className="fixed top-0 w-full z-50 bg-black/90 backdrop-blur-lg border-b-2 border-green-400/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-24">
-            {/* Player Avatar & Stats */}
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-lg border-2 border-green-400 flex items-center justify-center shadow-lg shadow-green-500/50">
-                  <Gamepad2 className="w-8 h-8 text-white" />
-                </div>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center border-2 border-black">
-                  <span className="text-black text-xs font-bold">{playerStats.level}</span>
-                </div>
+      {/* Main Navigation HUD */}
+      <nav className="game-nav">
+        <div className="game-nav-container">
+          {/* Player Avatar & Stats */}
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center border-2 border-green-400 shadow-lg">
+                <GamepadIcon className="w-6 h-6 text-black" />
               </div>
-              <div>
-                <div className="text-xl font-bold text-green-400 font-mono">GAME_WORLD</div>
-                <div className="text-sm text-gray-300 font-mono">SCORE: {playerStats.score.toLocaleString()}</div>
+              <div className="absolute -top-1 -right-1 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center text-black text-xs font-bold border-2 border-black">
+                {playerStats.level}
               </div>
             </div>
-
-            {/* Player HUD Stats */}
-            <div className="hidden lg:flex items-center gap-6">
-              {/* Health Bar */}
-              <div className="bg-gray-900/80 rounded-lg p-3 border border-red-400/50">
-                <div className="flex items-center gap-2 mb-1">
-                  <Heart className="w-4 h-4 text-red-400" />
-                  <span className="text-red-400 text-xs font-mono">HP</span>
-                </div>
-                <div className="w-20 h-2 bg-gray-700 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-red-500 to-green-500 rounded-full transition-all duration-500"
-                    style={{ width: `${playerStats.health}%` }}
-                  />
-                </div>
-                <div className="text-red-400 text-xs font-mono mt-1">{playerStats.health}/100</div>
+            <div className="hidden md:block">
+              <div className="game-heading text-lg">Player.exe</div>
+              <div className="flex items-center gap-2 text-xs">
+                <span className="text-green-400">ONLINE</span>
+                <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
               </div>
-
-              {/* Mana Bar */}
-              <div className="bg-gray-900/80 rounded-lg p-3 border border-blue-400/50">
-                <div className="flex items-center gap-2 mb-1">
-                  <Zap className="w-4 h-4 text-blue-400" />
-                  <span className="text-blue-400 text-xs font-mono">MP</span>
-                </div>
-                <div className="w-20 h-2 bg-gray-700 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transition-all duration-500"
-                    style={{ width: `${playerStats.mana}%` }}
-                  />
-                </div>
-                <div className="text-blue-400 text-xs font-mono mt-1">{playerStats.mana}/100</div>
-              </div>
-
-              {/* XP Bar */}
-              <div className="bg-gray-900/80 rounded-lg p-3 border border-yellow-400/50">
-                <div className="flex items-center gap-2 mb-1">
-                  <Star className="w-4 h-4 text-yellow-400" />
-                  <span className="text-yellow-400 text-xs font-mono">XP</span>
-                </div>
-                <div className="w-20 h-2 bg-gray-700 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full transition-all duration-500"
-                    style={{ width: `${playerStats.xp}%` }}
-                  />
-                </div>
-                <div className="text-yellow-400 text-xs font-mono mt-1">{playerStats.xp}/100</div>
-              </div>
-            </div>
-
-            {/* Desktop Navigation Buttons */}
-            <div className="hidden md:flex items-center space-x-3">
-              {navItems.map((item, index) => (
-                <a key={item.href} href={item.href} className="group relative">
-                  <div
-                    className={`bg-gray-900/80 rounded-lg p-4 border-2 transition-all duration-300 hover:scale-110 ${
-                      item.color === "green"
-                        ? "border-green-400/50 hover:border-green-400 hover:bg-green-400/10"
-                        : item.color === "blue"
-                        ? "border-blue-400/50 hover:border-blue-400 hover:bg-blue-400/10"
-                        : item.color === "yellow"
-                        ? "border-yellow-400/50 hover:border-yellow-400 hover:bg-yellow-400/10"
-                        : "border-purple-400/50 hover:border-purple-400 hover:bg-purple-400/10"
-                    } shadow-lg ${
-                      item.color === "green"
-                        ? "hover:shadow-green-500/50"
-                        : item.color === "blue"
-                        ? "hover:shadow-blue-500/50"
-                        : item.color === "yellow"
-                        ? "hover:shadow-yellow-500/50"
-                        : "hover:shadow-purple-500/50"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <item.icon
-                        className={`w-6 h-6 ${
-                          item.color === "green"
-                            ? "text-green-400"
-                            : item.color === "blue"
-                            ? "text-blue-400"
-                            : item.color === "yellow"
-                            ? "text-yellow-400"
-                            : "text-purple-400"
-                        }`}
-                      />
-                      <div>
-                        <div className="text-white font-mono text-sm font-bold">{item.label}</div>
-                        <div
-                          className={`text-xs font-mono ${
-                            item.color === "green"
-                              ? "text-green-400/70"
-                              : item.color === "blue"
-                              ? "text-blue-400/70"
-                              : item.color === "yellow"
-                              ? "text-yellow-400/70"
-                              : "text-purple-400/70"
-                          }`}
-                        >
-                          [{item.hotkey}]
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Button Glow */}
-                    <div
-                      className={`absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                        item.color === "green"
-                          ? "bg-green-400/5 shadow-lg shadow-green-400/30"
-                          : item.color === "blue"
-                          ? "bg-blue-400/5 shadow-lg shadow-blue-400/30"
-                          : item.color === "yellow"
-                          ? "bg-yellow-400/5 shadow-lg shadow-yellow-400/30"
-                          : "bg-purple-400/5 shadow-lg shadow-purple-400/30"
-                      }`}
-                    ></div>
-                  </div>
-
-                  {/* Hotkey Indicator */}
-                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-gray-800 rounded-full flex items-center justify-center border-2 border-gray-600">
-                    <span className="text-white text-xs font-mono font-bold">{item.hotkey}</span>
-                  </div>
-                </a>
-              ))}
-            </div>
-
-            {/* Game Status */}
-            <div className="hidden md:flex items-center gap-3">
-              <div className="bg-gray-900/80 rounded-lg px-3 py-2 border border-green-400/50">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                  <span className="text-green-400 font-mono text-xs">ONLINE</span>
-                </div>
-              </div>
-              <div className="text-green-400 font-mono text-sm">{new Date().toLocaleTimeString()}</div>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setIsOpen(!isOpen)}
-                className="bg-gray-900/80 border-2 border-green-400/50 rounded-lg p-3 text-green-400 hover:border-green-400 hover:bg-green-400/10 transition-all duration-300"
-              >
-                {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-              </button>
             </div>
           </div>
+
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center gap-6">
+            {navItems.map((item) => (
+              <a key={item.name} href={item.href} className="game-nav-link group">
+                <div className="flex items-center gap-2">
+                  {item.icon}
+                  <span>{item.name}</span>
+                </div>
+              </a>
+            ))}
+            <button className="game-btn game-btn-primary">
+              <TrophyIcon className="w-4 h-4" />
+              Join Raid
+            </button>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button className="lg:hidden game-nav-toggle" onClick={() => setIsOpen(!isOpen)}>
+            <div className="w-6 h-6 flex flex-col justify-center items-center">
+              <span
+                className={`w-full h-0.5 bg-current transition-all ${isOpen ? "rotate-45 translate-y-0.5" : "-translate-y-0.5"}`}
+              ></span>
+              <span className={`w-full h-0.5 bg-current transition-all ${isOpen ? "opacity-0" : "opacity-100"}`}></span>
+              <span
+                className={`w-full h-0.5 bg-current transition-all ${isOpen ? "-rotate-45 -translate-y-0.5" : "translate-y-0.5"}`}
+              ></span>
+            </div>
+          </button>
         </div>
 
-        {/* Mobile Navigation Panel */}
+        {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden bg-black/95 backdrop-blur-lg border-t-2 border-green-400/50">
-            <div className="px-4 py-6 space-y-4">
-              {/* Mobile Player Stats */}
-              <div className="grid grid-cols-3 gap-2 mb-6">
-                <div className="bg-gray-900/80 rounded-lg p-3 border border-red-400/50">
-                  <div className="text-red-400 text-xs font-mono mb-1">HP</div>
-                  <div className="text-white font-mono text-sm">{playerStats.health}%</div>
-                </div>
-                <div className="bg-gray-900/80 rounded-lg p-3 border border-blue-400/50">
-                  <div className="text-blue-400 text-xs font-mono mb-1">MP</div>
-                  <div className="text-white font-mono text-sm">{playerStats.mana}%</div>
-                </div>
-                <div className="bg-gray-900/80 rounded-lg p-3 border border-yellow-400/50">
-                  <div className="text-yellow-400 text-xs font-mono mb-1">XP</div>
-                  <div className="text-white font-mono text-sm">{playerStats.xp}%</div>
-                </div>
-              </div>
-
-              {navItems.map((item, index) => (
-                <a key={item.href} href={item.href} onClick={() => setIsOpen(false)} className="flex items-center gap-3 group">
-                  <div
-                    className={`bg-gray-900/80 rounded-lg p-4 border-2 transition-all duration-300 hover:scale-105 w-full ${
-                      item.color === "green"
-                        ? "border-green-400/50 hover:border-green-400 hover:bg-green-400/10"
-                        : item.color === "blue"
-                        ? "border-blue-400/50 hover:border-blue-400 hover:bg-blue-400/10"
-                        : item.color === "yellow"
-                        ? "border-yellow-400/50 hover:border-yellow-400 hover:bg-yellow-400/10"
-                        : "border-purple-400/50 hover:border-purple-400 hover:bg-purple-400/10"
-                    } shadow-lg relative`}
-                  >
-                    <div className="flex items-center gap-4">
-                      <item.icon
-                        className={`w-8 h-8 ${
-                          item.color === "green"
-                            ? "text-green-400"
-                            : item.color === "blue"
-                            ? "text-blue-400"
-                            : item.color === "yellow"
-                            ? "text-yellow-400"
-                            : "text-purple-400"
-                        }`}
-                      />
-                      <div>
-                        <div className="text-white font-mono text-lg font-bold">{item.label}</div>
-                        <div
-                          className={`text-sm font-mono ${
-                            item.color === "green"
-                              ? "text-green-400/70"
-                              : item.color === "blue"
-                              ? "text-blue-400/70"
-                              : item.color === "yellow"
-                              ? "text-yellow-400/70"
-                              : "text-purple-400/70"
-                          }`}
-                        >
-                          Press [{item.hotkey}]
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Status Indicator */}
-                    <div className="absolute top-2 right-2 w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                  </div>
-                </a>
-              ))}
-            </div>
+          <div className="lg:hidden game-nav-mobile open">
+            {navItems.map((item) => (
+              <a key={item.name} href={item.href} className="game-nav-link flex items-center gap-3" onClick={() => setIsOpen(false)}>
+                {item.icon}
+                <span>{item.name}</span>
+              </a>
+            ))}
+            <button className="game-btn game-btn-primary w-full">
+              <TrophyIcon className="w-4 h-4" />
+              Join Raid
+            </button>
           </div>
         )}
       </nav>
+
+      {/* Player HUD */}
+      <div className="game-hud">
+        <div className="game-hud-item">
+          <span>LVL</span>
+          <span className="text-yellow-400">{playerStats.level}</span>
+        </div>
+        <div className="game-hud-item">
+          <span>XP</span>
+          <span className="text-cyan-400">
+            {playerStats.xp}/{playerStats.maxXp}
+          </span>
+        </div>
+
+        {/* XP Progress Bar */}
+        <div className="game-stat-bar">
+          <div
+            className="game-stat-fill"
+            style={{ "--fill-width": `${(playerStats.xp / playerStats.maxXp) * 100}%` } as React.CSSProperties}
+          ></div>
+        </div>
+
+        {/* Health Bar */}
+        <div className="game-hud-item">
+          <span>HP</span>
+          <span className="text-green-400">{playerStats.health}%</span>
+        </div>
+        <div className="game-stat-bar">
+          <div
+            className="game-stat-fill"
+            style={
+              {
+                "--fill-width": `${playerStats.health}%`,
+                background: "linear-gradient(90deg, #ff4444, #ff8844)",
+              } as React.CSSProperties
+            }
+          ></div>
+        </div>
+
+        {/* Mana Bar */}
+        <div className="game-hud-item">
+          <span>MP</span>
+          <span className="text-blue-400">{playerStats.mana}%</span>
+        </div>
+        <div className="game-stat-bar">
+          <div
+            className="game-stat-fill"
+            style={
+              {
+                "--fill-width": `${playerStats.mana}%`,
+                background: "linear-gradient(90deg, #0099ff, #00ccff)",
+              } as React.CSSProperties
+            }
+          ></div>
+        </div>
+
+        <div className="game-hud-item">
+          <span>GOLD</span>
+          <span className="text-yellow-400">{playerStats.coins.toLocaleString()}</span>
+        </div>
+
+        {/* Game Time */}
+        <div className="game-hud-item border-t border-gray-600 pt-2 mt-2">
+          <span>TIME</span>
+          <span className="text-green-400 text-xs">{currentTime.toLocaleTimeString()}</span>
+        </div>
+      </div>
+
+      {/* Achievement Notification */}
+      {showAchievement && (
+        <div className="fixed top-24 right-4 z-50 game-achievement animate-slide-in-right">
+          <div className="game-achievement-icon">
+            <TrophyIcon className="w-6 h-6" />
+          </div>
+          <div className="game-achievement-text">
+            <div className="game-achievement-title">Achievement Unlocked!</div>
+            <div className="game-achievement-desc">Portfolio Master - Created 5+ unique themes</div>
+          </div>
+        </div>
+      )}
+
+      {/* Floating Game Elements */}
+      <div className="game-floating-elements">
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={i}
+            className="game-floating-pixel"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 4}s`,
+              animationDuration: `${4 + Math.random() * 2}s`,
+            }}
+          />
+        ))}
+
+        {[">", "$", "{", "}", "01", "10"].map((char, i) => (
+          <div
+            key={char}
+            className="game-matrix-char"
+            style={{
+              left: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${3 + Math.random() * 2}s`,
+            }}
+          >
+            {char}
+          </div>
+        ))}
+      </div>
+
+      <style jsx>{`
+        @keyframes slide-in-right {
+          from {
+            transform: translateX(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+
+        .animate-slide-in-right {
+          animation: slide-in-right 0.5s ease-out;
+        }
+      `}</style>
     </>
   );
 }

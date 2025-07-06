@@ -1,11 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 
 // Inline SVG Icons
 const MailIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+    />
   </svg>
 );
 
@@ -38,21 +43,21 @@ export function ContactSection() {
       price: "Starting at $5,000",
       duration: "2-3 weeks",
       description: "Comprehensive analysis of your current design patterns and recommendations for improvement.",
-      features: ["Pattern Inventory", "Gap Analysis", "Recommendations", "Roadmap"]
+      features: ["Pattern Inventory", "Gap Analysis", "Recommendations", "Roadmap"],
     },
     {
       title: "Custom Design System",
       price: "Starting at $25,000",
       duration: "3-6 months",
       description: "End-to-end design system creation with tokens, components, and documentation.",
-      features: ["Design Tokens", "Component Library", "Documentation", "Implementation Support"]
+      features: ["Design Tokens", "Component Library", "Documentation", "Implementation Support"],
     },
     {
       title: "Design System Training",
       price: "Starting at $2,500",
       duration: "1-2 weeks",
       description: "Team training on design system principles, tools, and best practices.",
-      features: ["Team Workshops", "Best Practices", "Tool Training", "Ongoing Support"]
+      features: ["Team Workshops", "Best Practices", "Tool Training", "Ongoing Support"],
     },
   ];
 
@@ -93,13 +98,9 @@ export function ContactSection() {
               {services.map((service, index) => (
                 <div key={index} className="ds-card">
                   <div className="ds-card-body">
-                    <h4 className="ds-text-lg ds-font-bold ds-text-gray-900 ds-mb-2">
-                      {service.title}
-                    </h4>
+                    <h4 className="ds-text-lg ds-font-bold ds-text-gray-900 ds-mb-2">{service.title}</h4>
                     <div className="ds-flex ds-justify-between ds-items-center ds-mb-3">
-                      <span className="ds-text-lg ds-font-semibold ds-text-primary-600">
-                        {service.price}
-                      </span>
+                      <span className="ds-text-lg ds-font-semibold ds-text-primary-600">{service.price}</span>
                       <span className="ds-badge ds-badge-secondary">{service.duration}</span>
                     </div>
                     <p className="ds-text-gray-600 ds-mb-4">{service.description}</p>
@@ -121,30 +122,19 @@ export function ContactSection() {
           <div className="lg:col-span-2">
             <div className="ds-card">
               <div className="ds-card-header">
-                <h3 className="ds-text-2xl ds-font-bold ds-text-gray-900">
-                  Start Your Project
-                </h3>
-                <p className="ds-text-gray-600">
-                  Tell us about your design system needs and we'll get back to you within 24 hours.
-                </p>
+                <h3 className="ds-text-2xl ds-font-bold ds-text-gray-900">Start Your Project</h3>
+                <p className="ds-text-gray-600">Tell us about your design system needs and we'll get back to you within 24 hours.</p>
               </div>
-              
+
               <div className="ds-card-body">
                 {isSubmitted ? (
                   <div className="ds-text-center py-12">
                     <div className="ds-w-16 ds-h-16 ds-bg-primary-100 ds-rounded-full ds-flex ds-items-center ds-justify-center mx-auto ds-mb-6">
                       <CheckIcon className="w-8 h-8 ds-text-primary-600" />
                     </div>
-                    <h4 className="ds-text-2xl ds-font-bold ds-text-gray-900 ds-mb-4">
-                      Thank You!
-                    </h4>
-                    <p className="ds-text-gray-600 ds-mb-8">
-                      We've received your inquiry and will get back to you within 24 hours.
-                    </p>
-                    <button
-                      onClick={() => setIsSubmitted(false)}
-                      className="ds-btn ds-btn-outline"
-                    >
+                    <h4 className="ds-text-2xl ds-font-bold ds-text-gray-900 ds-mb-4">Thank You!</h4>
+                    <p className="ds-text-gray-600 ds-mb-8">We've received your inquiry and will get back to you within 24 hours.</p>
+                    <button onClick={() => setIsSubmitted(false)} className="ds-btn ds-btn-outline">
                       Send Another Message
                     </button>
                   </div>
@@ -153,14 +143,7 @@ export function ContactSection() {
                     <div className="ds-grid ds-grid-cols-1 md:ds-grid-cols-2 ds-gap-6">
                       <div className="ds-form-group">
                         <label className="ds-label">Full Name *</label>
-                        <input
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleInputChange}
-                          className="ds-input"
-                          required
-                        />
+                        <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="ds-input" required />
                       </div>
                       <div className="ds-form-group">
                         <label className="ds-label">Email Address *</label>
@@ -178,23 +161,11 @@ export function ContactSection() {
                     <div className="ds-grid ds-grid-cols-1 md:ds-grid-cols-2 ds-gap-6">
                       <div className="ds-form-group">
                         <label className="ds-label">Company</label>
-                        <input
-                          type="text"
-                          name="company"
-                          value={formData.company}
-                          onChange={handleInputChange}
-                          className="ds-input"
-                        />
+                        <input type="text" name="company" value={formData.company} onChange={handleInputChange} className="ds-input" />
                       </div>
                       <div className="ds-form-group">
                         <label className="ds-label">Project Type *</label>
-                        <select
-                          name="projectType"
-                          value={formData.projectType}
-                          onChange={handleInputChange}
-                          className="ds-input"
-                          required
-                        >
+                        <select name="projectType" value={formData.projectType} onChange={handleInputChange} className="ds-input" required>
                           <option value="">Select project type</option>
                           <option value="audit">Design System Audit</option>
                           <option value="new">New Design System</option>
@@ -207,14 +178,9 @@ export function ContactSection() {
 
                     <div className="ds-form-group">
                       <label className="ds-label">Timeline</label>
-                      <select
-                        name="timeline"
-                        value={formData.timeline}
-                        onChange={handleInputChange}
-                        className="ds-input"
-                      >
+                      <select name="timeline" value={formData.timeline} onChange={handleInputChange} className="ds-input">
                         <option value="">Select timeline</option>
-                        <option value="immediate">Immediate (< 1 month)</option>
+                        <option value="immediate">Immediate ( 1 month)</option>
                         <option value="short">Short term (1-3 months)</option>
                         <option value="medium">Medium term (3-6 months)</option>
                         <option value="long">Long term (6+ months)</option>
@@ -249,19 +215,13 @@ export function ContactSection() {
         <div className="ds-text-center">
           <div className="ds-card max-w-2xl mx-auto">
             <div className="ds-card-body">
-              <h3 className="ds-text-2xl ds-font-bold ds-text-gray-900 ds-mb-4">
-                Questions? Let's Talk
-              </h3>
+              <h3 className="ds-text-2xl ds-font-bold ds-text-gray-900 ds-mb-4">Questions? Let's Talk</h3>
               <p className="ds-text-gray-600 ds-mb-8">
                 Not sure where to start? Schedule a free 30-minute consultation to discuss your design system needs.
               </p>
               <div className="ds-flex ds-flex-col sm:ds-flex-row ds-gap-4 ds-justify-center">
-                <button className="ds-btn ds-btn-outline ds-btn-lg">
-                  Schedule Call
-                </button>
-                <button className="ds-btn ds-btn-outline ds-btn-lg">
-                  Email Us
-                </button>
+                <button className="ds-btn ds-btn-outline ds-btn-lg">Schedule Call</button>
+                <button className="ds-btn ds-btn-outline ds-btn-lg">Email Us</button>
               </div>
             </div>
           </div>

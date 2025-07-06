@@ -150,14 +150,6 @@ export function HeroSection() {
               Get In Touch
             </button>
           </div>
-
-          {/* Scroll Indicator */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 pulsing-element">
-            <div className="flex flex-col items-center">
-              <span className="text-sm text-gray-400 mb-2">Scroll to explore</span>
-              <ChevronDown className="w-6 h-6 text-purple-400" />
-            </div>
-          </div>
         </div>
       </div>
 

@@ -70,7 +70,7 @@ export function ProjectsSection() {
       id: 5,
       title: "VR Museum Experience",
       description: "Virtual reality museum tour with interactive exhibits and spatial audio.",
-      image: "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=500&h=300&fit=crop",
+      image: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=500&h=300&fit=crop",
       category: "vr",
       technologies: ["A-Frame", "WebXR", "Three.js", "Spatial Audio"],
       demoUrl: "#",

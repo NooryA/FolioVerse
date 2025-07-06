@@ -2,18 +2,633 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Cinzel:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap");
+
+/* Time Machine Theme - Temporal Design System */
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  /* Color Tokens - Time Periods */
+  --tm-past-primary: #8b4513; /* Ancient Bronze */
+  --tm-past-secondary: #daa520; /* Golden Age */
+  --tm-past-accent: #cd853f; /* Sepia */
+
+  --tm-present-primary: #4169e1; /* Royal Blue */
+  --tm-present-secondary: #00ced1; /* Dark Turquoise */
+  --tm-present-accent: #32cd32; /* Lime Green */
+
+  --tm-future-primary: #9400d3; /* Violet */
+  --tm-future-secondary: #ff1493; /* Deep Pink */
+  --tm-future-accent: #00ffff; /* Cyan */
+
+  /* Neutral Colors */
+  --tm-neutral-dark: #1a1a1a;
+  --tm-neutral-medium: #404040;
+  --tm-neutral-light: #f5f5f5;
+  --tm-neutral-white: #ffffff;
+
+  /* Temporal Gradients */
+  --tm-gradient-time-flow: linear-gradient(90deg, var(--tm-past-primary), var(--tm-present-primary), var(--tm-future-primary));
+  --tm-gradient-temporal: linear-gradient(135deg, var(--tm-past-secondary), var(--tm-present-secondary), var(--tm-future-secondary));
+  --tm-gradient-chronos: radial-gradient(circle, var(--tm-future-accent), var(--tm-present-accent), var(--tm-past-accent));
+
+  /* Typography */
+  --tm-font-display: "Orbitron", "Cinzel", serif;
+  --tm-font-heading: "Cinzel", serif;
+  --tm-font-body: "Crimson Text", serif;
+  --tm-font-mono: "Orbitron", monospace;
+
+  /* Spacing & Layout */
+  --tm-space-xs: 0.25rem;
+  --tm-space-sm: 0.5rem;
+  --tm-space-md: 1rem;
+  --tm-space-lg: 1.5rem;
+  --tm-space-xl: 2rem;
+  --tm-space-2xl: 3rem;
+  --tm-space-3xl: 4rem;
+
+  /* Border Radius */
+  --tm-radius-sm: 4px;
+  --tm-radius-md: 8px;
+  --tm-radius-lg: 12px;
+  --tm-radius-xl: 16px;
+  --tm-radius-full: 50%;
+
+  /* Shadows & Effects */
+  --tm-shadow-temporal: 0 4px 20px rgba(148, 0, 211, 0.3);
+  --tm-shadow-past: 0 8px 32px rgba(139, 69, 19, 0.4);
+  --tm-shadow-present: 0 8px 32px rgba(65, 105, 225, 0.4);
+  --tm-shadow-future: 0 8px 32px rgba(148, 0, 211, 0.4);
+
+  /* Animation Timing */
+  --tm-transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --tm-transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --tm-transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --tm-transition-temporal: 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: var(--tm-font-body);
+  background: var(--tm-neutral-dark);
+  color: var(--tm-neutral-light);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Time Machine Animations */
+@keyframes tm-temporal-shift {
+  0% {
+    transform: translateX(0) scale(1);
+    filter: hue-rotate(0deg);
+  }
+  25% {
+    transform: translateX(-5px) scale(1.02);
+    filter: hue-rotate(90deg);
+  }
+  50% {
+    transform: translateX(0) scale(1.05);
+    filter: hue-rotate(180deg);
+  }
+  75% {
+    transform: translateX(5px) scale(1.02);
+    filter: hue-rotate(270deg);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes tm-time-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes tm-chronometer {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes tm-time-warp {
+  0%,
+  100% {
+    transform: perspective(1000px) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(1000px) rotateY(180deg);
+  }
+}
+
+@keyframes tm-temporal-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px var(--tm-future-accent);
+  }
+  50% {
+    box-shadow: 0 0 40px var(--tm-future-accent), 0 0 60px var(--tm-present-accent);
+  }
+}
+
+@keyframes tm-era-transition {
+  0% {
+    filter: sepia(100%) hue-rotate(30deg);
+  }
+  33% {
+    filter: brightness(1.2) contrast(1.1);
+  }
+  66% {
+    filter: hue-rotate(240deg) saturate(150%);
+  }
+  100% {
+    filter: sepia(100%) hue-rotate(30deg);
+  }
+}
+
+@keyframes tm-time-particles {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Layout Components */
+.tm-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--tm-space-lg);
+}
+
+.tm-section {
+  padding: var(--tm-space-3xl) 0;
+  position: relative;
+}
+
+.tm-grid {
+  display: grid;
+  gap: var(--tm-space-xl);
+}
+
+.tm-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.tm-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.tm-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* Typography */
+.tm-heading-display {
+  font-family: var(--tm-font-display);
+  font-size: clamp(3rem, 8vw, 6rem);
+  font-weight: 900;
+  line-height: 1.1;
+  background: var(--tm-gradient-time-flow);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
+
+.tm-heading-xl {
+  font-family: var(--tm-font-heading);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--tm-neutral-light);
+}
+
+.tm-heading-lg {
+  font-family: var(--tm-font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--tm-neutral-light);
+}
+
+.tm-heading-md {
+  font-family: var(--tm-font-heading);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--tm-neutral-light);
+}
+
+.tm-text-lg {
+  font-size: 1.25rem;
+  line-height: 1.7;
+  color: rgba(245, 245, 245, 0.9);
+}
+
+.tm-text-base {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: rgba(245, 245, 245, 0.8);
+}
+
+.tm-text-mono {
+  font-family: var(--tm-font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+/* Time Machine Components */
+.tm-time-machine {
+  position: relative;
+  background: linear-gradient(135deg, var(--tm-neutral-dark), var(--tm-neutral-medium));
+  border: 2px solid var(--tm-future-accent);
+  border-radius: var(--tm-radius-xl);
+  padding: var(--tm-space-xl);
+  box-shadow: var(--tm-shadow-temporal);
+  animation: tm-temporal-glow 3s ease-in-out infinite;
+}
+
+.tm-time-machine::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: var(--tm-gradient-time-flow);
+  border-radius: var(--tm-radius-xl);
+  z-index: -1;
+  animation: tm-temporal-shift 8s ease-in-out infinite;
+}
+
+.tm-time-display {
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--tm-future-accent);
+  border-radius: var(--tm-radius-md);
+  padding: var(--tm-space-md);
+  margin-bottom: var(--tm-space-lg);
+  text-align: center;
+}
+
+.tm-time-era {
+  font-family: var(--tm-font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  background: var(--tm-gradient-temporal);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: var(--tm-space-sm);
+}
+
+.tm-time-stamp {
+  font-family: var(--tm-font-mono);
+  font-size: 1.2rem;
+  color: var(--tm-future-accent);
+  letter-spacing: 0.1em;
+}
+
+/* Era Cards */
+.tm-era-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--tm-radius-lg);
+  padding: var(--tm-space-xl);
+  transition: all var(--tm-transition-temporal);
+  position: relative;
+  overflow: hidden;
+}
+
+.tm-era-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left var(--tm-transition-temporal);
+}
+
+.tm-era-card:hover::before {
+  left: 100%;
+}
+
+.tm-era-card:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: var(--tm-shadow-temporal);
+  border-color: var(--tm-future-accent);
+}
+
+.tm-era-past {
+  background: linear-gradient(135deg, rgba(139, 69, 19, 0.2), rgba(218, 165, 32, 0.1));
+  border-color: var(--tm-past-accent);
+}
+
+.tm-era-present {
+  background: linear-gradient(135deg, rgba(65, 105, 225, 0.2), rgba(0, 206, 209, 0.1));
+  border-color: var(--tm-present-accent);
+}
+
+.tm-era-future {
+  background: linear-gradient(135deg, rgba(148, 0, 211, 0.2), rgba(255, 20, 147, 0.1));
+  border-color: var(--tm-future-accent);
+}
+
+/* Buttons */
+.tm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--tm-space-sm);
+  padding: var(--tm-space-md) var(--tm-space-xl);
+  border: none;
+  border-radius: var(--tm-radius-md);
+  font-family: var(--tm-font-display);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--tm-transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+.tm-btn-primary {
+  background: var(--tm-gradient-time-flow);
+  color: var(--tm-neutral-white);
+  box-shadow: var(--tm-shadow-temporal);
+}
+
+.tm-btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--tm-shadow-future);
+  animation: tm-temporal-shift 0.5s ease-in-out;
+}
+
+.tm-btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid var(--tm-future-accent);
+  color: var(--tm-future-accent);
+  backdrop-filter: blur(10px);
+}
+
+.tm-btn-secondary:hover {
+  background: var(--tm-future-accent);
+  color: var(--tm-neutral-dark);
+  transform: translateY(-2px);
+}
+
+/* Time Particles */
+.tm-time-particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tm-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--tm-future-accent);
+  border-radius: 50%;
+  animation: tm-time-particles 8s linear infinite;
+}
+
+.tm-particle:nth-child(odd) {
+  background: var(--tm-present-accent);
+  animation-duration: 10s;
+}
+
+.tm-particle:nth-child(3n) {
+  background: var(--tm-past-accent);
+  animation-duration: 12s;
+}
+
+/* Chronometer */
+.tm-chronometer {
+  width: 200px;
+  height: 200px;
+  border: 4px solid var(--tm-future-accent);
+  border-radius: 50%;
+  position: relative;
+  margin: var(--tm-space-xl) auto;
+  background: radial-gradient(circle, var(--tm-neutral-dark), var(--tm-neutral-medium));
+  box-shadow: var(--tm-shadow-temporal);
+}
+
+.tm-chronometer::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 2px;
+  height: 80px;
+  background: var(--tm-future-accent);
+  transform-origin: bottom;
+  animation: tm-chronometer 60s linear infinite;
+}
+
+.tm-chronometer::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  background: var(--tm-future-accent);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Time Portal */
+.tm-time-portal {
+  width: 300px;
+  height: 300px;
+  margin: var(--tm-space-2xl) auto;
+  position: relative;
+  border-radius: 50%;
+  background: var(--tm-gradient-chronos);
+  animation: tm-temporal-shift 6s ease-in-out infinite;
+}
+
+.tm-time-portal::before {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  background: var(--tm-neutral-dark);
+  animation: tm-time-warp 4s ease-in-out infinite;
+}
+
+.tm-portal-ring {
+  position: absolute;
+  border: 2px solid var(--tm-future-accent);
+  border-radius: 50%;
+  animation: tm-time-ripple 2s ease-out infinite;
+}
+
+.tm-portal-ring:nth-child(1) {
+  inset: -10px;
+}
+.tm-portal-ring:nth-child(2) {
+  inset: -20px;
+  animation-delay: 0.5s;
+}
+.tm-portal-ring:nth-child(3) {
+  inset: -30px;
+  animation-delay: 1s;
+}
+
+/* Navigation Styles */
+.tm-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(26, 26, 26, 0.9);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--tm-future-accent);
+}
+
+.tm-nav-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--tm-space-md) var(--tm-space-lg);
+}
+
+.tm-logo {
+  font-family: var(--tm-font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: var(--tm-gradient-time-flow);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tm-nav-items {
+  display: flex;
+  gap: var(--tm-space-xl);
+}
+
+.tm-nav-item {
+  font-family: var(--tm-font-heading);
+  color: var(--tm-neutral-light);
+  text-decoration: none;
+  padding: var(--tm-space-sm) var(--tm-space-md);
+  border-radius: var(--tm-radius-sm);
+  transition: all var(--tm-transition-normal);
+  position: relative;
+}
+
+.tm-nav-item:hover {
+  color: var(--tm-future-accent);
+  background: rgba(148, 0, 211, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .tm-container {
+    padding: 0 var(--tm-space-md);
+  }
+
+  .tm-grid-2,
+  .tm-grid-3,
+  .tm-grid-4 {
+    grid-template-columns: 1fr;
+  }
+
+  .tm-time-machine {
+    padding: var(--tm-space-lg);
+  }
+
+  .tm-time-portal {
+    width: 200px;
+    height: 200px;
+  }
+
+  .tm-chronometer {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Era Transition Effects */
+.tm-era-transition {
+  animation: tm-era-transition 10s ease-in-out infinite;
+}
+
+/* Steampunk Elements */
+.tm-steampunk-gear {
+  width: 60px;
+  height: 60px;
+  border: 3px solid var(--tm-past-accent);
+  border-radius: 50%;
+  position: relative;
+  animation: tm-chronometer 15s linear infinite;
+}
+
+.tm-steampunk-gear::before,
+.tm-steampunk-gear::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 2px solid var(--tm-past-accent);
+  border-radius: 50%;
+}
+
+.tm-steampunk-gear::after {
+  inset: 16px;
+  animation: tm-chronometer 10s linear infinite reverse;
+}
+
+/* Future Tech Elements */
+.tm-hologram {
+  position: relative;
+  background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.1) 50%, transparent 70%);
+  border: 1px solid var(--tm-future-accent);
+  border-radius: var(--tm-radius-md);
+  padding: var(--tm-space-lg);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+  animation: tm-temporal-glow 2s ease-in-out infinite alternate;
+}
+
+.tm-hologram::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--tm-future-accent);
+  animation: tm-time-ripple 3s ease-in-out infinite;
 }

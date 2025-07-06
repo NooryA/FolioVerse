@@ -216,24 +216,33 @@ export function HeroSection() {
                     {totalContributions} contributions in the last year
                   </h3>
                   <div className="overflow-x-auto">
-                    <div className="grid grid-cols-53 gap-1 mb-4" style={{ minWidth: "700px" }}>
-                      {contributions.map((day, index) => (
-                        <div
-                          key={index}
-                          className={`w-3 h-3 rounded-sm ${
-                            day.level === 0
-                              ? "bg-gray-100 dark:bg-gray-700"
-                              : day.level === 1
-                              ? "bg-green-200 dark:bg-green-900"
-                              : day.level === 2
-                              ? "bg-green-300 dark:bg-green-800"
-                              : day.level === 3
-                              ? "bg-green-400 dark:bg-green-700"
-                              : "bg-green-500 dark:bg-green-600"
-                          }`}
-                          title={`${day.count} contributions on ${day.date}`}
-                        />
-                      ))}
+                    <div
+                      className="inline-grid grid-rows-7 gap-1 mb-4"
+                      style={{ gridTemplateColumns: "repeat(53, 12px)", minWidth: "700px" }}
+                    >
+                      {Array.from({ length: 7 }).map((_, weekDay) =>
+                        Array.from({ length: 53 }).map((_, week) => {
+                          const dayIndex = week * 7 + weekDay;
+                          const day = contributions[dayIndex] || { level: 0, count: 0, date: "" };
+                          return (
+                            <div
+                              key={`${week}-${weekDay}`}
+                              className={`w-3 h-3 rounded-sm ${
+                                day.level === 0
+                                  ? "bg-gray-100 dark:bg-gray-700"
+                                  : day.level === 1
+                                  ? "bg-green-200 dark:bg-green-900"
+                                  : day.level === 2
+                                  ? "bg-green-300 dark:bg-green-800"
+                                  : day.level === 3
+                                  ? "bg-green-400 dark:bg-green-700"
+                                  : "bg-green-500 dark:bg-green-600"
+                              }`}
+                              title={day.date ? `${day.count} contributions on ${day.date}` : "No data"}
+                            />
+                          );
+                        })
+                      )}
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-500">
                       <span>Less</span>
