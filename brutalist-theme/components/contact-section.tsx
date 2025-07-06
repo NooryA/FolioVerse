@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { useState } from "react";
 
 export function ContactSection() {
@@ -54,185 +53,157 @@ export function ContactSection() {
   ];
 
   return (
-    <section id="contact" className="brutal-section bg-yellow-500 relative overflow-brutal">
-      <div className="brutal-container">
-        {/* BRUTAL TITLE */}
-        <motion.div
-          className="text-center mb-12"
-          initial={{ y: -200, rotate: 180 }}
-          animate={{ y: 0, rotate: 0 }}
-          transition={{ type: "spring", damping: 10 }}
-        >
-          <h2 className="brutal-title brutal-responsive-text mb-4">CONTACT</h2>
-          <p className="brutal-heading text-lg md:text-xl">(BUT I PROBABLY WON'T RESPOND)</p>
-        </motion.div>
+    <section id="contact" className="bg-yellow-400 py-20 px-4 overflow-hidden relative">
+      <div className="max-w-6xl mx-auto">
+        {/* Enhanced BRUTAL TITLE */}
+        <div className="text-center mb-16">
+          <h2 className="font-black text-6xl md:text-8xl lg:text-9xl text-black uppercase mb-8 leading-none">CONTACT</h2>
+          <p className="font-black text-2xl md:text-3xl text-black uppercase">(BUT I PROBABLY WON'T RESPOND)</p>
+        </div>
 
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-          {/* BRUTAL FORM */}
-          <motion.div initial={{ x: -500 }} animate={{ x: 0 }} transition={{ type: "spring", damping: 15 }}>
-            <form onSubmit={handleSubmit} className="brutal-card brutal-safe-spacing bg-white">
-              <h3 className="brutal-heading text-2xl md:text-3xl mb-6">SEND A MESSAGE</h3>
+        <div className="grid lg:grid-cols-2 gap-12">
+          {/* Enhanced BRUTAL FORM */}
+          <div>
+            <form onSubmit={handleSubmit} className="bg-white border-8 border-black p-8 shadow-2xl">
+              <h3 className="font-black text-3xl md:text-4xl mb-8 uppercase">SEND A MESSAGE</h3>
 
-              {/* ERROR MESSAGES */}
+              {/* Enhanced ERROR MESSAGES */}
               {errors.length > 0 && (
-                <motion.div
-                  className="brutal-card brutal-card-red brutal-safe-spacing mb-6"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: "spring", damping: 10 }}
-                >
+                <div className="bg-red-500 border-8 border-black p-6 mb-8 shadow-lg">
                   {errors.map((error, index) => (
-                    <motion.p
-                      key={index}
-                      className="brutal-mono text-white mb-2 text-sm md:text-base"
-                      initial={{ x: -50 }}
-                      animate={{ x: 0 }}
-                      transition={{ delay: index * 0.1 }}
-                    >
+                    <p key={index} className="font-mono text-white mb-2 text-lg font-black">
                       ⚠️ {error}
-                    </motion.p>
+                    </p>
                   ))}
-                </motion.div>
+                </div>
               )}
 
-              {/* NAME INPUT */}
-              <div className="mb-6">
-                <label className="brutal-heading text-lg md:text-xl mb-2 block">YOUR NAME</label>
+              {/* Enhanced NAME INPUT */}
+              <div className="mb-8">
+                <label className="font-black text-2xl md:text-3xl mb-4 block uppercase">YOUR NAME</label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => handleInputChange("name", e.target.value)}
-                  className="brutal-input"
+                  className="w-full p-6 bg-white border-8 border-black font-mono font-bold text-xl text-black shadow-lg focus:bg-yellow-400 focus:border-red-500 transition-all"
                   placeholder="TYPE IT LOUD"
                   maxLength={20}
                 />
               </div>
 
-              {/* EMAIL INPUT */}
-              <div className="mb-6">
-                <label className="brutal-heading text-lg md:text-xl mb-2 block">EMAIL ADDRESS</label>
+              {/* Enhanced EMAIL INPUT */}
+              <div className="mb-8">
+                <label className="font-black text-2xl md:text-3xl mb-4 block uppercase">EMAIL ADDRESS</label>
                 <input
-                  type="text" // Intentionally not email type
+                  type="text"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
-                  className="brutal-input"
+                  className="w-full p-6 bg-white border-8 border-black font-mono font-bold text-xl text-black shadow-lg focus:bg-yellow-400 focus:border-red-500 transition-all"
                   placeholder="SOMETHING@SOMEWHERE.COM"
                 />
               </div>
 
-              {/* MESSAGE TEXTAREA */}
-              <div className="mb-6">
-                <label className="brutal-heading text-lg md:text-xl mb-2 block">YOUR MESSAGE</label>
+              {/* Enhanced MESSAGE TEXTAREA */}
+              <div className="mb-8">
+                <label className="font-black text-2xl md:text-3xl mb-4 block uppercase">YOUR MESSAGE</label>
                 <textarea
                   value={formData.message}
                   onChange={(e) => handleInputChange("message", e.target.value)}
-                  className="brutal-textarea"
+                  className="w-full p-6 bg-white border-8 border-black font-mono font-bold text-xl text-black shadow-lg focus:bg-yellow-400 focus:border-red-500 transition-all resize-none"
                   placeholder="SHOUT AT ME"
                   rows={5}
                 />
-                <div className="text-right mt-2">
-                  <span className={`brutal-mono text-sm ${formData.message.length > 100 ? "text-red-500" : ""}`}>
+                <div className="text-right mt-4">
+                  <span className={`font-mono text-xl font-black ${formData.message.length > 100 ? "text-red-500" : "text-black"}`}>
                     {formData.message.length}/100
                   </span>
                 </div>
               </div>
 
-              {/* SUBMIT BUTTON */}
-              <motion.button
+              {/* Enhanced SUBMIT BUTTON */}
+              <button
                 type="submit"
-                className={`brutal-button brutal-button-red w-full text-lg md:text-xl ${isSubmitting ? "brutal-blink" : ""}`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                className={`w-full bg-red-500 text-white border-8 border-black px-8 py-6 font-black text-2xl md:text-3xl uppercase shadow-2xl hover:bg-white hover:text-red-500 hover:border-red-500 transition-all transform hover:scale-105 ${
+                  isSubmitting ? "animate-pulse" : ""
+                }`}
                 disabled={isSubmitting}
               >
                 {isSubmitting ? "SENDING..." : "SEND IT!"}
-              </motion.button>
+              </button>
 
-              {/* Click counter */}
-              <motion.div className="mt-4 text-center" animate={{ rotate: clickCount * 5 }}>
-                <button type="button" className="brutal-mono text-sm" onClick={() => setClickCount(clickCount + 1)}>
+              {/* Enhanced Click counter */}
+              <div className="mt-6 text-center">
+                <button
+                  type="button"
+                  className="font-mono text-xl font-black text-black hover:text-red-500 transition-colors"
+                  onClick={() => setClickCount(clickCount + 1)}
+                >
                   CLICKS: {clickCount} (WHY?)
                 </button>
-              </motion.div>
+              </div>
             </form>
-          </motion.div>
+          </div>
 
-          {/* CONTACT INFO */}
-          <motion.div initial={{ x: 500 }} animate={{ x: 0 }} transition={{ type: "spring", damping: 15 }} className="space-y-6">
-            {/* Contact Methods */}
-            <div className="space-y-4">
+          {/* Enhanced CONTACT INFO */}
+          <div className="space-y-8">
+            {/* Enhanced Contact Methods */}
+            <div className="space-y-6">
               {contactMethods.map((contact, index) => (
-                <motion.div
+                <div
                   key={contact.method}
-                  className="brutal-card brutal-safe-spacing"
+                  className="border-8 border-black p-6 shadow-2xl transform hover:scale-105 hover:rotate-2 transition-all"
                   style={{ backgroundColor: contact.color }}
-                  initial={{ rotate: index % 2 === 0 ? -15 : 15 }}
-                  animate={{ rotate: 0 }}
-                  transition={{ delay: index * 0.1, type: "spring" }}
-                  whileHover={{ x: index % 2 === 0 ? -5 : 5, scale: 1.02 }}
                 >
-                  <h4 className="brutal-heading text-lg md:text-xl text-white mb-2">{contact.method}</h4>
-                  <p className="brutal-mono text-base md:text-lg text-white">{contact.value}</p>
-                </motion.div>
+                  <h4 className="font-black text-2xl md:text-3xl text-white mb-4 uppercase">{contact.method}</h4>
+                  <p className="font-mono text-xl md:text-2xl text-white font-bold">{contact.value}</p>
+                </div>
               ))}
             </div>
 
-            {/* Social Links (But Broken) */}
-            <div className="brutal-card brutal-card-blue brutal-safe-spacing">
-              <h4 className="brutal-heading text-lg md:text-xl text-white mb-4">ANTI-SOCIAL MEDIA</h4>
-              <div className="grid grid-cols-3 gap-2 md:gap-4">
+            {/* Enhanced Social Links (But Broken) */}
+            <div className="bg-blue-500 border-8 border-black p-8 shadow-2xl">
+              <h4 className="font-black text-2xl md:text-3xl text-white mb-6 uppercase">ANTI-SOCIAL MEDIA</h4>
+              <div className="grid grid-cols-3 gap-4">
                 {["X", "F", "L", "G", "I", "?"].map((platform, index) => (
-                  <motion.button
+                  <button
                     key={platform}
-                    className="brutal-button h-12 md:h-16 text-lg md:text-xl"
-                    whileHover={{ rotate: 180 }}
-                    whileTap={{ scale: 0.5 }}
+                    className="bg-white text-black border-8 border-black h-16 md:h-20 font-black text-2xl md:text-3xl shadow-lg hover:bg-black hover:text-white hover:rotate-180 transition-all transform hover:scale-110"
                     onClick={() => alert("BROKEN! TRY AGAIN NEVER!")}
                   >
                     {platform}
-                  </motion.button>
+                  </button>
                 ))}
               </div>
             </div>
 
-            {/* Office Hours */}
-            <div className="brutal-card brutal-safe-spacing">
-              <h4 className="brutal-heading text-lg md:text-xl mb-4">OFFICE HOURS</h4>
-              <div className="space-y-1 brutal-mono text-sm md:text-base">
+            {/* Enhanced Office Hours */}
+            <div className="bg-white border-8 border-black p-8 shadow-2xl">
+              <h4 className="font-black text-2xl md:text-3xl mb-6 uppercase">OFFICE HOURS</h4>
+              <div className="space-y-2 font-mono text-lg md:text-xl font-bold">
                 <p>MONDAY: CLOSED</p>
                 <p>TUESDAY: CLOSED</p>
                 <p>WEDNESDAY: CLOSED</p>
                 <p>THURSDAY: CLOSED</p>
                 <p>FRIDAY: CLOSED</p>
-                <p className="text-red-500">WEEKEND: DEFINITELY CLOSED</p>
+                <p className="text-red-500 text-xl md:text-2xl">WEEKEND: DEFINITELY CLOSED</p>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
-        {/* Success Message */}
+        {/* Enhanced Success Message */}
         {isSuccess && (
-          <motion.div
-            className="fixed inset-0 flex items-center justify-center z-50 p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="brutal-card brutal-card-red brutal-safe-spacing text-center max-w-md mx-auto"
-              initial={{ scale: 0, rotate: -180 }}
-              animate={{ scale: 1, rotate: 0 }}
-              transition={{ type: "spring", damping: 10 }}
-            >
-              <h3 className="brutal-title text-3xl md:text-4xl lg:text-5xl text-white mb-4">SENT!</h3>
-              <p className="brutal-heading text-lg md:text-xl text-white">(BUT I'LL PROBABLY IGNORE IT)</p>
-            </motion.div>
-          </motion.div>
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4 bg-black bg-opacity-50">
+            <div className="bg-red-500 border-8 border-black p-12 text-center max-w-md mx-auto shadow-2xl transform animate-bounce">
+              <h3 className="font-black text-5xl md:text-6xl text-white mb-6 uppercase">SENT!</h3>
+              <p className="font-black text-2xl md:text-3xl text-white uppercase">(BUT I'LL PROBABLY IGNORE IT)</p>
+            </div>
+          </div>
         )}
 
-        {/* Footer ASCII */}
-        <div className="text-center mt-12">
-          <pre className="brutal-mono text-xs overflow-x-auto">
+        {/* Enhanced Footer ASCII */}
+        <div className="text-center mt-16 bg-black text-white p-8 border-8 border-red-500 shadow-2xl">
+          <pre className="font-mono text-sm md:text-base font-bold overflow-x-auto">
             {`
 ┌─────────────────────────────────────┐
 │ RESPONSE TIME: ∞ BUSINESS DAYS     │
@@ -244,22 +215,14 @@ export function ContactSection() {
         </div>
       </div>
 
-      {/* Decorative Elements - only on larger screens */}
-      <motion.div
-        className="absolute top-10 right-10 hidden lg:block brutal-decoration"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      >
-        <div className="w-16 h-16 md:w-24 md:h-24 bg-red-500 brutal-spin" />
-      </motion.div>
+      {/* Enhanced Decorative Elements - hidden on mobile */}
+      <div className="absolute top-10 right-10 hidden lg:block">
+        <div className="w-24 h-24 bg-red-500 border-8 border-black shadow-2xl animate-spin" style={{ animationDuration: "20s" }}></div>
+      </div>
 
-      <motion.div
-        className="absolute bottom-10 left-10 hidden lg:block brutal-decoration"
-        animate={{ x: [0, 50, 0] }}
-        transition={{ duration: 10, repeat: Infinity }}
-      >
-        <div className="w-12 h-12 md:w-16 md:h-16 bg-blue-500" />
-      </motion.div>
+      <div className="absolute bottom-10 left-10 hidden lg:block">
+        <div className="w-16 h-16 bg-blue-500 border-8 border-black shadow-2xl animate-bounce"></div>
+      </div>
     </section>
   );
 }
