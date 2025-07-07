@@ -98,6 +98,7 @@ export function ContactSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
@@ -111,7 +112,12 @@ export function ContactSection() {
 
         <div className="grid lg:grid-cols-2 gap-12 mb-16">
           {/* Left Column - Contact Form */}
-          <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
             <div className="academia-paper relative">
               <div className="absolute -top-4 -left-4 w-8 h-8 bg-academia-burgundy rounded-full flex items-center justify-center">
                 <Pen className="w-4 h-4 text-academia-gold" />
@@ -125,7 +131,12 @@ export function ContactSection() {
               {!submitted ? (
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
-                    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.1 }}
+                    >
                       <label className="block text-sm font-medium text-academia-text-primary mb-2">Distinguished Name</label>
                       <input
                         type="text"
@@ -138,7 +149,12 @@ export function ContactSection() {
                       />
                     </motion.div>
 
-                    <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2 }}
+                    >
                       <label className="block text-sm font-medium text-academia-text-primary mb-2">Correspondence Address</label>
                       <input
                         type="email"
@@ -152,7 +168,12 @@ export function ContactSection() {
                     </motion.div>
                   </div>
 
-                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.3 }}
+                  >
                     <label className="block text-sm font-medium text-academia-text-primary mb-2">Subject of Discourse</label>
                     <input
                       type="text"
@@ -165,7 +186,12 @@ export function ContactSection() {
                     />
                   </motion.div>
 
-                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4 }}
+                  >
                     <label className="block text-sm font-medium text-academia-text-primary mb-2">Your Message</label>
                     <textarea
                       name="message"
@@ -180,7 +206,12 @@ I am writing to..."
                     />
                   </motion.div>
 
-                  <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 }}
+                  >
                     <motion.button
                       type="submit"
                       disabled={isSubmitting}
@@ -229,6 +260,7 @@ I am writing to..."
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
@@ -242,6 +274,7 @@ I am writing to..."
                 key={method.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ scale: 1.02, rotate: 0.5 }}
                 className="academia-catalog-card relative bg-academia-cream"
@@ -264,6 +297,7 @@ I am writing to..."
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ delay: 0.5 }}
               className="academia-scroll mt-8"
             >
@@ -285,6 +319,7 @@ I am writing to..."
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.6 }}
           className="academia-scroll text-center"
         >

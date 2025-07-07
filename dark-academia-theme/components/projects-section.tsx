@@ -136,11 +136,12 @@ export function ProjectsSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="academia-title text-5xl md:text-6xl mb-4">Published Works & Research</h2>
-          <p className="academia-body text-lg max-w-3xl mx-auto">
+          <h2 className="academia-title text-5xl md:text-6xl mb-4 text-academia-gold">Published Works & Research</h2>
+          <p className="academia-body text-lg max-w-3xl mx-auto text-academia-cream">
             A collection of scholarly contributions to the field of digital humanities, exploring the intersection of classical knowledge
             and modern technology.
           </p>
@@ -151,6 +152,7 @@ export function ProjectsSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.2 }}
           className="flex justify-center mb-12"
         >
@@ -178,8 +180,8 @@ export function ProjectsSection() {
               key={manuscript.id}
               layout
               initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               onMouseEnter={() => setHoveredProject(manuscript.id)}
               onMouseLeave={() => setHoveredProject(null)}
@@ -292,6 +294,7 @@ export function ProjectsSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.3 }}
           className="academia-scroll text-center"
         >
@@ -311,6 +314,7 @@ export function ProjectsSection() {
                 key={stat.label}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: 0.4 + index * 0.1 }}
                 className="academia-catalog-card bg-academia-cream"
               >
@@ -318,7 +322,7 @@ export function ProjectsSection() {
                   {stat.value}
                   {stat.suffix}
                 </div>
-                <div className="text-sm text-academia-sepia">{stat.label}</div>
+                <div className="text-sm text-academia-ink">{stat.label}</div>
               </motion.div>
             ))}
           </div>

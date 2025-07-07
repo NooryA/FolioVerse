@@ -89,19 +89,53 @@ export function AboutSection() {
       </div>
 
       <div className="max-w-6xl mx-auto relative z-10">
-        {/* Section Title with Typewriter Effect */}
+        {/* Scholar's Introduction */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="text-center mb-16"
+        >
+          <h2 className="academia-title text-5xl text-academia-gold mb-6">About the Scholar</h2>
+          <p className="academia-body text-lg text-academia-cream max-w-3xl mx-auto leading-relaxed">
+            Welcome to my digital sanctum of knowledge and discovery. As a devoted scholar of the digital arts, I bridge the ancient wisdom
+            of classical learning with the cutting-edge innovations of modern technology.
+          </p>
+        </motion.div>
+
+        {/* Areas of Expertise */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
         >
-          <h2 className="academia-title text-5xl md:text-6xl mb-4">About the Scholar</h2>
-          <div className="academia-typewriter text-xl text-center max-w-2xl mx-auto academia-heading">
-            {typedText}
-            {isTyping && <span className="animate-pulse">|</span>}
-          </div>
-          <div className="mt-8 w-32 h-1 bg-gradient-to-r from-transparent via-academia-gold to-transparent mx-auto" />
+          {subjects.map((subject, index) => (
+            <motion.div
+              key={subject.name}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6 + index * 0.1 }}
+              className="academia-catalog-card bg-academia-cream group hover:bg-academia-paper transition-colors"
+            >
+              <div className="p-6">
+                <div className="flex items-start gap-4">
+                  <div className="academia-icon-container">
+                    <subject.icon className="w-8 h-8 text-academia-gold" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="academia-heading text-xl mb-3 text-academia-gold">{subject.name}</h3>
+                    <p className="academia-body text-academia-ink leading-relaxed">
+                      {subject.level} • {subject.years}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
 
         {/* Main Content */}
@@ -110,6 +144,7 @@ export function AboutSection() {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="space-y-8"
           >
@@ -143,7 +178,9 @@ export function AboutSection() {
               className="academia-scroll"
             >
               <blockquote className="academia-quote text-center">{quotes[currentQuote]}</blockquote>
-              <p className="text-center mt-4 academia-body text-sm">— From the Scholar's Collection, Volume {currentQuote + 1}</p>
+              <p className="text-center mt-4 academia-body text-sm text-academia-gold opacity-90">
+                — From the Scholar's Collection, Volume {currentQuote + 1}
+              </p>
             </motion.div>
           </motion.div>
 
@@ -151,6 +188,7 @@ export function AboutSection() {
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
@@ -164,6 +202,7 @@ export function AboutSection() {
                 key={subject.name}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ scale: 1.02, rotate: 0.5 }}
                 className="academia-catalog-card bg-academia-cream"
@@ -172,8 +211,8 @@ export function AboutSection() {
                   <div className="flex items-center gap-3">
                     <subject.icon className="w-5 h-5 text-academia-burgundy" />
                     <div>
-                      <h4 className="font-semibold text-academia-ink">{subject.name}</h4>
-                      <p className="text-sm text-academia-sepia">
+                      <h4 className="font-semibold text-academia-burgundy">{subject.name}</h4>
+                      <p className="text-sm text-academia-ink">
                         {subject.level} • {subject.years}
                       </p>
                     </div>
@@ -187,6 +226,7 @@ export function AboutSection() {
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
               transition={{ delay: 0.4 }}
               className="academia-paper text-center"
             >
@@ -207,7 +247,13 @@ export function AboutSection() {
         </div>
 
         {/* Academic Timeline */}
-        <motion.div initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className="mb-20">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="mb-20"
+        >
           <h3 className="academia-title text-3xl text-center mb-12">Academic & Professional Manuscripts</h3>
 
           <div className="relative">
@@ -219,13 +265,14 @@ export function AboutSection() {
                 key={manuscript.year}
                 initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
                 whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: index * 0.2 }}
                 className={`relative flex items-center justify-${index % 2 === 0 ? "start" : "end"} mb-12`}
               >
                 <motion.div whileHover={{ scale: 1.05, rotate: index % 2 === 0 ? 1 : -1 }} className="academia-paper w-5/12 relative">
                   <div className="text-sm text-academia-sepia mb-1 font-mono">Anno Domini {manuscript.year}</div>
                   <h4 className="academia-heading text-lg mb-1">{manuscript.title}</h4>
-                  <div className="text-academia-text-secondary text-sm mb-2 italic">{manuscript.institution}</div>
+                  <div className="text-academia-burgundy text-sm mb-2 italic font-semibold">{manuscript.institution}</div>
                   <p className="academia-body text-sm mb-2">{manuscript.description}</p>
                   <div className="text-xs text-academia-gold font-semibold">{manuscript.achievement}</div>
 
@@ -250,6 +297,7 @@ export function AboutSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
           transition={{ delay: 0.5 }}
           className="relative mt-20"
         >
@@ -261,7 +309,13 @@ export function AboutSection() {
           {/* Library Wall Container */}
           <div className="relative bg-gradient-to-b from-academia-charcoal via-academia-surface to-academia-charcoal rounded-2xl p-8 shadow-2xl border border-academia-gold border-opacity-20">
             {/* Classic Literature Section */}
-            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: 0.8 }} className="mb-12">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8 }}
+              className="mb-12"
+            >
               <h4 className="text-academia-gold text-xl mb-6 flex items-center gap-2">
                 <BookOpen className="w-5 h-5" />
                 Classic Literature & Philosophy
@@ -279,16 +333,11 @@ export function AboutSection() {
                   <motion.div
                     key={i}
                     className={`${book.color} rounded-lg p-4 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group`}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.9 + i * 0.1 }}
                     whileHover={{ y: -8, rotateY: 5 }}
-                    animate={{
-                      rotateY: [0, 2, 0],
-                      scale: [1, 1.01, 1],
-                    }}
-                    transition={{
-                      duration: 4 + i * 0.5,
-                      repeat: Infinity,
-                      delay: i * 0.3,
-                    }}
                   >
                     <div className="h-32 flex flex-col justify-between">
                       <div>
@@ -308,7 +357,13 @@ export function AboutSection() {
             </motion.div>
 
             {/* Scientific Works Section */}
-            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: 1.0 }} className="mb-12">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1.0 }}
+              className="mb-12"
+            >
               <h4 className="text-academia-gold text-xl mb-6 flex items-center gap-2">
                 <Award className="w-5 h-5" />
                 Scientific & Mathematical Works
@@ -326,16 +381,11 @@ export function AboutSection() {
                   <motion.div
                     key={i}
                     className={`${book.color} rounded-lg p-4 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group`}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 1.1 + i * 0.1 }}
                     whileHover={{ y: -8, rotateY: -5 }}
-                    animate={{
-                      rotateY: [0, -1, 0],
-                      scale: [1, 1.01, 1],
-                    }}
-                    transition={{
-                      duration: 3.5 + i * 0.4,
-                      repeat: Infinity,
-                      delay: i * 0.4,
-                    }}
                   >
                     <div className="h-32 flex flex-col justify-between">
                       <div>
@@ -355,7 +405,13 @@ export function AboutSection() {
             </motion.div>
 
             {/* Modern Technical References */}
-            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="mb-8">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 1.2 }}
+              className="mb-8"
+            >
               <h4 className="text-academia-gold text-xl mb-6 flex items-center gap-2">
                 <Code className="w-5 h-5" />
                 Modern Technical References
@@ -375,16 +431,11 @@ export function AboutSection() {
                   <motion.div
                     key={i}
                     className={`${book.color} rounded-md p-3 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer group`}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 1.3 + i * 0.05 }}
                     whileHover={{ y: -5, scale: 1.05 }}
-                    animate={{
-                      rotateY: [0, 1, 0],
-                      y: [0, -2, 0],
-                    }}
-                    transition={{
-                      duration: 3 + i * 0.3,
-                      repeat: Infinity,
-                      delay: i * 0.2,
-                    }}
                   >
                     <div className="h-20 flex flex-col justify-between">
                       <div>
@@ -404,6 +455,7 @@ export function AboutSection() {
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
               transition={{ delay: 1.5 }}
               className="flex items-center justify-center gap-8 mt-12 pt-8 border-t border-academia-gold border-opacity-20"
             >
@@ -449,7 +501,13 @@ export function AboutSection() {
           </div>
 
           {/* Collection Summary */}
-          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 1.8 }} className="text-center mt-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 1.8 }}
+            className="text-center mt-8"
+          >
             <p className="text-academia-gold text-lg italic font-medium mb-2">"Books are a uniquely portable magic" — Stephen King</p>
             <p className="text-academia-cream text-sm opacity-75">
               Personal Collection • Classical Literature, Scientific Works & Modern References

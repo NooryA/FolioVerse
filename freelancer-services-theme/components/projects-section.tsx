@@ -49,118 +49,115 @@ const CalendarIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const TagIcon = ({ className }: { className?: string }) => (
+const CheckIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+  </svg>
+);
+
+const ArrowRightIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+  </svg>
+);
+
+const BriefcaseIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
+      d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2V6m8 0H8m0 0v2a2 2 0 002 2h4a2 2 0 002-2V6m-8 0H8"
     />
   </svg>
 );
 
 export default function ProjectsSection() {
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState("recent");
 
-  const projects = [
+  const featuredProjects = [
     {
       id: 1,
       title: "E-commerce Platform",
-      category: "web",
-      description: "Full-stack e-commerce solution with modern design, payment integration, and admin dashboard.",
+      category: "Web Development",
+      description: "Modern e-commerce solution with payment integration and admin dashboard",
       image: "🛒",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-      duration: "3 months",
-      year: "2024",
-      stats: { views: "2.5k", likes: "150", stars: "45" },
-      features: ["Payment Processing", "Admin Dashboard", "Mobile Responsive", "SEO Optimized"],
-      testimonial: "Alex delivered beyond expectations. The platform increased our sales by 40%.",
+      result: "300% increase in online sales",
       client: "TechStart Inc.",
+      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
+      year: "2024",
     },
     {
       id: 2,
       title: "SaaS Dashboard",
-      category: "saas",
-      description: "Analytics dashboard for SaaS companies with real-time data visualization and user management.",
+      category: "Web Application",
+      description: "Analytics dashboard with real-time data visualization",
       image: "📊",
-      technologies: ["Next.js", "TypeScript", "PostgreSQL", "Charts.js"],
-      duration: "2 months",
-      year: "2024",
-      stats: { views: "1.8k", likes: "120", stars: "38" },
-      features: ["Real-time Analytics", "User Management", "API Integration", "Dark Mode"],
-      testimonial: "The dashboard transformed how we understand our customers.",
+      result: "50% reduction in data analysis time",
       client: "DataFlow Solutions",
+      technologies: ["Next.js", "TypeScript", "PostgreSQL"],
+      year: "2024",
     },
     {
       id: 3,
       title: "Restaurant Website",
-      category: "web",
-      description: "Modern restaurant website with online ordering, reservation system, and CMS integration.",
+      category: "Web Development",
+      description: "Modern restaurant website with online ordering system",
       image: "🍽️",
-      technologies: ["React", "Gatsby", "Contentful", "Stripe"],
-      duration: "1.5 months",
-      year: "2023",
-      stats: { views: "3.2k", likes: "200", stars: "62" },
-      features: ["Online Ordering", "Reservation System", "Menu Management", "Location Integration"],
-      testimonial: "Our online orders increased by 200% after the new website launch.",
+      result: "200% increase in online orders",
       client: "Bella Vista Restaurant",
+      technologies: ["React", "Gatsby", "Contentful"],
+      year: "2023",
     },
     {
       id: 4,
-      title: "Portfolio Website",
-      category: "design",
-      description: "Creative portfolio website for a graphic designer with smooth animations and gallery system.",
+      title: "Creative Portfolio",
+      category: "Design & Development",
+      description: "Creative portfolio with smooth animations and gallery system",
       image: "🎨",
-      technologies: ["React", "Framer Motion", "Tailwind", "Sanity"],
-      duration: "3 weeks",
-      year: "2023",
-      stats: { views: "1.5k", likes: "95", stars: "28" },
-      features: ["Smooth Animations", "Gallery System", "Contact Forms", "Blog Integration"],
-      testimonial: "The website perfectly represents my brand and attracts quality clients.",
+      result: "150% increase in client inquiries",
       client: "Sarah Design Studio",
+      technologies: ["React", "Framer Motion", "Tailwind"],
+      year: "2023",
     },
     {
       id: 5,
       title: "Mobile App Landing",
-      category: "mobile",
-      description: "High-converting landing page for a mobile app with app store integration and analytics.",
+      category: "Landing Page",
+      description: "High-converting landing page for mobile app",
       image: "📱",
-      technologies: ["Next.js", "Tailwind", "Framer Motion", "Analytics"],
-      duration: "2 weeks",
-      year: "2023",
-      stats: { views: "4.1k", likes: "280", stars: "75" },
-      features: ["App Store Links", "Download Tracking", "Performance Optimized", "A/B Testing"],
-      testimonial: "The landing page doubled our app downloads in the first month.",
+      result: "85% conversion rate improvement",
       client: "FitTrack App",
+      technologies: ["Next.js", "Tailwind", "Analytics"],
+      year: "2023",
     },
     {
       id: 6,
       title: "Corporate Website",
-      category: "corporate",
-      description: "Professional corporate website with CMS, multi-language support, and SEO optimization.",
+      category: "Corporate",
+      description: "Professional corporate website with CMS integration",
       image: "🏢",
-      technologies: ["WordPress", "PHP", "MySQL", "SEO Tools"],
-      duration: "2 months",
-      year: "2023",
-      stats: { views: "2.8k", likes: "165", stars: "52" },
-      features: ["Multi-language", "CMS Integration", "SEO Optimized", "Contact Forms"],
-      testimonial: "Our online presence is now professional and generates quality leads.",
+      result: "400% increase in lead generation",
       client: "Global Solutions Ltd",
+      technologies: ["WordPress", "PHP", "MySQL"],
+      year: "2023",
     },
   ];
 
-  const categories = [
-    { id: "all", label: "All Projects", count: projects.length },
-    { id: "web", label: "Web Apps", count: projects.filter((p) => p.category === "web").length },
-    { id: "saas", label: "SaaS", count: projects.filter((p) => p.category === "saas").length },
-    { id: "mobile", label: "Mobile", count: projects.filter((p) => p.category === "mobile").length },
-    { id: "design", label: "Design", count: projects.filter((p) => p.category === "design").length },
-    { id: "corporate", label: "Corporate", count: projects.filter((p) => p.category === "corporate").length },
+  const projectCategories = [
+    { id: "recent", label: "Recent Work", count: 6 },
+    { id: "featured", label: "Featured", count: 3 },
+    { id: "ecommerce", label: "E-commerce", count: 2 },
+    { id: "saas", label: "SaaS", count: 1 },
   ];
 
-  const filteredProjects = activeFilter === "all" ? projects : projects.filter((project) => project.category === activeFilter);
+  const getFilteredProjects = () => {
+    if (selectedCategory === "recent") return featuredProjects;
+    if (selectedCategory === "featured") return featuredProjects.slice(0, 3);
+    if (selectedCategory === "ecommerce") return featuredProjects.filter((p) => p.category === "Web Development");
+    if (selectedCategory === "saas") return featuredProjects.filter((p) => p.category === "Web Application");
+    return featuredProjects;
+  };
 
   return (
     <section id="projects" className="freelancer-section freelancer-section-lg bg-gray-50">
@@ -168,150 +165,195 @@ export default function ProjectsSection() {
         {/* Section Header */}
         <div className="text-center mb-16">
           <div className="freelancer-badge freelancer-badge-primary mb-4">
-            <EyeIcon className="w-4 h-4" />
-            Portfolio
+            <BriefcaseIcon className="w-4 h-4" />
+            Recent Work
           </div>
           <h2 className="freelancer-heading text-4xl md:text-5xl mb-6">
-            Recent <span className="freelancer-text-gradient">Projects</span>
+            Featured <span className="freelancer-text-gradient">Projects</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Take a look at some of my recent work. Each project represents a unique challenge and showcases different aspects of my skills.
+            Here are some of my recent projects that showcase different aspects of my skills and the results I deliver for clients.
           </p>
         </div>
 
-        {/* Project Filters */}
+        {/* Project Categories */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((category) => (
+          {projectCategories.map((category) => (
             <button
               key={category.id}
-              onClick={() => setActiveFilter(category.id)}
+              onClick={() => setSelectedCategory(category.id)}
               className={`px-6 py-3 rounded-full font-semibold transition-all ${
-                activeFilter === category.id
+                selectedCategory === category.id
                   ? "bg-gradient-to-r from-indigo-500 to-purple-500 text-white shadow-lg"
                   : "bg-white text-gray-700 hover:bg-gray-100 shadow-sm"
               }`}
             >
-              {category.label} ({category.count})
+              {category.label}
             </button>
           ))}
         </div>
 
         {/* Projects Grid */}
-        <div className="freelancer-portfolio-grid mb-16">
-          {filteredProjects.map((project, index) => (
-            <div
-              key={project.id}
-              className="freelancer-portfolio-item"
-              onMouseEnter={() => setHoveredProject(project.id)}
-              onMouseLeave={() => setHoveredProject(null)}
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              {/* Project Image */}
-              <div className="freelancer-portfolio-image">
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center">
-                  <span className="text-6xl">{project.image}</span>
-                </div>
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8 mb-16">
+          {getFilteredProjects().map((project, index) => (
+            <div key={project.id} className="freelancer-card group cursor-pointer" style={{ animationDelay: `${index * 0.1}s` }}>
+              <div className="freelancer-card-content">
+                {/* Project Image */}
+                <div className="aspect-video bg-gradient-to-br from-indigo-500 to-purple-500 rounded-lg mb-6 flex items-center justify-center relative overflow-hidden">
+                  <span className="text-4xl">{project.image}</span>
 
-                {/* Hover Overlay */}
-                <div className="freelancer-portfolio-overlay">
-                  <div className="flex gap-4">
-                    <button className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all">
-                      <ExternalLinkIcon className="w-6 h-6 text-white" />
+                  {/* Hover Overlay */}
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+                    <button className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all">
+                      <ExternalLinkIcon className="w-5 h-5 text-white" />
                     </button>
-                    <button className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all">
-                      <GithubIcon className="w-6 h-6 text-white" />
+                    <button className="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition-all">
+                      <GithubIcon className="w-5 h-5 text-white" />
                     </button>
                   </div>
                 </div>
 
-                {/* Project Stats */}
-                <div className="absolute top-4 right-4 flex gap-2">
-                  <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center gap-1">
-                    <StarIcon className="w-4 h-4 text-yellow-500" />
-                    <span className="text-sm font-semibold">{project.stats.stars}</span>
+                {/* Project Content */}
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div className="px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">{project.category}</div>
+                    <div className="flex items-center gap-1 text-sm text-gray-500">
+                      <CalendarIcon className="w-4 h-4" />
+                      {project.year}
+                    </div>
                   </div>
-                </div>
-              </div>
 
-              {/* Project Content */}
-              <div className="freelancer-portfolio-content">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="freelancer-portfolio-title">{project.title}</h3>
-                  <div className="flex items-center gap-1 text-sm text-gray-500">
-                    <CalendarIcon className="w-4 h-4" />
-                    <span>{project.year}</span>
+                  <h3 className="text-xl font-bold text-gray-900 group-hover:text-indigo-600 transition-colors">{project.title}</h3>
+
+                  <p className="text-gray-600 text-sm leading-relaxed">{project.description}</p>
+
+                  {/* Result Highlight */}
+                  <div className="p-3 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg">
+                    <div className="flex items-center gap-2 text-sm">
+                      <CheckIcon className="w-4 h-4 text-green-600" />
+                      <span className="font-semibold text-green-700">{project.result}</span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="freelancer-portfolio-category mb-3">
-                  {project.category.charAt(0).toUpperCase() + project.category.slice(1)} • {project.duration}
-                </div>
-
-                <p className="freelancer-portfolio-description mb-4">{project.description}</p>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.technologies.map((tech, techIndex) => (
-                    <span key={techIndex} className="px-2 py-1 bg-gray-100 text-gray-700 rounded-md text-sm font-medium">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Key Features */}
-                <div className="mb-4">
-                  <h4 className="font-semibold text-sm text-gray-700 mb-2">Key Features:</h4>
-                  <div className="grid grid-cols-2 gap-1">
-                    {project.features.map((feature, featureIndex) => (
-                      <div key={featureIndex} className="flex items-center gap-1">
-                        <div className="w-1.5 h-1.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"></div>
-                        <span className="text-xs text-gray-600">{feature}</span>
-                      </div>
+                  {/* Technologies */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.slice(0, 3).map((tech, techIndex) => (
+                      <span key={techIndex} className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs">
+                        {tech}
+                      </span>
                     ))}
+                    {project.technologies.length > 3 && (
+                      <span className="px-2 py-1 bg-gray-100 text-gray-600 rounded text-xs">+{project.technologies.length - 3} more</span>
+                    )}
                   </div>
-                </div>
 
-                {/* Client Testimonial */}
-                <div className="bg-gray-50 rounded-lg p-3 mb-4">
-                  <p className="text-sm text-gray-600 italic mb-2">"{project.testimonial}"</p>
-                  <div className="text-xs text-gray-500">- {project.client}</div>
-                </div>
-
-                {/* Project Stats */}
-                <div className="flex justify-between items-center">
-                  <div className="flex gap-4 text-sm text-gray-500">
-                    <div className="flex items-center gap-1">
-                      <EyeIcon className="w-4 h-4" />
-                      <span>{project.stats.views}</span>
+                  {/* Client and CTA */}
+                  <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                    <div className="text-sm text-gray-500">
+                      Client: <span className="font-medium text-gray-700">{project.client}</span>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <StarIcon className="w-4 h-4" />
-                      <span>{project.stats.likes}</span>
-                    </div>
+                    <button className="flex items-center gap-1 text-indigo-600 hover:text-indigo-700 font-medium text-sm">
+                      View Details
+                      <ArrowRightIcon className="w-4 h-4" />
+                    </button>
                   </div>
-                  <button className="freelancer-btn freelancer-btn-primary freelancer-btn-small">View Details</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Project Statistics */}
-        <div className="grid md:grid-cols-4 gap-8 mb-16">
-          {[
-            { label: "Projects Completed", value: "150+", description: "Successful deliveries" },
-            { label: "Client Satisfaction", value: "98%", description: "Happy clients" },
-            { label: "Average Timeline", value: "6 weeks", description: "From start to finish" },
-            { label: "Technologies Used", value: "25+", description: "Modern tech stack" },
-          ].map((stat, index) => (
-            <div key={index} className="freelancer-card text-center">
-              <div className="freelancer-card-content">
-                <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
-                <div className="font-semibold text-gray-700 mb-1">{stat.label}</div>
-                <div className="text-sm text-gray-500">{stat.description}</div>
+        {/* Project Process */}
+        <div className="mb-16">
+          <h3 className="text-3xl font-bold text-center mb-12">
+            My Project <span className="freelancer-text-gradient">Process</span>
+          </h3>
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                step: "01",
+                title: "Discovery",
+                description: "Understanding your goals, requirements, and target audience",
+                icon: "🔍",
+              },
+              {
+                step: "02",
+                title: "Planning",
+                description: "Strategic planning and technical architecture design",
+                icon: "📋",
+              },
+              {
+                step: "03",
+                title: "Development",
+                description: "Building your solution with modern technologies",
+                icon: "⚡",
+              },
+              {
+                step: "04",
+                title: "Launch",
+                description: "Testing, deployment, and ongoing support",
+                icon: "🚀",
+              },
+            ].map((step, index) => (
+              <div key={index} className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white text-2xl mx-auto mb-4">
+                  {step.icon}
+                </div>
+                <div className="text-lg font-bold text-gray-900 mb-2">{step.title}</div>
+                <div className="text-sm text-indigo-600 font-semibold mb-3">Step {step.step}</div>
+                <p className="text-gray-600 text-sm">{step.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Results Summary */}
+        <div className="grid md:grid-cols-2 gap-12 mb-16">
+          <div className="freelancer-card">
+            <div className="freelancer-card-content">
+              <h3 className="freelancer-card-title mb-6">Project Results</h3>
+              <div className="space-y-6">
+                {[
+                  { metric: "Average ROI", value: "250%", description: "Return on investment for clients" },
+                  { metric: "Project Success Rate", value: "98%", description: "Projects delivered on time" },
+                  { metric: "Client Retention", value: "85%", description: "Clients who return for more work" },
+                  { metric: "Performance Improvement", value: "40%", description: "Average site speed increase" },
+                ].map((stat, index) => (
+                  <div key={index} className="flex items-center gap-4">
+                    <div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-lg flex items-center justify-center">
+                      <span className="text-white font-bold text-lg">{stat.value}</span>
+                    </div>
+                    <div>
+                      <div className="font-semibold text-gray-900">{stat.metric}</div>
+                      <div className="text-sm text-gray-600">{stat.description}</div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
+
+          <div className="freelancer-card">
+            <div className="freelancer-card-content">
+              <h3 className="freelancer-card-title mb-6">What You Get</h3>
+              <div className="space-y-4">
+                {[
+                  "Clean, modern design that reflects your brand",
+                  "Mobile-responsive and cross-browser compatible",
+                  "SEO optimized for better search rankings",
+                  "Fast loading times and optimal performance",
+                  "Secure and scalable architecture",
+                  "Complete documentation and training",
+                  "30 days of post-launch support included",
+                ].map((feature, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <CheckIcon className="w-5 h-5 text-green-500 mt-0.5" />
+                    <span className="text-gray-700">{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Call to Action */}
@@ -319,12 +361,14 @@ export default function ProjectsSection() {
           <div className="freelancer-card max-w-2xl mx-auto">
             <div className="freelancer-card-content">
               <h3 className="text-3xl font-bold mb-4">
-                Ready to Start Your <span className="freelancer-text-gradient">Next Project?</span>
+                Ready to Start Your <span className="freelancer-text-gradient">Project?</span>
               </h3>
-              <p className="text-xl text-gray-600 mb-8">Let's discuss your requirements and create something amazing together.</p>
+              <p className="text-xl text-gray-600 mb-8">
+                Let's discuss your goals and create a solution that delivers real results for your business.
+              </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <button className="freelancer-btn freelancer-btn-primary freelancer-btn-large">Get Project Quote</button>
-                <button className="freelancer-btn freelancer-btn-outline freelancer-btn-large">Schedule a Call</button>
+                <button className="freelancer-btn freelancer-btn-primary freelancer-btn-large">Get Free Project Quote</button>
+                <button className="freelancer-btn freelancer-btn-outline freelancer-btn-large">Schedule Discovery Call</button>
               </div>
             </div>
           </div>

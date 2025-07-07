@@ -98,19 +98,52 @@ export default function HeroSection() {
             Alex.Dev
           </a>
           <div className="freelancer-nav-links">
-            <a href="#services" className="freelancer-nav-link">
+            <a
+              href="#about"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="freelancer-nav-link"
+            >
               Services
             </a>
-            <a href="#about" className="freelancer-nav-link">
+            <a
+              href="#about"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("about")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="freelancer-nav-link"
+            >
               About
             </a>
-            <a href="#portfolio" className="freelancer-nav-link">
+            <a
+              href="#projects"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="freelancer-nav-link"
+            >
               Portfolio
             </a>
-            <a href="#contact" className="freelancer-nav-link">
+            <a
+              href="#contact"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="freelancer-nav-link"
+            >
               Contact
             </a>
-            <button className="freelancer-btn freelancer-btn-primary freelancer-btn-small">Get Quote</button>
+            <button
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              className="freelancer-btn freelancer-btn-primary freelancer-btn-small"
+            >
+              Get Quote
+            </button>
           </div>
         </div>
       </nav>
@@ -137,11 +170,19 @@ export default function HeroSection() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4">
-              <button className="freelancer-btn freelancer-btn-primary freelancer-btn-large">
+              <button
+                onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+                className="freelancer-btn freelancer-btn-primary freelancer-btn-large"
+              >
                 View My Work
                 <ArrowRightIcon className="w-5 h-5" />
               </button>
-              <button className="freelancer-btn freelancer-btn-outline freelancer-btn-large">Schedule Call</button>
+              <button
+                onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                className="freelancer-btn freelancer-btn-outline freelancer-btn-large"
+              >
+                Schedule Call
+              </button>
             </div>
 
             {/* Quick Stats */}
@@ -191,20 +232,15 @@ export default function HeroSection() {
                 <div className="freelancer-card-content text-center bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white rounded-lg">
                   <h3 className="text-2xl font-bold mb-2">Ready to Start?</h3>
                   <p className="mb-4 text-white/90">Let's discuss your project and create something amazing together.</p>
-                  <button className="freelancer-btn bg-white text-gray-900 hover:bg-gray-100">Get Free Consultation</button>
+                  <button
+                    onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                    className="freelancer-btn bg-white text-gray-900 hover:bg-gray-100"
+                  >
+                    Get Free Consultation
+                  </button>
                 </div>
               </div>
             </div>
-
-            {/* Floating Elements */}
-            <div
-              className="absolute -top-6 -right-6 w-32 h-32 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full opacity-20 freelancer-animate-bounce"
-              style={{ animationDelay: "1s" }}
-            ></div>
-            <div
-              className="absolute -bottom-6 -left-6 w-24 h-24 bg-gradient-to-r from-blue-400 to-cyan-400 rounded-full opacity-20 freelancer-animate-bounce"
-              style={{ animationDelay: "2s" }}
-            ></div>
           </div>
         </div>
       </div>

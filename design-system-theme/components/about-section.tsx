@@ -1,22 +1,33 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-// Inline SVG Icons
-const UserIcon = ({ className }: { className?: string }) => (
+// Simple inline icons
+const CheckIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+  </svg>
+);
+
+const HeartIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+      d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
     />
   </svg>
 );
 
-const CodeIcon = ({ className }: { className?: string }) => (
+const UsersIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+    />
   </svg>
 );
 
@@ -31,35 +42,13 @@ const LightbulbIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const SparklesIcon = ({ className }: { className?: string }) => (
+const TargetIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
-    />
-  </svg>
-);
-
-const PuzzleIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M11 4a2 2 0 114 0v1a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-1a2 2 0 100 4h1a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-1a2 2 0 10-4 0v1a1 1 0 01-1 1H7a1 1 0 01-1-1v-3a1 1 0 00-1-1H4a2 2 0 110-4h1a1 1 0 001-1V7a1 1 0 011-1h3a1 1 0 001-1V4z"
-    />
-  </svg>
-);
-
-const CubeIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
+      d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 100-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 100-4m0 4v2m0-6V4"
     />
   </svg>
 );
@@ -75,384 +64,197 @@ const StarIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const CheckIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-  </svg>
-);
-
 export function AboutSection() {
   const [activeTab, setActiveTab] = useState("philosophy");
-  const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const [isVisible, setIsVisible] = useState(false);
 
-  const designPrinciples = [
+  const tabs = [
+    { id: "philosophy", label: "Philosophy", icon: HeartIcon },
+    { id: "process", label: "Process", icon: TargetIcon },
+    { id: "principles", label: "Principles", icon: StarIcon },
+  ];
+
+  const philosophy = [
     {
-      title: "Consistency",
-      description: "Unified patterns across all interfaces for seamless experiences",
-      icon: "🎯",
-      gradient: "from-blue-500 to-cyan-500",
+      title: "Design is Communication",
+      description: "Every design decision should communicate intent clearly and purposefully to both users and developers.",
+      icon: LightbulbIcon,
     },
     {
-      title: "Accessibility",
-      description: "Inclusive design ensuring usability for everyone",
-      icon: "♿",
-      gradient: "from-green-500 to-emerald-500",
+      title: "Consistency Creates Trust",
+      description: "Systematic approaches to design build user confidence and reduce cognitive load across experiences.",
+      icon: CheckIcon,
     },
+    {
+      title: "Accessibility First",
+      description: "Inclusive design isn't an afterthought—it's fundamental to creating products that work for everyone.",
+      icon: UsersIcon,
+    },
+  ];
+
+  const process = [
+    {
+      step: "01",
+      title: "Discovery & Research",
+      description: "Understanding user needs, business goals, and technical constraints through comprehensive research.",
+      duration: "2-3 weeks",
+    },
+    {
+      step: "02",
+      title: "Design & Prototype",
+      description: "Creating scalable design foundations, component libraries, and interactive prototypes.",
+      duration: "4-6 weeks",
+    },
+    {
+      step: "03",
+      title: "Development & Testing",
+      description: "Building production-ready components with comprehensive testing and documentation.",
+      duration: "3-4 weeks",
+    },
+    {
+      step: "04",
+      title: "Launch & Support",
+      description: "Deployment, team training, and ongoing support to ensure successful adoption.",
+      duration: "Ongoing",
+    },
+  ];
+
+  const principles = [
     {
       title: "Scalability",
-      description: "System architecture that grows with your needs",
-      icon: "📈",
-      gradient: "from-purple-500 to-pink-500",
+      description: "Systems that grow with your product and team",
+      icon: TargetIcon,
     },
     {
-      title: "Efficiency",
-      description: "Streamlined workflows for maximum productivity",
-      icon: "⚡",
-      gradient: "from-orange-500 to-red-500",
+      title: "Flexibility",
+      description: "Components that adapt to diverse use cases",
+      icon: LightbulbIcon,
+    },
+    {
+      title: "Maintainability",
+      description: "Clean, documented code that's easy to update",
+      icon: CheckIcon,
+    },
+    {
+      title: "Performance",
+      description: "Optimized for speed and user experience",
+      icon: StarIcon,
     },
   ];
-
-  const methodology = [
-    {
-      phase: "Research",
-      description: "Deep dive into user needs, behaviors, and business requirements through comprehensive analysis",
-      duration: "2 weeks",
-      color: "from-purple-500 to-purple-600",
-      bgColor: "from-purple-50 to-purple-100",
-    },
-    {
-      phase: "Audit",
-      description: "Systematic evaluation of existing design patterns and comprehensive component inventory",
-      duration: "1 week",
-      color: "from-blue-500 to-blue-600",
-      bgColor: "from-blue-50 to-blue-100",
-    },
-    {
-      phase: "Design",
-      description: "Meticulous token definition and component creation with focus on consistency",
-      duration: "4 weeks",
-      color: "from-green-500 to-green-600",
-      bgColor: "from-green-50 to-green-100",
-    },
-    {
-      phase: "Implementation",
-      description: "Full development cycle with comprehensive documentation and testing",
-      duration: "6 weeks",
-      color: "from-orange-500 to-orange-600",
-      bgColor: "from-orange-50 to-orange-100",
-    },
-    {
-      phase: "Testing",
-      description: "Rigorous validation, user testing, and iterative refinement process",
-      duration: "2 weeks",
-      color: "from-pink-500 to-pink-600",
-      bgColor: "from-pink-50 to-pink-100",
-    },
-  ];
-
-  const achievements = [
-    { metric: "50+", label: "Projects Delivered", icon: StarIcon },
-    { metric: "99%", label: "Client Satisfaction", icon: SparklesIcon },
-    { metric: "10x", label: "Faster Development", icon: CubeIcon },
-    { metric: "24/7", label: "Support Available", icon: CheckIcon },
-  ];
-
-  useEffect(() => {
-    setIsVisible(true);
-    const timer = setInterval(() => {
-      setCompletedSteps((prev) => {
-        if (prev.length < methodology.length) {
-          return [...prev, prev.length];
-        }
-        return [];
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
 
   return (
-    <section className="relative py-24 overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-purple-50/30 to-pink-50/30"></div>
-        <div className="absolute inset-0 bg-pattern opacity-30"></div>
-
-        {/* Floating Shapes */}
-        <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full opacity-20 animate-float"></div>
-        <div
-          className="absolute top-40 right-20 w-24 h-24 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-2xl opacity-20 animate-float"
-          style={{ animationDelay: "1s" }}
-        ></div>
-        <div
-          className="absolute bottom-32 left-1/4 w-40 h-40 bg-gradient-to-br from-green-400 to-emerald-400 rounded-full opacity-20 animate-float"
-          style={{ animationDelay: "2s" }}
-        ></div>
-      </div>
-
-      <div className="relative z-10 ds-container">
-        {/* Section Header */}
-        <div
-          className={`text-center mb-20 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
-        >
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-full text-sm font-medium mb-8 animate-pulse-slow">
-            <UserIcon className="w-4 h-4" />
-            Design System Philosophy
-          </div>
-          <h2 className="text-6xl lg:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-gray-900 via-purple-900 to-pink-900 mb-8 leading-tight">
-            Building{" "}
-            <span className="relative">
-              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text">Systematic Design</span>
-              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full transform scale-x-0 animate-bounce-in"></div>
-            </span>
-          </h2>
-          <p className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Our approach combines <span className="font-bold text-purple-600">strategic thinking</span>,{" "}
-            <span className="font-bold text-pink-600">user-centered design</span>, and{" "}
-            <span className="font-bold text-blue-600">technical excellence</span> to create scalable, maintainable design solutions.
+    <section id="about" className="py-20 bg-gray-50">
+      <div className="container mx-auto px-6">
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">About Our Design System</h2>
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+            We believe in creating design systems that are not just collections of components, but comprehensive foundations that empower
+            teams to build exceptional products.
           </p>
         </div>
 
-        {/* Achievements Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          {achievements.map((achievement, index) => (
-            <div
-              key={index}
-              className={`text-center group transition-all duration-500 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-              }`}
-              style={{ transitionDelay: `${index * 0.1}s` }}
-            >
-              <div className="bg-white/60 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg group-hover:shadow-xl transition-all duration-300">
-                  <achievement.icon className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-600 mb-2">
-                  {achievement.metric}
-                </div>
-                <div className="text-sm font-semibold text-gray-600">{achievement.label}</div>
-              </div>
-            </div>
-          ))}
+        {/* Stats Section */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+          <div className="text-center bg-white rounded-lg p-6 shadow-sm">
+            <div className="text-2xl font-bold text-blue-600 mb-2">5+</div>
+            <div className="text-gray-600 text-sm">Years Experience</div>
+          </div>
+          <div className="text-center bg-white rounded-lg p-6 shadow-sm">
+            <div className="text-2xl font-bold text-green-600 mb-2">150+</div>
+            <div className="text-gray-600 text-sm">Components Built</div>
+          </div>
+          <div className="text-center bg-white rounded-lg p-6 shadow-sm">
+            <div className="text-2xl font-bold text-purple-600 mb-2">50+</div>
+            <div className="text-gray-600 text-sm">Projects Delivered</div>
+          </div>
+          <div className="text-center bg-white rounded-lg p-6 shadow-sm">
+            <div className="text-2xl font-bold text-orange-600 mb-2">98%</div>
+            <div className="text-gray-600 text-sm">Client Satisfaction</div>
+          </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex justify-center mb-16">
-          <div className="bg-white/60 backdrop-blur-lg rounded-2xl p-2 border border-white/20 shadow-xl">
-            {[
-              { id: "philosophy", label: "Philosophy", icon: LightbulbIcon },
-              { id: "process", label: "Process", icon: PuzzleIcon },
-              { id: "principles", label: "Principles", icon: SparklesIcon },
-            ].map((tab) => (
+        <div className="flex flex-col sm:flex-row justify-center mb-8">
+          <div className="flex bg-white rounded-lg shadow-sm border border-gray-200 p-2">
+            {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative px-8 py-4 rounded-xl font-semibold transition-all duration-300 ${
-                  activeTab === tab.id
-                    ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg transform scale-105"
-                    : "text-gray-700 hover:text-purple-600 hover:bg-purple-50/50"
+                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  activeTab === tab.id ? "bg-blue-600 text-white shadow-sm" : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
                 }`}
               >
-                <span className="flex items-center gap-2">
-                  <tab.icon className="w-5 h-5" />
-                  {tab.label}
-                </span>
+                <tab.icon className="w-4 h-4" />
+                {tab.label}
               </button>
             ))}
           </div>
         </div>
 
         {/* Tab Content */}
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {activeTab === "philosophy" && (
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-16 animate-slide-up">
-              <div className="space-y-8">
-                <h3 className="text-4xl font-bold text-gray-900 mb-8">Our Design Philosophy</h3>
-                <div className="space-y-8">
-                  {[
-                    {
-                      title: "Human-Centered Foundation",
-                      content:
-                        "Design systems are more than just component libraries—they're the foundation for creating cohesive, scalable digital experiences that put users first.",
-                      icon: "🎨",
-                    },
-                    {
-                      title: "Atomic Design Principles",
-                      content:
-                        "We believe in atomic design principles, where small, reusable components combine to form complex interfaces while ensuring consistency and flexibility.",
-                      icon: "⚛️",
-                    },
-                    {
-                      title: "Intentional Decision Making",
-                      content:
-                        "Every decision in our design system is intentional, documented, and based on real user needs and business objectives for sustainable growth.",
-                      icon: "🎯",
-                    },
-                  ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="bg-white/70 backdrop-blur-sm rounded-2xl p-6 border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                    >
-                      <div className="flex items-start gap-4">
-                        <div className="text-3xl">{item.icon}</div>
-                        <div>
-                          <h4 className="text-xl font-bold text-gray-900 mb-3">{item.title}</h4>
-                          <p className="text-gray-600 leading-relaxed">{item.content}</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-white/60 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 overflow-hidden">
-                <div className="p-8 bg-gradient-to-r from-purple-50 to-pink-50 border-b border-white/20">
-                  <h4 className="text-2xl font-bold text-gray-900 mb-2">System Architecture</h4>
-                  <p className="text-gray-600">Layered approach to design systems</p>
-                </div>
-                <div className="p-8">
-                  <div className="space-y-4">
-                    {[
-                      {
-                        layer: "Design Tokens",
-                        description: "Core design decisions and variables",
-                        color: "from-purple-500 to-purple-600",
-                        bgColor: "from-purple-100 to-purple-200",
-                      },
-                      {
-                        layer: "Components",
-                        description: "Reusable UI building blocks",
-                        color: "from-blue-500 to-blue-600",
-                        bgColor: "from-blue-100 to-blue-200",
-                      },
-                      {
-                        layer: "Patterns",
-                        description: "Common design compositions",
-                        color: "from-green-500 to-green-600",
-                        bgColor: "from-green-100 to-green-200",
-                      },
-                      {
-                        layer: "Templates",
-                        description: "Page-level layout structures",
-                        color: "from-orange-500 to-orange-600",
-                        bgColor: "from-orange-100 to-orange-200",
-                      },
-                    ].map((item, index) => (
-                      <div
-                        key={index}
-                        className={`bg-gradient-to-r ${item.bgColor} rounded-2xl p-6 border border-white/20 transform hover:scale-105 transition-all duration-300`}
-                      >
-                        <div className="flex items-center gap-4">
-                          <div className={`w-12 h-12 bg-gradient-to-r ${item.color} rounded-xl flex items-center justify-center shadow-lg`}>
-                            <span className="text-white font-bold text-lg">{index + 1}</span>
-                          </div>
-                          <div>
-                            <h5 className="font-bold text-gray-900 text-lg">{item.layer}</h5>
-                            <p className="text-gray-600">{item.description}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {philosophy.map((item, index) => (
+                <div key={index} className="bg-white rounded-lg p-6 shadow-sm">
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                    <item.icon className="w-5 h-5 text-blue-600" />
                   </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">{item.title}</h3>
+                  <p className="text-gray-600 leading-relaxed text-sm">{item.description}</p>
                 </div>
-              </div>
+              ))}
             </div>
           )}
 
           {activeTab === "process" && (
-            <div className="animate-slide-up">
-              <h3 className="text-4xl font-bold text-gray-900 mb-12 text-center">Design System Development Process</h3>
-              <div className="space-y-8">
-                {methodology.map((phase, index) => (
-                  <div
-                    key={index}
-                    className={`bg-white/60 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 overflow-hidden transition-all duration-500 transform hover:scale-105 ${
-                      completedSteps.includes(index) ? "ring-4 ring-green-200" : ""
-                    }`}
-                  >
-                    <div className={`bg-gradient-to-r ${phase.bgColor} p-8`}>
-                      <div className="flex items-center gap-6">
-                        <div className={`relative flex-shrink-0`}>
-                          <div
-                            className={`w-16 h-16 bg-gradient-to-r ${phase.color} rounded-2xl flex items-center justify-center shadow-lg`}
-                          >
-                            {completedSteps.includes(index) ? (
-                              <CheckIcon className="w-8 h-8 text-white" />
-                            ) : (
-                              <span className="text-white font-black text-2xl">{index + 1}</span>
-                            )}
-                          </div>
-                          {completedSteps.includes(index) && (
-                            <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                              <CheckIcon className="w-4 h-4 text-white" />
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex justify-between items-center mb-3">
-                            <h4 className="text-2xl font-bold text-gray-900">{phase.phase}</h4>
-                            <span className="px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-sm font-semibold text-gray-700 border border-white/20">
-                              {phase.duration}
-                            </span>
-                          </div>
-                          <p className="text-gray-600 text-lg leading-relaxed">{phase.description}</p>
-                        </div>
+            <div className="space-y-6">
+              {process.map((step, index) => (
+                <div key={index} className="bg-white rounded-lg p-6 shadow-sm">
+                  <div className="flex flex-col md:flex-row md:items-center gap-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center">
+                        <span className="text-white font-bold text-lg">{step.step}</span>
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold text-gray-900 mb-2">{step.title}</h3>
+                      <p className="text-gray-600 mb-3 text-sm">{step.description}</p>
+                      <div className="inline-flex items-center gap-2 bg-gray-100 px-3 py-1 rounded-full text-sm text-gray-600">
+                        <span>Duration: {step.duration}</span>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           )}
 
           {activeTab === "principles" && (
-            <div className="animate-slide-up">
-              <h3 className="text-4xl font-bold text-gray-900 mb-12 text-center">Core Design Principles</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {designPrinciples.map((principle, index) => (
-                  <div
-                    key={index}
-                    className="group bg-white/60 backdrop-blur-lg rounded-3xl shadow-xl border border-white/20 overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:scale-105"
-                  >
-                    <div className={`bg-gradient-to-r ${principle.gradient} p-8 text-center`}>
-                      <div className="text-6xl mb-4">{principle.icon}</div>
-                      <h4 className="text-2xl font-bold text-white mb-2">{principle.title}</h4>
-                    </div>
-                    <div className="p-8 text-center">
-                      <p className="text-gray-600 text-lg leading-relaxed">{principle.description}</p>
-                    </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {principles.map((principle, index) => (
+                <div key={index} className="bg-white rounded-lg p-6 shadow-sm">
+                  <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                    <principle.icon className="w-5 h-5 text-green-600" />
                   </div>
-                ))}
-              </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-3">{principle.title}</h3>
+                  <p className="text-gray-600 leading-relaxed text-sm">{principle.description}</p>
+                </div>
+              ))}
             </div>
           )}
         </div>
 
-        {/* Call to Action */}
-        <div className="text-center mt-20">
-          <div className="bg-white/60 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 max-w-4xl mx-auto p-12">
-            <div className="mb-8">
-              <LightbulbIcon className="w-20 h-20 text-purple-600 mx-auto mb-6" />
-              <h3 className="text-4xl font-bold text-gray-900 mb-6">Ready to Transform Your Design Process?</h3>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                Let's create a scalable, consistent design foundation that will revolutionize your product development.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button className="group relative overflow-hidden px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-2xl font-semibold text-lg shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-700 to-pink-700 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                <span className="relative flex items-center gap-2">
-                  <CodeIcon className="w-6 h-6" />
-                  Start Your Project
-                </span>
-              </button>
-              <button className="px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-800 rounded-2xl font-semibold text-lg border-2 border-purple-200 hover:border-purple-400 transition-all duration-300 transform hover:scale-105 shadow-xl">
-                View Case Studies
-              </button>
-            </div>
+        {/* CTA Section */}
+        <div className="text-center mt-12">
+          <div className="bg-white rounded-lg p-8 shadow-sm">
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">Ready to Build Something Amazing?</h3>
+            <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
+              Let's collaborate to create a design system that transforms how your team builds products.
+            </p>
+            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold text-lg transition-colors duration-200">
+              Start a Project
+            </button>
           </div>
         </div>
       </div>
