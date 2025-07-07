@@ -502,6 +502,54 @@ html {
   animation: clay-bounce 2s infinite;
 }
 
+/* Beautiful Blob Ripple Animations */
+@keyframes clay-blob-ripple {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    border-radius: 50% 40% 60% 30%;
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg) scale(1.1);
+    border-radius: 30% 60% 40% 50%;
+  }
+  50% {
+    transform: translateY(-10px) rotate(180deg) scale(0.9);
+    border-radius: 60% 30% 50% 40%;
+  }
+  75% {
+    transform: translateY(-30px) rotate(270deg) scale(1.05);
+    border-radius: 40% 50% 30% 60%;
+  }
+}
+
+@keyframes clay-blob-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes clay-blob-shimmer {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: rotate(0deg);
+  }
+  50% {
+    opacity: 0.6;
+    transform: rotate(180deg);
+  }
+}
+
 /* Utility Classes */
 .clay-text-gradient {
   background: linear-gradient(135deg, var(--clay-primary) 0%, var(--clay-accent) 100%);
@@ -601,7 +649,32 @@ html {
   background: linear-gradient(135deg, var(--clay-accent) 0%, var(--clay-primary) 100%);
   filter: blur(1px);
   opacity: 0.3;
-  animation: clay-float 8s ease-in-out infinite;
+  animation: clay-blob-ripple 12s ease-in-out infinite;
+}
+
+.clay-floating-blob::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: clay-blob-pulse 4s ease-out infinite;
+}
+
+.clay-floating-blob::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+  border-radius: inherit;
+  animation: clay-blob-shimmer 6s ease-in-out infinite;
 }
 
 .clay-hero-content {
