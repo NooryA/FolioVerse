@@ -226,9 +226,6 @@ export function ProjectsSection() {
               </div>
             ))}
           </div>
-          <div className="clay-nav-description">
-            <p className="text-lg text-gray-500">{getCategoryDescription(activeFilter)}</p>
-          </div>
         </div>
 
         {/* Projects Grid */}
@@ -317,21 +314,6 @@ export function ProjectsSection() {
                 <div className="clay-stat-text">{stat.label}</div>
               </div>
             ))}
-          </div>
-        </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="clay-card clay-card-cta max-w-2xl mx-auto">
-            <h3 className="text-3xl font-bold text-gray-800 mb-4">Have a Project in Mind?</h3>
-            <p className="text-gray-600 mb-8 leading-relaxed">
-              I'm always excited to work on new challenges and bring innovative ideas to life. Let's discuss how we can create something
-              amazing together.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="clay-btn clay-btn-primary">Start a Project</button>
-              <button className="clay-btn clay-btn-secondary">View All Work</button>
-            </div>
           </div>
         </div>
       </div>

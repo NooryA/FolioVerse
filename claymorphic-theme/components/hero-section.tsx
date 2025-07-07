@@ -10,12 +10,17 @@ export function HeroSection() {
   useEffect(() => {
     setMounted(true);
 
-    // Generate random floating elements
-    const elements = Array.from({ length: 8 }, (_, i) => ({
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      delay: i * 0.2,
-    }));
+    // Fixed beautiful floating elements positions
+    const elements = [
+      { x: 10, y: 15, delay: 0 },
+      { x: 85, y: 25, delay: 0.3 },
+      { x: 20, y: 70, delay: 0.6 },
+      { x: 75, y: 60, delay: 0.9 },
+      { x: 5, y: 45, delay: 1.2 },
+      { x: 90, y: 80, delay: 1.5 },
+      { x: 15, y: 90, delay: 1.8 },
+      { x: 80, y: 10, delay: 2.1 },
+    ];
     setFloatingElements(elements);
   }, []);
 
@@ -56,7 +61,7 @@ export function HeroSection() {
   if (!mounted) return null;
 
   return (
-    <section className="clay-hero">
+    <section id="home" className="clay-hero">
       {/* Floating Background Elements */}
       <div className="clay-floating-bg">
         {floatingElements.map((element, index) => (
@@ -108,19 +113,6 @@ export function HeroSection() {
                 Get My Resume
               </button>
             </div>
-
-            {/* Skills */}
-            <div className="clay-skills-preview">
-              <span className="clay-skills-label">🎯 My Superpowers</span>
-              <div className="clay-skills-grid">
-                {skills.map((skill, index) => (
-                  <div key={index} className={`clay-skill-item ${skill.color}`}>
-                    <skill.icon className="w-5 h-5" />
-                    <span>{skill.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Interactive Clay Card */}
@@ -161,26 +153,16 @@ export function HeroSection() {
                     <div className="clay-progress-fill" style={{ width: "100%" }}></div>
                   </div>
                 </div>
-
-                <div className="clay-toggle-group">
-                  <div className="clay-toggle clay-toggle-active">
-                    <div className="clay-toggle-slider"></div>
-                  </div>
-                  <span className="clay-toggle-label">✨ Ready to create magic</span>
-                </div>
               </div>
 
               {/* Action Area */}
               <div className="clay-card-actions">
-                <button onClick={scrollToProjects} className="clay-btn clay-btn-card">
+                <button onClick={() => window.open("https://calendly.com/your-link", "_blank")} className="clay-btn clay-btn-card">
                   <Play className="w-4 h-4" />
-                  See Magic Happen
+                  Schedule Consultation
                 </button>
-                <button
-                  className="clay-btn clay-btn-icon"
-                  onClick={() => window.open("mailto:hello@creativedeveloper.com?subject=Let's Collaborate!", "_blank")}
-                >
-                  <Heart className="w-4 h-4" />
+                <button className="clay-btn clay-btn-icon" onClick={() => window.open("https://github.com/yourusername", "_blank")}>
+                  <Code className="w-4 h-4" />
                 </button>
               </div>
             </div>

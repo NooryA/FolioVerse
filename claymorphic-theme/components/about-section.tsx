@@ -34,6 +34,25 @@ const TrophyIcon = ({ className }: { className?: string }) => (
 export function AboutSection() {
   const [activeTab, setActiveTab] = useState("journey");
 
+  const getJourneyIcon = (year: string) => {
+    switch (year) {
+      case "2019":
+        return "⚡";
+      case "2020":
+        return "🏗️";
+      case "2021":
+        return "🚀";
+      case "2022":
+        return "💪";
+      case "2023":
+        return "👑";
+      case "2024":
+        return "🌟";
+      default:
+        return "✨";
+    }
+  };
+
   const skills = [
     { name: "React & Next.js", level: 95, color: "#61DAFB" },
     { name: "TypeScript", level: 90, color: "#3178C6" },
@@ -60,7 +79,7 @@ export function AboutSection() {
   ];
 
   return (
-    <section className="clay-section">
+    <section id="about" className="clay-section">
       <div className="clay-container">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -94,16 +113,52 @@ export function AboutSection() {
         {/* Tab Content */}
         <div className="max-w-4xl mx-auto">
           {activeTab === "journey" && (
-            <div className="clay-timeline">
-              {journey.map((item, index) => (
-                <div key={index} className="clay-timeline-item">
-                  <div className="clay-timeline-year">{item.year}</div>
-                  <div className="clay-timeline-content">
-                    <h3 className="text-xl font-bold text-gray-800 mb-2">{item.title}</h3>
-                    <p className="text-gray-600">{item.description}</p>
+            <div className="clay-river-journey">
+              {/* Clay Journey Container */}
+              <div className="clay-river-container">
+                {/* Beautiful Clay Stepping Stones */}
+                <div className="clay-stepping-stones">
+                  {journey.map((item, index) => (
+                    <div
+                      key={index}
+                      className={`clay-stepping-stone stone-${index + 1}`}
+                      style={{
+                        animationDelay: `${index * 0.4}s`,
+                      }}
+                    >
+                      <div className="clay-stone-surface">
+                        <div className="clay-stone-rim"></div>
+                        <div className="clay-stone-center">
+                          <div className="clay-year-badge">{item.year}</div>
+                          <div className="clay-journey-icon">{getJourneyIcon(item.year)}</div>
+                        </div>
+                        <div className="clay-ripple-effect"></div>
+                      </div>
+
+                      <div className="clay-story-bubble">
+                        <div className="clay-bubble-content">
+                          <h4 className="clay-story-title">{item.title}</h4>
+                          <p className="clay-story-text">{item.description}</p>
+                          <div className="clay-bubble-tail"></div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Decorative Clay Elements */}
+                <div className="clay-river-decorations">
+                  <div className="clay-lily-pad clay-pad-1">🌿</div>
+                  <div className="clay-lily-pad clay-pad-2">🌸</div>
+                  <div className="clay-lily-pad clay-pad-3">🍃</div>
+                  <div className="clay-pebbles">
+                    <div className="clay-pebble pebble-1"></div>
+                    <div className="clay-pebble pebble-2"></div>
+                    <div className="clay-pebble pebble-3"></div>
+                    <div className="clay-pebble pebble-4"></div>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
           )}
 

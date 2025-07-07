@@ -147,7 +147,7 @@ export function ContactSection() {
   };
 
   return (
-    <section className="clay-section">
+    <section id="contact" className="clay-section">
       <div className="clay-container">
         {/* Creative Header */}
         <div className="text-center mb-20">

@@ -372,7 +372,6 @@ body {
 
 /* Clay Navigation */
 .clay-nav {
-  @apply clay-element;
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);
   padding: 1rem 2rem;
@@ -384,6 +383,20 @@ body {
   display: flex;
   align-items: center;
   gap: 2rem;
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: none;
+}
+
+.clay-nav:hover {
+  transform: translateX(-50%);
+}
+
+/* Smooth scroll offset for fixed navigation */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
 }
 
 .clay-nav-item {
@@ -392,11 +405,12 @@ body {
   font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 1rem;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .clay-nav-item:hover {
   background: var(--clay-surface-3);
+  transform: none;
 }
 
 /* Clay Section */
@@ -742,6 +756,7 @@ body {
   position: relative;
   overflow: visible;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.05);
+  margin-top: 7rem;
 }
 
 .clay-profile-section {
@@ -2197,12 +2212,13 @@ body {
   font-weight: 500;
   padding: 0.5rem 1rem;
   border-radius: 1rem;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
   font-size: 0.875rem;
 }
 
 .clay-nav-item:hover {
   background: var(--clay-surface-2);
+  transform: none;
 }
 
 .clay-nav-item.active {
@@ -2772,4 +2788,318 @@ body {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+/* Beautiful Clay Journey */
+.clay-river-journey {
+  position: relative;
+  min-height: 500px;
+  padding: 2rem 0;
+}
+
+.clay-river-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Beautiful Stepping Stones */
+.clay-stepping-stones {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.clay-stepping-stone {
+  position: relative;
+  cursor: pointer;
+  opacity: 0;
+  animation: clay-stone-emerge 1s ease-out forwards;
+}
+
+@keyframes clay-stone-emerge {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.5) rotate(10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .clay-river-journey {
+    min-height: auto;
+    padding: 2rem 1rem;
+  }
+
+  .clay-stepping-stones {
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .clay-stepping-stone {
+    margin-bottom: 2rem;
+  }
+
+  .clay-stone-surface {
+    width: 100px;
+    height: 100px;
+  }
+
+  .clay-story-bubble {
+    position: relative !important;
+    opacity: 1 !important;
+    top: 20px !important;
+    left: 0 !important;
+    transform: none !important;
+    margin-top: 1rem;
+  }
+
+  .clay-bubble-content {
+    min-width: auto;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .clay-river-decorations {
+    display: none;
+  }
+}
+
+.clay-stone-surface {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1), inset 0 5px 15px rgba(255, 255, 255, 0.8), inset 0 -5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+}
+
+.clay-stone-surface:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), inset 0 5px 20px rgba(255, 255, 255, 0.9), inset 0 -5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.clay-stone-rim {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border: 3px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.clay-stone-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 3;
+}
+
+.clay-year-badge {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--clay-primary);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.clay-journey-icon {
+  font-size: 2rem;
+  animation: clay-icon-bounce 2s ease-in-out infinite;
+}
+
+@keyframes clay-icon-bounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.1);
+  }
+}
+
+.clay-ripple-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+  transform: translate(-50%, -50%) scale(0);
+  animation: clay-ripple 3s ease-out infinite;
+}
+
+@keyframes clay-ripple {
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+/* Story Bubbles */
+.clay-story-bubble {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 20;
+}
+
+.clay-stepping-stone:hover .clay-story-bubble {
+  opacity: 1;
+  top: -160px;
+}
+
+.clay-bubble-content {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 250, 250, 0.9) 100%);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  min-width: 280px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), inset 0 2px 10px rgba(255, 255, 255, 0.8);
+  position: relative;
+}
+
+.clay-story-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--clay-dark);
+  margin: 0 0 0.75rem 0;
+}
+
+.clay-story-text {
+  color: var(--clay-neutral);
+  line-height: 1.5;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.clay-bubble-tail {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 20px;
+  background: inherit;
+  border-right: 2px solid rgba(255, 255, 255, 0.8);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 0 0 1rem 0;
+  transform: translateX(-50%) rotate(45deg);
+}
+
+/* Decorative Elements */
+.clay-river-decorations {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.clay-lily-pad {
+  position: absolute;
+  font-size: 2rem;
+  animation: clay-lily-float 6s ease-in-out infinite;
+}
+
+.clay-lily-pad.clay-pad-1 {
+  top: 20%;
+  left: 15%;
+  animation-delay: 0s;
+}
+
+.clay-lily-pad.clay-pad-2 {
+  top: 70%;
+  right: 20%;
+  animation-delay: 2s;
+}
+
+.clay-lily-pad.clay-pad-3 {
+  bottom: 25%;
+  left: 10%;
+  animation-delay: 4s;
+}
+
+@keyframes clay-lily-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(5deg);
+  }
+}
+
+.clay-pebbles {
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+}
+
+.clay-pebble {
+  position: absolute;
+  width: 12px;
+  height: 8px;
+  background: linear-gradient(135deg, #adb5bd, #868e96);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.clay-pebble.pebble-1 {
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 12px;
+}
+
+.clay-pebble.pebble-2 {
+  top: 5px;
+  left: 20px;
+  width: 10px;
+  height: 6px;
+}
+
+.clay-pebble.pebble-3 {
+  top: -5px;
+  left: 35px;
+  width: 14px;
+  height: 10px;
+}
+
+.clay-pebble.pebble-4 {
+  top: 10px;
+  left: 50px;
+  width: 8px;
+  height: 5px;
 }
