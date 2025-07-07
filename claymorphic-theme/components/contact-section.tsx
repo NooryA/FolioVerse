@@ -67,6 +67,21 @@ export function ContactSection() {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const getServiceIcon = (serviceName: string) => {
+    switch (serviceName) {
+      case "Web Development":
+        return "💻";
+      case "Mobile App Development":
+        return "📱";
+      case "UI/UX Design":
+        return "🎨";
+      case "Consulting":
+        return "🧠";
+      default:
+        return "✨";
+    }
+  };
+
   const contactInfo = [
     {
       icon: MailIcon,
@@ -134,71 +149,97 @@ export function ContactSection() {
   return (
     <section className="clay-section">
       <div className="clay-container">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="clay-badge mb-6">
-            <MailIcon className="w-5 h-5" />
-            Get In Touch
+        {/* Creative Header */}
+        <div className="text-center mb-20">
+          <div className="clay-collaboration-badge mb-12">
+            <div className="clay-collab-icons">
+              <div className="clay-icon-orbit">
+                <span className="clay-orbit-icon">💡</span>
+                <span className="clay-orbit-icon">🚀</span>
+                <span className="clay-orbit-icon">✨</span>
+                <span className="clay-orbit-icon">🎯</span>
+              </div>
+            </div>
+            <div className="clay-collab-text">
+              <span>Let's Create Magic Together</span>
+            </div>
           </div>
-          <h2 className="clay-heading text-5xl md:text-6xl mb-6">
-            Let's <span className="clay-text-gradient">Collaborate</span>
+          <h2 className="clay-heading text-6xl md:text-7xl mb-8">
+            Ready to Build <span className="clay-text-gradient">Something Epic?</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Ready to bring your ideas to life? I'd love to hear about your project and discuss how we can work together to create something
-            amazing. Drop me a message and let's get started!
+          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-12">
+            Every groundbreaking project starts with a simple "hello." Whether you're dreaming of the next big app, need to revamp your
+            digital presence, or want to explore cutting-edge technologies, I'm here to turn your vision into reality. Let's embark on this
+            creative adventure together!
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-12 mb-16">
-          {/* Contact Information */}
-          <div className="lg:col-span-1">
-            <h3 className="text-2xl font-bold text-gray-800 mb-8">Contact Information</h3>
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <a key={index} href={info.link} className="clay-contact-card group">
-                  <div className="clay-contact-icon">
-                    <info.icon className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">{info.title}</h4>
-                    <p className="font-medium text-gray-700">{info.value}</p>
-                    <p className="text-sm text-gray-500">{info.description}</p>
-                  </div>
-                </a>
-              ))}
-            </div>
+        {/* Creative Contact Options */}
+        <div className="clay-contact-methods mb-20">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {contactInfo.map((info, index) => (
+              <a key={index} href={info.link} className="clay-creative-contact-card group">
+                <div className="clay-creative-icon">
+                  <info.icon className="w-8 h-8" />
+                </div>
+                <h4 className="clay-card-title">{info.title}</h4>
+                <p className="clay-card-value">{info.value}</p>
+                <p className="clay-card-desc">{info.description}</p>
+                <div className="clay-card-glow"></div>
+              </a>
+            ))}
+          </div>
+        </div>
 
-            {/* Services Pricing */}
-            <div className="mt-12">
-              <h4 className="text-lg font-bold text-gray-800 mb-6">Service Pricing</h4>
-              <div className="space-y-4">
+        {/* Main Collaboration Section */}
+        <div className="grid lg:grid-cols-5 gap-12 mb-20">
+          {/* Creative Services Showcase */}
+          <div className="lg:col-span-2">
+            <div className="clay-services-showcase">
+              <h3 className="text-3xl font-bold text-gray-800 mb-8 text-center">🎨 What I Create</h3>
+              <div className="space-y-6">
                 {services.map((service, index) => (
-                  <div key={index} className="clay-service-item">
-                    <span className="font-medium text-gray-800">{service.name}</span>
-                    <span className="text-purple-600 font-semibold">{service.price}</span>
+                  <div key={index} className="clay-creative-service">
+                    <div className="clay-service-icon">{getServiceIcon(service.name)}</div>
+                    <div className="clay-service-content">
+                      <h4 className="clay-service-name">{service.name}</h4>
+                      <p className="clay-service-price">{service.price}</p>
+                    </div>
+                    <div className="clay-service-hover-effect"></div>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          {/* Contact Form */}
-          <div className="lg:col-span-2">
-            <div className="clay-contact-form">
-              <h3 className="text-2xl font-bold text-gray-800 mb-8">Send Me a Message</h3>
+          {/* Enhanced Contact Form */}
+          <div className="lg:col-span-3">
+            <div className="clay-creative-form">
+              <div className="clay-form-header">
+                <h3 className="text-3xl font-bold text-gray-800 mb-4">💌 Start Our Journey</h3>
+                <p className="text-gray-600 mb-8">Tell me about your project and let's create something extraordinary together!</p>
+              </div>
 
               {isSubmitted ? (
-                <div className="text-center py-12">
-                  <div className="clay-success-icon mb-6">
-                    <CheckIcon className="w-12 h-12 text-white" />
+                <div className="text-center py-16">
+                  <div className="clay-success-celebration mb-8">
+                    <div className="clay-success-icon mb-6">
+                      <CheckIcon className="w-16 h-16 text-white" />
+                    </div>
+                    <div className="clay-celebration-particles">
+                      <span className="clay-particle">🎉</span>
+                      <span className="clay-particle">✨</span>
+                      <span className="clay-particle">🚀</span>
+                      <span className="clay-particle">💫</span>
+                    </div>
                   </div>
-                  <h4 className="text-2xl font-bold text-gray-800 mb-4">Message Sent Successfully! 🎉</h4>
-                  <p className="text-gray-600 mb-8 leading-relaxed">
-                    Thank you for reaching out! I'll get back to you within 24 hours. In the meantime, feel free to check out my latest
-                    projects or connect with me on social media.
+                  <h4 className="text-3xl font-bold text-gray-800 mb-6">Your Message Launched Successfully!</h4>
+                  <p className="text-gray-600 mb-8 leading-relaxed text-lg">
+                    Amazing! Your message has been sent to my digital workspace. I'll craft a personalized response within 24 hours. While
+                    you wait, explore my latest creations or connect with me on social platforms!
                   </p>
-                  <button onClick={() => setIsSubmitted(false)} className="clay-btn clay-btn-secondary">
-                    Send Another Message
+                  <button onClick={() => setIsSubmitted(false)} className="clay-btn clay-btn-primary">
+                    ✨ Send Another Message
                   </button>
                 </div>
               ) : (
@@ -304,28 +345,53 @@ export function ContactSection() {
           </div>
         </div>
 
-        {/* Social Links & Additional Info */}
-        <div className="text-center">
-          <div className="clay-card clay-card-social max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Let's Connect on Social Media</h3>
-            <p className="text-gray-600 mb-8">Follow me for development tips, project updates, and behind-the-scenes content.</p>
-            <div className="flex justify-center gap-4 mb-8">
+        {/* Creative Social Connection */}
+        <div className="clay-social-universe">
+          <div className="text-center mb-16">
+            <h3 className="text-4xl font-bold text-gray-800 mb-6">🌟 Join My Digital Universe</h3>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Connect with me across different platforms and become part of my creative community. Get exclusive insights, behind-the-scenes
+              content, and early access to my latest projects!
+            </p>
+          </div>
+
+          <div className="clay-social-galaxy">
+            <div className="clay-social-orbit">
               {[
                 { name: "Twitter", icon: "🐦", followers: "2.5K" },
                 { name: "LinkedIn", icon: "💼", followers: "5.8K" },
                 { name: "GitHub", icon: "🐙", followers: "1.2K" },
                 { name: "Dribbble", icon: "🏀", followers: "800" },
               ].map((social, index) => (
-                <button key={index} className="clay-social-btn">
-                  <span className="text-2xl mb-1">{social.icon}</span>
-                  <span className="font-semibold">{social.name}</span>
-                  <span className="text-sm text-gray-500">{social.followers}</span>
-                </button>
+                <div key={index} className="clay-social-planet" style={{ animationDelay: `${index * 0.2}s` }}>
+                  <div className="clay-planet-content">
+                    <div className="clay-planet-icon">{social.icon}</div>
+                    <div className="clay-planet-info">
+                      <h4 className="clay-planet-name">{social.name}</h4>
+                      <p className="clay-planet-followers">{social.followers}</p>
+                    </div>
+                  </div>
+                  <div className="clay-planet-rings"></div>
+                </div>
               ))}
             </div>
-            <p className="text-sm text-gray-500">
-              Prefer email? Send me a message at <strong>hello@alexdev.com</strong>
-            </p>
+          </div>
+
+          <div className="clay-contact-footer">
+            <div className="clay-footer-card">
+              <h4 className="text-2xl font-bold text-gray-800 mb-4">🚀 Ready to Launch Your Project?</h4>
+              <p className="text-gray-600 mb-6">
+                Whether you prefer a quick chat or a detailed email, I'm here to help bring your vision to life.
+              </p>
+              <div className="clay-contact-actions">
+                <a href="mailto:hello@alexdev.com" className="clay-btn clay-btn-primary">
+                  📧 Email Me Directly
+                </a>
+                <a href="tel:+15551234567" className="clay-btn clay-btn-secondary">
+                  📞 Schedule a Call
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

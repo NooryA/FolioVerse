@@ -44,19 +44,19 @@ export function AboutSection() {
   ];
 
   const achievements = [
-    { icon: "🏆", title: "Top 1% Developer", description: "GitHub contributions" },
-    { icon: "🎨", title: "Design Awards", description: "UI/UX recognition" },
-    { icon: "⚡", title: "Performance Expert", description: "Optimization specialist" },
-    { icon: "🚀", title: "Startup Experience", description: "0-1 product builder" },
+    { icon: "🏆", title: "Code Maestro", description: "Top 1% on GitHub - where magic happens daily" },
+    { icon: "🎨", title: "Design Wizard", description: "Award-winning UI/UX that captivates users" },
+    { icon: "⚡", title: "Speed Demon", description: "Lightning-fast apps that perform flawlessly" },
+    { icon: "🚀", title: "Innovation Pioneer", description: "Built products from zero to hero" },
   ];
 
   const journey = [
-    { year: "2019", title: "Started Coding Journey", description: "Began with HTML, CSS, and JavaScript" },
-    { year: "2020", title: "First Freelance Projects", description: "Built websites for local businesses" },
-    { year: "2021", title: "Joined Tech Startup", description: "Frontend developer at early-stage startup" },
-    { year: "2022", title: "Full Stack Developer", description: "Expanded skills to backend and cloud" },
-    { year: "2023", title: "Senior Developer", description: "Leading development teams and architecture" },
-    { year: "2024", title: "Independent Consultant", description: "Helping companies build amazing products" },
+    { year: "2019", title: "The Spark", description: "First 'Hello World' - fell in love with creating magic from code" },
+    { year: "2020", title: "Building Dreams", description: "Transformed local businesses with stunning digital presence" },
+    { year: "2021", title: "Startup Adventure", description: "Joined a rocket ship, learned to code at warp speed" },
+    { year: "2022", title: "Full Stack Mastery", description: "Conquered both frontend beauty and backend power" },
+    { year: "2023", title: "Team Leader", description: "Inspired teams to build the impossible" },
+    { year: "2024", title: "Digital Architect", description: "Creating tomorrow's digital experiences today" },
   ];
 
   return (
@@ -66,27 +66,27 @@ export function AboutSection() {
         <div className="text-center mb-16">
           <div className="clay-badge mb-6">
             <UserIcon className="w-5 h-5" />
-            About Me
+            My Story
           </div>
           <h2 className="clay-heading text-5xl md:text-6xl mb-6">
-            Crafting Digital <span className="clay-text-gradient">Experiences</span>
+            The Journey of a <span className="clay-text-gradient">Digital Architect</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            I'm a passionate developer who loves creating beautiful, functional, and user-centered digital solutions. With 5+ years of
-            experience, I bring ideas to life through clean code and thoughtful design.
+            Every pixel tells a story, every line of code builds a dream. I'm on a mission to create digital experiences that inspire,
+            engage, and transform the way we interact with technology. Welcome to my universe of creativity and innovation.
           </p>
         </div>
 
         {/* Tab Navigation */}
         <div className="clay-tabs mb-12">
           {[
-            { id: "journey", label: "My Journey", icon: "🚀" },
-            { id: "skills", label: "Skills", icon: "⚡" },
-            { id: "achievements", label: "Achievements", icon: "🏆" },
+            { id: "journey", label: "My Adventure", icon: "🌟" },
+            { id: "skills", label: "Superpowers", icon: "⚡" },
+            { id: "achievements", label: "Victories", icon: "🏆" },
           ].map((tab) => (
             <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`clay-tab ${activeTab === tab.id ? "active" : ""}`}>
-              <span className="mr-2">{tab.icon}</span>
-              {tab.label}
+              <span>{tab.icon}</span>
+              <span>{tab.label}</span>
             </button>
           ))}
         </div>
@@ -141,32 +141,6 @@ export function AboutSection() {
               ))}
             </div>
           )}
-        </div>
-
-        {/* Personal Touch */}
-        <div className="mt-20">
-          <div className="clay-card clay-card-special max-w-3xl mx-auto text-center">
-            <div className="clay-avatar mb-6">
-              <div className="w-24 h-24 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto">
-                AD
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Let's Build Something Amazing Together</h3>
-            <p className="text-gray-600 mb-8 leading-relaxed">
-              I believe in the power of collaboration and am always excited to work on projects that make a positive impact. Whether you're
-              a startup with a bold vision or an established company looking to innovate, I'm here to help bring your ideas to life.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="clay-btn clay-btn-primary">
-                <BookOpenIcon className="w-5 h-5" />
-                View My Work
-              </button>
-              <button className="clay-btn clay-btn-secondary">
-                <UserIcon className="w-5 h-5" />
-                Get In Touch
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </section>

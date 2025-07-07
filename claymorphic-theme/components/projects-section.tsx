@@ -151,35 +151,84 @@ export function ProjectsSection() {
     }
   };
 
+  const getCategoryIcon = (categoryId: string) => {
+    switch (categoryId) {
+      case "all":
+        return "✨";
+      case "web":
+        return "🌐";
+      case "mobile":
+        return "📱";
+      case "ai":
+        return "🤖";
+      case "design":
+        return "🎨";
+      case "web3":
+        return "⛓️";
+      default:
+        return "💫";
+    }
+  };
+
+  const getCategoryDescription = (categoryId: string) => {
+    switch (categoryId) {
+      case "all":
+        return "Explore the complete spectrum of my digital creations across all technologies and platforms.";
+      case "web":
+        return "Dynamic web applications built with modern frameworks and cutting-edge technologies.";
+      case "mobile":
+        return "Native and cross-platform mobile experiences that delight users on every device.";
+      case "ai":
+        return "Intelligent solutions powered by machine learning and artificial intelligence.";
+      case "design":
+        return "Visual masterpieces that blend aesthetics with functionality and user experience.";
+      case "web3":
+        return "Decentralized applications exploring the future of blockchain and cryptocurrency.";
+      default:
+        return "Discover amazing projects that push the boundaries of what's possible.";
+    }
+  };
+
   return (
-    <section className="clay-section clay-section-alt">
+    <section id="projects" className="clay-section clay-section-alt">
       <div className="clay-container">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <div className="clay-badge mb-6">
-            <FolderIcon className="w-5 h-5" />
-            My Projects
+        <div className="text-center mb-20">
+          <div className="clay-creative-badge mb-8">
+            <div className="clay-badge-icon">🚀</div>
+            <span>Digital Playground</span>
           </div>
-          <h2 className="clay-heading text-5xl md:text-6xl mb-6">
-            Featured <span className="clay-text-gradient">Work</span>
+          <h2 className="clay-heading text-6xl md:text-7xl mb-8">
+            My Creative <span className="clay-text-gradient">Universe</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            A collection of projects that showcase my skills in full-stack development, design, and problem-solving. Each project represents
-            a unique challenge and learning experience.
+          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-12">
+            Welcome to my digital playground where imagination meets innovation. Each project is a unique journey through different
+            technologies and creative challenges. Explore the realms of my work...
           </p>
         </div>
 
-        {/* Project Filters */}
-        <div className="clay-filter-tabs mb-12">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setActiveFilter(category.id)}
-              className={`clay-filter-tab ${activeFilter === category.id ? "active" : ""}`}
-            >
-              {category.label} ({category.count})
-            </button>
-          ))}
+        {/* Creative Project Navigation */}
+        <div className="clay-creative-nav mb-20">
+          <div className="clay-nav-orb-container">
+            {categories.map((category, index) => (
+              <div
+                key={category.id}
+                className={`clay-nav-orb ${activeFilter === category.id ? "active" : ""}`}
+                onClick={() => setActiveFilter(category.id)}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="clay-orb-content">
+                  <div className="clay-orb-icon">{getCategoryIcon(category.id)}</div>
+                  <div className="clay-orb-label">{category.label}</div>
+                  <div className="clay-orb-count">{category.count}</div>
+                </div>
+                <div className="clay-orb-glow"></div>
+              </div>
+            ))}
+          </div>
+          <div className="clay-nav-description">
+            <p className="text-lg text-gray-500">{getCategoryDescription(activeFilter)}</p>
+          </div>
         </div>
 
         {/* Projects Grid */}

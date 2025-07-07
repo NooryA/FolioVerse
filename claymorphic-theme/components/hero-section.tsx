@@ -19,6 +19,28 @@ export function HeroSection() {
     setFloatingElements(elements);
   }, []);
 
+  const scrollToProjects = () => {
+    const projectsSection = document.getElementById("projects");
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const downloadResume = () => {
+    // Create a sample resume download
+    const link = document.createElement("a");
+    link.href = "/resume.pdf"; // You can replace this with actual resume path
+    link.download = "Creative_Developer_Resume.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Fallback: open a new window with resume content
+    if (!link.href.includes(".pdf")) {
+      window.open("mailto:hello@creativedeveloper.com?subject=Resume Request&body=Hi! I would like to request your resume.", "_blank");
+    }
+  };
+
   const skills = [
     { icon: Code, label: "Development", color: "clay-skill-blue" },
     { icon: Palette, label: "Design", color: "clay-skill-purple" },
@@ -26,9 +48,9 @@ export function HeroSection() {
   ];
 
   const stats = [
-    { number: "50+", label: "Projects" },
-    { number: "25+", label: "Clients" },
-    { number: "5+", label: "Years" },
+    { number: "50+", label: "Creations" },
+    { number: "25+", label: "Happy Clients" },
+    { number: "∞", label: "Ideas" },
   ];
 
   if (!mounted) return null;
@@ -51,43 +73,45 @@ export function HeroSection() {
       </div>
 
       <div className="clay-container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen pt-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-start min-h-screen pt-20">
           {/* Content */}
           <div className="clay-hero-content">
-            <div className="clay-status-badge mb-6">
-              <div className="clay-status-dot"></div>
-              Available for hire
+            <div className="clay-hero-badge mb-8">
+              <div className="flex items-center gap-2">
+                <div className="clay-pulse-dot"></div>
+                <span className="text-sm font-medium">Creative Developer</span>
+              </div>
             </div>
 
             <h1 className="clay-hero-title">
-              Crafting Digital
+              Building Digital
               <br />
-              <span className="clay-text-gradient">Experiences</span>
+              <span className="clay-text-gradient">Masterpieces</span>
               <br />
-              with Love
+              One Pixel at a Time
             </h1>
 
             <p className="clay-hero-subtitle">
-              I'm a passionate full-stack developer and designer who creates beautiful, functional, and user-centered digital solutions.
-              Let's bring your ideas to life with clean code and thoughtful design.
+              Where creativity meets technology. I transform complex ideas into stunning digital experiences that captivate users and drive
+              results. Let's create something extraordinary together.
             </p>
 
             {/* Action Buttons */}
             <div className="clay-hero-actions">
-              <button className="clay-btn clay-btn-primary group">
+              <button onClick={scrollToProjects} className="clay-btn clay-btn-primary group">
                 <Sparkles className="w-5 h-5" />
-                View My Work
+                Explore My Universe
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
-              <button className="clay-btn clay-btn-secondary">
+              <button onClick={downloadResume} className="clay-btn clay-btn-secondary">
                 <Download className="w-5 h-5" />
-                Download Resume
+                Get My Resume
               </button>
             </div>
 
             {/* Skills */}
             <div className="clay-skills-preview">
-              <span className="clay-skills-label">Specializing in</span>
+              <span className="clay-skills-label">🎯 My Superpowers</span>
               <div className="clay-skills-grid">
                 {skills.map((skill, index) => (
                   <div key={index} className={`clay-skill-item ${skill.color}`}>
@@ -106,13 +130,13 @@ export function HeroSection() {
               <div className="clay-profile-section">
                 <div className="clay-avatar">
                   <div className="clay-avatar-inner">
-                    <span className="text-2xl font-bold">AD</span>
+                    <span className="text-2xl font-bold">🚀</span>
                   </div>
                   <div className="clay-status-indicator"></div>
                 </div>
                 <div className="clay-profile-info">
-                  <h3 className="clay-profile-name">Alex Developer</h3>
-                  <p className="clay-profile-role">Full Stack Developer & Designer</p>
+                  <h3 className="clay-profile-name">Creative Developer</h3>
+                  <p className="clay-profile-role">Turning Ideas into Reality</p>
                 </div>
               </div>
 
@@ -129,57 +153,35 @@ export function HeroSection() {
               {/* Interactive Elements */}
               <div className="clay-interactive-section">
                 <div className="clay-progress-bar">
-                  <div className="clay-progress-label">Project Completion</div>
-                  <div className="clay-progress-track">
-                    <div className="clay-progress-fill" style={{ width: "92%" }}></div>
+                  <div className="clay-progress-label">
+                    <span>🎨 Creative Energy</span>
+                    <span className="clay-progress-value">100%</span>
                   </div>
-                  <div className="clay-progress-value">92%</div>
+                  <div className="clay-progress-track">
+                    <div className="clay-progress-fill" style={{ width: "100%" }}></div>
+                  </div>
                 </div>
 
                 <div className="clay-toggle-group">
                   <div className="clay-toggle clay-toggle-active">
                     <div className="clay-toggle-slider"></div>
                   </div>
-                  <span className="clay-toggle-label">Available for projects</span>
+                  <span className="clay-toggle-label">✨ Ready to create magic</span>
                 </div>
               </div>
 
               {/* Action Area */}
               <div className="clay-card-actions">
-                <button className="clay-btn clay-btn-card">
+                <button onClick={scrollToProjects} className="clay-btn clay-btn-card">
                   <Play className="w-4 h-4" />
-                  Watch Demo
+                  See Magic Happen
                 </button>
-                <button className="clay-btn clay-btn-icon">
+                <button
+                  className="clay-btn clay-btn-icon"
+                  onClick={() => window.open("mailto:hello@creativedeveloper.com?subject=Let's Collaborate!", "_blank")}
+                >
                   <Heart className="w-4 h-4" />
                 </button>
-              </div>
-            </div>
-
-            {/* Floating UI Elements */}
-            <div className="clay-floating-ui">
-              <div className="clay-notification clay-notification-1">
-                <div className="clay-notification-icon">✨</div>
-                <div className="clay-notification-content">
-                  <div className="clay-notification-title">Project Completed!</div>
-                  <div className="clay-notification-text">E-commerce platform launched</div>
-                </div>
-              </div>
-
-              <div className="clay-mini-card clay-mini-card-1">
-                <div className="clay-mini-icon">📊</div>
-                <div className="clay-mini-content">
-                  <div className="clay-mini-title">Analytics</div>
-                  <div className="clay-mini-value">+125%</div>
-                </div>
-              </div>
-
-              <div className="clay-mini-card clay-mini-card-2">
-                <div className="clay-mini-icon">🎨</div>
-                <div className="clay-mini-content">
-                  <div className="clay-mini-title">Design</div>
-                  <div className="clay-mini-value">Active</div>
-                </div>
               </div>
             </div>
           </div>
