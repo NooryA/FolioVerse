@@ -5,21 +5,20 @@ import {
   ChevronDown,
   ArrowRight,
   BarChart3,
-  Users,
   TrendingUp,
-  Award,
-  Calendar,
-  MapPin,
-  Mail,
+  Users,
+  Target,
+  Play,
   ExternalLink,
-  Github,
-  Linkedin,
-  MousePointer,
+  Award,
+  Zap,
+  Clock,
+  CheckCircle,
 } from "lucide-react";
 
 export function HeroSection() {
   const [mounted, setMounted] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentCase, setCurrentCase] = useState(0);
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -37,8 +36,8 @@ export function HeroSection() {
     if (!mounted) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % 3);
-    }, 4000);
+      setCurrentCase((prev) => (prev + 1) % featuredCases.length);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [mounted]);
@@ -50,243 +49,251 @@ export function HeroSection() {
     }
   };
 
-  const caseStudies = [
+  const featuredCases = [
     {
-      title: "E-Commerce Platform Redesign",
-      subtitle: "Increased conversion rate by 67%",
-      description: "Complete UX overhaul resulting in significant revenue growth",
-      metrics: [
-        { value: "67%", label: "Conversion Rate" },
-        { value: "45%", label: "User Engagement" },
-        { value: "89%", label: "User Satisfaction" },
-      ],
-      tags: ["UX Design", "E-Commerce", "Analytics"],
-      gradient: "from-blue-600 to-purple-600",
+      title: "E-Commerce Transformation",
+      company: "RetailCorp",
+      challenge: "Low conversion rates and poor user experience",
+      solution: "Complete UX redesign with data-driven optimization",
+      result: "67% increase in conversion rate",
+      revenue: "$2.3M",
+      timeline: "6 months",
+      category: "UX Design",
+      color: "from-blue-600 to-indigo-700",
     },
     {
       title: "SaaS Dashboard Optimization",
-      subtitle: "Reduced user onboarding time by 50%",
-      description: "Streamlined user experience with data-driven insights",
-      metrics: [
-        { value: "50%", label: "Onboarding Time" },
-        { value: "73%", label: "Feature Adoption" },
-        { value: "92%", label: "User Retention" },
-      ],
-      tags: ["SaaS", "Data Visualization", "User Research"],
-      gradient: "from-emerald-600 to-teal-600",
+      company: "DataFlow Inc",
+      challenge: "Complex interface causing user churn",
+      solution: "Simplified information architecture and progressive disclosure",
+      result: "50% reduction in onboarding time",
+      revenue: "$1.8M",
+      timeline: "4 months",
+      category: "Product Design",
+      color: "from-emerald-600 to-teal-700",
     },
     {
-      title: "Mobile App Development",
-      subtitle: "Achieved 4.8★ rating with 100K+ downloads",
-      description: "End-to-end development of award-winning mobile application",
-      metrics: [
-        { value: "4.8★", label: "App Store Rating" },
-        { value: "100K+", label: "Downloads" },
-        { value: "95%", label: "User Reviews" },
-      ],
-      tags: ["Mobile", "React Native", "iOS/Android"],
-      gradient: "from-orange-600 to-red-600",
+      title: "Mobile Banking Innovation",
+      company: "SecureBank",
+      challenge: "Outdated mobile experience vs competitors",
+      solution: "Modern UI with advanced security features",
+      result: "4.8★ rating with 100K+ downloads",
+      revenue: "$5.2M",
+      timeline: "8 months",
+      category: "Mobile App",
+      color: "from-purple-600 to-pink-700",
     },
   ];
 
-  const currentStudy = caseStudies[currentSlide];
+  const metrics = [
+    { value: "50+", label: "Case Studies", icon: <BarChart3 className="w-6 h-6" /> },
+    { value: "95%", label: "Client Satisfaction", icon: <Award className="w-6 h-6" /> },
+    { value: "3.2M+", label: "Impact Reached", icon: <TrendingUp className="w-6 h-6" /> },
+  ];
 
   if (!mounted) return null;
 
   return (
-    <section id="home" className="min-h-screen relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute top-1/2 right-0 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-indigo-500 rounded-full blur-3xl animate-pulse delay-500"></div>
-        </div>
-      </div>
-
-      {/* Navigation */}
+    <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+      {/* Professional Navigation */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? "bg-white/90 backdrop-blur-md shadow-lg" : "bg-transparent"
+          isScrolled ? "bg-white/95 backdrop-blur-lg shadow-lg border-b border-gray-200" : "bg-transparent"
         }`}
       >
-        <div className="cs-container">
-          <div className="flex items-center justify-between h-16">
-            <div className={`font-display text-2xl font-bold ${isScrolled ? "text-gray-900" : "text-white"}`}>
-              Case<span className="cs-text-gradient">Study</span>
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-20">
+            {/* Logo */}
+            <div className={`flex items-center space-x-2 ${isScrolled ? "text-gray-900" : "text-slate-800"}`}>
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center">
+                <BarChart3 className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <div className="font-bold text-xl">CaseStudy</div>
+                <div className="text-xs text-gray-500 -mt-1">Professional</div>
+              </div>
             </div>
+
+            {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-8">
               {["About", "Studies", "Process", "Contact"].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className={`font-medium transition-colors ${
-                    isScrolled ? "text-gray-700 hover:text-blue-600" : "text-gray-300 hover:text-white"
+                  className={`font-medium transition-colors relative group ${
+                    isScrolled ? "text-gray-700 hover:text-blue-600" : "text-slate-700 hover:text-blue-600"
                   }`}
                 >
                   {item}
+                  <div className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></div>
                 </button>
               ))}
             </div>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => scrollToSection("contact")}
-                className={`cs-btn cs-btn-primary ${isScrolled ? "" : "bg-white/20 hover:bg-white/30"}`}
-              >
-                Get in Touch
-              </button>
-            </div>
+
+            {/* CTA Button */}
+            <button
+              onClick={() => scrollToSection("contact")}
+              className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200"
+            >
+              Get in Touch
+            </button>
           </div>
         </div>
       </nav>
 
       {/* Hero Content */}
-      <div className="cs-container relative z-10 pt-32 pb-20">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-7xl mx-auto px-6 pt-32 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Left Column - Content */}
-          <div className="cs-animate-slide-in-left">
-            <div className="flex items-center space-x-2 mb-6">
-              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-              <span className="text-green-400 font-medium">Available for new projects</span>
+          <div className="space-y-8">
+            {/* Status Badge */}
+            <div className="flex items-center space-x-2">
+              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+              <span className="text-green-600 font-semibold">Available for new projects</span>
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight">
-              Transforming Ideas into
-              <span className="block cs-text-gradient">Success Stories</span>
-            </h1>
-
-            <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              I specialize in creating detailed case studies that showcase the journey from problem identification to successful
-              implementation. Each project tells a story of innovation, collaboration, and measurable impact.
-            </p>
-
-            <div className="grid grid-cols-3 gap-6 mb-10">
-              <div className="text-center">
-                <div className="cs-metric-value text-white">50+</div>
-                <div className="cs-metric-label text-gray-400">Case Studies</div>
-              </div>
-              <div className="text-center">
-                <div className="cs-metric-value text-white">95%</div>
-                <div className="cs-metric-label text-gray-400">Client Satisfaction</div>
-              </div>
-              <div className="text-center">
-                <div className="cs-metric-value text-white">3.2M+</div>
-                <div className="cs-metric-label text-gray-400">Impact Reached</div>
-              </div>
+            {/* Main Heading */}
+            <div className="space-y-4">
+              <h1 className="text-5xl lg:text-6xl font-bold text-slate-900 leading-tight">
+                Transforming Ideas into
+                <span className="block bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">Success Stories</span>
+              </h1>
+              <p className="text-xl text-slate-600 leading-relaxed">
+                I specialize in creating detailed case studies that showcase the journey from problem identification to successful
+                implementation. Each project tells a story of innovation, collaboration, and measurable impact.
+              </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <button onClick={() => scrollToSection("studies")} className="cs-btn cs-btn-primary group">
+            {/* Metrics */}
+            <div className="grid grid-cols-3 gap-6">
+              {metrics.map((metric, index) => (
+                <div key={index} className="text-center group">
+                  <div className="flex justify-center mb-2 text-blue-600 group-hover:scale-110 transition-transform">{metric.icon}</div>
+                  <div className="text-3xl font-bold text-slate-900">{metric.value}</div>
+                  <div className="text-sm text-slate-500 uppercase tracking-wide">{metric.label}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <button
+                onClick={() => scrollToSection("studies")}
+                className="group bg-gradient-to-r from-blue-600 to-indigo-700 text-white px-8 py-4 rounded-lg font-semibold hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center space-x-2"
+              >
                 <BarChart3 className="w-5 h-5" />
-                View Case Studies
+                <span>View Case Studies</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </button>
               <button
                 onClick={() => scrollToSection("process")}
-                className="cs-btn cs-btn-secondary bg-white/10 border-white/20 text-white hover:bg-white/20"
+                className="group bg-white text-slate-700 px-8 py-4 rounded-lg font-semibold border-2 border-slate-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-300 flex items-center justify-center space-x-2"
               >
-                <MousePointer className="w-5 h-5" />
-                My Process
+                <Play className="w-5 h-5" />
+                <span>My Process</span>
               </button>
-            </div>
-
-            {/* Social Links */}
-            <div className="flex items-center space-x-6">
-              <span className="text-gray-400 font-medium">Connect with me:</span>
-              <div className="flex space-x-4">
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <Github className="w-5 h-5" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <Linkedin className="w-5 h-5" />
-                </a>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  <Mail className="w-5 h-5" />
-                </a>
-              </div>
             </div>
           </div>
 
-          {/* Right Column - Featured Case Study Carousel */}
-          <div className="cs-animate-slide-in-right">
-            <div className="relative">
-              {/* Case Study Card */}
-              <div className="cs-card-large p-8 bg-white/10 backdrop-blur-md border-white/20 text-white">
-                <div className="flex items-center justify-between mb-6">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium text-green-400">Featured Case Study</span>
+          {/* Right Column - Featured Case Study */}
+          <div className="relative">
+            {/* Main Case Study Card */}
+            <div className="bg-white rounded-2xl shadow-2xl p-8 transform hover:scale-105 transition-all duration-500">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center space-x-2">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                  <span className="text-green-600 font-semibold text-sm">Featured Case Study</span>
+                </div>
+                <ExternalLink className="w-5 h-5 text-slate-400 hover:text-blue-600 cursor-pointer transition-colors" />
+              </div>
+
+              {/* Visual Preview */}
+              <div
+                className={`h-48 rounded-xl mb-6 bg-gradient-to-br ${featuredCases[currentCase].color} flex items-center justify-center relative overflow-hidden`}
+              >
+                <div className="absolute inset-0 bg-black/10"></div>
+                <div className="text-white text-center z-10">
+                  <div className="text-4xl font-bold mb-2">+{featuredCases[currentCase].result.split("%")[0]}%</div>
+                  <div className="text-lg opacity-90">Performance Boost</div>
+                </div>
+                {/* Decorative Elements */}
+                <div className="absolute top-4 right-4 w-12 h-12 bg-white/20 rounded-full"></div>
+                <div className="absolute bottom-4 left-4 w-8 h-8 bg-white/10 rounded-full"></div>
+              </div>
+
+              {/* Case Study Info */}
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-1">{featuredCases[currentCase].title}</h3>
+                  <p className="text-blue-600 font-semibold">{featuredCases[currentCase].company}</p>
+                </div>
+
+                <div className="text-slate-600">
+                  <div className="mb-2">
+                    <span className="font-semibold text-slate-800">Challenge:</span> {featuredCases[currentCase].challenge}
                   </div>
-                  <ExternalLink className="w-5 h-5 text-gray-400" />
+                  <div>
+                    <span className="font-semibold text-slate-800">Result:</span> {featuredCases[currentCase].result}
+                  </div>
                 </div>
 
-                <div className={`w-full h-48 rounded-xl mb-6 bg-gradient-to-br ${currentStudy.gradient} flex items-center justify-center`}>
-                  <div className="text-6xl font-display font-bold text-white/20">{currentSlide + 1}</div>
-                </div>
-
-                <h3 className="text-2xl font-display font-bold mb-2">{currentStudy.title}</h3>
-                <p className="text-lg text-green-400 mb-4">{currentStudy.subtitle}</p>
-                <p className="text-gray-300 mb-6 leading-relaxed">{currentStudy.description}</p>
-
-                {/* Metrics */}
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  {currentStudy.metrics.map((metric, index) => (
-                    <div key={index} className="text-center">
-                      <div className="text-2xl font-bold text-white mb-1">{metric.value}</div>
-                      <div className="text-xs text-gray-400 uppercase tracking-wide">{metric.label}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {currentStudy.tags.map((tag, index) => (
-                    <span key={index} className="cs-tag bg-white/10 text-white border border-white/20">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Carousel Dots */}
-                <div className="flex justify-center space-x-2">
-                  {caseStudies.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentSlide(index)}
-                      className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? "bg-white" : "bg-white/30"}`}
-                    />
-                  ))}
+                {/* Metrics Row */}
+                <div className="grid grid-cols-3 gap-4 pt-4 border-t border-slate-100">
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-slate-900">{featuredCases[currentCase].revenue}</div>
+                    <div className="text-xs text-slate-500">Revenue Impact</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-slate-900">{featuredCases[currentCase].timeline}</div>
+                    <div className="text-xs text-slate-500">Timeline</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-lg font-bold text-slate-900">{featuredCases[currentCase].category}</div>
+                    <div className="text-xs text-slate-500">Category</div>
+                  </div>
                 </div>
               </div>
 
-              {/* Floating Elements */}
-              <div className="absolute -top-4 -left-4 w-20 h-20 bg-blue-500/20 rounded-full blur-xl animate-pulse"></div>
-              <div className="absolute -bottom-4 -right-4 w-16 h-16 bg-purple-500/20 rounded-full blur-xl animate-pulse delay-1000"></div>
+              {/* Case Study Navigation */}
+              <div className="flex justify-center space-x-2 mt-6 pt-6 border-t border-slate-100">
+                {featuredCases.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentCase(index)}
+                    className={`w-3 h-3 rounded-full transition-all ${
+                      index === currentCase ? "bg-blue-600 scale-125" : "bg-slate-300 hover:bg-slate-400"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Floating Success Indicators */}
+            <div className="absolute -top-6 -left-6 bg-green-500 text-white p-4 rounded-xl shadow-lg">
+              <CheckCircle className="w-6 h-6" />
+            </div>
+            <div className="absolute -bottom-6 -right-6 bg-blue-600 text-white p-4 rounded-xl shadow-lg">
+              <TrendingUp className="w-6 h-6" />
             </div>
           </div>
         </div>
       </div>
 
       {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cs-animate-bounce-in">
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
         <button
-          onClick={() => scrollToSection("about")}
-          className="flex flex-col items-center space-y-2 text-white/60 hover:text-white transition-colors"
+          onClick={() => scrollToSection("studies")}
+          className="flex flex-col items-center space-y-2 text-slate-600 hover:text-blue-600 transition-colors group"
         >
           <span className="text-sm font-medium">Scroll to explore</span>
-          <ChevronDown className="w-5 h-5 animate-bounce" />
+          <ChevronDown className="w-5 h-5 animate-bounce group-hover:translate-y-1 transition-transform" />
         </button>
       </div>
 
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }}
-        ></div>
-      </div>
+      {/* Background Decorations */}
+      <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-200/30 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-200/20 rounded-full blur-3xl"></div>
     </section>
   );
 }
