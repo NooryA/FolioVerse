@@ -103,7 +103,7 @@ export function ContactSection() {
           className="text-center mb-16"
         >
           <h2 className="academia-title text-5xl md:text-6xl mb-4 text-academia-gold">Scholarly Correspondence</h2>
-          <p className="academia-body text-lg max-w-3xl mx-auto text-academia-cream opacity-90">
+          <p className="academia-body text-lg max-w-3xl mx-auto text-academia-gold opacity-90">
             In the tradition of great academic discourse, I welcome thoughtful correspondence and collaboration opportunities. Let us
             exchange ideas as scholars have for centuries.
           </p>
@@ -137,7 +137,7 @@ export function ContactSection() {
                       viewport={{ once: true }}
                       transition={{ delay: 0.1 }}
                     >
-                      <label className="block text-sm font-medium text-academia-text-primary mb-2">Distinguished Name</label>
+                      <label className="block text-sm font-medium text-academia-gold mb-2">Distinguished Name</label>
                       <input
                         type="text"
                         name="name"
@@ -155,7 +155,7 @@ export function ContactSection() {
                       viewport={{ once: true }}
                       transition={{ delay: 0.2 }}
                     >
-                      <label className="block text-sm font-medium text-academia-text-primary mb-2">Correspondence Address</label>
+                      <label className="block text-sm font-medium text-academia-gold mb-2">Correspondence Address</label>
                       <input
                         type="email"
                         name="email"
@@ -174,7 +174,7 @@ export function ContactSection() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.3 }}
                   >
-                    <label className="block text-sm font-medium text-academia-text-primary mb-2">Subject of Discourse</label>
+                    <label className="block text-sm font-medium text-academia-gold mb-2">Subject of Discourse</label>
                     <input
                       type="text"
                       name="subject"
@@ -192,7 +192,7 @@ export function ContactSection() {
                     viewport={{ once: true }}
                     transition={{ delay: 0.4 }}
                   >
-                    <label className="block text-sm font-medium text-academia-text-primary mb-2">Your Message</label>
+                    <label className="block text-sm font-medium text-academia-gold mb-2">Your Message</label>
                     <textarea
                       name="message"
                       value={formData.message}
@@ -240,7 +240,7 @@ I am writing to..."
               ) : (
                 <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
                   <div className="w-16 h-16 bg-academia-forest rounded-full flex items-center justify-center mx-auto mb-4">
-                    <BookOpen className="w-8 h-8 text-white" />
+                    <BookOpen className="w-8 h-8 text-academia-paper" />
                   </div>
                   <h3 className="academia-heading text-xl mb-2">Letter Dispatched!</h3>
                   <p className="academia-body">

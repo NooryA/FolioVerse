@@ -107,7 +107,7 @@ export function HeroSection() {
 
               {/* Grand Title */}
               <div className="relative mb-8">
-                <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold text-academia-text leading-none">
+                <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold text-academia-gold leading-none">
                   <span className="inline-block transform hover:scale-105 transition-transform duration-300">Dr. Alexander</span>
                   <br />
                   <span className="inline-block transform hover:scale-105 transition-transform duration-300 text-academia-gold">
@@ -148,12 +148,12 @@ export function HeroSection() {
                         <GraduationCap className="w-6 h-6 text-academia-paper" />
                       </div>
                       <div>
-                        <h3 className="text-xl font-display font-bold text-academia-textDark">Academic Profile</h3>
+                        <h3 className="text-xl font-display font-bold text-academia-gold">Academic Profile</h3>
                         <p className="text-sm text-academia-sepia">Distinguished Scholar</p>
                       </div>
                     </div>
 
-                    <div className="space-y-4 font-body text-academia-textDark">
+                    <div className="space-y-4 font-body text-academia-gold">
                       <div className="border-l-4 border-academia-gold pl-4">
                         <p className="text-sm font-bold text-academia-burgundy">Ph.D. Philosophy</p>
                         <p className="text-xs text-academia-sepia">Oxford University, 2010</p>
@@ -186,7 +186,7 @@ export function HeroSection() {
                         <Scroll className="w-6 h-6 text-academia-paper" />
                       </div>
                       <div>
-                        <h3 className="text-2xl font-display font-bold text-academia-textDark">Current Research</h3>
+                        <h3 className="text-2xl font-display font-bold text-academia-gold">Current Research</h3>
                         <p className="text-sm text-academia-sepia">Digital Humanities & Classical Philosophy</p>
                       </div>
                     </div>
@@ -194,14 +194,14 @@ export function HeroSection() {
                     <div className="grid md:grid-cols-2 gap-6">
                       <div className="space-y-4">
                         <div className="bg-academia-cream rounded-lg p-4 border-l-4 border-academia-burgundy">
-                          <h4 className="font-bold text-academia-textDark mb-2">Ancient Wisdom, Modern Applications</h4>
+                          <h4 className="font-bold text-academia-ink mb-2">Ancient Wisdom, Modern Applications</h4>
                           <p className="text-sm text-academia-sepia">
                             Exploring how Stoic philosophy can address contemporary challenges in ethics and personal development.
                           </p>
                         </div>
 
                         <div className="bg-academia-cream rounded-lg p-4 border-l-4 border-academia-navy">
-                          <h4 className="font-bold text-academia-textDark mb-2">Digital Manuscript Analysis</h4>
+                          <h4 className="font-bold text-academia-ink mb-2">Digital Manuscript Analysis</h4>
                           <p className="text-sm text-academia-sepia">
                             Using AI to decode and preserve ancient texts for future generations.
                           </p>
@@ -210,14 +210,14 @@ export function HeroSection() {
 
                       <div className="space-y-4">
                         <div className="bg-academia-cream rounded-lg p-4 border-l-4 border-academia-forest">
-                          <h4 className="font-bold text-academia-textDark mb-2">Philosophy of Technology</h4>
+                          <h4 className="font-bold text-academia-ink mb-2">Philosophy of Technology</h4>
                           <p className="text-sm text-academia-sepia">
                             Examining the ethical implications of artificial intelligence through classical philosophical frameworks.
                           </p>
                         </div>
 
                         <div className="bg-academia-cream rounded-lg p-4 border-l-4 border-academia-gold">
-                          <h4 className="font-bold text-academia-textDark mb-2">Cross-Cultural Philosophy</h4>
+                          <h4 className="font-bold text-academia-ink mb-2">Cross-Cultural Philosophy</h4>
                           <p className="text-sm text-academia-sepia">
                             Comparative analysis of Eastern and Western philosophical traditions.
                           </p>
@@ -237,7 +237,7 @@ export function HeroSection() {
                     <Quote className="w-16 h-16 text-academia-gold opacity-60" />
                   </div>
 
-                  <blockquote className="text-3xl md:text-4xl font-serif text-academia-text italic leading-relaxed mb-6">
+                  <blockquote className="text-3xl md:text-4xl font-serif text-academia-gold italic leading-relaxed mb-6">
                     "{quotes[currentQuote]}"
                   </blockquote>
 
@@ -256,7 +256,7 @@ export function HeroSection() {
                 <div className="w-16 h-16 bg-gradient-to-br from-academia-burgundy to-academia-burgundyLight rounded-full flex items-center justify-center mx-auto mb-4">
                   <Scroll className="w-8 h-8 text-academia-paper" />
                 </div>
-                <h4 className="text-lg font-display font-bold text-academia-text mb-2">Publications</h4>
+                <h4 className="text-lg font-display font-bold text-academia-gold mb-2">Publications</h4>
                 <p className="text-4xl font-bold text-academia-gold mb-1">47</p>
                 <p className="text-sm text-academia-sepia">Academic Papers</p>
               </div>
@@ -265,7 +265,7 @@ export function HeroSection() {
                 <div className="w-16 h-16 bg-gradient-to-br from-academia-forest to-academia-forestLight rounded-full flex items-center justify-center mx-auto mb-4">
                   <Quote className="w-8 h-8 text-academia-paper" />
                 </div>
-                <h4 className="text-lg font-display font-bold text-academia-text mb-2">Citations</h4>
+                <h4 className="text-lg font-display font-bold text-academia-gold mb-2">Citations</h4>
                 <p className="text-4xl font-bold text-academia-gold mb-1">1,247</p>
                 <p className="text-sm text-academia-sepia">Total Citations</p>
               </div>
@@ -274,7 +274,7 @@ export function HeroSection() {
                 <div className="w-16 h-16 bg-gradient-to-br from-academia-navy to-academia-navyLight rounded-full flex items-center justify-center mx-auto mb-4">
                   <GraduationCap className="w-8 h-8 text-academia-paper" />
                 </div>
-                <h4 className="text-lg font-display font-bold text-academia-text mb-2">Teaching</h4>
+                <h4 className="text-lg font-display font-bold text-academia-gold mb-2">Teaching</h4>
                 <p className="text-4xl font-bold text-academia-gold mb-1">15+</p>
                 <p className="text-sm text-academia-sepia">Years Experience</p>
               </div>
@@ -283,7 +283,7 @@ export function HeroSection() {
                 <div className="w-16 h-16 bg-gradient-to-br from-academia-bronze to-academia-bronzeLight rounded-full flex items-center justify-center mx-auto mb-4">
                   <Coffee className="w-8 h-8 text-academia-paper" />
                 </div>
-                <h4 className="text-lg font-display font-bold text-academia-text mb-2">Inspiration</h4>
+                <h4 className="text-lg font-display font-bold text-academia-gold mb-2">Inspiration</h4>
                 <p className="text-4xl font-bold text-academia-gold mb-1">∞</p>
                 <p className="text-sm text-academia-sepia">Cups of Coffee</p>
               </div>

@@ -98,7 +98,7 @@ export function AboutSection() {
           className="text-center mb-16"
         >
           <h2 className="academia-title text-5xl text-academia-gold mb-6">About the Scholar</h2>
-          <p className="academia-body text-lg text-academia-cream max-w-3xl mx-auto leading-relaxed">
+          <p className="academia-body text-lg text-academia-gold max-w-3xl mx-auto leading-relaxed">
             Welcome to my digital sanctum of knowledge and discovery. As a devoted scholar of the digital arts, I bridge the ancient wisdom
             of classical learning with the cutting-edge innovations of modern technology.
           </p>
@@ -303,7 +303,7 @@ export function AboutSection() {
         >
           <div className="text-center mb-12">
             <h3 className="academia-title text-4xl text-academia-gold mb-4">Personal Library</h3>
-            <p className="text-academia-cream opacity-80 text-lg">Curated Collection of Scholarly Works</p>
+            <p className="text-academia-gold opacity-80 text-lg">Curated Collection of Scholarly Works</p>
           </div>
 
           {/* Library Wall Container */}
@@ -459,17 +459,17 @@ export function AboutSection() {
               transition={{ delay: 1.5 }}
               className="flex items-center justify-center gap-8 mt-12 pt-8 border-t border-academia-gold border-opacity-20"
             >
-              <div className="flex items-center gap-2 text-academia-cream opacity-70">
+              <div className="flex items-center gap-2 text-academia-gold opacity-70">
                 <Coffee className="w-5 h-5 text-academia-gold" />
                 <span className="text-sm">Reading Corner</span>
               </div>
 
-              <div className="flex items-center gap-2 text-academia-cream opacity-70">
+              <div className="flex items-center gap-2 text-academia-gold opacity-70">
                 <Feather className="w-5 h-5 text-academia-gold" />
                 <span className="text-sm">Research Notes</span>
               </div>
 
-              <div className="flex items-center gap-2 text-academia-cream opacity-70">
+              <div className="flex items-center gap-2 text-academia-gold opacity-70">
                 <Clock className="w-5 h-5 text-academia-gold" />
                 <span className="text-sm">Study Sessions</span>
               </div>
@@ -509,7 +509,7 @@ export function AboutSection() {
             className="text-center mt-8"
           >
             <p className="text-academia-gold text-lg italic font-medium mb-2">"Books are a uniquely portable magic" — Stephen King</p>
-            <p className="text-academia-cream text-sm opacity-75">
+            <p className="text-academia-gold text-sm opacity-75">
               Personal Collection • Classical Literature, Scientific Works & Modern References
             </p>
           </motion.div>

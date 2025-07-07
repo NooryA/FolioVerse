@@ -141,7 +141,7 @@ export function ProjectsSection() {
           className="text-center mb-16"
         >
           <h2 className="academia-title text-5xl md:text-6xl mb-4 text-academia-gold">Published Works & Research</h2>
-          <p className="academia-body text-lg max-w-3xl mx-auto text-academia-cream">
+          <p className="academia-body text-lg max-w-3xl mx-auto text-academia-gold">
             A collection of scholarly contributions to the field of digital humanities, exploring the intersection of classical knowledge
             and modern technology.
           </p>
@@ -164,7 +164,7 @@ export function ProjectsSection() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className={`academia-button text-sm ${
-                  selectedCategory === category.id ? "bg-academia-gold text-academia-ink" : "bg-academia-cream text-academia-text-primary"
+                  selectedCategory === category.id ? "bg-academia-gold text-academia-ink" : "bg-academia-cream text-academia-ink"
                 }`}
               >
                 {category.name}
@@ -209,7 +209,7 @@ export function ProjectsSection() {
                   </div>
 
                   <h3 className="academia-heading text-xl mb-2 leading-tight">{manuscript.title}</h3>
-                  <p className="academia-body text-sm italic text-academia-text-secondary">{manuscript.subtitle}</p>
+                  <p className="academia-body text-sm italic text-academia-sepia">{manuscript.subtitle}</p>
                 </div>
 
                 {/* Manuscript Content */}
@@ -222,12 +222,12 @@ export function ProjectsSection() {
                     <div className="academia-catalog-card p-2">
                       <Star className="w-4 h-4 text-academia-gold mx-auto mb-1" />
                       <div className="text-xs font-semibold">{manuscript.citations}</div>
-                      <div className="text-xs text-academia-text-muted">Citations</div>
+                      <div className="text-xs text-academia-sepia">Citations</div>
                     </div>
                     <div className="academia-catalog-card p-2">
                       <Users className="w-4 h-4 text-academia-sepia mx-auto mb-1" />
                       <div className="text-xs font-semibold">{manuscript.collaborators}</div>
-                      <div className="text-xs text-academia-text-muted">Authors</div>
+                      <div className="text-xs text-academia-sepia">Authors</div>
                     </div>
                     <div className="academia-catalog-card p-2">
                       <Award className="w-4 h-4 text-academia-gold mx-auto mb-1" />
