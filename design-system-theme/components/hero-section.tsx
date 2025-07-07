@@ -244,17 +244,6 @@ export function HeroSection() {
             </div>
           </div>
         </div>
-
-        {/* CTA section */}
-        <div className="text-center pb-12">
-          <h2 className="text-2xl font-bold text-gray-900 mb-4">Ready to Build Your Design System?</h2>
-          <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
-            Let's create a foundation that scales with your product and empowers your team.
-          </p>
-          <button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-3 rounded-lg font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl">
-            Get Started Today
-          </button>
-        </div>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { BookOpen, Feather, Flame, Scroll, PenTool, Quote, GraduationCap, Coffee } from "lucide-react";
+import { BookOpen, Feather, Flame, Scroll, PenTool, Quote, GraduationCap, Coffee, Crown, Star, Zap } from "lucide-react";
 
 export function HeroSection() {
   const [currentQuote, setCurrentQuote] = useState(0);
@@ -11,32 +11,34 @@ export function HeroSection() {
   const [floatingElements, setFloatingElements] = useState<Array<{ left: number; top: number; delay: number; duration: number }>>([]);
 
   const quotes = [
-    "The only true wisdom is in knowing you know nothing. — Socrates",
-    "I think, therefore I am. — René Descartes",
-    "Knowledge is power. — Francis Bacon",
-    "The unexamined life is not worth living. — Socrates",
+    "The only true wisdom is in knowing you know nothing.",
+    "I think, therefore I am.",
+    "Knowledge is power.",
+    "The unexamined life is not worth living.",
   ];
 
-  const fullText = "Scholar • Researcher • Thinker";
+  const authors = ["Socrates", "René Descartes", "Francis Bacon", "Socrates"];
+
+  const fullText = "Scholar • Researcher • Digital Humanist";
 
   useEffect(() => {
     setMounted(true);
     setIsVisible(true);
 
-    // Generate fixed beautiful positions instead of random
+    // Generate elegant floating elements
     const elements = [
-      { left: 15, top: 20, delay: 0, duration: 5 },
-      { left: 85, top: 15, delay: 0.8, duration: 6 },
-      { left: 10, top: 70, delay: 1.6, duration: 4.5 },
-      { left: 90, top: 60, delay: 2.4, duration: 5.5 },
-      { left: 50, top: 25, delay: 3.2, duration: 5 },
-      { left: 70, top: 80, delay: 4, duration: 4.8 },
+      { left: 8, top: 15, delay: 0, duration: 8 },
+      { left: 92, top: 20, delay: 1.2, duration: 7 },
+      { left: 5, top: 60, delay: 2.4, duration: 6 },
+      { left: 88, top: 70, delay: 3.6, duration: 9 },
+      { left: 15, top: 85, delay: 4.8, duration: 7 },
+      { left: 85, top: 10, delay: 6, duration: 8 },
     ];
     setFloatingElements(elements);
 
     const quoteInterval = setInterval(() => {
       setCurrentQuote((prev) => (prev + 1) % quotes.length);
-    }, 5000);
+    }, 6000);
 
     // Typewriter effect
     let index = 0;
@@ -47,7 +49,7 @@ export function HeroSection() {
       } else {
         clearInterval(typeInterval);
       }
-    }, 100);
+    }, 120);
 
     return () => {
       clearInterval(quoteInterval);
@@ -56,17 +58,21 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="min-h-screen bg-academia-bg relative overflow-hidden">
-      {/* Background texture overlay */}
-      <div className="absolute inset-0 bg-vintage-gradient opacity-20"></div>
+    <section className="min-h-screen bg-gradient-to-br from-academia-bg via-academia-surface to-academia-bg relative overflow-hidden">
+      {/* Grand Library Background */}
+      <div className="absolute inset-0 bg-vintage-gradient opacity-30"></div>
 
-      {/* Floating book pages */}
+      {/* Ornate Border Frame */}
+      <div className="absolute inset-4 border-2 border-academia-gold border-opacity-20 rounded-lg"></div>
+      <div className="absolute inset-8 border border-academia-gold border-opacity-10 rounded-lg"></div>
+
+      {/* Floating Scholarly Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {mounted &&
           floatingElements.map((element, i) => (
             <div
               key={i}
-              className="absolute opacity-10 animate-float"
+              className="absolute opacity-20 animate-float"
               style={{
                 left: `${element.left}%`,
                 top: `${element.top}%`,
@@ -74,173 +80,249 @@ export function HeroSection() {
                 animationDuration: `${element.duration}s`,
               }}
             >
-              <Scroll className="w-12 h-12 text-academia-gold transform rotate-12" />
+              {i % 3 === 0 && <Scroll className="w-8 h-8 text-academia-gold transform rotate-12" />}
+              {i % 3 === 1 && <Feather className="w-6 h-6 text-academia-burgundy transform -rotate-45" />}
+              {i % 3 === 2 && <BookOpen className="w-7 h-7 text-academia-sepia transform rotate-12" />}
             </div>
           ))}
       </div>
 
-      <div className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <div className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-            {/* Header with candle effect */}
+      {/* Main Content */}
+      <div className="relative z-10 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className={`transition-all duration-1500 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"}`}>
+            {/* Majestic Header */}
             <div className="text-center mb-16">
-              <div className="inline-flex items-center justify-center mb-8">
-                <Flame className="w-8 h-8 text-academia-gold animate-candle-flicker mr-4" />
-                <h1 className="text-5xl md:text-7xl font-display font-bold text-academia-text animate-candle-flicker">Academia</h1>
-                <Flame className="w-8 h-8 text-academia-gold animate-candle-flicker ml-4" />
-              </div>
-
-              {/* Typewriter subtitle */}
-              <div className="h-8 mb-12">
-                <p className="text-2xl font-serif text-academia-gold border-r-2 border-academia-gold animate-pulse overflow-hidden whitespace-nowrap">
-                  {typewriterText}
+              {/* Academic Institution Banner */}
+              <div className="mb-8">
+                <div className="inline-flex items-center justify-center mb-4">
+                  <div className="w-16 h-0.5 bg-academia-gold mr-6"></div>
+                  <Crown className="w-8 h-8 text-academia-gold" />
+                  <div className="w-16 h-0.5 bg-academia-gold ml-6"></div>
+                </div>
+                <p className="text-sm font-display tracking-widest text-academia-gold uppercase opacity-80">
+                  University of Classical Studies
                 </p>
               </div>
 
-              {/* Decorative line */}
-              <div className="w-32 h-0.5 bg-academia-gold mx-auto opacity-60"></div>
+              {/* Grand Title */}
+              <div className="relative mb-8">
+                <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold text-academia-text leading-none">
+                  <span className="inline-block transform hover:scale-105 transition-transform duration-300">Dr. Alexander</span>
+                  <br />
+                  <span className="inline-block transform hover:scale-105 transition-transform duration-300 text-academia-gold">
+                    Thornfield
+                  </span>
+                </h1>
+
+                {/* Decorative Elements */}
+                <div className="absolute -top-4 -left-4 w-8 h-8 border-t-2 border-l-2 border-academia-gold opacity-50"></div>
+                <div className="absolute -top-4 -right-4 w-8 h-8 border-t-2 border-r-2 border-academia-gold opacity-50"></div>
+                <div className="absolute -bottom-4 -left-4 w-8 h-8 border-b-2 border-l-2 border-academia-gold opacity-50"></div>
+                <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-academia-gold opacity-50"></div>
+              </div>
+
+              {/* Typewriter Subtitle */}
+              <div className="h-12 mb-8">
+                <p className="text-2xl md:text-3xl font-serif text-academia-gold relative">
+                  <span className="border-r-2 border-academia-gold animate-pulse">{typewriterText}</span>
+                </p>
+              </div>
+
+              {/* Elegant Separator */}
+              <div className="flex items-center justify-center mb-8">
+                <div className="w-20 h-0.5 bg-academia-gold"></div>
+                <Star className="w-4 h-4 text-academia-gold mx-4" />
+                <div className="w-20 h-0.5 bg-academia-gold"></div>
+              </div>
             </div>
 
-            {/* Main content - Book style layout */}
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              {/* Left page - About */}
-              <div className="bg-academia-surface shadow-book rounded-vintage p-8 transform hover:scale-105 transition-transform duration-300 animate-book-open">
-                <div className="bg-academia-paper bg-paper-texture rounded-page p-6 h-full">
-                  <div className="flex items-center mb-6">
-                    <BookOpen className="w-8 h-8 text-academia-burgundy mr-3" />
-                    <h2 className="text-3xl font-display font-bold text-academia-textDark">Curriculum Vitae</h2>
-                  </div>
+            {/* Scholarly Manuscript Layout */}
+            <div className="grid lg:grid-cols-3 gap-8 mb-16">
+              {/* Left Manuscript - Academic Profile */}
+              <div className="lg:col-span-1">
+                <div className="bg-academia-surface shadow-manuscript rounded-manuscript p-8 transform hover:scale-105 transition-all duration-500 hover:shadow-glow-gold">
+                  <div className="bg-academia-paper bg-paper-texture rounded-page p-6 h-full border border-academia-gold border-opacity-20">
+                    <div className="flex items-center mb-6">
+                      <div className="w-12 h-12 bg-academia-burgundy rounded-full flex items-center justify-center mr-4">
+                        <GraduationCap className="w-6 h-6 text-academia-paper" />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-display font-bold text-academia-textDark">Academic Profile</h3>
+                        <p className="text-sm text-academia-sepia">Distinguished Scholar</p>
+                      </div>
+                    </div>
 
-                  <div className="space-y-4 font-body text-academia-textDark leading-loose">
-                    <p className="text-lg">
-                      <span className="font-bold text-academia-burgundy">Name:</span>
-                      <span className="ml-2 font-script text-xl">Dr. Scholar McAcademia</span>
-                    </p>
+                    <div className="space-y-4 font-body text-academia-textDark">
+                      <div className="border-l-4 border-academia-gold pl-4">
+                        <p className="text-sm font-bold text-academia-burgundy">Ph.D. Philosophy</p>
+                        <p className="text-xs text-academia-sepia">Oxford University, 2010</p>
+                      </div>
 
-                    <p className="text-lg">
-                      <span className="font-bold text-academia-burgundy">Institution:</span>
-                      <span className="ml-2">University of Classical Studies</span>
-                    </p>
+                      <div className="border-l-4 border-academia-forest pl-4">
+                        <p className="text-sm font-bold text-academia-burgundy">M.A. Classical Studies</p>
+                        <p className="text-xs text-academia-sepia">Cambridge University, 2007</p>
+                      </div>
 
-                    <p className="text-lg">
-                      <span className="font-bold text-academia-burgundy">Specialization:</span>
-                      <span className="ml-2">Ancient Philosophy & Modern Applications</span>
-                    </p>
+                      <div className="border-l-4 border-academia-navy pl-4">
+                        <p className="text-sm font-bold text-academia-burgundy">B.A. Liberal Arts</p>
+                        <p className="text-xs text-academia-sepia">Harvard University, 2005</p>
+                      </div>
+                    </div>
 
-                    <div className="border-t border-academia-burgundy pt-4 mt-6">
-                      <p className="italic text-academia-sepia">
-                        "Dedicated to the pursuit of knowledge through rigorous study, critical thinking, and the timeless wisdom of
-                        classical scholarship."
-                      </p>
+                    <div className="mt-6 pt-4 border-t border-academia-gold border-opacity-30">
+                      <p className="text-xs italic text-academia-sepia text-center">"Wisdom begins in wonder"</p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Right page - Current work */}
-              <div
-                className="bg-academia-surface shadow-book rounded-vintage p-8 transform hover:scale-105 transition-transform duration-300 animate-book-open"
-                style={{ animationDelay: "0.3s" }}
-              >
-                <div className="bg-academia-paper bg-paper-texture rounded-page p-6 h-full">
-                  <div className="flex items-center mb-6">
-                    <PenTool className="w-8 h-8 text-academia-forest mr-3" />
-                    <h2 className="text-3xl font-display font-bold text-academia-textDark">Current Research</h2>
-                  </div>
-
-                  <div className="space-y-6 font-body text-academia-textDark">
-                    <div className="border-l-4 border-academia-forest pl-4">
-                      <h3 className="text-xl font-bold mb-2">The Digital Humanities Project</h3>
-                      <p className="text-sm text-academia-sepia">
-                        Exploring the intersection of classical philosophy and modern technology
-                      </p>
+              {/* Center Manuscript - Current Research */}
+              <div className="lg:col-span-2">
+                <div className="bg-academia-surface shadow-manuscript rounded-manuscript p-8 transform hover:scale-105 transition-all duration-500 hover:shadow-glow-gold">
+                  <div className="bg-academia-paper bg-paper-texture rounded-page p-6 h-full border border-academia-gold border-opacity-20">
+                    <div className="flex items-center mb-6">
+                      <div className="w-12 h-12 bg-academia-forest rounded-full flex items-center justify-center mr-4">
+                        <Scroll className="w-6 h-6 text-academia-paper" />
+                      </div>
+                      <div>
+                        <h3 className="text-2xl font-display font-bold text-academia-textDark">Current Research</h3>
+                        <p className="text-sm text-academia-sepia">Digital Humanities & Classical Philosophy</p>
+                      </div>
                     </div>
 
-                    <div className="border-l-4 border-academia-navy pl-4">
-                      <h3 className="text-xl font-bold mb-2">Manuscript Analysis</h3>
-                      <p className="text-sm text-academia-sepia">Digital preservation and analysis of medieval manuscripts</p>
-                    </div>
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div className="space-y-4">
+                        <div className="bg-academia-cream rounded-lg p-4 border-l-4 border-academia-burgundy">
+                          <h4 className="font-bold text-academia-textDark mb-2">Ancient Wisdom, Modern Applications</h4>
+                          <p className="text-sm text-academia-sepia">
+                            Exploring how Stoic philosophy can address contemporary challenges in ethics and personal development.
+                          </p>
+                        </div>
 
-                    <div className="border-l-4 border-academia-burgundy pl-4">
-                      <h3 className="text-xl font-bold mb-2">Philosophical Discourse</h3>
-                      <p className="text-sm text-academia-sepia">Contemporary applications of Stoic principles in modern life</p>
+                        <div className="bg-academia-cream rounded-lg p-4 border-l-4 border-academia-navy">
+                          <h4 className="font-bold text-academia-textDark mb-2">Digital Manuscript Analysis</h4>
+                          <p className="text-sm text-academia-sepia">
+                            Using AI to decode and preserve ancient texts for future generations.
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <div className="bg-academia-cream rounded-lg p-4 border-l-4 border-academia-forest">
+                          <h4 className="font-bold text-academia-textDark mb-2">Philosophy of Technology</h4>
+                          <p className="text-sm text-academia-sepia">
+                            Examining the ethical implications of artificial intelligence through classical philosophical frameworks.
+                          </p>
+                        </div>
+
+                        <div className="bg-academia-cream rounded-lg p-4 border-l-4 border-academia-gold">
+                          <h4 className="font-bold text-academia-textDark mb-2">Cross-Cultural Philosophy</h4>
+                          <p className="text-sm text-academia-sepia">
+                            Comparative analysis of Eastern and Western philosophical traditions.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Quote section */}
-            <div className="mt-16 bg-academia-surface shadow-deep rounded-vintage p-8">
-              <div className="text-center">
-                <Quote className="w-12 h-12 text-academia-gold mx-auto mb-6 animate-ink-drop" />
-                <blockquote className="text-2xl font-serif text-academia-text italic leading-extra-loose">
-                  "{quotes[currentQuote]}"
-                </blockquote>
-                <div className="mt-6 w-20 h-0.5 bg-academia-gold mx-auto opacity-60"></div>
+            {/* Wisdom Quote Section */}
+            <div className="mb-16">
+              <div className="bg-academia-surface shadow-manuscript rounded-manuscript p-8 border border-academia-gold border-opacity-20">
+                <div className="text-center max-w-4xl mx-auto">
+                  <div className="flex justify-center mb-6">
+                    <Quote className="w-16 h-16 text-academia-gold opacity-60" />
+                  </div>
+
+                  <blockquote className="text-3xl md:text-4xl font-serif text-academia-text italic leading-relaxed mb-6">
+                    "{quotes[currentQuote]}"
+                  </blockquote>
+
+                  <div className="flex items-center justify-center">
+                    <div className="w-12 h-0.5 bg-academia-gold mr-4"></div>
+                    <cite className="text-lg font-display text-academia-gold">{authors[currentQuote]}</cite>
+                    <div className="w-12 h-0.5 bg-academia-gold ml-4"></div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* Academic achievements */}
-            <div className="mt-16 grid md:grid-cols-4 gap-6">
-              {/* Publications */}
-              <div className="bg-academia-surface rounded-vintage p-6 text-center shadow-book hover:shadow-glow-gold transition-shadow duration-300">
-                <div className="w-16 h-16 bg-academia-burgundy rounded-full flex items-center justify-center mx-auto mb-4">
+            {/* Academic Achievements */}
+            <div className="grid md:grid-cols-4 gap-6 mb-16">
+              <div className="bg-academia-surface rounded-manuscript p-6 text-center shadow-manuscript hover:shadow-glow-gold transition-all duration-300 border border-academia-gold border-opacity-20">
+                <div className="w-16 h-16 bg-gradient-to-br from-academia-burgundy to-academia-burgundyLight rounded-full flex items-center justify-center mx-auto mb-4">
                   <Scroll className="w-8 h-8 text-academia-paper" />
                 </div>
-                <h3 className="text-xl font-display font-bold text-academia-text mb-2">Publications</h3>
-                <p className="text-3xl font-bold text-academia-gold">47</p>
-                <p className="text-sm text-academia-textMuted">Academic Papers</p>
+                <h4 className="text-lg font-display font-bold text-academia-text mb-2">Publications</h4>
+                <p className="text-4xl font-bold text-academia-gold mb-1">47</p>
+                <p className="text-sm text-academia-sepia">Academic Papers</p>
               </div>
 
-              {/* Citations */}
-              <div className="bg-academia-surface rounded-vintage p-6 text-center shadow-book hover:shadow-glow-gold transition-shadow duration-300">
-                <div className="w-16 h-16 bg-academia-forest rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-academia-surface rounded-manuscript p-6 text-center shadow-manuscript hover:shadow-glow-gold transition-all duration-300 border border-academia-gold border-opacity-20">
+                <div className="w-16 h-16 bg-gradient-to-br from-academia-forest to-academia-forestLight rounded-full flex items-center justify-center mx-auto mb-4">
                   <Quote className="w-8 h-8 text-academia-paper" />
                 </div>
-                <h3 className="text-xl font-display font-bold text-academia-text mb-2">Citations</h3>
-                <p className="text-3xl font-bold text-academia-gold">1,247</p>
-                <p className="text-sm text-academia-textMuted">Total Citations</p>
+                <h4 className="text-lg font-display font-bold text-academia-text mb-2">Citations</h4>
+                <p className="text-4xl font-bold text-academia-gold mb-1">1,247</p>
+                <p className="text-sm text-academia-sepia">Total Citations</p>
               </div>
 
-              {/* Years Experience */}
-              <div className="bg-academia-surface rounded-vintage p-6 text-center shadow-book hover:shadow-glow-gold transition-shadow duration-300">
-                <div className="w-16 h-16 bg-academia-navy rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-academia-surface rounded-manuscript p-6 text-center shadow-manuscript hover:shadow-glow-gold transition-all duration-300 border border-academia-gold border-opacity-20">
+                <div className="w-16 h-16 bg-gradient-to-br from-academia-navy to-academia-navyLight rounded-full flex items-center justify-center mx-auto mb-4">
                   <GraduationCap className="w-8 h-8 text-academia-paper" />
                 </div>
-                <h3 className="text-xl font-display font-bold text-academia-text mb-2">Experience</h3>
-                <p className="text-3xl font-bold text-academia-gold">15+</p>
-                <p className="text-sm text-academia-textMuted">Years Teaching</p>
+                <h4 className="text-lg font-display font-bold text-academia-text mb-2">Teaching</h4>
+                <p className="text-4xl font-bold text-academia-gold mb-1">15+</p>
+                <p className="text-sm text-academia-sepia">Years Experience</p>
               </div>
 
-              {/* Coffee consumed */}
-              <div className="bg-academia-surface rounded-vintage p-6 text-center shadow-book hover:shadow-glow-gold transition-shadow duration-300">
-                <div className="w-16 h-16 bg-academia-bronze rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-academia-surface rounded-manuscript p-6 text-center shadow-manuscript hover:shadow-glow-gold transition-all duration-300 border border-academia-gold border-opacity-20">
+                <div className="w-16 h-16 bg-gradient-to-br from-academia-bronze to-academia-bronzeLight rounded-full flex items-center justify-center mx-auto mb-4">
                   <Coffee className="w-8 h-8 text-academia-paper" />
                 </div>
-                <h3 className="text-xl font-display font-bold text-academia-text mb-2">Coffee</h3>
-                <p className="text-3xl font-bold text-academia-gold">∞</p>
-                <p className="text-sm text-academia-textMuted">Cups Consumed</p>
+                <h4 className="text-lg font-display font-bold text-academia-text mb-2">Inspiration</h4>
+                <p className="text-4xl font-bold text-academia-gold mb-1">∞</p>
+                <p className="text-sm text-academia-sepia">Cups of Coffee</p>
               </div>
             </div>
 
-            {/* Call to action */}
-            <div className="mt-16 text-center">
-              <div className="inline-flex items-center space-x-6">
-                <button className="bg-academia-burgundy hover:bg-academia-burgundyLight text-academia-paper px-8 py-4 rounded-vintage font-display font-bold shadow-vintage transition-all duration-300 hover:shadow-glow-burgundy">
-                  <Feather className="w-5 h-5 inline-block mr-2" />
-                  View Research
+            {/* Call to Action */}
+            <div className="text-center">
+              <div className="inline-flex flex-col sm:flex-row items-center gap-6">
+                <button className="group bg-gradient-to-r from-academia-burgundy to-academia-burgundyLight hover:from-academia-burgundyLight hover:to-academia-burgundy text-academia-paper px-10 py-4 rounded-manuscript font-display font-bold shadow-manuscript transition-all duration-300 hover:shadow-glow-burgundy transform hover:scale-105">
+                  <Feather className="w-5 h-5 inline-block mr-3 group-hover:animate-pulse" />
+                  Explore My Research
                 </button>
 
-                <button className="border-2 border-academia-gold text-academia-gold hover:bg-academia-gold hover:text-academia-bg px-8 py-4 rounded-vintage font-display font-bold transition-all duration-300">
-                  <BookOpen className="w-5 h-5 inline-block mr-2" />
+                <button className="group border-2 border-academia-gold text-academia-gold hover:bg-academia-gold hover:text-academia-bg px-10 py-4 rounded-manuscript font-display font-bold transition-all duration-300 hover:shadow-glow-gold transform hover:scale-105">
+                  <BookOpen className="w-5 h-5 inline-block mr-3 group-hover:animate-pulse" />
                   Read Publications
                 </button>
               </div>
+
+              <p className="mt-6 text-sm text-academia-sepia italic">"In the pursuit of knowledge, every question leads to wisdom"</p>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Ambient Candlelight Effects */}
+      <div className="absolute top-20 left-20 w-4 h-4 bg-academia-gold rounded-full blur-sm opacity-60 animate-candle-flicker"></div>
+      <div
+        className="absolute top-32 right-24 w-3 h-3 bg-academia-gold rounded-full blur-sm opacity-40 animate-candle-flicker"
+        style={{ animationDelay: "1s" }}
+      ></div>
+      <div
+        className="absolute bottom-32 left-16 w-2 h-2 bg-academia-gold rounded-full blur-sm opacity-50 animate-candle-flicker"
+        style={{ animationDelay: "2s" }}
+      ></div>
+      <div
+        className="absolute bottom-20 right-20 w-4 h-4 bg-academia-gold rounded-full blur-sm opacity-30 animate-candle-flicker"
+        style={{ animationDelay: "0.5s" }}
+      ></div>
     </section>
   );
 }

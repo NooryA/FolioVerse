@@ -128,7 +128,7 @@ export function AboutSection() {
                   </div>
                   <div className="flex-1">
                     <h3 className="academia-heading text-xl mb-3 text-academia-gold">{subject.name}</h3>
-                    <p className="academia-body text-academia-ink leading-relaxed">
+                    <p className="academia-body text-academia-gold leading-relaxed">
                       {subject.level} • {subject.years}
                     </p>
                   </div>
@@ -177,8 +177,8 @@ export function AboutSection() {
               transition={{ duration: 0.8 }}
               className="academia-scroll"
             >
-              <blockquote className="academia-quote text-center">{quotes[currentQuote]}</blockquote>
-              <p className="text-center mt-4 academia-body text-sm text-academia-gold opacity-90">
+              <blockquote className="academia-quote text-center text-academia-gold">{quotes[currentQuote]}</blockquote>
+              <p className="text-center mt-4 academia-body text-sm text-academia-gold">
                 — From the Scholar's Collection, Volume {currentQuote + 1}
               </p>
             </motion.div>
@@ -211,7 +211,7 @@ export function AboutSection() {
                   <div className="flex items-center gap-3">
                     <subject.icon className="w-5 h-5 text-academia-burgundy" />
                     <div>
-                      <h4 className="font-semibold text-academia-burgundy">{subject.name}</h4>
+                      <h4 className="font-semibold text-academia-gold">{subject.name}</h4>
                       <p className="text-sm text-academia-ink">
                         {subject.level} • {subject.years}
                       </p>
@@ -231,15 +231,15 @@ export function AboutSection() {
               className="academia-paper text-center"
             >
               <Clock className="w-8 h-8 text-academia-gold mx-auto mb-2" />
-              <h4 className="academia-heading text-lg mb-2 text-academia-ink">Hours of Study</h4>
+              <h4 className="academia-heading text-lg mb-2 text-academia-gold">Hours of Study</h4>
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <div className="text-2xl font-bold text-academia-burgundy">10,000+</div>
-                  <div className="text-sm text-academia-sepia">Coding</div>
+                  <div className="text-sm text-academia-gold">Coding</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-academia-burgundy">5,000+</div>
-                  <div className="text-sm text-academia-sepia">Research</div>
+                  <div className="text-sm text-academia-gold">Research</div>
                 </div>
               </div>
             </motion.div>
@@ -254,7 +254,7 @@ export function AboutSection() {
           transition={{ duration: 0.8 }}
           className="mb-20"
         >
-          <h3 className="academia-title text-3xl text-center mb-12">Academic & Professional Manuscripts</h3>
+          <h3 className="academia-title text-3xl text-center mb-12 text-academia-gold">Academic & Professional Manuscripts</h3>
 
           <div className="relative">
             {/* Timeline Line */}
@@ -270,10 +270,10 @@ export function AboutSection() {
                 className={`relative flex items-center justify-${index % 2 === 0 ? "start" : "end"} mb-12`}
               >
                 <motion.div whileHover={{ scale: 1.05, rotate: index % 2 === 0 ? 1 : -1 }} className="academia-paper w-5/12 relative">
-                  <div className="text-sm text-academia-sepia mb-1 font-mono">Anno Domini {manuscript.year}</div>
+                  <div className="text-sm text-academia-gold mb-1 font-mono">Anno Domini {manuscript.year}</div>
                   <h4 className="academia-heading text-lg mb-1">{manuscript.title}</h4>
                   <div className="text-academia-burgundy text-sm mb-2 italic font-semibold">{manuscript.institution}</div>
-                  <p className="academia-body text-sm mb-2">{manuscript.description}</p>
+                  <p className="academia-body text-sm mb-2 text-academia-gold">{manuscript.description}</p>
                   <div className="text-xs text-academia-gold font-semibold">{manuscript.achievement}</div>
 
                   {/* Wax Seal */}

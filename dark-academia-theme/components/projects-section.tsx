@@ -298,7 +298,7 @@ export function ProjectsSection() {
           transition={{ delay: 0.3 }}
           className="academia-scroll text-center"
         >
-          <h3 className="academia-heading text-2xl mb-6 flex items-center justify-center gap-2 text-academia-gold">
+          <h3 className="academia-heading text-3xl mb-6 flex items-center justify-center gap-2 text-academia-gold">
             <Calendar className="w-6 h-6 text-academia-gold" />
             Research Impact & Metrics
           </h3>

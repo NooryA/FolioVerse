@@ -244,19 +244,6 @@ export function AboutSection() {
             </div>
           )}
         </div>
-
-        {/* CTA Section */}
-        <div className="text-center mt-12">
-          <div className="bg-white rounded-lg p-8 shadow-sm">
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">Ready to Build Something Amazing?</h3>
-            <p className="text-lg text-gray-600 mb-6 max-w-2xl mx-auto">
-              Let's collaborate to create a design system that transforms how your team builds products.
-            </p>
-            <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold text-lg transition-colors duration-200">
-              Start a Project
-            </button>
-          </div>
-        </div>
       </div>
     </section>
   );

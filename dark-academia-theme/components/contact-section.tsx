@@ -286,8 +286,8 @@ I am writing to..."
                   <div className="flex-1">
                     <h4 className="academia-heading text-lg mb-1 text-academia-ink">{method.title}</h4>
                     <p className="text-academia-burgundy font-semibold mb-1">{method.value}</p>
-                    <p className="academia-body text-sm mb-2 text-academia-sepia">{method.description}</p>
-                    <p className="text-xs text-academia-sepia italic">{method.available}</p>
+                    <p className="academia-body text-sm mb-2 text-academia-gold">{method.description}</p>
+                    <p className="text-xs text-academia-gold italic">{method.available}</p>
                   </div>
                 </div>
               </motion.div>
@@ -302,15 +302,13 @@ I am writing to..."
               className="academia-scroll mt-8"
             >
               <motion.blockquote
-                className="academia-quote text-center text-academia-gold"
+                className="academia-quote text-center text-academia-gold text-lg font-semibold"
                 animate={{ opacity: [0.7, 1, 0.7] }}
                 transition={{ duration: 4, repeat: Infinity }}
               >
                 {mounted ? scholarlyQuotes[currentQuoteIndex] : scholarlyQuotes[0]}
               </motion.blockquote>
-              <p className="text-center mt-4 academia-body text-sm text-academia-gold opacity-80">
-                — From the Scholar's Reflections on Communication
-              </p>
+              <p className="text-center mt-4 academia-body text-sm text-academia-gold">— From the Scholar's Reflections on Communication</p>
             </motion.div>
           </motion.div>
         </div>
@@ -323,7 +321,7 @@ I am writing to..."
           transition={{ delay: 0.6 }}
           className="academia-scroll text-center"
         >
-          <h3 className="academia-heading text-2xl mb-8 flex items-center justify-center gap-2 text-academia-gold">
+          <h3 className="academia-heading text-3xl mb-8 flex items-center justify-center gap-2 text-academia-gold">
             <Coffee className="w-6 h-6 text-academia-gold" />
             The Scholar's Schedule
           </h3>

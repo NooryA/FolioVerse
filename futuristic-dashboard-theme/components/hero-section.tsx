@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import SystemMetrics from "./system-metrics";
 
 // Inline SVG Icons
 const ActivityIcon = ({ className }: { className?: string }) => (
@@ -123,32 +124,15 @@ const BarChart3Icon = ({ className }: { className?: string }) => (
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
-  const [cpuUsage, setCpuUsage] = useState(0);
-  const [memoryUsage, setMemoryUsage] = useState(0);
-  const [networkActivity, setNetworkActivity] = useState(0);
-  const [systemStatus, setSystemStatus] = useState("OPTIMAL");
-  const [dataStreams, setDataStreams] = useState<number[]>([]);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     setMounted(true);
 
-    // Simulate real-time data
-    const interval = setInterval(() => {
-      setCpuUsage(Math.random() * 100);
-      setMemoryUsage(Math.random() * 100);
-      setNetworkActivity(Math.random() * 100);
-      setDataStreams((prev) => {
-        const newStreams = [...prev, Math.random() * 100].slice(-20);
-        return newStreams;
-      });
-    }, 1000);
-
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
 
     return () => {
-      clearInterval(interval);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -157,6 +141,44 @@ export default function HeroSection() {
 
   return (
     <section className="min-h-screen bg-black relative overflow-hidden">
+      {/* Futuristic Background Effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Animated Circuit Board Pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="cyber-circuit"></div>
+        </div>
+
+        {/* Morphing Geometric Shapes */}
+        <div className="absolute inset-0">
+          <div className="geometric-shape shape-1"></div>
+          <div className="geometric-shape shape-2"></div>
+          <div className="geometric-shape shape-3"></div>
+        </div>
+
+        {/* Energy Grid */}
+        <div className="absolute inset-0 opacity-30">
+          <div className="energy-grid"></div>
+        </div>
+
+        {/* Pulsing Orbs */}
+        <div className="absolute inset-0">
+          <div className="energy-orb orb-1"></div>
+          <div className="energy-orb orb-2"></div>
+          <div className="energy-orb orb-3"></div>
+          <div className="energy-orb orb-4"></div>
+        </div>
+
+        {/* Matrix Code Rain */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="matrix-rain"></div>
+        </div>
+
+        {/* Glitch Effect Overlay */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="glitch-overlay"></div>
+        </div>
+      </div>
+
       {/* Futuristic Navigation */}
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -178,32 +200,10 @@ export default function HeroSection() {
               <a href="#contact" className="text-cyan-400 hover:text-white transition-colors font-mono text-sm">
                 CONTACT
               </a>
-              <button className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-2 rounded font-mono text-sm hover:from-cyan-600 hover:to-blue-600 transition-all">
-                LOGIN
-              </button>
             </div>
           </div>
         </div>
       </nav>
-
-      {/* Grid Overlay */}
-      <div className="absolute inset-0 opacity-20">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,255,255,0.1) 1px, transparent 1px)",
-            backgroundSize: "50px 50px",
-          }}
-        ></div>
-      </div>
-
-      {/* Neon Glow Effects */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-20 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72 bg-green-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
-      </div>
 
       {/* Main Dashboard Container */}
       <div className="relative z-10 min-h-screen p-4 pt-20">
@@ -234,36 +234,92 @@ export default function HeroSection() {
 
         {/* Main Content Grid */}
         <div className="grid lg:grid-cols-3 gap-6 mb-8">
-          {/* Left Panel - Profile */}
-          <div className="bg-black/50 backdrop-blur-sm border border-cyan-400/30 rounded-lg p-6 hover:border-cyan-400/50 transition-all duration-300">
-            <div className="text-center mb-6">
+          {/* Left Panel - Enhanced Profile */}
+          <div className="bg-black/50 backdrop-blur-sm border border-cyan-400/30 rounded-lg p-6 hover:border-cyan-400/50 transition-all duration-300 relative overflow-hidden">
+            {/* Bio-Metric Scanner Lines */}
+            <div className="absolute inset-0 pointer-events-none">
+              <div className="scanner-line"></div>
+              <div className="scanner-line-2"></div>
+            </div>
+
+            <div className="text-center mb-6 relative">
+              {/* Enhanced Profile Picture */}
               <div className="w-32 h-32 mx-auto mb-4 relative">
                 <div className="w-full h-full bg-gradient-to-br from-cyan-400/20 to-purple-500/20 rounded-full border-2 border-cyan-400 relative overflow-hidden">
-                  <div className="w-full h-full bg-gradient-to-br from-cyan-400/30 to-purple-500/30 rounded-full flex items-center justify-center">
+                  {/* Hexagonal Pattern Overlay */}
+                  <div className="absolute inset-0 hexagon-pattern opacity-30"></div>
+
+                  {/* Profile Avatar */}
+                  <div className="w-full h-full bg-gradient-to-br from-cyan-400/30 to-purple-500/30 rounded-full flex items-center justify-center relative z-10">
                     <span className="text-4xl font-bold text-cyan-400">AC</span>
                   </div>
+
+                  {/* Holographic Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-cyan-400/20 to-transparent rounded-full"></div>
+
+                  {/* Rotating Border */}
+                  <div className="absolute inset-0 rounded-full border-2 border-transparent bg-gradient-to-r from-cyan-400 to-purple-400 rotating-border"></div>
                 </div>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-pulse border-2 border-black"></div>
+
+                {/* Status Indicators */}
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full border-2 border-black status-indicator"></div>
+                <div className="absolute -top-1 -left-1 w-4 h-4 bg-blue-400 rounded-full border border-black pulse-indicator"></div>
               </div>
 
+              {/* Identity Information */}
               <h1 className="text-3xl font-bold mb-2">
                 <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">ALEX CYBER</span>
               </h1>
-              <div className="text-cyan-400 font-mono mb-4">SYSTEM ARCHITECT</div>
+              <div className="text-cyan-400 font-mono text-lg mb-1">SYSTEM ARCHITECT</div>
+              <div className="text-xs text-gray-400 font-mono mb-4">ID: CYB-2024-7749 | NEURAL-LINK: ACTIVE</div>
 
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">ACCESS LEVEL:</span>
-                  <span className="text-green-400">ADMIN</span>
+              {/* Compact Info Grid */}
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                <div className="bg-black/30 rounded px-3 py-2">
+                  <div className="text-xs text-gray-400">ACCESS LEVEL</div>
+                  <div className="text-green-400 font-bold text-sm">OMEGA-ADMIN</div>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">CLEARANCE:</span>
-                  <span className="text-cyan-400">ULTRA</span>
+                <div className="bg-black/30 rounded px-3 py-2">
+                  <div className="text-xs text-gray-400">CLEARANCE</div>
+                  <div className="text-cyan-400 font-bold text-sm">ULTRA</div>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-400">EXPERIENCE:</span>
-                  <span className="text-purple-400">5+ YEARS</span>
+                <div className="bg-black/30 rounded px-3 py-2">
+                  <div className="text-xs text-gray-400">EXPERIENCE</div>
+                  <div className="text-purple-400 font-bold text-sm">8+ YEARS</div>
+                </div>
+                <div className="bg-black/30 rounded px-3 py-2">
+                  <div className="text-xs text-gray-400">NEURAL SYNC</div>
+                  <div className="text-green-400 font-bold text-sm">99.7%</div>
+                </div>
+              </div>
+
+              {/* Specializations Tags */}
+              <div className="flex flex-wrap gap-2 justify-center mb-4">
+                <span className="bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-400/30 rounded-full px-3 py-1 text-xs text-cyan-400">
+                  QUANTUM AI
+                </span>
+                <span className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-400/30 rounded-full px-3 py-1 text-xs text-purple-400">
+                  CYBERSECURITY
+                </span>
+                <span className="bg-gradient-to-r from-green-500/20 to-cyan-500/20 border border-green-400/30 rounded-full px-3 py-1 text-xs text-green-400">
+                  NEURAL NET
+                </span>
+                <span className="bg-gradient-to-r from-orange-500/20 to-red-500/20 border border-orange-400/30 rounded-full px-3 py-1 text-xs text-orange-400">
+                  BLOCKCHAIN
+                </span>
+              </div>
+
+              {/* Quick Status */}
+              <div className="flex justify-center gap-4 text-xs">
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-green-400 rounded-full pulse-dot"></div>
+                  <span className="text-gray-400">NEURAL:</span>
+                  <span className="text-green-400">ONLINE</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-2 h-2 bg-blue-400 rounded-full pulse-dot"></div>
+                  <span className="text-gray-400">QUANTUM:</span>
+                  <span className="text-blue-400">ACTIVE</span>
                 </div>
               </div>
             </div>
@@ -309,82 +365,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right Panel - System Metrics */}
-          <div className="bg-black/50 backdrop-blur-sm border border-cyan-400/30 rounded-lg p-6 hover:border-cyan-400/50 transition-all duration-300">
-            <h3 className="text-xl font-bold text-cyan-400 mb-6 flex items-center gap-2">
-              <ActivityIcon className="w-6 h-6" />
-              SYSTEM METRICS
-            </h3>
-
-            <div className="space-y-6">
-              {/* CPU Usage */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <CpuIcon className="w-4 h-4 text-cyan-400" />
-                    <span className="text-sm text-gray-300">CPU USAGE</span>
-                  </div>
-                  <span className="text-cyan-400 font-mono text-sm">{Math.floor(cpuUsage)}%</span>
-                </div>
-                <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-1000"
-                    style={{ width: `${cpuUsage}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Memory Usage */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <DatabaseIcon className="w-4 h-4 text-purple-400" />
-                    <span className="text-sm text-gray-300">MEMORY</span>
-                  </div>
-                  <span className="text-purple-400 font-mono text-sm">{Math.floor(memoryUsage)}%</span>
-                </div>
-                <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-1000"
-                    style={{ width: `${memoryUsage}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Network Activity */}
-              <div>
-                <div className="flex items-center justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <WifiIcon className="w-4 h-4 text-green-400" />
-                    <span className="text-sm text-gray-300">NETWORK</span>
-                  </div>
-                  <span className="text-green-400 font-mono text-sm">{Math.floor(networkActivity)}%</span>
-                </div>
-                <div className="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-green-500 to-cyan-500 rounded-full transition-all duration-1000"
-                    style={{ width: `${networkActivity}%` }}
-                  />
-                </div>
-              </div>
-
-              {/* Data Visualization */}
-              <div>
-                <h4 className="text-sm text-gray-300 mb-3 flex items-center gap-2">
-                  <BarChart3Icon className="w-4 h-4 text-cyan-400" />
-                  DATA FLOW
-                </h4>
-                <div className="flex items-end gap-1 h-16">
-                  {dataStreams.map((value, index) => (
-                    <div
-                      key={index}
-                      className="bg-gradient-to-t from-cyan-500 to-blue-500 flex-1 rounded-sm transition-all duration-300"
-                      style={{ height: `${(value / 100) * 100}%` }}
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+          <SystemMetrics />
         </div>
 
         {/* Bottom Dashboard Row */}
@@ -400,7 +381,7 @@ export default function HeroSection() {
               </div>
             </div>
             <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
-              <div className="h-full bg-green-500 rounded-full w-4/5"></div>
+              <div className="h-full bg-green-500 rounded-full performance-bar"></div>
             </div>
           </div>
 
@@ -430,7 +411,7 @@ export default function HeroSection() {
               </div>
             </div>
             <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
-              <div className="h-full bg-purple-500 rounded-full w-3/4"></div>
+              <div className="h-full bg-purple-500 rounded-full energy-bar"></div>
             </div>
           </div>
 
@@ -445,7 +426,7 @@ export default function HeroSection() {
               </div>
             </div>
             <div className="w-full h-1 bg-gray-800 rounded-full overflow-hidden">
-              <div className="h-full bg-cyan-500 rounded-full w-full animate-pulse"></div>
+              <div className="h-full bg-cyan-500 rounded-full monitoring-bar"></div>
             </div>
           </div>
         </div>
@@ -462,25 +443,9 @@ export default function HeroSection() {
             <div className="text-gray-300">✓ Neural networks synchronized</div>
             <div className="text-gray-300">✓ Quantum processors online</div>
             <div className="text-green-400">$ portfolio --display</div>
-            <div className="text-cyan-400 animate-pulse">_ Loading portfolio data...</div>
+            <div className="text-cyan-400 typing-effect">_ Loading portfolio data...</div>
           </div>
         </div>
-      </div>
-
-      {/* Floating Data Points */}
-      <div className="absolute inset-0 pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-60 animate-pulse"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
-            }}
-          />
-        ))}
       </div>
     </section>
   );
