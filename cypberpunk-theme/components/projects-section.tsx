@@ -23,7 +23,6 @@ interface Project {
 export function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [visibleProjects, setVisibleProjects] = useState<Set<string>>(new Set());
-  const [activeCategory, setActiveCategory] = useState("All");
 
   const projects: Project[] = [
     {
@@ -192,16 +191,16 @@ export function ProjectsSection() {
     },
   ];
 
-  const categories = ["All", "Full Stack", "Frontend", "Mobile", "Blockchain", "AI/ML"];
-
-  const filteredProjects = activeCategory === "All" ? projects : projects.filter((project) => project.category === activeCategory);
-
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisibleProjects((prev) => new Set([...prev, entry.target.id]));
+            setVisibleProjects((prev) => {
+              const newSet = new Set(prev);
+              newSet.add(entry.target.id);
+              return newSet;
+            });
           }
         });
       },
@@ -212,7 +211,7 @@ export function ProjectsSection() {
     projectElements.forEach((element) => observer.observe(element));
 
     return () => observer.disconnect();
-  }, [filteredProjects]);
+  }, [projects]);
 
   const openModal = (project: Project) => {
     setSelectedProject(project);
@@ -233,36 +232,31 @@ export function ProjectsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold font-cyber mb-4">
-            <span className="cyber-text">MY</span>
-            <span className="text-white ml-4">PROJECTS</span>
+          <h2 className="text-6xl sm:text-8xl font-bold font-cyber mb-6 relative">
+            <span className="cyber-text block animate-pulse-neon">DIGITAL</span>
+            <span className="text-white block relative">
+              <span className="absolute inset-0 text-cyber-secondary opacity-70 animate-glitch" data-text="ARSENAL">
+                ARSENAL
+              </span>
+              <span
+                className="absolute inset-0 text-cyber-accent opacity-50 animate-glitch"
+                data-text="ARSENAL"
+                style={{ animationDelay: "0.1s" }}
+              >
+                ARSENAL
+              </span>
+              ARSENAL
+            </span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Explore my digital creations - from cutting-edge web applications to AI-powered solutions that push the boundaries of
-            technology.
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto font-jetbrains">
+            <span className="text-cyber-primary">&gt;</span> Explore my digital creations - from cutting-edge web applications to AI-powered
+            solutions that push the boundaries of technology.
           </p>
-        </div>
-
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                activeCategory === category
-                  ? "bg-cyber-primary text-cyber-dark shadow-lg shadow-cyber-primary/20"
-                  : "bg-cyber-dark/50 text-gray-300 hover:bg-cyber-primary/20 hover:text-cyber-primary border border-cyber-primary/30"
-              }`}
-            >
-              {category}
-            </button>
-          ))}
         </div>
 
         {/* Projects Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
+          {projects.map((project, index) => (
             <div
               key={project.id}
               id={project.id}

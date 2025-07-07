@@ -236,7 +236,7 @@ export function ProjectsSection() {
                   {/* Technologies */}
                   <div className="flex flex-wrap gap-1">
                     {manuscript.technologies.map((tech) => (
-                      <span key={tech} className="text-xs px-2 py-1 bg-academia-cream rounded font-mono text-academia-text-primary">
+                      <span key={tech} className="text-xs px-2 py-1 bg-academia-burgundy text-academia-cream rounded font-mono">
                         {tech}
                       </span>
                     ))}
@@ -295,7 +295,7 @@ export function ProjectsSection() {
           transition={{ delay: 0.3 }}
           className="academia-scroll text-center"
         >
-          <h3 className="academia-heading text-2xl mb-6 flex items-center justify-center gap-2">
+          <h3 className="academia-heading text-2xl mb-6 flex items-center justify-center gap-2 text-academia-gold">
             <Calendar className="w-6 h-6 text-academia-gold" />
             Research Impact & Metrics
           </h3>
@@ -312,13 +312,13 @@ export function ProjectsSection() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + index * 0.1 }}
-                className="academia-catalog-card"
+                className="academia-catalog-card bg-academia-cream"
               >
-                <div className="text-2xl font-bold text-academia-sepia mb-1">
+                <div className="text-2xl font-bold text-academia-burgundy mb-1">
                   {stat.value}
                   {stat.suffix}
                 </div>
-                <div className="text-sm text-academia-text-secondary">{stat.label}</div>
+                <div className="text-sm text-academia-sepia">{stat.label}</div>
               </motion.div>
             ))}
           </div>

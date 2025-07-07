@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
-import { BookOpen, Coffee, Pen, Award, Clock, Quote } from "lucide-react";
+import { BookOpen, Coffee, Pen, Award, Clock, Quote, Feather, Code } from "lucide-react";
 
 export function AboutSection() {
   const [currentQuote, setCurrentQuote] = useState(0);
@@ -154,7 +154,7 @@ export function AboutSection() {
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
-            <h3 className="academia-heading text-2xl mb-6 flex items-center gap-2">
+            <h3 className="academia-heading text-2xl mb-6 flex items-center gap-2 text-academia-gold">
               <Coffee className="w-6 h-6 text-academia-gold" />
               Areas of Expertise
             </h3>
@@ -166,14 +166,14 @@ export function AboutSection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ scale: 1.02, rotate: 0.5 }}
-                className="academia-catalog-card"
+                className="academia-catalog-card bg-academia-cream"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <subject.icon className="w-5 h-5 text-academia-sepia" />
+                    <subject.icon className="w-5 h-5 text-academia-burgundy" />
                     <div>
-                      <h4 className="font-semibold text-academia-text-primary">{subject.name}</h4>
-                      <p className="text-sm text-academia-text-secondary">
+                      <h4 className="font-semibold text-academia-ink">{subject.name}</h4>
+                      <p className="text-sm text-academia-sepia">
                         {subject.level} • {subject.years}
                       </p>
                     </div>
@@ -191,15 +191,15 @@ export function AboutSection() {
               className="academia-paper text-center"
             >
               <Clock className="w-8 h-8 text-academia-gold mx-auto mb-2" />
-              <h4 className="academia-heading text-lg mb-2">Hours of Study</h4>
+              <h4 className="academia-heading text-lg mb-2 text-academia-ink">Hours of Study</h4>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <div className="text-2xl font-bold text-academia-sepia">10,000+</div>
-                  <div className="text-sm text-academia-text-secondary">Coding</div>
+                  <div className="text-2xl font-bold text-academia-burgundy">10,000+</div>
+                  <div className="text-sm text-academia-sepia">Coding</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-academia-sepia">5,000+</div>
-                  <div className="text-sm text-academia-text-secondary">Research</div>
+                  <div className="text-2xl font-bold text-academia-burgundy">5,000+</div>
+                  <div className="text-sm text-academia-sepia">Research</div>
                 </div>
               </div>
             </motion.div>
@@ -246,29 +246,215 @@ export function AboutSection() {
           </div>
         </motion.div>
 
-        {/* Bottom Shelf */}
+        {/* Elegant Academic Library Wall - Complete Redesign */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.5 }}
-          className="academia-shelf"
+          className="relative mt-20"
         >
-          {[...Array(8)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="academia-book-spine h-24 w-6 flex-shrink-0"
-              animate={{
-                rotateY: [0, 5, 0],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-            >
-              Vol. {i + 1}
+          <div className="text-center mb-12">
+            <h3 className="academia-title text-4xl text-academia-gold mb-4">Personal Library</h3>
+            <p className="text-academia-cream opacity-80 text-lg">Curated Collection of Scholarly Works</p>
+          </div>
+
+          {/* Library Wall Container */}
+          <div className="relative bg-gradient-to-b from-academia-charcoal via-academia-surface to-academia-charcoal rounded-2xl p-8 shadow-2xl border border-academia-gold border-opacity-20">
+            {/* Classic Literature Section */}
+            <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: 0.8 }} className="mb-12">
+              <h4 className="text-academia-gold text-xl mb-6 flex items-center gap-2">
+                <BookOpen className="w-5 h-5" />
+                Classic Literature & Philosophy
+              </h4>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                {[
+                  { title: "The Republic", author: "Plato", pages: "380", color: "bg-academia-burgundy" },
+                  { title: "Hamlet", author: "Shakespeare", pages: "342", color: "bg-academia-forest" },
+                  { title: "Divine Comedy", author: "Dante", pages: "798", color: "bg-academia-navy" },
+                  { title: "Don Quixote", author: "Cervantes", pages: "1056", color: "bg-academia-brass" },
+                  { title: "Paradise Lost", author: "Milton", pages: "453", color: "bg-academia-sepia" },
+                  { title: "Odyssey", author: "Homer", pages: "541", color: "bg-academia-burgundy" },
+                ].map((book, i) => (
+                  <motion.div
+                    key={i}
+                    className={`${book.color} rounded-lg p-4 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group`}
+                    whileHover={{ y: -8, rotateY: 5 }}
+                    animate={{
+                      rotateY: [0, 2, 0],
+                      scale: [1, 1.01, 1],
+                    }}
+                    transition={{
+                      duration: 4 + i * 0.5,
+                      repeat: Infinity,
+                      delay: i * 0.3,
+                    }}
+                  >
+                    <div className="h-32 flex flex-col justify-between">
+                      <div>
+                        <h5 className="text-academia-cream font-semibold text-sm mb-1 group-hover:text-academia-gold transition-colors">
+                          {book.title}
+                        </h5>
+                        <p className="text-academia-cream opacity-70 text-xs">{book.author}</p>
+                      </div>
+                      <div className="flex justify-between items-end">
+                        <span className="text-academia-cream opacity-50 text-xs">{book.pages}p</span>
+                        <div className="w-2 h-2 bg-academia-gold rounded-full opacity-60"></div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </motion.div>
-          ))}
+
+            {/* Scientific Works Section */}
+            <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ delay: 1.0 }} className="mb-12">
+              <h4 className="text-academia-gold text-xl mb-6 flex items-center gap-2">
+                <Award className="w-5 h-5" />
+                Scientific & Mathematical Works
+              </h4>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                {[
+                  { title: "Principia", author: "Newton", pages: "687", color: "bg-academia-navy" },
+                  { title: "On the Origin of Species", author: "Darwin", pages: "502", color: "bg-academia-forest" },
+                  { title: "Relativity", author: "Einstein", pages: "365", color: "bg-academia-burgundy" },
+                  { title: "The Art of Computer Programming", author: "Knuth", pages: "3168", color: "bg-academia-brass" },
+                  { title: "A Brief History of Time", author: "Hawking", pages: "256", color: "bg-academia-sepia" },
+                  { title: "The Feynman Lectures", author: "Feynman", pages: "1552", color: "bg-academia-navy" },
+                ].map((book, i) => (
+                  <motion.div
+                    key={i}
+                    className={`${book.color} rounded-lg p-4 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer group`}
+                    whileHover={{ y: -8, rotateY: -5 }}
+                    animate={{
+                      rotateY: [0, -1, 0],
+                      scale: [1, 1.01, 1],
+                    }}
+                    transition={{
+                      duration: 3.5 + i * 0.4,
+                      repeat: Infinity,
+                      delay: i * 0.4,
+                    }}
+                  >
+                    <div className="h-32 flex flex-col justify-between">
+                      <div>
+                        <h5 className="text-academia-cream font-semibold text-sm mb-1 group-hover:text-academia-gold transition-colors">
+                          {book.title}
+                        </h5>
+                        <p className="text-academia-cream opacity-70 text-xs">{book.author}</p>
+                      </div>
+                      <div className="flex justify-between items-end">
+                        <span className="text-academia-cream opacity-50 text-xs">{book.pages}p</span>
+                        <div className="w-2 h-2 bg-academia-gold rounded-full opacity-60"></div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Modern Technical References */}
+            <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }} className="mb-8">
+              <h4 className="text-academia-gold text-xl mb-6 flex items-center gap-2">
+                <Code className="w-5 h-5" />
+                Modern Technical References
+              </h4>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
+                {[
+                  { title: "Clean Code", author: "Martin", color: "bg-academia-forest" },
+                  { title: "Design Patterns", author: "Gang of Four", color: "bg-academia-burgundy" },
+                  { title: "You Don't Know JS", author: "Simpson", color: "bg-academia-navy" },
+                  { title: "React Docs", author: "Meta Team", color: "bg-academia-brass" },
+                  { title: "Next.js Guide", author: "Vercel", color: "bg-academia-sepia" },
+                  { title: "TypeScript Handbook", author: "Microsoft", color: "bg-academia-forest" },
+                  { title: "Node.js Best Practices", author: "Community", color: "bg-academia-burgundy" },
+                  { title: "GraphQL Reference", author: "Facebook", color: "bg-academia-navy" },
+                ].map((book, i) => (
+                  <motion.div
+                    key={i}
+                    className={`${book.color} rounded-md p-3 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer group`}
+                    whileHover={{ y: -5, scale: 1.05 }}
+                    animate={{
+                      rotateY: [0, 1, 0],
+                      y: [0, -2, 0],
+                    }}
+                    transition={{
+                      duration: 3 + i * 0.3,
+                      repeat: Infinity,
+                      delay: i * 0.2,
+                    }}
+                  >
+                    <div className="h-20 flex flex-col justify-between">
+                      <div>
+                        <h5 className="text-academia-cream font-medium text-xs mb-1 group-hover:text-academia-gold transition-colors">
+                          {book.title}
+                        </h5>
+                        <p className="text-academia-cream opacity-60 text-xs">{book.author}</p>
+                      </div>
+                      <div className="w-1 h-1 bg-academia-gold rounded-full opacity-50 self-end"></div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Reading Corner Decoration */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.5 }}
+              className="flex items-center justify-center gap-8 mt-12 pt-8 border-t border-academia-gold border-opacity-20"
+            >
+              <div className="flex items-center gap-2 text-academia-cream opacity-70">
+                <Coffee className="w-5 h-5 text-academia-gold" />
+                <span className="text-sm">Reading Corner</span>
+              </div>
+
+              <div className="flex items-center gap-2 text-academia-cream opacity-70">
+                <Feather className="w-5 h-5 text-academia-gold" />
+                <span className="text-sm">Research Notes</span>
+              </div>
+
+              <div className="flex items-center gap-2 text-academia-cream opacity-70">
+                <Clock className="w-5 h-5 text-academia-gold" />
+                <span className="text-sm">Study Sessions</span>
+              </div>
+            </motion.div>
+
+            {/* Ambient lighting effects */}
+            <div className="absolute inset-0 pointer-events-none">
+              {Array.from({ length: 12 }).map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="absolute w-2 h-2 bg-academia-gold opacity-20 rounded-full"
+                  style={{
+                    left: `${10 + i * 7}%`,
+                    top: `${15 + Math.sin(i * 0.5) * 40}%`,
+                  }}
+                  animate={{
+                    y: [-20, -40, -20],
+                    opacity: [0.2, 0.4, 0.2],
+                    scale: [1, 1.3, 1],
+                  }}
+                  transition={{
+                    duration: 5 + i * 0.3,
+                    repeat: Infinity,
+                    delay: i * 0.7,
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Collection Summary */}
+          <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{ delay: 1.8 }} className="text-center mt-8">
+            <p className="text-academia-gold text-lg italic font-medium mb-2">"Books are a uniquely portable magic" — Stephen King</p>
+            <p className="text-academia-cream text-sm opacity-75">
+              Personal Collection • Classical Literature, Scientific Works & Modern References
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </section>

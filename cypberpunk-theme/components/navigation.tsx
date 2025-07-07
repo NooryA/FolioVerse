@@ -120,15 +120,6 @@ export function Navigation() {
                 CONNECTION: <span className="cyber-connection-secure">SECURE</span>
               </span>
             </div>
-
-            <button className="cyber-cta-btn group">
-              <div className="cyber-cta-bg"></div>
-              <div className="cyber-cta-content">
-                <ZapIcon className="w-4 h-4 group-hover:animate-pulse" />
-                <span>INTERFACE</span>
-              </div>
-              <div className="cyber-cta-scan"></div>
-            </button>
           </div>
 
           {/* Mobile Menu Button */}

@@ -7,6 +7,8 @@ export function HeroSection() {
   const [currentQuote, setCurrentQuote] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
   const [typewriterText, setTypewriterText] = useState("");
+  const [mounted, setMounted] = useState(false);
+  const [floatingElements, setFloatingElements] = useState<Array<{ left: number; top: number; delay: number; duration: number }>>([]);
 
   const quotes = [
     "The only true wisdom is in knowing you know nothing. — Socrates",
@@ -18,7 +20,20 @@ export function HeroSection() {
   const fullText = "Scholar • Researcher • Thinker";
 
   useEffect(() => {
+    setMounted(true);
     setIsVisible(true);
+
+    // Generate fixed beautiful positions instead of random
+    const elements = [
+      { left: 15, top: 20, delay: 0, duration: 5 },
+      { left: 85, top: 15, delay: 0.8, duration: 6 },
+      { left: 10, top: 70, delay: 1.6, duration: 4.5 },
+      { left: 90, top: 60, delay: 2.4, duration: 5.5 },
+      { left: 50, top: 25, delay: 3.2, duration: 5 },
+      { left: 70, top: 80, delay: 4, duration: 4.8 },
+    ];
+    setFloatingElements(elements);
+
     const quoteInterval = setInterval(() => {
       setCurrentQuote((prev) => (prev + 1) % quotes.length);
     }, 5000);
@@ -47,20 +62,21 @@ export function HeroSection() {
 
       {/* Floating book pages */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute opacity-10 animate-float"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.8}s`,
-              animationDuration: `${4 + Math.random() * 2}s`,
-            }}
-          >
-            <Scroll className="w-12 h-12 text-academia-gold transform rotate-12" />
-          </div>
-        ))}
+        {mounted &&
+          floatingElements.map((element, i) => (
+            <div
+              key={i}
+              className="absolute opacity-10 animate-float"
+              style={{
+                left: `${element.left}%`,
+                top: `${element.top}%`,
+                animationDelay: `${element.delay}s`,
+                animationDuration: `${element.duration}s`,
+              }}
+            >
+              <Scroll className="w-12 h-12 text-academia-gold transform rotate-12" />
+            </div>
+          ))}
       </div>
 
       <div className="relative z-10 py-20 px-4 sm:px-6 lg:px-8">

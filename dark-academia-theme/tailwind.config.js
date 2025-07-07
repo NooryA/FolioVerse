@@ -97,6 +97,8 @@ module.exports = {
         typewriter: "typewriter 3s steps(40) forwards",
         "ink-drop": "ink-drop 2s ease-in-out infinite",
         "book-open": "book-open 1s ease-in-out",
+        float: "float 6s ease-in-out infinite",
+        pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
       keyframes: {
         "candle-flicker": {
@@ -148,6 +150,22 @@ module.exports = {
             opacity: "1",
           },
         },
+        float: {
+          "0%, 100%": {
+            transform: "translateY(0px) rotate(0deg)",
+          },
+          "50%": {
+            transform: "translateY(-20px) rotate(180deg)",
+          },
+        },
+        pulse: {
+          "0%, 100%": {
+            opacity: "1",
+          },
+          "50%": {
+            opacity: "0.5",
+          },
+        },
       },
       backdropBlur: {
         xs: "2px",
@@ -163,4 +181,20 @@ module.exports = {
     },
   },
   plugins: [],
+  // Ensure Tailwind doesn't purge our custom classes
+  safelist: [
+    "academia-title",
+    "academia-heading",
+    "academia-body",
+    "academia-quote",
+    "academia-paper",
+    "academia-book-spine",
+    "academia-button",
+    "academia-input",
+    "academia-textarea",
+    "academia-catalog-card",
+    "academia-candle-glow",
+    "academia-scroll",
+    "academia-shelf",
+  ],
 };

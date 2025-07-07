@@ -47,21 +47,18 @@ const ScrollIcon = ({ className }: { className?: string }) => (
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
 
-    const timeInterval = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 1000);
-
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      clearInterval(timeInterval);
     };
   }, []);
 
@@ -72,43 +69,9 @@ export function Navigation() {
     { name: "Contact", href: "#contact", latin: "Epistu" },
   ];
 
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString("en-US", {
-      hour12: false,
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  };
-
   return (
     <>
-      {/* Academic Header Banner */}
-      <div className="academia-header-banner">
-        <div className="academia-banner-content">
-          <div className="academia-banner-left">
-            <div className="academia-crest">
-              <GraduationCapIcon className="w-6 h-6" />
-            </div>
-            <div className="academia-institution">
-              <div className="academia-institution-name">COLLEGIUM DIGITALIS</div>
-              <div className="academia-institution-motto">Scientia et Ars</div>
-            </div>
-          </div>
-          <div className="academia-banner-right">
-            <div className="academia-date">
-              {currentTime.toLocaleDateString("en-US", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </div>
-            <div className="academia-time">{formatTime(currentTime)}</div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Navigation */}
+      {/* Main Navigation - Removed the header banner */}
       <nav className={`academia-nav ${scrolled ? "academia-nav-scrolled" : ""}`}>
         <div className="academia-nav-container">
           {/* Logo & Brand */}
@@ -144,32 +107,18 @@ export function Navigation() {
             </div>
           </div>
 
-          {/* Scholar Tools */}
+          {/* Scholar Tools - Removed language selector */}
           <div className="academia-nav-tools">
-            <div className="academia-language-selector">
-              <button className="academia-lang-btn">
-                <span>EN</span>
-                <div className="academia-lang-dropdown">
-                  <div className="academia-lang-option">English</div>
-                  <div className="academia-lang-option">Latin</div>
-                  <div className="academia-lang-option">Français</div>
-                </div>
-              </button>
-            </div>
-
             <button className="academia-contact-btn group">
-              <div className="academia-contact-bg"></div>
               <div className="academia-contact-content">
                 <FeatherIcon className="w-4 h-4 group-hover:rotate-12 transition-transform" />
                 <span>Correspondence</span>
               </div>
-              <div className="academia-contact-wax-seal"></div>
             </button>
           </div>
 
           {/* Mobile Menu Button */}
           <button className="academia-mobile-toggle md:hidden" onClick={() => setIsOpen(!isOpen)}>
-            <div className="academia-mobile-toggle-bg"></div>
             <div className="academia-mobile-toggle-icon">{isOpen ? <XIcon className="w-5 h-5" /> : <MenuIcon className="w-5 h-5" />}</div>
           </button>
         </div>
@@ -243,21 +192,6 @@ export function Navigation() {
 
       {/* Mobile Backdrop */}
       {isOpen && <div className="academia-mobile-backdrop" onClick={() => setIsOpen(false)} />}
-
-      {/* Floating Academic Elements */}
-      <div className="academia-floating-elements">
-        <div className="academia-floating-quill"></div>
-        <div className="academia-floating-scroll"></div>
-        <div className="academia-floating-ink-well"></div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="academia-scroll-indicator">
-        <div className="academia-scroll-ornament">
-          <ScrollIcon className="w-4 h-4" />
-        </div>
-        <div className="academia-scroll-text">Scroll to Continue</div>
-      </div>
     </>
   );
 }

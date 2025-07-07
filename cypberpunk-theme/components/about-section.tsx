@@ -10,6 +10,13 @@ export function AboutSection() {
 
   const glitchTexts = ["NEURAL_INTERFACE.exe", "CYBER_DEVELOPER.dll", "MATRIX_CODER.sys", "DIGITAL_ARCHITECT.bin"];
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   useEffect(() => {
     const glitchInterval = setInterval(() => {
       setGlitchText(glitchTexts[Math.floor(Math.random() * glitchTexts.length)]);
@@ -231,43 +238,6 @@ export function AboutSection() {
           </motion.div>
         </div>
 
-        {/* Neural Network Visualization */}
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="cyber-border p-8 rounded-lg relative overflow-hidden"
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-900/20 to-blue-900/20" />
-          <h3 className="text-3xl font-orbitron text-center text-purple-400 mb-8">NEURAL_NETWORK.exe</h3>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-            <motion.div className="text-center" whileHover={{ scale: 1.1 }}>
-              <div className="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-cyan-400 flex items-center justify-center cyber-glow">
-                <Code className="w-12 h-12 text-cyan-400" />
-              </div>
-              <h4 className="font-orbitron text-cyan-400 mb-2">INPUT_LAYER</h4>
-              <p className="text-sm text-gray-400 font-jetbrains">Raw data processing and pattern recognition algorithms</p>
-            </motion.div>
-
-            <motion.div className="text-center" whileHover={{ scale: 1.1 }}>
-              <div className="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-pink-400 flex items-center justify-center cyber-glow">
-                <Cpu className="w-12 h-12 text-pink-400" />
-              </div>
-              <h4 className="font-orbitron text-pink-400 mb-2">HIDDEN_LAYER</h4>
-              <p className="text-sm text-gray-400 font-jetbrains">Deep learning and neural pathway optimization</p>
-            </motion.div>
-
-            <motion.div className="text-center" whileHover={{ scale: 1.1 }}>
-              <div className="w-24 h-24 mx-auto mb-4 rounded-full border-2 border-green-400 flex items-center justify-center cyber-glow">
-                <Globe className="w-12 h-12 text-green-400" />
-              </div>
-              <h4 className="font-orbitron text-green-400 mb-2">OUTPUT_LAYER</h4>
-              <p className="text-sm text-gray-400 font-jetbrains">Reality synthesis and digital manifestation</p>
-            </motion.div>
-          </div>
-        </motion.div>
-
         {/* Call to Action */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -276,6 +246,7 @@ export function AboutSection() {
           className="text-center mt-16"
         >
           <motion.button
+            onClick={() => scrollToSection("contact")}
             className="neon-button px-8 py-4 font-orbitron text-lg font-bold relative overflow-hidden group"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}

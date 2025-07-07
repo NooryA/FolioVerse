@@ -1,402 +1,523 @@
 "use client";
-import { useState } from "react";
-
-// Inline SVG Icons
-const SendIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-  </svg>
-);
-
-const PhoneIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-    />
-  </svg>
-);
-
-const EmailIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-    />
-  </svg>
-);
-
-const LocationIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-    />
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-  </svg>
-);
-
-const CalendarIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-    />
-  </svg>
-);
-
-const CheckIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-  </svg>
-);
+import { useState, useEffect, useRef } from "react";
 
 export default function ContactSection() {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    company: "",
+    project: "",
     budget: "",
-    projectType: "",
     timeline: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const [activeField, setActiveField] = useState<string | null>(null);
+  const [particleTrail, setParticleTrail] = useState<Array<{ id: number; x: number; y: number; color: string }>>([]);
+  const sectionRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const newPosition = {
+          x: e.clientX - rect.left,
+          y: e.clientY - rect.top,
+        };
+        setMousePosition(newPosition);
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitStatus("success");
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        budget: "",
-        projectType: "",
-        timeline: "",
-        message: "",
-      });
-    }, 2000);
+        // Create particle trail
+        const colors = ["#8b5cf6", "#ec4899", "#06b6d4", "#10b981", "#f59e0b"];
+        const newParticle = {
+          id: Date.now(),
+          x: newPosition.x,
+          y: newPosition.y,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        };
+
+        setParticleTrail((prev) => [...prev.slice(-10), newParticle]);
+      }
+    };
+
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+        setIsVisible(isInView);
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // Clean up old particles
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setParticleTrail((prev) => prev.filter((particle) => Date.now() - particle.id < 2000));
+    }, 100);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const contactMethods = [
-    {
-      icon: <PhoneIcon className="w-6 h-6" />,
-      title: "Let's Talk",
-      value: "+1 (555) 123-4567",
-      description: "Ready to discuss your project?",
-      gradient: "studio-bg-gradient",
-    },
-    {
-      icon: <EmailIcon className="w-6 h-6" />,
-      title: "Send a Message",
-      value: "hello@creativestudio.com",
-      description: "We'd love to hear from you",
-      gradient: "studio-bg-gradient-secondary",
-    },
-    {
-      icon: <LocationIcon className="w-6 h-6" />,
-      title: "Visit Our Studio",
-      value: "123 Creative St, Design City",
-      description: "Coffee and creativity await",
-      gradient: "studio-bg-gradient-warm",
-    },
-    {
-      icon: <CalendarIcon className="w-6 h-6" />,
-      title: "Book a Meeting",
-      value: "Schedule a consultation",
-      description: "Free 30-minute discovery call",
-      gradient: "studio-bg-gradient-cool",
-    },
+  const projectTypes = [
+    { id: "branding", label: "Brand Universe Creation", icon: "🌟", color: "from-purple-500 to-pink-500" },
+    { id: "web", label: "Web Portal Development", icon: "🌐", color: "from-blue-500 to-cyan-500" },
+    { id: "mobile", label: "Mobile Reality Apps", icon: "📱", color: "from-green-500 to-teal-500" },
+    { id: "strategy", label: "Cosmic Strategy", icon: "🚀", color: "from-orange-500 to-red-500" },
   ];
 
-  const faqs = [
+  const budgetRanges = [
+    { id: "startup", label: "$5K - $15K", desc: "Startup Universe", icon: "🌱" },
+    { id: "growth", label: "$15K - $50K", desc: "Growth Galaxy", icon: "🌌" },
+    { id: "enterprise", label: "$50K - $100K", desc: "Enterprise Empire", icon: "🏰" },
+    { id: "infinite", label: "$100K+", desc: "Infinite Possibilities", icon: "♾️" },
+  ];
+
+  const timelineOptions = [
+    { id: "rush", label: "1-2 Months", desc: "Warp Speed", icon: "⚡" },
+    { id: "normal", label: "2-4 Months", desc: "Cruise Control", icon: "🛸" },
+    { id: "extended", label: "4-6 Months", desc: "Epic Journey", icon: "🌠" },
+    { id: "flexible", label: "Flexible", desc: "Timeless Creation", icon: "🔮" },
+  ];
+
+  const contactInfo = [
     {
-      question: "What's your typical project timeline?",
-      answer: "Most projects take 6-12 weeks depending on scope. We'll give you a detailed timeline during our discovery call.",
+      type: "Interdimensional HQ",
+      value: "123 Creative Cosmos Ave\nDigital Dimension 90210",
+      icon: "🏢",
+      gradient: "from-purple-500 to-pink-500",
     },
     {
-      question: "Do you work with startups?",
-      answer: "Absolutely! We love working with innovative startups and have special packages designed for growing businesses.",
+      type: "Quantum Communication",
+      value: "hello@creativestudio.universe\n+1 (555) COSMIC-1",
+      icon: "📡",
+      gradient: "from-blue-500 to-cyan-500",
     },
     {
-      question: "What's included in your design process?",
-      answer:
-        "Our process includes research, strategy, design, development, testing, and launch support. We're with you every step of the way.",
-    },
-    {
-      question: "Can you work within our budget?",
-      answer: "We offer flexible solutions for various budgets. Let's discuss your needs and find the perfect approach for your project.",
+      type: "Social Galaxies",
+      value: "@creativestudio\nLinked across all dimensions",
+      icon: "🌐",
+      gradient: "from-green-500 to-teal-500",
     },
   ];
 
   return (
-    <section id="contact" className="studio-section-lg bg-gradient-to-br from-gray-50 to-white">
-      <div className="studio-container">
+    <section
+      id="contact"
+      ref={sectionRef}
+      className="min-h-screen py-20 relative overflow-hidden"
+      style={{
+        background: `
+          linear-gradient(135deg, 
+            #0f0f23 0%, 
+            #1a1a2e 20%, 
+            #16213e 40%, 
+            #2d1b69 60%, 
+            #581c87 80%, 
+            #7c2d12 100%
+          ),
+          radial-gradient(circle at 30% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 70% 80%, rgba(236, 72, 153, 0.15) 0%, transparent 50%),
+          radial-gradient(circle at 20% 70%, rgba(6, 182, 212, 0.1) 0%, transparent 40%)
+        `,
+      }}
+    >
+      {/* Static Creative Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        {/* Top Left Constellation */}
+        <div className="absolute top-20 left-20 w-32 h-32 opacity-20">
+          <div className="absolute top-0 left-0 w-2 h-2 bg-purple-400 rounded-full"></div>
+          <div className="absolute top-8 left-12 w-1 h-1 bg-pink-400 rounded-full"></div>
+          <div className="absolute top-16 left-6 w-1.5 h-1.5 bg-cyan-400 rounded-full"></div>
+          <div className="absolute top-24 left-20 w-1 h-1 bg-purple-300 rounded-full"></div>
+          <div className="absolute top-12 left-24 w-1.5 h-1.5 bg-pink-300 rounded-full"></div>
+        </div>
+
+        {/* Top Right Geometric */}
+        <div className="absolute top-32 right-32 w-24 h-24 opacity-15">
+          <div className="w-full h-full border border-purple-400/30 rounded-lg rotate-45 backdrop-blur-sm"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 bg-gradient-to-br from-purple-400 to-pink-400 rounded-full"></div>
+        </div>
+
+        {/* Bottom Left Circle */}
+        <div className="absolute bottom-40 left-40 w-20 h-20 opacity-10">
+          <div className="w-full h-full border-2 border-cyan-400/40 rounded-full"></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-cyan-400 rounded-full"></div>
+        </div>
+
+        {/* Bottom Right Stars */}
+        <div className="absolute bottom-20 right-20 w-40 h-40 opacity-25">
+          <div className="absolute top-0 right-0 w-1 h-1 bg-yellow-400 rounded-full"></div>
+          <div className="absolute top-8 right-12 w-1.5 h-1.5 bg-orange-400 rounded-full"></div>
+          <div className="absolute top-16 right-6 w-1 h-1 bg-pink-400 rounded-full"></div>
+          <div className="absolute top-24 right-20 w-1.5 h-1.5 bg-purple-400 rounded-full"></div>
+        </div>
+
+        {/* Center Floating Elements */}
+        <div className="absolute top-1/2 left-1/4 transform -translate-y-1/2 w-16 h-16 opacity-10">
+          <div className="w-full h-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 rounded-full blur-sm"></div>
+        </div>
+
+        <div className="absolute top-1/3 right-1/4 w-12 h-12 opacity-15">
+          <div className="w-full h-full bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-lg rotate-12 blur-sm"></div>
+        </div>
+
+        {/* Subtle Grid Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div
+            className="w-full h-full"
+            style={{
+              backgroundImage: `
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
+              `,
+              backgroundSize: "60px 60px",
+            }}
+          ></div>
+        </div>
+      </div>
+
+      {/* Enhanced Mouse Trail (Only Interactive Element) */}
+      <div className="absolute inset-0 pointer-events-none">
+        {particleTrail.map((particle, index) => (
+          <div
+            key={particle.id}
+            className="absolute rounded-full"
+            style={{
+              left: particle.x,
+              top: particle.y,
+              width: "2px",
+              height: "2px",
+              backgroundColor: particle.color,
+              opacity: Math.max(0, 0.4 - (Date.now() - particle.id) / 3000),
+              transition: "opacity 0.3s ease-out",
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section Header */}
-        <div className="text-center mb-16 studio-animate-fadeInUp">
-          <div className="studio-badge studio-badge-primary mb-4">💌 Let's Create Together</div>
-          <h2 className="font-display text-5xl lg:text-6xl font-bold mb-6">
-            Ready to Start Your
-            <br />
-            <span className="studio-text-gradient-rainbow">Creative Journey?</span>
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Whether you have a clear vision or just a spark of an idea, we're here to help bring your creative dreams to life. Let's chat
-            about your next big project!
-          </p>
-        </div>
+        <div
+          className={`text-center mb-20 transition-all duration-1000 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"
+          }`}
+        >
+          <div className="relative">
+            {/* Creative Badge */}
+            <div className="inline-flex items-center gap-3 mb-8 px-8 py-4 bg-white/5 rounded-full border border-white/10 backdrop-blur-md">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                <span className="text-xl">🚀</span>
+              </div>
+              <span className="text-white font-medium text-lg">Launch Your Vision</span>
+              <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
+            </div>
 
-        {/* Contact Methods Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-          {contactMethods.map((method, index) => (
-            <div key={index} className="studio-card group cursor-pointer">
-              <div className="studio-card-content text-center">
-                <div
-                  className={`w-16 h-16 ${method.gradient} rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}
-                >
-                  <div className="text-white">{method.icon}</div>
-                </div>
-                <h4 className="font-display text-xl font-bold mb-2 studio-text-gradient">{method.title}</h4>
-                <p className="font-semibold text-gray-900 mb-2">{method.value}</p>
-                <p className="text-gray-600 text-sm">{method.description}</p>
+            {/* Elegant Title */}
+            <h2 className="text-6xl md:text-8xl font-black mb-8 text-white leading-tight">
+              <span className="block mb-4">Ready to Create</span>
+              <span className="block bg-gradient-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                Digital Magic?
+              </span>
+            </h2>
+
+            {/* Professional Subtitle */}
+            <div className="max-w-4xl mx-auto">
+              <p className="text-xl md:text-2xl text-gray-300 leading-relaxed mb-8">
+                Let's transcend the ordinary together. Tell us about your impossible dream, and we'll show you how to make it reality.
+              </p>
+
+              {/* Subtle Accent Elements */}
+              <div className="flex justify-center items-center gap-4 opacity-40">
+                <div className="w-1 h-1 bg-purple-400 rounded-full"></div>
+                <div className="w-8 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                <div className="w-2 h-2 bg-pink-400 rounded-full"></div>
+                <div className="w-8 h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
+                <div className="w-1 h-1 bg-cyan-400 rounded-full"></div>
               </div>
             </div>
-          ))}
+          </div>
         </div>
 
-        {/* Main Contact Form */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
-          {/* Contact Form */}
-          <div className="studio-contact-form">
-            <h3 className="font-display text-3xl font-bold mb-6 studio-text-gradient">Tell Us About Your Project</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {/* Contact Form Portal */}
+          <div
+            className={`transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-20"}`}
+          >
+            <div className="relative p-8 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10">
+              <div
+                className="absolute inset-0 rounded-3xl opacity-10 transition-all duration-300"
+                style={{
+                  background: `linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%)`,
+                }}
+              />
 
-            {submitStatus === "success" ? (
-              <div className="text-center py-12">
-                <div className="w-20 h-20 studio-bg-gradient rounded-full flex items-center justify-center mx-auto mb-6">
-                  <CheckIcon className="w-10 h-10 text-white" />
-                </div>
-                <h4 className="font-display text-2xl font-bold mb-4 studio-text-gradient">Message Sent! ✨</h4>
-                <p className="text-gray-600 mb-6 leading-relaxed">
-                  Thanks for reaching out! We'll get back to you within 24 hours with some creative ideas.
-                </p>
-                <button onClick={() => setSubmitStatus("idle")} className="studio-btn studio-btn-outline">
-                  Send Another Message
-                </button>
-              </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="studio-form-group">
-                    <label className="studio-form-label">Your Name *</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="studio-form-input"
-                      placeholder="John Doe"
-                      required
+              <div className="relative z-10">
+                <h3 className="text-3xl font-black text-white mb-8">
+                  Project Brief
+                  <span className="block text-lg font-normal text-gray-400">Tell us about your universe</span>
+                </h3>
+
+                <form className="space-y-8">
+                  {/* Name & Email */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="relative">
+                      <input
+                        type="text"
+                        placeholder="Your cosmic name"
+                        value={formData.name}
+                        onChange={(e) => handleInputChange("name", e.target.value)}
+                        onFocus={() => setActiveField("name")}
+                        onBlur={() => setActiveField(null)}
+                        className={`w-full px-6 py-4 bg-white/5 border-2 rounded-2xl text-white placeholder-gray-400 backdrop-blur-sm transition-all duration-300 ${
+                          activeField === "name" ? "border-pink-500 shadow-lg shadow-pink-500/20" : "border-white/10 hover:border-white/20"
+                        }`}
+                      />
+                      {activeField === "name" && (
+                        <div className="absolute -top-2 left-4 px-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-xs rounded-full">
+                          Identity Required
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="relative">
+                      <input
+                        type="email"
+                        placeholder="Quantum email address"
+                        value={formData.email}
+                        onChange={(e) => handleInputChange("email", e.target.value)}
+                        onFocus={() => setActiveField("email")}
+                        onBlur={() => setActiveField(null)}
+                        className={`w-full px-6 py-4 bg-white/5 border-2 rounded-2xl text-white placeholder-gray-400 backdrop-blur-sm transition-all duration-300 ${
+                          activeField === "email" ? "border-cyan-500 shadow-lg shadow-cyan-500/20" : "border-white/10 hover:border-white/20"
+                        }`}
+                      />
+                      {activeField === "email" && (
+                        <div className="absolute -top-2 left-4 px-2 bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs rounded-full">
+                          Communication Portal
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Project Type */}
+                  <div>
+                    <label className="block text-white font-bold mb-4">What universe are we creating?</label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {projectTypes.map((type) => (
+                        <button
+                          key={type.id}
+                          type="button"
+                          onClick={() => handleInputChange("project", type.id)}
+                          className={`p-4 rounded-2xl border-2 transition-all duration-300 group relative overflow-hidden ${
+                            formData.project === type.id
+                              ? "border-white bg-white/10 scale-105"
+                              : "border-white/10 hover:border-white/30 hover:bg-white/5"
+                          }`}
+                        >
+                          <div
+                            className={`absolute inset-0 bg-gradient-to-br ${type.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
+                          />
+                          <div className="relative flex items-center gap-3">
+                            <span className="text-2xl">{type.icon}</span>
+                            <span className="text-white font-medium">{type.label}</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Budget Range */}
+                  <div>
+                    <label className="block text-white font-bold mb-4">Investment level for your vision</label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {budgetRanges.map((budget) => (
+                        <button
+                          key={budget.id}
+                          type="button"
+                          onClick={() => handleInputChange("budget", budget.id)}
+                          className={`p-4 rounded-2xl border-2 transition-all duration-300 group relative overflow-hidden ${
+                            formData.budget === budget.id
+                              ? "border-green-400 bg-green-400/10 scale-105"
+                              : "border-white/10 hover:border-white/30 hover:bg-white/5"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="text-left">
+                              <div className="text-white font-medium">{budget.label}</div>
+                              <div className="text-gray-400 text-sm">{budget.desc}</div>
+                            </div>
+                            <span className="text-xl">{budget.icon}</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Timeline */}
+                  <div>
+                    <label className="block text-white font-bold mb-4">When do we launch to the stars?</label>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {timelineOptions.map((timeline) => (
+                        <button
+                          key={timeline.id}
+                          type="button"
+                          onClick={() => handleInputChange("timeline", timeline.id)}
+                          className={`p-4 rounded-2xl border-2 transition-all duration-300 group relative overflow-hidden ${
+                            formData.timeline === timeline.id
+                              ? "border-orange-400 bg-orange-400/10 scale-105"
+                              : "border-white/10 hover:border-white/30 hover:bg-white/5"
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <div className="text-left">
+                              <div className="text-white font-medium">{timeline.label}</div>
+                              <div className="text-gray-400 text-sm">{timeline.desc}</div>
+                            </div>
+                            <span className="text-xl">{timeline.icon}</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Message */}
+                  <div className="relative">
+                    <textarea
+                      placeholder="Describe your impossible dream... we specialize in making the impossible possible."
+                      value={formData.message}
+                      onChange={(e) => handleInputChange("message", e.target.value)}
+                      onFocus={() => setActiveField("message")}
+                      onBlur={() => setActiveField(null)}
+                      rows={6}
+                      className={`w-full px-6 py-4 bg-white/5 border-2 rounded-2xl text-white placeholder-gray-400 backdrop-blur-sm transition-all duration-300 resize-none ${
+                        activeField === "message"
+                          ? "border-purple-500 shadow-lg shadow-purple-500/20"
+                          : "border-white/10 hover:border-white/20"
+                      }`}
                     />
+                    {activeField === "message" && (
+                      <div className="absolute -top-2 left-4 px-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs rounded-full">
+                        Vision Portal
+                      </div>
+                    )}
                   </div>
-                  <div className="studio-form-group">
-                    <label className="studio-form-label">Email Address *</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="studio-form-input"
-                      placeholder="john@company.com"
-                      required
-                    />
-                  </div>
-                </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="studio-form-group">
-                    <label className="studio-form-label">Company/Organization</label>
-                    <input
-                      type="text"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleChange}
-                      className="studio-form-input"
-                      placeholder="Awesome Company Inc."
-                    />
-                  </div>
-                  <div className="studio-form-group">
-                    <label className="studio-form-label">Project Budget</label>
-                    <select name="budget" value={formData.budget} onChange={handleChange} className="studio-form-input">
-                      <option value="">Select budget range</option>
-                      <option value="under-10k">Under $10,000</option>
-                      <option value="10k-25k">$10,000 - $25,000</option>
-                      <option value="25k-50k">$25,000 - $50,000</option>
-                      <option value="50k-100k">$50,000 - $100,000</option>
-                      <option value="100k-plus">$100,000+</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="studio-form-group">
-                    <label className="studio-form-label">Project Type *</label>
-                    <select name="projectType" value={formData.projectType} onChange={handleChange} className="studio-form-input" required>
-                      <option value="">What do you need?</option>
-                      <option value="branding">Brand Identity</option>
-                      <option value="website">Website Design</option>
-                      <option value="mobile-app">Mobile App</option>
-                      <option value="ui-ux">UI/UX Design</option>
-                      <option value="consulting">Design Consulting</option>
-                      <option value="other">Something Else</option>
-                    </select>
-                  </div>
-                  <div className="studio-form-group">
-                    <label className="studio-form-label">Timeline</label>
-                    <select name="timeline" value={formData.timeline} onChange={handleChange} className="studio-form-input">
-                      <option value="">When do you need this?</option>
-                      <option value="asap">ASAP</option>
-                      <option value="1-month">Within 1 month</option>
-                      <option value="2-3-months">2-3 months</option>
-                      <option value="3-6-months">3-6 months</option>
-                      <option value="flexible">I'm flexible</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="studio-form-group">
-                  <label className="studio-form-label">Tell us about your project *</label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={5}
-                    className="studio-form-input studio-form-textarea"
-                    placeholder="Describe your vision, goals, and any specific requirements. The more details you share, the better we can help!"
-                    required
-                  />
-                </div>
-
-                <button type="submit" disabled={isSubmitting} className="studio-btn studio-btn-primary studio-btn-large w-full">
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Sending Magic...
+                  {/* Submit Button */}
+                  <button
+                    type="submit"
+                    className="w-full group relative px-8 py-6 bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl text-xl font-bold text-white overflow-hidden hover:scale-105 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/50"
+                  >
+                    <span className="relative z-10 flex items-center justify-center gap-3">
+                      <span>Launch Our Collaboration</span>
+                      <span className="text-2xl group-hover:rotate-12 transition-transform duration-300">🚀</span>
                     </span>
-                  ) : (
-                    <>
-                      Send Message
-                      <SendIcon className="w-5 h-5" />
-                    </>
-                  )}
-                </button>
-              </form>
-            )}
-          </div>
-
-          {/* Additional Info */}
-          <div className="space-y-8">
-            {/* Quick Info */}
-            <div className="studio-card">
-              <div className="studio-card-content">
-                <h4 className="font-display text-2xl font-bold mb-6 studio-text-gradient">Let's Make Magic Happen ✨</h4>
-                <div className="space-y-4 text-gray-600 leading-relaxed">
-                  <p>
-                    <strong className="text-gray-900">Response Time:</strong> We typically respond within 4-6 hours during business days.
-                  </p>
-                  <p>
-                    <strong className="text-gray-900">Free Consultation:</strong> Every project starts with a complimentary discovery call
-                    to understand your vision.
-                  </p>
-                  <p>
-                    <strong className="text-gray-900">Collaborative Process:</strong> We believe the best work comes from close
-                    collaboration with our clients.
-                  </p>
-                  <p>
-                    <strong className="text-gray-900">Ongoing Support:</strong> Our relationship doesn't end at launch - we're here for the
-                    long haul.
-                  </p>
-                </div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 bg-white/20 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                  </button>
+                </form>
               </div>
             </div>
+          </div>
 
-            {/* Social Links */}
-            <div className="studio-card">
-              <div className="studio-card-content text-center">
-                <h4 className="font-display text-xl font-bold mb-4 studio-text-gradient">Follow Our Journey</h4>
-                <div className="flex justify-center gap-4">
-                  {["Instagram", "Dribbble", "Behance", "Twitter"].map((platform, index) => (
-                    <a
-                      key={platform}
-                      href="#"
-                      className="w-12 h-12 studio-bg-gradient rounded-full flex items-center justify-center text-white hover:scale-110 transition-transform"
-                      style={{ animationDelay: `${index * 0.1}s` }}
+          {/* Contact Information & Map */}
+          <div className={`transition-all duration-1000 delay-600 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20"}`}>
+            <div className="space-y-8">
+              {/* Contact Cards */}
+              {contactInfo.map((info, index) => (
+                <div
+                  key={index}
+                  className="group relative p-6 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-500 cursor-pointer"
+                  style={{
+                    animationDelay: `${index * 0.2}s`,
+                  }}
+                >
+                  <div
+                    className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${info.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}
+                  />
+
+                  <div className="relative flex items-start gap-4">
+                    <div
+                      className={`w-16 h-16 rounded-full bg-gradient-to-br ${info.gradient} flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300`}
                     >
-                      <span className="text-sm font-bold">{platform[0]}</span>
-                    </a>
-                  ))}
+                      {info.icon}
+                    </div>
+
+                    <div>
+                      <h4 className="text-xl font-bold text-white mb-2">{info.type}</h4>
+                      <p className="text-gray-300 leading-relaxed whitespace-pre-line">{info.value}</p>
+                    </div>
+                  </div>
                 </div>
+              ))}
+
+              {/* Interactive Universe Map */}
+              <div className="relative p-8 rounded-3xl bg-white/5 backdrop-blur-sm border border-white/10 group overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 via-pink-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <div className="relative">
+                  <h4 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+                    <span>🌌</span>
+                    Our Creative Universe
+                  </h4>
+
+                  <div className="aspect-video bg-gradient-to-br from-purple-900/20 to-pink-900/20 rounded-2xl border border-white/10 relative overflow-hidden">
+                    {/* Static Constellation Pattern */}
+                    <div className="absolute inset-0">
+                      <div className="absolute top-1/4 left-1/4 w-1 h-1 bg-white/30 rounded-full" />
+                      <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-white/20 rounded-full" />
+                      <div className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-white/25 rounded-full" />
+                      <div className="absolute bottom-1/4 right-1/4 w-1 h-1 bg-white/20 rounded-full" />
+                      <div className="absolute top-1/2 left-1/6 w-1 h-1 bg-white/15 rounded-full" />
+                      <div className="absolute top-1/6 right-1/6 w-1 h-1 bg-white/20 rounded-full" />
+                    </div>
+
+                    {/* Center Hub with Pink Pulse */}
+                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                      <div className="w-8 h-8 bg-gradient-to-br from-pink-500 to-purple-500 rounded-full animate-pulse shadow-lg shadow-pink-500/50" />
+                      <div className="absolute top-10 left-1/2 transform -translate-x-1/2 text-white text-sm whitespace-nowrap">
+                        Creative HQ
+                      </div>
+                    </div>
+
+                    {/* Static Connection Lines */}
+                    <svg className="absolute inset-0 w-full h-full opacity-10">
+                      <line x1="25%" y1="25%" x2="50%" y2="50%" stroke="rgba(236, 72, 153, 0.3)" strokeWidth="1" />
+                      <line x1="75%" y1="25%" x2="50%" y2="50%" stroke="rgba(139, 92, 246, 0.3)" strokeWidth="1" />
+                      <line x1="25%" y1="75%" x2="50%" y2="50%" stroke="rgba(236, 72, 153, 0.2)" strokeWidth="1" />
+                    </svg>
+                  </div>
+
+                  <p className="text-gray-400 text-sm mt-4 text-center">
+                    Operating across all dimensions • Available 24/7 in the metaverse
+                  </p>
+                </div>
+              </div>
+
+              {/* Quick Connect */}
+              <div className="text-center p-8 rounded-3xl bg-gradient-to-br from-purple-900/20 to-pink-900/20 border border-white/10">
+                <h4 className="text-2xl font-bold text-white mb-4">Need Instant Cosmic Consultation?</h4>
+                <p className="text-gray-300 mb-6">Book a 30-minute reality-bending session with our interdimensional team.</p>
+                <button className="group px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full text-white font-bold hover:scale-105 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30">
+                  <span className="flex items-center gap-2">
+                    <span>📅</span>
+                    Schedule Cosmic Meeting
+                    <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
+                  </span>
+                </button>
               </div>
             </div>
-
-            {/* Office Hours */}
-            <div className="studio-card">
-              <div className="studio-card-content">
-                <h4 className="font-display text-xl font-bold mb-4 studio-text-gradient">Studio Hours</h4>
-                <div className="space-y-2 text-gray-600">
-                  <div className="flex justify-between">
-                    <span>Monday - Friday</span>
-                    <span className="font-semibold">9:00 AM - 6:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Saturday</span>
-                    <span className="font-semibold">10:00 AM - 4:00 PM</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Sunday</span>
-                    <span className="font-semibold">Closed</span>
-                  </div>
-                  <div className="mt-4 p-3 bg-yellow-50 rounded-lg text-sm">
-                    <strong className="text-yellow-800">Emergency Projects:</strong> Available 24/7 for urgent requests
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* FAQ Section */}
-        <div>
-          <h3 className="font-display text-3xl font-bold text-center mb-12 studio-text-gradient">Frequently Asked Questions</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {faqs.map((faq, index) => (
-              <div key={index} className="studio-card">
-                <div className="studio-card-content">
-                  <h4 className="font-display text-lg font-bold mb-3 studio-text-gradient">{faq.question}</h4>
-                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </div>

@@ -250,40 +250,6 @@ export function ContactSection() {
                 </div>
               </motion.div>
             ))}
-
-            {/* Status Panel */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="cyber-border p-6 rounded-lg bg-black/50"
-            >
-              <h4 className="font-orbitron text-yellow-400 mb-4 flex items-center gap-2">
-                <Terminal className="w-5 h-5" />
-                SYSTEM_STATUS
-              </h4>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300 font-jetbrains">Response Time</span>
-                  <span className="text-green-400 font-jetbrains">&lt; 24 hours</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300 font-jetbrains">Encryption Level</span>
-                  <span className="text-green-400 font-jetbrains">AES-256</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300 font-jetbrains">Server Status</span>
-                  <span className="text-green-400 font-jetbrains flex items-center gap-1">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    ONLINE
-                  </span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-300 font-jetbrains">Uptime</span>
-                  <span className="text-cyan-400 font-jetbrains">99.9%</span>
-                </div>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
 

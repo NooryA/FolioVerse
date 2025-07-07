@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Send, Mail, Phone, MapPin, Coffee, BookOpen, Pen, Quote } from "lucide-react";
 
 export function ContactSection() {
@@ -13,6 +13,8 @@ export function ContactSection() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const [currentQuoteIndex, setCurrentQuoteIndex] = useState(0);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +46,12 @@ export function ContactSection() {
     "In digital ink, we write the future of discourse.",
     "Let us discourse as scholars once did by candlelight.",
   ];
+
+  useEffect(() => {
+    setMounted(true);
+    // Set initial random quote only after mounting
+    setCurrentQuoteIndex(Math.floor(Math.random() * scholarlyQuotes.length));
+  }, []);
 
   const contactMethods = [
     {
@@ -93,8 +101,8 @@ export function ContactSection() {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="academia-title text-5xl md:text-6xl mb-4">Scholarly Correspondence</h2>
-          <p className="academia-body text-lg max-w-3xl mx-auto">
+          <h2 className="academia-title text-5xl md:text-6xl mb-4 text-academia-gold">Scholarly Correspondence</h2>
+          <p className="academia-body text-lg max-w-3xl mx-auto text-academia-cream opacity-90">
             In the tradition of great academic discourse, I welcome thoughtful correspondence and collaboration opportunities. Let us
             exchange ideas as scholars have for centuries.
           </p>
@@ -109,7 +117,7 @@ export function ContactSection() {
                 <Pen className="w-4 h-4 text-academia-gold" />
               </div>
 
-              <h3 className="academia-heading text-2xl mb-6 flex items-center gap-2">
+              <h3 className="academia-heading text-2xl mb-6 flex items-center gap-2 text-academia-ink">
                 <BookOpen className="w-6 h-6 text-academia-gold" />
                 Compose Your Letter
               </h3>
@@ -224,7 +232,7 @@ I am writing to..."
             transition={{ duration: 0.8 }}
             className="space-y-6"
           >
-            <h3 className="academia-heading text-2xl mb-6 flex items-center gap-2">
+            <h3 className="academia-heading text-2xl mb-6 flex items-center gap-2 text-academia-gold">
               <Mail className="w-6 h-6 text-academia-gold" />
               Ways to Reach the Scholar
             </h3>
@@ -236,16 +244,16 @@ I am writing to..."
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 }}
                 whileHover={{ scale: 1.02, rotate: 0.5 }}
-                className="academia-catalog-card relative"
+                className="academia-catalog-card relative bg-academia-cream"
               >
                 <div className="flex items-start gap-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-academia-gold rounded-full flex items-center justify-center">
                     <method.icon className="w-6 h-6 text-academia-ink" />
                   </div>
                   <div className="flex-1">
-                    <h4 className="academia-heading text-lg mb-1">{method.title}</h4>
-                    <p className="text-academia-text-primary font-semibold mb-1">{method.value}</p>
-                    <p className="academia-body text-sm mb-2">{method.description}</p>
+                    <h4 className="academia-heading text-lg mb-1 text-academia-ink">{method.title}</h4>
+                    <p className="text-academia-burgundy font-semibold mb-1">{method.value}</p>
+                    <p className="academia-body text-sm mb-2 text-academia-sepia">{method.description}</p>
                     <p className="text-xs text-academia-sepia italic">{method.available}</p>
                   </div>
                 </div>
@@ -260,13 +268,15 @@ I am writing to..."
               className="academia-scroll mt-8"
             >
               <motion.blockquote
-                className="academia-quote text-center"
+                className="academia-quote text-center text-academia-gold"
                 animate={{ opacity: [0.7, 1, 0.7] }}
                 transition={{ duration: 4, repeat: Infinity }}
               >
-                {scholarlyQuotes[Math.floor(Math.random() * scholarlyQuotes.length)]}
+                {mounted ? scholarlyQuotes[currentQuoteIndex] : scholarlyQuotes[0]}
               </motion.blockquote>
-              <p className="text-center mt-4 academia-body text-sm">— From the Scholar's Reflections on Communication</p>
+              <p className="text-center mt-4 academia-body text-sm text-academia-gold opacity-80">
+                — From the Scholar's Reflections on Communication
+              </p>
             </motion.div>
           </motion.div>
         </div>
@@ -278,33 +288,33 @@ I am writing to..."
           transition={{ delay: 0.6 }}
           className="academia-scroll text-center"
         >
-          <h3 className="academia-heading text-2xl mb-8 flex items-center justify-center gap-2">
+          <h3 className="academia-heading text-2xl mb-8 flex items-center justify-center gap-2 text-academia-gold">
             <Coffee className="w-6 h-6 text-academia-gold" />
             The Scholar's Schedule
           </h3>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="academia-catalog-card">
-              <h4 className="academia-heading text-lg mb-2">Research Hours</h4>
-              <div className="space-y-1 text-sm">
+            <div className="academia-catalog-card bg-academia-cream">
+              <h4 className="academia-heading text-lg mb-2 text-academia-burgundy">Research Hours</h4>
+              <div className="space-y-1 text-sm text-academia-ink">
                 <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
                 <p>Saturday: 10:00 AM - 2:00 PM</p>
                 <p>Sunday: By appointment only</p>
               </div>
             </div>
 
-            <div className="academia-catalog-card">
-              <h4 className="academia-heading text-lg mb-2">Collaboration Time</h4>
-              <div className="space-y-1 text-sm">
+            <div className="academia-catalog-card bg-academia-cream">
+              <h4 className="academia-heading text-lg mb-2 text-academia-burgundy">Collaboration Time</h4>
+              <div className="space-y-1 text-sm text-academia-ink">
                 <p>Tuesday & Thursday: 2:00 PM - 4:00 PM</p>
                 <p>Open office hours for discussions</p>
                 <p>Coffee meetings welcomed</p>
               </div>
             </div>
 
-            <div className="academia-catalog-card">
-              <h4 className="academia-heading text-lg mb-2">Response Time</h4>
-              <div className="space-y-1 text-sm">
+            <div className="academia-catalog-card bg-academia-cream">
+              <h4 className="academia-heading text-lg mb-2 text-academia-burgundy">Response Time</h4>
+              <div className="space-y-1 text-sm text-academia-ink">
                 <p>Email: Within 24 hours</p>
                 <p>Project inquiries: 2-3 business days</p>
                 <p>Urgent matters: Same day</p>
