@@ -83,10 +83,6 @@ export function AboutSection() {
       <div className="clay-container">
         {/* Section Header */}
         <div className="text-center mb-16">
-          <div className="clay-badge mb-6">
-            <UserIcon className="w-5 h-5" />
-            My Story
-          </div>
           <h2 className="clay-heading text-5xl md:text-6xl mb-6">
             The Journey of a <span className="clay-text-gradient">Digital Architect</span>
           </h2>
