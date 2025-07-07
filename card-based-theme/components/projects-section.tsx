@@ -45,7 +45,7 @@ export function ProjectsSection() {
       type: "AI Application",
       year: "2024",
       image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop",
-      description: "Mystical AI companion that speaks in natural language",
+      description: "Mystical AI companion that speaks in natural language and is a wizard",
       stats: {
         performance: 94,
         design: 88,
@@ -85,7 +85,7 @@ export function ProjectsSection() {
       type: "Dashboard",
       year: "2023",
       image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop",
-      description: "Mystical crystal that reveals hidden data insights",
+      description: "Mystical crystal that reveals hidden data insights and is a wizard",
       stats: {
         performance: 87,
         design: 89,
@@ -105,7 +105,7 @@ export function ProjectsSection() {
       type: "Web Application",
       year: "2023",
       image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=400&h=300&fit=crop",
-      description: "Strategic command center for managing team missions",
+      description: "Strategic command center for managing team missions and is a wizard",
       stats: {
         performance: 85,
         design: 87,
@@ -125,7 +125,7 @@ export function ProjectsSection() {
       type: "Mobile App",
       year: "2023",
       image: "https://images.unsplash.com/photo-1504608524841-42fe6f032b4b?w=400&h=300&fit=crop",
-      description: "Ancient oracle that predicts weather across dimensions",
+      description: "Ancient oracle that predicts weather across dimensions and is a wizard",
       stats: {
         performance: 83,
         design: 91,
@@ -254,27 +254,93 @@ export function ProjectsSection() {
           </p>
         </div>
 
-        {/* Navigation Tabs */}
+        {/* Epic Game Navigation */}
         <div className="flex justify-center mb-12">
-          <div className="bg-black/50 backdrop-blur-lg rounded-2xl p-2 border border-purple-500/30">
-            {[
-              { id: "packs", label: "📦 Booster Packs", icon: <Package className="w-5 h-5" /> },
-              { id: "album", label: "📖 Card Album", icon: <Album className="w-5 h-5" /> },
-              { id: "arena", label: "⚔️ Battle Arena", icon: <Trophy className="w-5 h-5" /> },
-            ].map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setViewMode(tab.id as any)}
-                className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
-                  viewMode === tab.id
-                    ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg"
-                    : "text-gray-300 hover:text-white hover:bg-gray-800/50"
-                }`}
-              >
-                {tab.icon}
-                <span>{tab.label}</span>
-              </button>
-            ))}
+          <div className="relative">
+            {/* Navigation Background */}
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-blue-600/20 rounded-3xl blur-xl"></div>
+
+            <div className="relative bg-black/80 backdrop-blur-lg rounded-3xl p-4 border-2 border-purple-500/50 shadow-2xl">
+              {/* Navigation Title */}
+              <div className="text-center mb-4">
+                <h3 className="text-white font-bold text-lg bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
+                  🎮 GAME MODES 🎮
+                </h3>
+              </div>
+
+              {/* Navigation Buttons */}
+              <div className="flex gap-2">
+                {[
+                  {
+                    id: "packs",
+                    label: "BOOSTER PACKS",
+                    icon: "📦",
+                    color: "from-orange-500 to-red-600",
+                    hoverColor: "from-orange-400 to-red-500",
+                    shadowColor: "shadow-orange-500/50",
+                  },
+                  {
+                    id: "album",
+                    label: "CARD ALBUM",
+                    icon: "📖",
+                    color: "from-blue-500 to-purple-600",
+                    hoverColor: "from-blue-400 to-purple-500",
+                    shadowColor: "shadow-blue-500/50",
+                  },
+                  {
+                    id: "arena",
+                    label: "BATTLE ARENA",
+                    icon: "⚔️",
+                    color: "from-red-500 to-pink-600",
+                    hoverColor: "from-red-400 to-pink-500",
+                    shadowColor: "shadow-red-500/50",
+                  },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setViewMode(tab.id as any)}
+                    className={`relative group transform transition-all duration-300 hover:scale-105 ${
+                      viewMode === tab.id ? "scale-105" : ""
+                    }`}
+                  >
+                    {/* Button Background */}
+                    <div
+                      className={`
+                      relative overflow-hidden rounded-2xl p-4 min-w-[140px] text-center border-2 transition-all duration-300
+                      ${
+                        viewMode === tab.id
+                          ? `bg-gradient-to-br ${tab.color} border-white shadow-2xl ${tab.shadowColor}`
+                          : `bg-gradient-to-br from-gray-700 to-gray-800 border-gray-600 hover:bg-gradient-to-br hover:${tab.hoverColor} hover:border-white hover:shadow-xl hover:${tab.shadowColor}`
+                      }
+                    `}
+                    >
+                      {/* Active Glow Effect */}
+                      {viewMode === tab.id && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shimmer_2s_infinite]"></div>
+                      )}
+
+                      {/* Icon */}
+                      <div className="text-3xl mb-1 filter drop-shadow-lg">{tab.icon}</div>
+
+                      {/* Label */}
+                      <div className="text-white font-bold text-xs tracking-wide drop-shadow-lg">{tab.label}</div>
+
+                      {/* Active Indicator */}
+                      {viewMode === tab.id && (
+                        <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-6 h-1 bg-white rounded-full shadow-lg"></div>
+                      )}
+
+                      {/* Hover Particles */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        <div className="absolute top-2 left-2 w-1 h-1 bg-white rounded-full"></div>
+                        <div className="absolute top-3 right-3 w-0.5 h-0.5 bg-yellow-400 rounded-full"></div>
+                        <div className="absolute bottom-3 left-3 w-0.5 h-0.5 bg-blue-400 rounded-full"></div>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
@@ -387,7 +453,7 @@ export function ProjectsSection() {
                 <div key={card.id} className="group relative transform hover:scale-110 transition-all duration-700 hover:z-10">
                   {/* Epic Game Card */}
                   <div
-                    className={`relative w-full h-[600px] rounded-3xl overflow-hidden shadow-2xl transform transition-all duration-700 ${
+                    className={`relative w-full h-[650px] rounded-3xl overflow-hidden shadow-2xl transform transition-all duration-700 ${
                       card.rarity === "Legendary"
                         ? "bg-gradient-to-br from-yellow-400 via-orange-500 to-red-600"
                         : card.rarity === "Epic"
@@ -399,15 +465,6 @@ export function ProjectsSection() {
                   >
                     {/* Inner Card Frame */}
                     <div className="relative w-full h-full bg-gradient-to-br from-gray-900 via-black to-gray-800 rounded-[20px] overflow-hidden">
-                      {/* Subtle Particle Background */}
-                      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                        <div className="absolute top-4 left-4 w-2 h-2 bg-white rounded-full opacity-30"></div>
-                        <div className="absolute top-8 right-6 w-1 h-1 bg-yellow-400 rounded-full opacity-40"></div>
-                        <div className="absolute bottom-12 left-8 w-1.5 h-1.5 bg-blue-400 rounded-full opacity-30"></div>
-                        <div className="absolute bottom-20 right-4 w-1 h-1 bg-green-400 rounded-full opacity-40"></div>
-                        <div className="absolute top-1/3 left-1/2 w-1 h-1 bg-purple-400 rounded-full opacity-30"></div>
-                      </div>
-
                       {/* Holographic Scanlines */}
                       {card.holographic && (
                         <div className="absolute inset-0 opacity-20 pointer-events-none">
@@ -494,46 +551,26 @@ export function ProjectsSection() {
                       </div>
 
                       {/* Battle Stats */}
-                      <div className="px-4 py-3 space-y-2">
-                        <h4 className="text-white font-bold text-center mb-3 text-sm">⚔️ BATTLE STATS ⚔️</h4>
+                      <div className="px-4 py-1">
+                        <h4 className="text-white font-bold text-center mb-1 text-xs">⚔️ BATTLE STATS ⚔️</h4>
 
-                        <div className="grid grid-cols-2 gap-2">
-                          <div className="bg-red-900/70 border border-red-500 rounded-lg p-2 text-center backdrop-blur-sm">
+                        <div className="grid grid-cols-2 gap-1">
+                          <div className="bg-red-900/80 border border-red-500 rounded p-1 text-center backdrop-blur-sm">
                             <div className="text-red-300 text-xs font-medium">ATK</div>
-                            <div className="text-white font-bold text-lg drop-shadow-lg">{card.stats.performance}</div>
+                            <div className="text-white font-bold text-sm drop-shadow-lg">{card.stats.performance}</div>
                           </div>
-                          <div className="bg-blue-900/70 border border-blue-500 rounded-lg p-2 text-center backdrop-blur-sm">
+                          <div className="bg-blue-900/80 border border-blue-500 rounded p-1 text-center backdrop-blur-sm">
                             <div className="text-blue-300 text-xs font-medium">DEF</div>
-                            <div className="text-white font-bold text-lg drop-shadow-lg">{card.stats.design}</div>
+                            <div className="text-white font-bold text-sm drop-shadow-lg">{card.stats.design}</div>
                           </div>
-                          <div className="bg-yellow-900/70 border border-yellow-500 rounded-lg p-2 text-center backdrop-blur-sm">
+                          <div className="bg-yellow-900/80 border border-yellow-500 rounded p-1 text-center backdrop-blur-sm">
                             <div className="text-yellow-300 text-xs font-medium">SPD</div>
-                            <div className="text-white font-bold text-lg drop-shadow-lg">{card.stats.innovation}</div>
+                            <div className="text-white font-bold text-sm drop-shadow-lg">{card.stats.innovation}</div>
                           </div>
-                          <div className="bg-green-900/70 border border-green-500 rounded-lg p-2 text-center backdrop-blur-sm">
+                          <div className="bg-green-900/80 border border-green-500 rounded p-1 text-center backdrop-blur-sm">
                             <div className="text-green-300 text-xs font-medium">HP</div>
-                            <div className="text-white font-bold text-lg drop-shadow-lg">{card.stats.impact}</div>
+                            <div className="text-white font-bold text-sm drop-shadow-lg">{card.stats.impact}</div>
                           </div>
-                        </div>
-                      </div>
-
-                      {/* Equipment/Tech Slots */}
-                      <div className="px-4 py-2">
-                        <h5 className="text-gray-400 text-xs font-medium mb-2 text-center">🔧 EQUIPPED TECH</h5>
-                        <div className="flex flex-wrap gap-1 justify-center">
-                          {card.technologies.slice(0, 4).map((tech: string, techIndex: number) => (
-                            <span
-                              key={techIndex}
-                              className="bg-gradient-to-r from-gray-700 to-gray-800 text-white text-xs px-2 py-1 rounded-md font-medium border border-gray-600 shadow-sm"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                          {card.technologies.length > 4 && (
-                            <span className="bg-gradient-to-r from-indigo-700 to-purple-700 text-white text-xs px-2 py-1 rounded-md font-medium border border-indigo-500">
-                              +{card.technologies.length - 4}
-                            </span>
-                          )}
                         </div>
                       </div>
 
