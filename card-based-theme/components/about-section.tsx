@@ -1,344 +1,260 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Shuffle, RotateCcw, Star, Zap, Crown, Sword, Shield, Gem, Trophy, Heart, Diamond, Club, Spade } from "lucide-react";
+import { Shuffle, Code, Database, Palette, Globe, Server, Smartphone, Trophy, Star, Award, Zap } from "lucide-react";
+
+// Developer Skill Cards - Relevant to portfolio
+const initialSkillCards = [
+  {
+    id: 1,
+    name: "React Expert",
+    category: "Frontend",
+    level: 95,
+    experience: "5+ years",
+    projects: 45,
+    description: "Building modern, interactive user interfaces with React ecosystem",
+    icon: <Code className="w-8 h-8" />,
+    color: "from-blue-500 to-cyan-500",
+    borderColor: "border-blue-400",
+    technologies: ["React", "Redux", "Next.js", "TypeScript"],
+  },
+  {
+    id: 2,
+    name: "Node.js Specialist",
+    category: "Backend",
+    level: 90,
+    experience: "4+ years",
+    projects: 35,
+    description: "Server-side development with scalable Node.js applications",
+    icon: <Server className="w-8 h-8" />,
+    color: "from-green-500 to-emerald-500",
+    borderColor: "border-green-400",
+    technologies: ["Node.js", "Express", "MongoDB", "PostgreSQL"],
+  },
+  {
+    id: 3,
+    name: "Database Architect",
+    category: "Backend",
+    level: 85,
+    experience: "4+ years",
+    projects: 30,
+    description: "Designing efficient database structures and optimizations",
+    icon: <Database className="w-8 h-8" />,
+    color: "from-purple-500 to-indigo-500",
+    borderColor: "border-purple-400",
+    technologies: ["PostgreSQL", "MongoDB", "Redis", "GraphQL"],
+  },
+  {
+    id: 4,
+    name: "UI/UX Designer",
+    category: "Design",
+    level: 80,
+    experience: "3+ years",
+    projects: 25,
+    description: "Creating beautiful and intuitive user experiences",
+    icon: <Palette className="w-8 h-8" />,
+    color: "from-pink-500 to-rose-500",
+    borderColor: "border-pink-400",
+    technologies: ["Figma", "Adobe XD", "Sketch", "Prototyping"],
+  },
+  {
+    id: 5,
+    name: "Mobile Developer",
+    category: "Mobile",
+    level: 75,
+    experience: "2+ years",
+    projects: 20,
+    description: "Cross-platform mobile app development",
+    icon: <Smartphone className="w-8 h-8" />,
+    color: "from-orange-500 to-amber-500",
+    borderColor: "border-orange-400",
+    technologies: ["React Native", "Flutter", "iOS", "Android"],
+  },
+  {
+    id: 6,
+    name: "DevOps Engineer",
+    category: "Infrastructure",
+    level: 70,
+    experience: "2+ years",
+    projects: 15,
+    description: "Cloud deployment and infrastructure management",
+    icon: <Globe className="w-8 h-8" />,
+    color: "from-teal-500 to-cyan-500",
+    borderColor: "border-teal-400",
+    technologies: ["AWS", "Docker", "Kubernetes", "CI/CD"],
+  },
+];
 
 export function AboutSection() {
   const [mounted, setMounted] = useState(false);
-  const [currentHand, setCurrentHand] = useState(0);
-  const [isShuffling, setIsShuffling] = useState(false);
-  const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [selectedDeck, setSelectedDeck] = useState("skills");
+  const [isShuffling, setIsShuffling] = useState(false);
+  const [skillCards, setSkillCards] = useState<any[]>([]);
 
   useEffect(() => {
     setMounted(true);
+    setSkillCards(initialSkillCards);
   }, []);
 
   if (!mounted) return null;
 
-  // Trading Card Collection - Skills as Pokemon-style cards
-  const skillCards = [
+  // Experience Cards
+  const experienceCards = [
     {
       id: 1,
-      name: "JavaScript Master",
-      rarity: "Legendary",
-      type: "Frontend",
-      level: 95,
-      attack: 180,
-      defense: 165,
-      speed: 190,
-      image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=300&h=400&fit=crop",
-      description: "A powerful card that dominates the frontend battlefield",
-      element: "⚡",
-      cardColor: "from-yellow-400 to-orange-500",
-      borderColor: "border-yellow-400",
+      title: "Senior Frontend Developer",
+      company: "Tech Innovators Inc.",
+      period: "2022 - Present",
+      achievements: ["Led team of 5 developers", "Improved performance by 40%", "Launched 3 major products"],
+      color: "from-blue-500 to-blue-600",
+      icon: <Trophy className="w-6 h-6" />,
     },
     {
       id: 2,
-      name: "React Wizard",
-      rarity: "Epic",
-      type: "Frontend",
-      level: 92,
-      attack: 175,
-      defense: 150,
-      speed: 185,
-      image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=300&h=400&fit=crop",
-      description: "Casts powerful component spells with hooks",
-      element: "🔮",
-      cardColor: "from-blue-400 to-cyan-500",
-      borderColor: "border-blue-400",
+      title: "Full-Stack Developer",
+      company: "Digital Solutions Co.",
+      period: "2020 - 2022",
+      achievements: ["Built scalable APIs", "Mentored junior developers", "Reduced server costs by 30%"],
+      color: "from-green-500 to-green-600",
+      icon: <Award className="w-6 h-6" />,
     },
     {
       id: 3,
-      name: "Node.js Guardian",
-      rarity: "Epic",
-      type: "Backend",
-      level: 88,
-      attack: 160,
-      defense: 180,
-      speed: 145,
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=300&h=400&fit=crop",
-      description: "Protects servers with asynchronous magic",
-      element: "🛡️",
-      cardColor: "from-green-400 to-emerald-500",
-      borderColor: "border-green-400",
-    },
-    {
-      id: 4,
-      name: "Python Sage",
-      rarity: "Rare",
-      type: "Backend",
-      level: 85,
-      attack: 155,
-      defense: 170,
-      speed: 160,
-      image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=300&h=400&fit=crop",
-      description: "Ancient wisdom in clean, readable code",
-      element: "🐍",
-      cardColor: "from-purple-400 to-indigo-500",
-      borderColor: "border-purple-400",
-    },
-    {
-      id: 5,
-      name: "UI/UX Enchanter",
-      rarity: "Rare",
-      type: "Design",
-      level: 80,
-      attack: 140,
-      defense: 130,
-      speed: 200,
-      image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=300&h=400&fit=crop",
-      description: "Enchants users with beautiful experiences",
-      element: "✨",
-      cardColor: "from-pink-400 to-rose-500",
-      borderColor: "border-pink-400",
-    },
-    {
-      id: 6,
-      name: "Database Oracle",
-      rarity: "Uncommon",
-      type: "Backend",
-      level: 75,
-      attack: 130,
-      defense: 190,
-      speed: 120,
-      image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=300&h=400&fit=crop",
-      description: "Sees through data with SQL vision",
-      element: "🔍",
-      cardColor: "from-gray-400 to-slate-500",
-      borderColor: "border-gray-400",
-    },
-  ];
-
-  // Playing Card Hands - Different aspects of personality
-  const playingCardHands = [
-    {
-      name: "Personality Hand",
-      cards: [
-        { suit: "♠️", value: "A", title: "Adaptable", desc: "Ace of problem-solving" },
-        { suit: "♥️", value: "K", title: "Kind", desc: "King of collaboration" },
-        { suit: "♦️", value: "Q", title: "Quality", desc: "Queen of clean code" },
-        { suit: "♣️", value: "J", title: "Jovial", desc: "Jack of all trades" },
-        { suit: "♠️", value: "10", title: "Tenacious", desc: "Never gives up" },
-      ],
-    },
-    {
-      name: "Work Style Hand",
-      cards: [
-        { suit: "♥️", value: "A", title: "Agile", desc: "Ace of methodologies" },
-        { suit: "♦️", value: "K", title: "Keen", desc: "King of attention to detail" },
-        { suit: "♣️", value: "Q", title: "Quick", desc: "Queen of rapid delivery" },
-        { suit: "♠️", value: "J", title: "Just", desc: "Jack of fair solutions" },
-        { suit: "♥️", value: "9", title: "Noble", desc: "Nine of integrity" },
-      ],
-    },
-    {
-      name: "Achievement Hand",
-      cards: [
-        { suit: "♦️", value: "A", title: "Award Winner", desc: "Ace of recognition" },
-        { suit: "♠️", value: "K", title: "Knowledge", desc: "King of learning" },
-        { suit: "♣️", value: "Q", title: "Quality Code", desc: "Queen of standards" },
-        { suit: "♥️", value: "J", title: "Joy in Work", desc: "Jack of passion" },
-        { suit: "♦️", value: "8", title: "8 Years Exp", desc: "Eight of experience" },
-      ],
-    },
-  ];
-
-  // Business Card Collection
-  const businessCards = [
-    {
       title: "Frontend Developer",
-      company: "Tech Innovators Inc.",
-      speciality: "React & Vue Specialist",
-      years: "3 Years",
-      color: "from-blue-500 to-purple-600",
-      icon: <Crown className="w-6 h-6" />,
-    },
-    {
-      title: "Full-Stack Engineer",
-      company: "Digital Solutions Co.",
-      speciality: "MERN Stack Expert",
-      years: "2 Years",
-      color: "from-green-500 to-teal-600",
-      icon: <Sword className="w-6 h-6" />,
-    },
-    {
-      title: "UI/UX Designer",
       company: "Creative Studio Ltd.",
-      speciality: "User Experience Design",
-      years: "3 Years",
-      color: "from-pink-500 to-rose-600",
-      icon: <Gem className="w-6 h-6" />,
+      period: "2019 - 2020",
+      achievements: ["Developed responsive UIs", "Collaborated with designers", "Improved user engagement"],
+      color: "from-purple-500 to-purple-600",
+      icon: <Star className="w-6 h-6" />,
     },
   ];
 
+  // Shuffle functionality
   const shuffleDeck = () => {
     setIsShuffling(true);
+
     setTimeout(() => {
+      const shuffled = [...skillCards].sort(() => Math.random() - 0.5);
+      setSkillCards(shuffled);
       setIsShuffling(false);
-      setFlippedCards([]);
     }, 1000);
   };
 
-  const flipCard = (cardId: number) => {
-    setFlippedCards((prev) => (prev.includes(cardId) ? prev.filter((id) => id !== cardId) : [...prev, cardId]));
+  const getLevelColor = (level: number) => {
+    if (level >= 90) return "text-green-500";
+    if (level >= 80) return "text-blue-500";
+    if (level >= 70) return "text-yellow-500";
+    return "text-gray-500";
   };
 
-  const getRarityColor = (rarity: string) => {
-    switch (rarity) {
-      case "Legendary":
-        return "from-yellow-400 via-orange-500 to-red-500";
-      case "Epic":
-        return "from-purple-400 via-blue-500 to-cyan-500";
-      case "Rare":
-        return "from-blue-400 to-purple-500";
-      case "Uncommon":
-        return "from-green-400 to-blue-500";
-      default:
-        return "from-gray-400 to-gray-500";
-    }
+  const getLevelLabel = (level: number) => {
+    if (level >= 90) return "Expert";
+    if (level >= 80) return "Advanced";
+    if (level >= 70) return "Proficient";
+    return "Beginner";
   };
 
   return (
-    <section id="about" className="py-20 px-4 bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 relative overflow-hidden">
-      {/* Card Table Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div
-          className="w-full h-full"
-          style={{
-            backgroundImage: `radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.3) 2px, transparent 2px)`,
-            backgroundSize: "60px 60px",
-          }}
-        ></div>
-      </div>
-
+    <section id="about" className="py-20 px-4 bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto relative z-10">
-        {/* Card Game Header */}
+        {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-4 mb-6 bg-white rounded-2xl px-8 py-4 shadow-xl border-2 border-gray-200">
-            <div className="text-4xl">🃏</div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800">About Me: The Card Collection</h2>
-            <div className="text-4xl">🂡</div>
-          </div>
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">About Me</h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover my skills, experience, and personality through an interactive card game experience
+            Discover my skills, experience, and expertise through my developer portfolio collection
           </p>
         </div>
 
-        {/* Card Deck Selector */}
+        {/* Deck Selector */}
         <div className="flex justify-center mb-12">
-          <div className="bg-white rounded-2xl p-2 shadow-lg border-2 border-gray-200 flex gap-2">
-            {["skills", "personality", "experience"].map((deck) => (
+          <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-2 shadow-lg border border-white/20 flex gap-2">
+            {["skills", "experience", "achievements"].map((deck) => (
               <button
                 key={deck}
                 onClick={() => setSelectedDeck(deck)}
                 className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
                   selectedDeck === deck
-                    ? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg transform scale-105"
+                    ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-lg transform scale-105"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
-                {deck === "skills" && "🎯 Skill Cards"}
-                {deck === "personality" && "🂠 Playing Cards"}
-                {deck === "experience" && "💼 Business Cards"}
+                {deck === "skills" && "💻 Technical Skills"}
+                {deck === "experience" && "🏢 Work Experience"}
+                {deck === "achievements" && "🏆 Achievements"}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Skills Trading Cards */}
+        {/* Skills Cards */}
         {selectedDeck === "skills" && (
           <div className="mb-16">
-            <div className="flex justify-center gap-4 mb-8">
+            <div className="flex justify-center mb-8">
               <button
                 onClick={shuffleDeck}
                 disabled={isShuffling}
-                className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-2"
+                className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center gap-3"
               >
-                <Shuffle className={`w-5 h-5 ${isShuffling ? "animate-spin" : ""}`} />
-                {isShuffling ? "Shuffling..." : "Shuffle Deck"}
-              </button>
-              <button
-                onClick={() => setFlippedCards([])}
-                className="bg-white text-gray-700 border-2 border-gray-300 px-6 py-3 rounded-xl font-semibold hover:border-gray-400 transition-all duration-300 flex items-center gap-2"
-              >
-                <RotateCcw className="w-5 h-5" />
-                Reset Cards
+                <Shuffle className={`w-6 h-6 ${isShuffling ? "animate-spin" : ""}`} />
+                <span className="text-lg">{isShuffling ? "Shuffling Cards..." : "Shuffle My Skills"}</span>
               </button>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 perspective-1000">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {skillCards.map((card, index) => (
                 <div
                   key={card.id}
-                  className={`relative w-full h-96 cursor-pointer transform-style-preserve-3d transition-all duration-700 hover:scale-105 ${
-                    flippedCards.includes(card.id) ? "rotate-y-180" : ""
-                  } ${isShuffling ? "animate-bounce" : ""}`}
-                  onClick={() => flipCard(card.id)}
+                  className={`relative group cursor-pointer transform transition-all duration-500 hover:scale-105 ${
+                    isShuffling ? "animate-bounce" : ""
+                  }`}
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  {/* Card Front */}
                   <div
-                    className={`absolute inset-0 w-full h-full backface-hidden rounded-2xl border-4 ${card.borderColor} shadow-xl bg-gradient-to-br ${card.cardColor} p-6 text-white`}
+                    className={`bg-gradient-to-br ${card.color} rounded-2xl p-6 text-white shadow-xl hover:shadow-2xl transition-all duration-300 h-full`}
                   >
-                    <div className="flex justify-between items-start mb-4">
-                      <div className="text-3xl">{card.element}</div>
+                    {/* Card Header */}
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center">{card.icon}</div>
+                      <div>
+                        <h3 className="text-xl font-bold mb-1">{card.name}</h3>
+                        <p className="text-white/80 text-sm">{card.category}</p>
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    <p className="text-white/90 text-sm mb-6 leading-relaxed">{card.description}</p>
+
+                    {/* Level & Stats */}
+                    <div className="bg-white/20 rounded-xl p-4 mb-4">
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="text-white/80 text-sm font-medium">Skill Level</span>
+                        <span className="text-white font-bold text-lg">{card.level}%</span>
+                      </div>
+                      <div className="w-full bg-white/20 rounded-full h-3">
+                        <div className="bg-white rounded-full h-3 transition-all duration-1000" style={{ width: `${card.level}%` }}></div>
+                      </div>
+                      <div className="flex justify-between mt-3 text-xs text-white/75">
+                        <span>{card.experience} experience</span>
+                        <span>{card.projects} projects</span>
+                      </div>
+                    </div>
+
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-2">
+                      {card.technologies.map((tech: string, techIndex: number) => (
+                        <span key={techIndex} className="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-medium">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Level Badge */}
+                    <div className="absolute -top-2 -right-2">
                       <div
-                        className={`px-3 py-1 rounded-full text-xs font-bold bg-gradient-to-r ${getRarityColor(
-                          card.rarity
-                        )} text-white shadow-lg`}
+                        className={`bg-white text-gray-800 px-3 py-1 rounded-full text-xs font-bold shadow-lg ${getLevelColor(card.level)}`}
                       >
-                        {card.rarity}
+                        {getLevelLabel(card.level)}
                       </div>
-                    </div>
-
-                    <div className="text-center">
-                      <img src={card.image} alt={card.name} className="w-32 h-40 mx-auto rounded-lg object-cover shadow-lg mb-4" />
-                      <h3 className="text-xl font-bold mb-2">{card.name}</h3>
-                      <p className="text-sm opacity-90 mb-4">{card.description}</p>
-
-                      <div className="bg-white/20 rounded-lg p-3">
-                        <div className="text-2xl font-bold">LVL {card.level}</div>
-                        <div className="text-xs opacity-75">{card.type} Type</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Card Back - Stats */}
-                  <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 rounded-2xl border-4 border-gray-300 shadow-xl bg-white p-6">
-                    <div className="h-full flex flex-col">
-                      <div className="text-center mb-6">
-                        <h3 className="text-xl font-bold text-gray-800 mb-2">{card.name}</h3>
-                        <div className="text-gray-600">Battle Stats</div>
-                      </div>
-
-                      <div className="space-y-4 flex-1">
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-2">
-                            <Sword className="w-5 h-5 text-red-500" />
-                            <span className="font-semibold">Attack</span>
-                          </div>
-                          <div className="font-bold text-red-500">{card.attack}</div>
-                        </div>
-
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-2">
-                            <Shield className="w-5 h-5 text-blue-500" />
-                            <span className="font-semibold">Defense</span>
-                          </div>
-                          <div className="font-bold text-blue-500">{card.defense}</div>
-                        </div>
-
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-2">
-                            <Zap className="w-5 h-5 text-yellow-500" />
-                            <span className="font-semibold">Speed</span>
-                          </div>
-                          <div className="font-bold text-yellow-500">{card.speed}</div>
-                        </div>
-                      </div>
-
-                      <div className="text-center text-sm text-gray-500 mt-4">Click to flip back</div>
                     </div>
                   </div>
                 </div>
@@ -347,102 +263,31 @@ export function AboutSection() {
           </div>
         )}
 
-        {/* Playing Card Hands */}
-        {selectedDeck === "personality" && (
-          <div className="mb-16">
-            <div className="flex justify-center mb-8">
-              <div className="bg-white rounded-2xl p-2 shadow-lg border-2 border-gray-200 flex gap-2">
-                {playingCardHands.map((hand, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentHand(index)}
-                    className={`px-4 py-2 rounded-xl font-medium transition-all duration-300 ${
-                      currentHand === index ? "bg-gradient-to-r from-red-500 to-red-600 text-white" : "text-gray-600 hover:bg-gray-100"
-                    }`}
-                  >
-                    {hand.name}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-gradient-to-br from-green-800 to-green-900 rounded-3xl p-8 shadow-2xl">
-              <h3 className="text-2xl font-bold text-white text-center mb-8">Current Hand: {playingCardHands[currentHand].name}</h3>
-
-              <div className="flex justify-center items-center gap-4 flex-wrap">
-                {playingCardHands[currentHand].cards.map((card, index) => (
-                  <div
-                    key={index}
-                    className="w-28 h-40 bg-white rounded-xl shadow-lg transform hover:scale-110 hover:-translate-y-4 transition-all duration-300 cursor-pointer border-2 border-gray-200"
-                    style={{
-                      transform: `rotate(${(index - 2) * 8}deg) translateY(${Math.abs(index - 2) * 10}px)`,
-                      zIndex: 5 - Math.abs(index - 2),
-                    }}
-                  >
-                    <div className="h-full p-3 flex flex-col justify-between">
-                      <div className="flex justify-between items-start">
-                        <div className="text-2xl font-bold text-gray-800">{card.value}</div>
-                        <div className="text-2xl">{card.suit}</div>
-                      </div>
-
-                      <div className="text-center">
-                        <div className="text-4xl mb-2">{card.suit}</div>
-                      </div>
-
-                      <div className="flex justify-between items-end rotate-180">
-                        <div className="text-2xl font-bold text-gray-800">{card.value}</div>
-                        <div className="text-2xl">{card.suit}</div>
-                      </div>
-                    </div>
-
-                    {/* Card Info Tooltip */}
-                    <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 bg-black text-white p-2 rounded-lg text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-                      <div className="font-bold">{card.title}</div>
-                      <div>{card.desc}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Business Card Collection */}
+        {/* Experience Cards */}
         {selectedDeck === "experience" && (
           <div className="mb-16">
-            <h3 className="text-2xl font-bold text-gray-800 text-center mb-8">Professional Business Card Collection</h3>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {businessCards.map((card, index) => (
-                <div key={index} className="group relative">
-                  {/* Card Stack Effect */}
-                  <div className="absolute inset-0 bg-white rounded-2xl shadow-lg border border-gray-200 transform translate-x-2 translate-y-2 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform duration-300"></div>
-                  <div className="absolute inset-0 bg-gray-50 rounded-2xl shadow-md border border-gray-100 transform translate-x-1 translate-y-1 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-300"></div>
-
-                  {/* Main Card */}
+            <h3 className="text-3xl font-bold text-gray-800 text-center mb-8">Professional Journey</h3>
+            <div className="space-y-6">
+              {experienceCards.map((exp, index) => (
+                <div key={exp.id} className="group">
                   <div
-                    className={`relative bg-gradient-to-br ${card.color} rounded-2xl p-8 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300`}
+                    className={`bg-gradient-to-br ${exp.color} rounded-2xl p-8 text-white shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300`}
                   >
-                    <div className="flex justify-between items-start mb-6">
-                      <div className="bg-white/20 p-3 rounded-lg">{card.icon}</div>
-                      <div className="text-right">
-                        <div className="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">{card.years}</div>
-                      </div>
-                    </div>
+                    <div className="flex items-start gap-6">
+                      <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center flex-shrink-0">{exp.icon}</div>
+                      <div className="flex-1">
+                        <h3 className="text-2xl font-bold mb-2">{exp.title}</h3>
+                        <p className="text-white/90 text-lg font-medium mb-2">{exp.company}</p>
+                        <p className="text-white/75 text-sm mb-4">{exp.period}</p>
 
-                    <div>
-                      <h3 className="text-xl font-bold mb-2">{card.title}</h3>
-                      <p className="text-white/90 font-medium mb-2">{card.company}</p>
-                      <p className="text-white/75 text-sm">{card.speciality}</p>
-                    </div>
-
-                    {/* Business Card Details */}
-                    <div className="mt-6 pt-4 border-t border-white/20">
-                      <div className="flex justify-between items-center text-sm">
-                        <span className="text-white/75">Card #{index + 1}</span>
-                        <div className="flex gap-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-3 h-3 fill-white/60 text-white/60" />
+                        <div className="grid md:grid-cols-3 gap-4">
+                          {exp.achievements.map((achievement, achIndex) => (
+                            <div key={achIndex} className="bg-white/20 rounded-lg p-3">
+                              <div className="flex items-center gap-2">
+                                <Zap className="w-4 h-4 text-yellow-300" />
+                                <span className="text-sm font-medium">{achievement}</span>
+                              </div>
+                            </div>
                           ))}
                         </div>
                       </div>
@@ -454,52 +299,69 @@ export function AboutSection() {
           </div>
         )}
 
-        {/* Card Game Stats */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 border-2 border-gray-200">
-          <h3 className="text-2xl font-bold text-gray-800 text-center mb-8">🏆 Card Collection Stats</h3>
+        {/* Achievements */}
+        {selectedDeck === "achievements" && (
+          <div className="mb-16">
+            <h3 className="text-3xl font-bold text-gray-800 text-center mb-8">Key Achievements</h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {[
+                { title: "Projects Completed", value: "50+", icon: "🚀", color: "from-blue-500 to-blue-600" },
+                { title: "Years Experience", value: "5+", icon: "⏰", color: "from-green-500 to-green-600" },
+                { title: "Client Satisfaction", value: "99%", icon: "😊", color: "from-purple-500 to-purple-600" },
+                { title: "Code Quality Score", value: "A+", icon: "⭐", color: "from-orange-500 to-orange-600" },
+              ].map((achievement, index) => (
+                <div key={index} className="group">
+                  <div
+                    className={`bg-gradient-to-br ${achievement.color} rounded-2xl p-6 text-white text-center shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300`}
+                  >
+                    <div className="text-4xl mb-3">{achievement.icon}</div>
+                    <div className="text-3xl font-bold mb-2">{achievement.value}</div>
+                    <div className="text-sm text-white/80">{achievement.title}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
+        {/* Portfolio Summary */}
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-white/20">
+          <h3 className="text-2xl font-bold text-gray-800 text-center mb-8">Portfolio Overview</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="text-center bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl p-6 text-white shadow-lg">
-              <div className="text-3xl font-bold mb-2">74</div>
-              <div className="text-sm opacity-90">Total Cards</div>
-              <Trophy className="w-6 h-6 mx-auto mt-2" />
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl mx-auto mb-3 flex items-center justify-center">
+                <Code className="w-8 h-8 text-white" />
+              </div>
+              <div className="text-2xl font-bold text-gray-800">50+</div>
+              <div className="text-sm text-gray-600">Total Projects</div>
             </div>
 
-            <div className="text-center bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl p-6 text-white shadow-lg">
-              <div className="text-3xl font-bold mb-2">15</div>
-              <div className="text-sm opacity-90">Legendary</div>
-              <Star className="w-6 h-6 mx-auto mt-2" />
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl mx-auto mb-3 flex items-center justify-center">
+                <Trophy className="w-8 h-8 text-white" />
+              </div>
+              <div className="text-2xl font-bold text-gray-800">15</div>
+              <div className="text-sm text-gray-600">Awards Won</div>
             </div>
 
-            <div className="text-center bg-gradient-to-br from-green-400 to-teal-500 rounded-2xl p-6 text-white shadow-lg">
-              <div className="text-3xl font-bold mb-2">98%</div>
-              <div className="text-sm opacity-90">Win Rate</div>
-              <Crown className="w-6 h-6 mx-auto mt-2" />
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl mx-auto mb-3 flex items-center justify-center">
+                <Star className="w-8 h-8 text-white" />
+              </div>
+              <div className="text-2xl font-bold text-gray-800">4.9</div>
+              <div className="text-sm text-gray-600">Average Rating</div>
             </div>
 
-            <div className="text-center bg-gradient-to-br from-pink-400 to-rose-500 rounded-2xl p-6 text-white shadow-lg">
-              <div className="text-3xl font-bold mb-2">5y</div>
-              <div className="text-sm opacity-90">Playing</div>
-              <Heart className="w-6 h-6 mx-auto mt-2" />
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl mx-auto mb-3 flex items-center justify-center">
+                <Zap className="w-8 h-8 text-white" />
+              </div>
+              <div className="text-2xl font-bold text-gray-800">5+</div>
+              <div className="text-sm text-gray-600">Years Experience</div>
             </div>
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-        .transform-style-preserve-3d {
-          transform-style: preserve-3d;
-        }
-        .backface-hidden {
-          backface-visibility: hidden;
-        }
-        .rotate-y-180 {
-          transform: rotateY(180deg);
-        }
-      `}</style>
     </section>
   );
 }

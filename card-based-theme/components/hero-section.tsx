@@ -1,83 +1,78 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowRight, Download, Github, Linkedin, Mail, Heart, Star, Sparkles, Code, Trophy } from "lucide-react";
+import { ArrowRight, Download, Github, Linkedin, Mail, Code, Palette, Rocket, Zap, Star, Trophy } from "lucide-react";
 
 export function HeroSection() {
   const [mounted, setMounted] = useState(false);
-  const [activeCard, setActiveCard] = useState(0);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+  const [flipCard, setFlipCard] = useState<number | null>(null);
 
   useEffect(() => {
     setMounted(true);
-
-    const interval = setInterval(() => {
-      setActiveCard((prev) => (prev + 1) % 3);
-    }, 4000);
-
-    return () => clearInterval(interval);
   }, []);
 
   if (!mounted) return null;
 
-  const heroCards = [
+  const skillCards = [
     {
-      title: "Creative Developer",
-      subtitle: "Building Digital Experiences",
-      description: "Passionate about creating beautiful, functional applications",
-      color: "from-blue-500 to-purple-600",
-      bgColor: "bg-blue-50",
-      borderColor: "border-blue-200",
+      id: 1,
+      title: "Frontend",
+      level: "Expert",
       icon: Code,
-      stats: { projects: 24, likes: 1.2 },
+      color: "from-blue-500 to-cyan-500",
+      description: "React, Vue, TypeScript, Tailwind CSS",
+      years: "5+",
+      projects: 50,
     },
     {
-      title: "UI/UX Designer",
-      subtitle: "Crafting User Journeys",
-      description: "Designing intuitive interfaces that users love",
-      color: "from-purple-500 to-pink-600",
-      bgColor: "bg-purple-50",
-      borderColor: "border-purple-200",
-      icon: Sparkles,
-      stats: { projects: 18, likes: 856 },
+      id: 2,
+      title: "Backend",
+      level: "Advanced",
+      icon: Zap,
+      color: "from-green-500 to-emerald-500",
+      description: "Node.js, Python, PostgreSQL, MongoDB",
+      years: "4+",
+      projects: 35,
     },
     {
-      title: "Problem Solver",
-      subtitle: "Innovative Solutions",
-      description: "Turning complex challenges into elegant solutions",
-      color: "from-green-500 to-teal-600",
-      bgColor: "bg-green-50",
-      borderColor: "border-green-200",
-      icon: Trophy,
-      stats: { projects: 32, likes: 2.1 },
+      id: 3,
+      title: "Design",
+      level: "Proficient",
+      icon: Palette,
+      color: "from-purple-500 to-pink-500",
+      description: "UI/UX, Figma, Adobe Creative Suite",
+      years: "3+",
+      projects: 25,
     },
   ];
 
-  const socialCards = [
-    { icon: Github, label: "GitHub", color: "bg-gray-800", count: "42 repos" },
-    { icon: Linkedin, label: "LinkedIn", color: "bg-blue-600", count: "500+ connections" },
-    { icon: Mail, label: "Email", color: "bg-red-500", count: "Contact me" },
+  const socialLinks = [
+    { icon: Github, label: "GitHub", href: "#", count: "50+ repos" },
+    { icon: Linkedin, label: "LinkedIn", href: "#", count: "500+ connections" },
+    { icon: Mail, label: "Email", href: "#", count: "Let's connect" },
   ];
 
   return (
-    <section id="home" className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 py-20 px-4 sm:px-6 lg:px-8">
+    <section id="home" className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 pt-20 pb-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        {/* Main Hero Cards Grid */}
-        <div className="grid lg:grid-cols-3 gap-8 mb-12">
-          {/* Primary Profile Card */}
-          <div className="lg:col-span-2 relative group">
-            <div className="bg-white rounded-3xl shadow-2xl border-2 border-gray-100 p-8 h-full relative overflow-hidden transform group-hover:scale-[1.02] transition-all duration-500">
+        {/* Hero Cards Layout */}
+        <div className="grid lg:grid-cols-3 gap-8 mb-16">
+          {/* Main Profile Card */}
+          <div className="lg:col-span-2">
+            <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl border border-white/20 p-8 h-full relative overflow-hidden">
               {/* Background Pattern */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-blue-100 to-purple-100 rounded-full -translate-y-32 translate-x-32 opacity-50"></div>
+              <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-blue-100/50 to-purple-100/50 rounded-full -translate-y-48 translate-x-48"></div>
 
-              {/* Profile Content */}
               <div className="relative z-10">
-                <div className="flex items-start gap-6 mb-8">
-                  <div className="relative">
-                    <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg flex items-center justify-center">
+                {/* Profile Header */}
+                <div className="flex items-center gap-6 mb-8">
+                  <div className="relative group">
+                    <div className="w-24 h-24 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-xl flex items-center justify-center group-hover:scale-105 transition-transform">
                       <img
                         src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"
                         alt="Profile"
-                        className="w-16 h-16 rounded-xl object-cover"
+                        className="w-20 h-20 rounded-xl object-cover"
                       />
                     </div>
                     <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
@@ -88,141 +83,215 @@ export function HeroSection() {
                   <div>
                     <h1 className="text-4xl lg:text-5xl font-bold text-gray-800 mb-2">Alex Johnson</h1>
                     <p className="text-xl text-gray-600 mb-4">Full-Stack Developer & Designer</p>
-                    <div className="flex items-center gap-4 text-sm text-gray-500">
-                      <div className="flex items-center gap-1">
-                        <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                        <span>4.9 rating</span>
+                    <div className="flex items-center gap-4 text-sm">
+                      <div className="flex items-center gap-2 bg-yellow-100 px-3 py-1 rounded-full">
+                        <Star className="w-4 h-4 text-yellow-500 fill-current" />
+                        <span className="text-yellow-700 font-medium">4.9 rating</span>
                       </div>
-                      <div className="flex items-center gap-1">
-                        <Heart className="w-4 h-4 fill-red-400 text-red-400" />
-                        <span>2.1k likes</span>
+                      <div className="flex items-center gap-2 bg-red-100 px-3 py-1 rounded-full">
+                        <Trophy className="w-4 h-4 text-red-500" />
+                        <span className="text-red-700 font-medium">50+ projects</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
+                {/* Bio */}
                 <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                  I'm passionate about creating beautiful, functional digital experiences that make a difference. With expertise in modern
-                  web technologies and a keen eye for design, I bring ideas to life.
+                  Passionate about creating beautiful, functional applications that solve real problems. I combine technical expertise with
+                  creative design to build exceptional digital experiences.
                 </p>
 
-                {/* Action Cards */}
+                {/* Action Buttons */}
                 <div className="flex flex-wrap gap-4">
-                  <button className="group bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300">
-                    <span>View Projects</span>
-                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <button
+                    onClick={() => {
+                      const projectsSection = document.getElementById("projects");
+                      if (projectsSection) {
+                        projectsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                      }
+                    }}
+                    className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-8 py-3 rounded-xl font-semibold flex items-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"
+                  >
+                    <Rocket className="w-5 h-5" />
+                    <span>View My Work</span>
+                    <ArrowRight className="w-5 h-5" />
                   </button>
 
-                  <button className="bg-white border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold flex items-center gap-2 hover:border-gray-300 hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                  <button
+                    onClick={() => {
+                      // Create a placeholder CV file
+                      const cvContent = `
+Alex Johnson - Full-Stack Developer & Designer
+===============================================
+
+Contact Information:
+- Email: alex@example.com
+- Phone: +1 (555) 123-4567
+- Location: San Francisco, CA
+- Portfolio: alexdev.portfolio.com
+- GitHub: github.com/alexdev
+- LinkedIn: linkedin.com/in/alexdev
+
+Professional Summary:
+Passionate full-stack developer with 5+ years of experience creating beautiful, functional applications that solve real problems. I combine technical expertise with creative design to build exceptional digital experiences.
+
+Technical Skills:
+- Frontend: React, Vue, TypeScript, Tailwind CSS (5+ years)
+- Backend: Node.js, Python, PostgreSQL, MongoDB (4+ years)
+- Design: UI/UX, Figma, Adobe Creative Suite (3+ years)
+- Mobile: React Native, Flutter (2+ years)
+- DevOps: AWS, Docker, Kubernetes, CI/CD (2+ years)
+
+Professional Experience:
+
+Senior Frontend Developer | Tech Innovators Inc. | 2022 - Present
+- Led team of 5 developers
+- Improved performance by 40%
+- Launched 3 major products
+
+Full-Stack Developer | Digital Solutions Co. | 2020 - 2022
+- Built scalable APIs
+- Mentored junior developers
+- Reduced server costs by 30%
+
+Frontend Developer | Creative Studio Ltd. | 2019 - 2020
+- Developed responsive UIs
+- Collaborated with designers
+- Improved user engagement
+
+Key Projects:
+- E-Commerce Empire: Revolutionary trading platform ($8,500 value)
+- AI Chat Wizard: Natural language AI companion ($7,200 value)
+- Banking Fortress: Secure mobile banking app ($5,800 value)
+
+Education:
+Bachelor of Science in Computer Science
+University of California, San Francisco | 2019
+
+Achievements:
+- 50+ completed projects
+- 98% client satisfaction rate
+- 15 awards won
+- 4.9/5 average rating
+                      `;
+
+                      const blob = new Blob([cvContent], { type: "text/plain" });
+                      const url = window.URL.createObjectURL(blob);
+                      const link = document.createElement("a");
+                      link.href = url;
+                      link.download = "Alex_Johnson_CV.txt";
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                      window.URL.revokeObjectURL(url);
+                    }}
+                    className="bg-white/80 backdrop-blur-sm border-2 border-gray-200 text-gray-700 px-8 py-3 rounded-xl font-semibold flex items-center gap-2 hover:border-gray-300 hover:shadow-lg transform hover:scale-105 transition-all"
+                  >
                     <Download className="w-5 h-5" />
                     <span>Download CV</span>
                   </button>
                 </div>
               </div>
-
-              {/* Card Stack Effect */}
-              <div className="absolute inset-0 bg-white rounded-3xl shadow-lg border border-gray-200 transform translate-x-2 translate-y-2 -z-10 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform duration-500"></div>
-              <div className="absolute inset-0 bg-gray-50 rounded-3xl shadow-md border border-gray-100 transform translate-x-4 translate-y-4 -z-20 group-hover:translate-x-6 group-hover:translate-y-6 transition-transform duration-500"></div>
             </div>
           </div>
 
-          {/* Rotating Skills Cards */}
-          <div className="space-y-6">
-            {heroCards.map((card, index) => (
+          {/* Skill Cards Stack */}
+          <div className="space-y-4">
+            {skillCards.map((card, index) => (
               <div
-                key={index}
-                className={`relative group cursor-pointer transition-all duration-500 ${
-                  activeCard === index ? "scale-105 z-10" : "scale-100 hover:scale-102"
-                }`}
-                onClick={() => setActiveCard(index)}
+                key={card.id}
+                className="relative group cursor-pointer"
+                onMouseEnter={() => setHoveredCard(card.id)}
+                onMouseLeave={() => setHoveredCard(null)}
+                onClick={() => setFlipCard(flipCard === card.id ? null : card.id)}
               >
                 <div
-                  className={`bg-white rounded-2xl shadow-lg border-2 p-6 ${
-                    activeCard === index ? `${card.bgColor} ${card.borderColor} shadow-xl` : "border-gray-100 hover:shadow-xl"
-                  } transition-all duration-300 relative overflow-hidden`}
+                  className={`bg-gradient-to-br ${card.color} rounded-2xl p-6 text-white shadow-xl transform transition-all duration-300 ${
+                    hoveredCard === card.id ? "scale-105 -translate-y-2" : ""
+                  } ${flipCard === card.id ? "rotate-y-180" : ""}`}
                 >
-                  {/* Active Indicator */}
-                  {activeCard === index && (
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-purple-600"></div>
+                  {/* Card Front */}
+                  {flipCard !== card.id && (
+                    <>
+                      <div className="flex items-center gap-4 mb-4">
+                        <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                          <card.icon className="w-6 h-6" />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg">{card.title}</h3>
+                          <p className="text-white/80 text-sm">{card.level}</p>
+                        </div>
+                      </div>
+
+                      <p className="text-white/90 text-sm mb-4">{card.description}</p>
+
+                      <div className="flex justify-between text-xs text-white/75">
+                        <span>{card.years} experience</span>
+                        <span>{card.projects} projects</span>
+                      </div>
+                    </>
                   )}
 
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className={`w-12 h-12 bg-gradient-to-br ${card.color} rounded-xl flex items-center justify-center shadow-lg`}>
-                      <card.icon className="w-6 h-6 text-white" />
+                  {/* Card Back */}
+                  {flipCard === card.id && (
+                    <div className="text-center">
+                      <div className="text-3xl mb-4">🏆</div>
+                      <h3 className="font-bold text-lg mb-2">{card.title} Expert</h3>
+                      <p className="text-white/90 text-sm mb-4">
+                        Specialized in modern {card.title.toLowerCase()} technologies with proven track record
+                      </p>
+                      <div className="bg-white/20 rounded-lg p-3">
+                        <div className="text-2xl font-bold">{card.projects}</div>
+                        <div className="text-xs text-white/75">Completed Projects</div>
+                      </div>
                     </div>
-                    <div>
-                      <h3 className="font-bold text-gray-800">{card.title}</h3>
-                      <p className="text-sm text-gray-500">{card.subtitle}</p>
-                    </div>
-                  </div>
-
-                  <p className="text-gray-600 text-sm mb-4">{card.description}</p>
-
-                  <div className="flex justify-between items-center text-xs text-gray-500">
-                    <span>{card.stats.projects} projects</span>
-                    <div className="flex items-center gap-1">
-                      <Heart className="w-3 h-3 fill-red-400 text-red-400" />
-                      <span>{card.stats.likes}k</span>
-                    </div>
-                  </div>
-
-                  {/* Card Stack Effect */}
-                  <div className="absolute inset-0 bg-white rounded-2xl shadow-md border border-gray-200 transform translate-x-1 translate-y-1 -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform"></div>
+                  )}
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Social Media Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-          {socialCards.map((social, index) => (
-            <div key={index} className="group relative cursor-pointer">
-              <div className="bg-white rounded-2xl shadow-lg border-2 border-gray-100 p-6 hover:shadow-xl transform hover:scale-105 hover:-translate-y-2 transition-all duration-300 relative">
-                <div className="flex items-center gap-4">
-                  <div className={`w-12 h-12 ${social.color} rounded-xl flex items-center justify-center shadow-lg`}>
-                    <social.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-800">{social.label}</h3>
-                    <p className="text-sm text-gray-500">{social.count}</p>
-                  </div>
+        {/* Social Cards */}
+        <div className="grid md:grid-cols-3 gap-6 mb-16">
+          {socialLinks.map((social, index) => (
+            <a
+              key={index}
+              href={social.href}
+              className="group bg-white/60 backdrop-blur-lg rounded-2xl p-6 shadow-lg border border-white/20 hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 transition-all duration-300"
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 bg-gradient-to-br from-gray-700 to-gray-900 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <social.icon className="w-6 h-6 text-white" />
                 </div>
-
-                {/* Floating Badge */}
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center transform group-hover:scale-110 transition-transform">
-                  <span className="text-white text-xs font-bold">•</span>
+                <div>
+                  <h3 className="font-bold text-gray-800">{social.label}</h3>
+                  <p className="text-sm text-gray-600">{social.count}</p>
                 </div>
-
-                {/* Card Stack Effect */}
-                <div className="absolute inset-0 bg-white rounded-2xl shadow-md border border-gray-200 transform translate-x-1 translate-y-1 -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform"></div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
 
-        {/* Floating Stats Cards */}
-        <div className="flex justify-center mt-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { label: "Projects", value: "74", color: "bg-blue-500" },
-              { label: "Clients", value: "32", color: "bg-green-500" },
-              { label: "Awards", value: "8", color: "bg-purple-500" },
-              { label: "Experience", value: "5y", color: "bg-orange-500" },
-            ].map((stat, index) => (
-              <div key={index} className="group relative">
-                <div className="bg-white rounded-xl shadow-lg border border-gray-200 p-4 text-center hover:shadow-xl transform hover:scale-110 transition-all duration-300">
-                  <div className={`w-8 h-8 ${stat.color} rounded-lg mx-auto mb-2 flex items-center justify-center`}>
-                    <span className="text-white text-sm font-bold">{stat.value}</span>
-                  </div>
-                  <p className="text-xs text-gray-600 font-medium">{stat.label}</p>
-
-                  {/* Mini Stack Effect */}
-                  <div className="absolute inset-0 bg-gray-50 rounded-xl shadow-sm transform translate-x-0.5 translate-y-0.5 -z-10 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform"></div>
-                </div>
+        {/* Achievement Cards */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          {[
+            { label: "Years Experience", value: "5+", icon: "🎯", color: "from-blue-500 to-blue-600" },
+            { label: "Projects Completed", value: "50+", icon: "🚀", color: "from-green-500 to-green-600" },
+            { label: "Happy Clients", value: "30+", icon: "😊", color: "from-purple-500 to-purple-600" },
+            { label: "Awards Won", value: "8", icon: "🏆", color: "from-orange-500 to-orange-600" },
+          ].map((stat, index) => (
+            <div key={index} className="group">
+              <div
+                className={`bg-gradient-to-br ${stat.color} rounded-2xl p-6 text-white text-center shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300`}
+              >
+                <div className="text-3xl mb-2">{stat.icon}</div>
+                <div className="text-2xl font-bold mb-1">{stat.value}</div>
+                <div className="text-sm text-white/80">{stat.label}</div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
