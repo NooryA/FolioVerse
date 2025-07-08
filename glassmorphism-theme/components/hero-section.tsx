@@ -46,6 +46,13 @@ export function HeroSection() {
   });
 
   useEffect(() => {
+    // Ensure page starts from the very top
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+
     const interval = setInterval(() => {
       setCurrentRole((prev) => (prev + 1) % roles.length);
     }, 3000);

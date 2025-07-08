@@ -23,6 +23,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Force page to start from top */
+  scroll-restoration: manual;
 }
 
 body {
@@ -34,6 +36,9 @@ body {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  /* Ensure page starts from top */
+  position: relative;
+  min-height: 100vh;
 }
 
 /* Advanced Animated Background */
