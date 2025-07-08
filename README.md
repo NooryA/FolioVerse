@@ -1,7 +1,7 @@
 ![image](https://github.com/user-attachments/assets/8ffbbf59-e077-4e57-b015-0ff9f936a289)
 
 
-# 🌟 FolioVerse - Portfolio Theme Collection ( some themees are still under construction ) 
+# 🌟 FolioVerse - Portfolio Theme Collection ( some themes are still under construction ) 
 
 > A curated collection of stunning, modern portfolio themes built with Next.js, TypeScript, and Tailwind CSS. Each theme represents a unique design philosophy and aesthetic approach.
 
