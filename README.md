@@ -1,11 +1,6 @@
 # 🌟 FolioVerse - Premium Portfolio Theme Collection
 
-> A curated collection of 39 stunning, modern portfolio themes built with Next.js, TypeScript, and Tailwind CSS. Each theme represents a unique design philosophy and aesthetic approach.
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Next.js](https://img.shields.io/badge/Next.js-14.0.4-black)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.3.3-blue)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.0-38B2AC)](https://tailwindcss.com/)
+> A curated collection of stunning, modern portfolio themes built with Next.js, TypeScript, and Tailwind CSS. Each theme represents a unique design philosophy and aesthetic approach.
 
 ### 🎭 All Available Themes
 
