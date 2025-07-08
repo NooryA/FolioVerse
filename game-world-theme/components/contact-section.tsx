@@ -184,8 +184,10 @@ export default function ContactSection() {
   // Tavern atmosphere updates
   useEffect(() => {
     const activities = ["bustling", "lively", "peaceful", "mysterious"];
+    let activityIndex = 0;
     const interval = setInterval(() => {
-      setTavernActivity(activities[Math.floor(Math.random() * activities.length)]);
+      setTavernActivity(activities[activityIndex % activities.length]);
+      activityIndex++;
     }, 8000);
 
     return () => clearInterval(interval);
@@ -229,7 +231,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative min-h-screen py-20 bg-gradient-to-br from-amber-900/20 via-orange-900/30 to-red-900/20">
+    <section id="contact" className="game-section relative bg-gradient-to-br from-amber-900/20 via-orange-900/30 to-red-900/20">
       {/* Tavern Atmosphere Effects */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating candles and mystical elements */}
@@ -238,13 +240,13 @@ export default function ContactSection() {
             key={i}
             className="absolute animate-float opacity-30"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 10}s`,
-              animationDuration: `${6 + Math.random() * 8}s`,
+              left: `${(i * 27) % 100}%`,
+              top: `${(i * 41) % 100}%`,
+              animationDelay: `${(i % 20) * 0.5}s`,
+              animationDuration: `${6 + (i % 8)}s`,
             }}
           >
-            <div className="text-2xl">{["🕯️", "🍺", "📜", "⚔️", "🛡️", "💰", "🔮", "📚"][Math.floor(Math.random() * 8)]}</div>
+            <div className="text-2xl">{["🕯️", "🍺", "📜", "⚔️", "🛡️", "💰", "🔮", "📚"][i % 8]}</div>
           </div>
         ))}
 
@@ -254,10 +256,10 @@ export default function ContactSection() {
             key={i}
             className="absolute animate-sparkle opacity-20"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
+              left: `${(i * 13) % 100}%`,
+              top: `${(i * 17) % 100}%`,
+              animationDelay: `${(i % 10) * 0.5}s`,
+              animationDuration: `${3 + (i % 4)}s`,
             }}
           >
             <div className="w-1 h-1 bg-yellow-400 rounded-full" />
@@ -581,7 +583,7 @@ export default function ContactSection() {
               </div>
               <div className="game-stat">
                 <div className="game-stat-label">Response Time</div>
-                <div className="game-stat-value text-blue-500">&lt; 24h</div>
+                <div className="game-stat-value text-blue-500">{"< 24h"}</div>
               </div>
             </div>
 

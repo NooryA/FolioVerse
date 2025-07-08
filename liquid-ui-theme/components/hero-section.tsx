@@ -1,20 +1,19 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { Droplets, Waves, Sparkles, Play, ArrowRight, ChevronDown } from "lucide-react";
+import { motion } from "framer-motion";
+import { Droplets, Waves, Sparkles, Play, ArrowRight, ChevronDown, Zap, Globe, Heart, Code, Palette, Rocket } from "lucide-react";
 
 export function HeroSection() {
-  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number; timestamp: number }>>([]);
+  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
   const [mounted, setMounted] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const controls = useAnimation();
 
   useEffect(() => {
     setMounted(true);
-    controls.start("visible");
+  }, []);
 
+  useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
@@ -22,53 +21,25 @@ export function HeroSection() {
           id: Date.now(),
           x: e.clientX - rect.left,
           y: e.clientY - rect.top,
-          timestamp: Date.now(),
         };
         setRipples((prev) => [...prev, newRipple]);
 
         setTimeout(() => {
           setRipples((prev) => prev.filter((r) => r.id !== newRipple.id));
-        }, 1200);
+        }, 1000);
       }
     };
 
     document.addEventListener("click", handleClick);
+    return () => document.removeEventListener("click", handleClick);
+  }, []);
 
-    return () => {
-      document.removeEventListener("click", handleClick);
-    };
-  }, [controls]);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        delayChildren: 0.3,
-        staggerChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        damping: 12,
-        stiffness: 100,
-      },
-    },
-  };
-
-  if (!mounted) return null;
+  if (!mounted) return <div>Loading...</div>;
 
   return (
     <section
       ref={containerRef}
-      className="min-h-screen relative overflow-hidden"
+      className="min-h-screen relative overflow-hidden flex items-center justify-center"
       style={{
         background: "linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 30%, #f0f4ff 100%)",
       }}
@@ -76,29 +47,29 @@ export function HeroSection() {
       {/* Subtle Liquid Background Elements */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Slow Moving Ambient Blobs */}
-        {[...Array(5)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute liquid-morph opacity-20"
+            className="absolute rounded-full"
             style={{
-              left: `${15 + i * 20}%`,
-              top: `${10 + i * 15}%`,
-              width: `${150 + i * 40}px`,
-              height: `${150 + i * 40}px`,
-              background: `linear-gradient(${45 + i * 72}deg, 
-                rgba(6, 182, 212, 0.15) 0%, 
-                rgba(139, 92, 246, 0.15) 50%, 
-                rgba(59, 130, 246, 0.15) 100%)`,
-              filter: `blur(${25 + i * 5}px)`,
+              left: `${10 + i * 15}%`,
+              top: `${5 + i * 12}%`,
+              width: `${100 + i * 30}px`,
+              height: `${100 + i * 30}px`,
+              background: `linear-gradient(${45 + i * 60}deg, 
+                rgba(6, 182, 212, 0.08) 0%, 
+                rgba(139, 92, 246, 0.08) 50%, 
+                rgba(59, 130, 246, 0.08) 100%)`,
+              filter: `blur(${20 + i * 5}px)`,
             }}
             animate={{
-              x: [0, 30, -20, 0],
-              y: [0, -25, 15, 0],
+              x: [0, 20, -10, 0],
+              y: [0, -15, 10, 0],
               scale: [1, 1.1, 0.9, 1],
-              rotate: [0, 180, 360],
+              rotate: [0, 360],
             }}
             transition={{
-              duration: 20 + i * 5,
+              duration: 15 + i * 5,
               repeat: Infinity,
               ease: "linear",
             }}
@@ -106,30 +77,30 @@ export function HeroSection() {
         ))}
 
         {/* Gentle Floating Particles */}
-        {[...Array(15)].map((_, i) => (
+        {[...Array(12)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-40"
+            className="absolute w-2 h-2 bg-cyan-400 rounded-full opacity-30"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
             animate={{
-              y: [0, -50, 0],
-              x: [0, Math.random() * 30 - 15, 0],
-              scale: [1, 1.3, 1],
-              opacity: [0.4, 0.7, 0.4],
+              y: [0, -30, 0],
+              x: [0, Math.random() * 20 - 10, 0],
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.6, 0.3],
             }}
             transition={{
-              duration: 8 + Math.random() * 4,
+              duration: 6 + Math.random() * 4,
               repeat: Infinity,
-              delay: Math.random() * 5,
+              delay: Math.random() * 3,
             }}
           />
         ))}
       </div>
 
-      {/* Click Ripples (only on click) */}
+      {/* Click Ripples */}
       <div className="absolute inset-0 pointer-events-none">
         {ripples.map((ripple) => (
           <div
@@ -141,59 +112,60 @@ export function HeroSection() {
               transform: "translate(-50%, -50%)",
             }}
           >
-            {[...Array(3)].map((_, i) => (
-              <div
-                key={i}
-                className="absolute border-2 border-cyan-400 rounded-full"
-                style={{
-                  width: `${20 + i * 15}px`,
-                  height: `${20 + i * 15}px`,
-                  transform: "translate(-50%, -50%)",
-                  animation: `liquid-ripple 1.2s ease-out ${i * 0.1}s forwards`,
-                }}
-              />
-            ))}
+            <div
+              className="absolute border-2 border-cyan-400 rounded-full"
+              style={{
+                width: "20px",
+                height: "20px",
+                transform: "translate(-50%, -50%)",
+                animation: `liquid-ripple 1s ease-out forwards`,
+              }}
+            />
           </div>
         ))}
       </div>
 
-      {/* Main Content - Higher z-index and better contrast */}
-      <motion.div
-        className="relative z-20 flex items-center justify-center min-h-screen px-4"
-        variants={containerVariants}
-        initial="hidden"
-        animate={controls}
-      >
-        <div className="text-center max-w-6xl mx-auto">
-          {/* Liquid Logo */}
+      {/* Main Content */}
+      <div className="relative z-30 w-full">
+        <motion.div
+          className="container mx-auto px-4 text-center"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          {/* Hero Logo */}
           <motion.div
-            className="relative mb-12"
-            variants={itemVariants}
-            whileHover={{ scale: 1.05 }}
-            onHoverStart={() => setIsHovered(true)}
-            onHoverEnd={() => setIsHovered(false)}
+            className="mb-16 mt-20"
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="w-32 h-32 mx-auto relative liquid-glow">
-              <div className="absolute inset-0 liquid-morph liquid-gradient rounded-full" />
-              <div className="absolute inset-4 liquid-glass rounded-full flex items-center justify-center bg-white/20 backdrop-blur-lg">
-                <motion.div animate={{ rotate: isHovered ? 360 : 0 }} transition={{ duration: 0.8, ease: "easeInOut" }}>
-                  <Droplets className="w-12 h-12 text-cyan-600" />
+            <div className="relative w-40 h-40 mx-auto">
+              {/* Main Logo Circle */}
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full shadow-2xl">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-full animate-pulse" />
+              </div>
+
+              {/* Inner Glass Circle */}
+              <div className="absolute inset-4 bg-white/20 backdrop-blur-lg rounded-full border border-white/30 flex items-center justify-center">
+                <motion.div animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }}>
+                  <Droplets className="w-16 h-16 text-cyan-600" />
                 </motion.div>
               </div>
 
-              {/* Subtle Orbiting Elements */}
-              {[...Array(2)].map((_, i) => (
+              {/* Orbiting Elements */}
+              {[...Array(3)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="absolute w-4 h-4 bg-cyan-400 rounded-full opacity-60"
+                  className="absolute w-3 h-3 bg-purple-400 rounded-full"
                   style={{
                     top: "50%",
                     left: "50%",
-                    transformOrigin: `0 ${50 + i * 15}px`,
+                    transformOrigin: `0 ${40 + i * 10}px`,
                   }}
                   animate={{ rotate: 360 }}
                   transition={{
-                    duration: 12 + i * 3,
+                    duration: 8 + i * 2,
                     repeat: Infinity,
                     ease: "linear",
                   }}
@@ -202,140 +174,219 @@ export function HeroSection() {
             </div>
           </motion.div>
 
-          {/* Main Heading - Better contrast */}
-          <motion.div className="mb-8" variants={itemVariants}>
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-tight">
+          {/* Main Heading */}
+          <motion.div
+            className="mb-12"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            <h1 className="text-7xl md:text-9xl font-bold mb-8 leading-none">
               <motion.span
-                className="block bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent liquid-wave"
-                whileHover={{ scale: 1.02 }}
+                className="block bg-gradient-to-r from-cyan-600 via-blue-600 to-cyan-500 bg-clip-text text-transparent"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
               >
                 Liquid
               </motion.span>
               <motion.span
-                className="block bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent liquid-wave"
-                style={{ animationDelay: "0.3s" }}
-                whileHover={{ scale: 1.02 }}
+                className="block bg-gradient-to-r from-purple-600 via-pink-600 to-purple-500 bg-clip-text text-transparent"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
               >
-                Interface
+                UI
               </motion.span>
             </h1>
+
+            {/* Animated Underline */}
             <motion.div
-              className="h-2 w-24 mx-auto liquid-morph liquid-gradient rounded-full"
+              className="h-2 w-32 mx-auto bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"
               animate={{ scaleX: [1, 1.2, 1] }}
-              transition={{ duration: 4, repeat: Infinity }}
+              transition={{ duration: 3, repeat: Infinity }}
             />
           </motion.div>
 
-          {/* Subtitle - Better contrast */}
+          {/* Subtitle */}
           <motion.p
-            className="text-xl md:text-2xl text-gray-700 mb-16 max-w-4xl mx-auto leading-relaxed font-medium"
-            variants={itemVariants}
+            className="text-2xl md:text-3xl text-gray-700 mb-20 max-w-5xl mx-auto leading-relaxed font-light"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
           >
-            Experience fluid designs that{" "}
-            <span className="bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent font-semibold">flow seamlessly</span>{" "}
-            across all devices. Where creativity meets{" "}
+            Create stunning{" "}
+            <span className="bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent font-semibold">
+              fluid experiences
+            </span>{" "}
+            that captivate and inspire. Where design meets{" "}
             <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent font-semibold">liquid motion</span>.
           </motion.p>
 
-          {/* Feature Cards - Better contrast */}
-          <motion.div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16" variants={itemVariants}>
+          {/* Feature Cards */}
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20 max-w-6xl mx-auto"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
             {[
               {
                 icon: Waves,
                 title: "Fluid Animations",
-                description: "Smooth transitions that feel natural and responsive",
-                color: "from-cyan-400 to-blue-500",
+                description: "Smooth, natural transitions that feel alive",
+                gradient: "from-cyan-400 to-blue-500",
+                bgGradient: "from-cyan-50 to-blue-50",
               },
               {
                 icon: Sparkles,
                 title: "Morphing Elements",
-                description: "Components that adapt and transform dynamically",
-                color: "from-purple-400 to-pink-500",
+                description: "Dynamic components that transform beautifully",
+                gradient: "from-purple-400 to-pink-500",
+                bgGradient: "from-purple-50 to-pink-50",
               },
               {
-                icon: Play,
+                icon: Zap,
                 title: "Interactive Magic",
-                description: "Touch, hover, and watch elements come alive",
-                color: "from-green-400 to-emerald-500",
+                description: "Responsive design that reacts to every touch",
+                gradient: "from-green-400 to-emerald-500",
+                bgGradient: "from-green-50 to-emerald-50",
               },
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                className="bg-white/80 backdrop-blur-lg border border-white/40 rounded-3xl p-8 transition-all duration-300 hover:bg-white/90 hover:scale-105 hover:shadow-xl group cursor-pointer"
-                whileHover={{ scale: 1.03, y: -5 }}
-                whileTap={{ scale: 0.97 }}
-                style={{ animationDelay: `${index * 0.2}s` }}
+                className={`relative bg-gradient-to-br ${feature.bgGradient} border border-white/50 rounded-3xl p-10 shadow-lg hover:shadow-xl transition-all duration-300 group cursor-pointer`}
+                whileHover={{ scale: 1.05, y: -10 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 + index * 0.1 }}
               >
-                <div className="relative">
+                <div className="text-center">
                   <div
-                    className={`w-16 h-16 mx-auto mb-6 liquid-morph bg-gradient-to-r ${feature.color} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}
+                    className={`w-20 h-20 mx-auto mb-8 bg-gradient-to-r ${feature.gradient} rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
                   >
-                    <feature.icon className="w-8 h-8 text-white" />
+                    <feature.icon className="w-10 h-10 text-white" />
                   </div>
-                  <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent">
-                    {feature.title}
-                  </h3>
+                  <h3 className="text-2xl font-bold mb-4 text-gray-800">{feature.title}</h3>
                   <p className="text-gray-600 leading-relaxed">{feature.description}</p>
                 </div>
               </motion.div>
             ))}
           </motion.div>
 
-          {/* Action Buttons - Better visibility */}
-          <motion.div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16" variants={itemVariants}>
+          {/* Call to Action Buttons */}
+          <motion.div
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-20"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+          >
             <motion.button
-              className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-lg px-10 py-4 rounded-full font-semibold flex items-center gap-3 shadow-lg hover:shadow-xl transition-all duration-300"
+              className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xl px-12 py-5 rounded-full font-semibold flex items-center gap-4 shadow-lg hover:shadow-xl transition-all duration-300 group"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <span>Experience the Flow</span>
-              <ArrowRight className="w-5 h-5" />
+              <Rocket className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+              <span>Start Creating</span>
+              <ArrowRight className="w-6 h-6 group-hover:translate-x-1 transition-transform" />
             </motion.button>
 
             <motion.button
-              className="bg-white/80 backdrop-blur-lg border border-white/40 text-lg px-10 py-4 rounded-full font-semibold flex items-center gap-3 text-gray-700 hover:text-gray-800 hover:bg-white/90 transition-all duration-300"
+              className="bg-white/80 backdrop-blur-lg border border-white/50 text-xl px-12 py-5 rounded-full font-semibold flex items-center gap-4 text-gray-700 hover:text-gray-800 hover:bg-white/90 transition-all duration-300 shadow-lg"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Play className="w-5 h-5" />
+              <Play className="w-6 h-6" />
               <span>Watch Demo</span>
             </motion.button>
           </motion.div>
 
-          {/* Liquid Stats - Better contrast */}
-          <motion.div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16" variants={itemVariants}>
+          {/* Stats Section */}
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-20 max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.4 }}
+          >
             {[
-              { value: "100%", label: "Fluid Design", color: "text-cyan-600" },
-              { value: "∞", label: "Possibilities", color: "text-purple-600" },
-              { value: "60fps", label: "Smooth Animation", color: "text-blue-600" },
-              { value: "0ms", label: "Lag Time", color: "text-green-600" },
+              { icon: Globe, value: "100%", label: "Responsive", color: "text-cyan-600" },
+              { icon: Heart, value: "∞", label: "Possibilities", color: "text-purple-600" },
+              { icon: Code, value: "60fps", label: "Performance", color: "text-blue-600" },
+              { icon: Palette, value: "0ms", label: "Lag Time", color: "text-green-600" },
             ].map((stat, index) => (
-              <motion.div key={index} className="text-center group" whileHover={{ scale: 1.05 }}>
-                <div className="relative">
-                  <div className={`text-3xl md:text-4xl font-bold mb-2 ${stat.color} liquid-pulse`}>{stat.value}</div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 to-purple-400/20 blur-xl scale-0 group-hover:scale-150 transition-transform duration-500 rounded-full" />
+              <motion.div
+                key={index}
+                className="text-center group"
+                whileHover={{ scale: 1.1 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 1.5 + index * 0.1 }}
+              >
+                <div className="relative mb-4">
+                  <div
+                    className={`w-16 h-16 mx-auto ${stat.color} bg-gradient-to-r from-current to-current opacity-20 rounded-full flex items-center justify-center mb-4`}
+                  >
+                    <stat.icon className={`w-8 h-8 ${stat.color}`} />
+                  </div>
+                  <div className={`text-4xl md:text-5xl font-bold ${stat.color} mb-2`}>{stat.value}</div>
+                  <div className="text-gray-700 font-medium text-lg">{stat.label}</div>
                 </div>
-                <div className="text-gray-700 font-medium">{stat.label}</div>
               </motion.div>
             ))}
           </motion.div>
 
-          {/* Scroll Indicator */}
+          {/* Additional Features */}
           <motion.div
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-            variants={itemVariants}
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            className="bg-white/60 backdrop-blur-lg border border-white/50 rounded-3xl p-12 max-w-4xl mx-auto shadow-lg"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.6 }}
           >
-            <div className="flex flex-col items-center gap-2 text-gray-600">
-              <span className="text-sm font-medium">Scroll to explore</span>
-              <div className="w-8 h-8 bg-white/80 backdrop-blur-lg border border-white/40 rounded-full flex items-center justify-center">
-                <ChevronDown className="w-5 h-5" />
+            <h2 className="text-3xl font-bold text-gray-800 mb-6">Why Choose Liquid UI?</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Waves className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">Fluid by Nature</h3>
+                    <p className="text-gray-600">Every element flows seamlessly with natural motion</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Sparkles className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">Magical Interactions</h3>
+                    <p className="text-gray-600">Delightful animations that engage and inspire</p>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Zap className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">Lightning Fast</h3>
+                    <p className="text-gray-600">Optimized performance without compromising beauty</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Globe className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-800 mb-2">Universal Design</h3>
+                    <p className="text-gray-600">Works beautifully across all devices and screens</p>
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>
-        </div>
-      </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 }

@@ -301,7 +301,7 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <section id="about" className="relative min-h-screen py-20 bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20">
+    <section id="about" className="game-section relative bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20">
       {/* Mystical Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating magical orbs */}
@@ -310,10 +310,10 @@ export default function AboutSection() {
             key={i}
             className="absolute animate-float opacity-20"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 8}s`,
-              animationDuration: `${6 + Math.random() * 6}s`,
+              left: `${(i * 19) % 100}%`,
+              top: `${(i * 29) % 100}%`,
+              animationDelay: `${(i % 16) * 0.5}s`,
+              animationDuration: `${6 + (i % 6)}s`,
             }}
           >
             <div className="w-3 h-3 bg-purple-400 rounded-full animate-glow" />

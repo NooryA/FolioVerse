@@ -1,43 +1,37 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Palette, Sparkles, Zap, ArrowRight, Star, Circle, Heart } from "lucide-react";
+import { useTheme } from "./theme-context";
 
 export function HeroSection() {
-  const [gradientIndex, setGradientIndex] = useState(0);
+  const { currentTheme, changeTheme, gradientIndex, setGradientIndex, themeIndex, allThemes } = useTheme();
+
   const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
   const [mounted, setMounted] = useState(false);
   const [isColorMixing, setIsColorMixing] = useState(false);
+  const [isThemeChanging, setIsThemeChanging] = useState(false);
 
-  const gradients = [
-    "from-pink-500 via-red-500 to-yellow-500",
-    "from-purple-400 via-pink-500 to-red-500",
-    "from-green-400 via-blue-500 to-purple-600",
-    "from-yellow-400 via-red-500 to-pink-500",
-    "from-indigo-400 via-purple-500 to-pink-500",
-    "from-green-500 via-teal-500 to-blue-500",
-    "from-orange-400 via-pink-500 to-purple-600",
-    "from-cyan-400 via-blue-500 to-purple-600",
-  ];
+  // Use theme colors from context
+  const gradients = currentTheme.gradients;
+  const textGradients = currentTheme.textGradients;
 
-  const textGradients = [
-    "from-pink-600 via-purple-600 to-indigo-600",
-    "from-red-500 via-yellow-500 to-pink-500",
-    "from-green-500 via-blue-500 to-purple-500",
-    "from-yellow-500 via-orange-500 to-red-500",
-    "from-indigo-500 via-purple-500 to-pink-500",
-    "from-teal-500 via-green-500 to-blue-500",
-    "from-orange-500 via-red-500 to-pink-500",
-    "from-blue-500 via-indigo-500 to-purple-500",
-  ];
+  // Generate stable random values for floating elements
+  const floatingElements = useMemo(() => {
+    return Array.from({ length: 25 }).map((_, i) => ({
+      id: i,
+      gradient: gradients[i % gradients.length],
+      width: 15 + Math.random() * 30,
+      height: 15 + Math.random() * 30,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      animationDelay: Math.random() * 10,
+      animationDuration: 6 + Math.random() * 12,
+    }));
+  }, [gradients, themeIndex]); // Re-generate when theme changes
 
   useEffect(() => {
     setMounted(true);
-
-    // Auto-cycle gradients
-    const interval = setInterval(() => {
-      setGradientIndex((prev) => (prev + 1) % gradients.length);
-    }, 3000);
 
     // Mouse tracking
     const handleMouseMove = (e: MouseEvent) => {
@@ -50,7 +44,6 @@ export function HeroSection() {
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
-      clearInterval(interval);
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
@@ -59,15 +52,28 @@ export function HeroSection() {
     setIsColorMixing(true);
     // Rapidly cycle through gradients for mixing effect
     const mixInterval = setInterval(() => {
-      setGradientIndex((prev) => Math.floor(Math.random() * gradients.length));
+      const randomIndex = Math.floor(Math.random() * gradients.length);
+      setGradientIndex(randomIndex);
     }, 100);
 
     // Stop mixing after 2 seconds
     setTimeout(() => {
       clearInterval(mixInterval);
       setIsColorMixing(false);
-      setGradientIndex(Math.floor(Math.random() * gradients.length));
+      const finalIndex = Math.floor(Math.random() * gradients.length);
+      setGradientIndex(finalIndex);
     }, 2000);
+  };
+
+  // NEW: Handle theme change with animation
+  const handleThemeChange = () => {
+    setIsThemeChanging(true);
+
+    // Add exciting animation effect
+    setTimeout(() => {
+      changeTheme();
+      setIsThemeChanging(false);
+    }, 500);
   };
 
   if (!mounted) return null;
@@ -86,15 +92,27 @@ export function HeroSection() {
           }}
         />
 
-        {/* Enhanced animated gradient orbs with better positioning */}
-        <div className="absolute top-32 left-10 w-96 h-96 bg-gradient-to-r from-pink-400/20 to-purple-600/20 rounded-full blur-3xl animate-gradient-float animation-delay-0" />
-        <div className="absolute top-40 right-20 w-80 h-80 bg-gradient-to-r from-yellow-400/20 to-orange-600/20 rounded-full blur-3xl animate-gradient-float animation-delay-1000" />
-        <div className="absolute bottom-40 left-32 w-72 h-72 bg-gradient-to-r from-green-400/20 to-blue-600/20 rounded-full blur-3xl animate-gradient-float animation-delay-2000" />
-        <div className="absolute bottom-52 right-32 w-88 h-88 bg-gradient-to-r from-indigo-400/20 to-pink-600/20 rounded-full blur-3xl animate-gradient-float animation-delay-3000" />
+        {/* Enhanced animated gradient orbs with theme colors */}
+        <div
+          className={`absolute top-32 left-10 w-96 h-96 bg-gradient-to-r ${gradients[0]}/20 rounded-full blur-3xl animate-gradient-float animation-delay-0`}
+        />
+        <div
+          className={`absolute top-40 right-20 w-80 h-80 bg-gradient-to-r ${gradients[1]}/20 rounded-full blur-3xl animate-gradient-float animation-delay-1000`}
+        />
+        <div
+          className={`absolute bottom-40 left-32 w-72 h-72 bg-gradient-to-r ${gradients[2]}/20 rounded-full blur-3xl animate-gradient-float animation-delay-2000`}
+        />
+        <div
+          className={`absolute bottom-52 right-32 w-88 h-88 bg-gradient-to-r ${gradients[3]}/20 rounded-full blur-3xl animate-gradient-float animation-delay-3000`}
+        />
 
         {/* Additional atmospheric orbs */}
-        <div className="absolute top-1/3 left-1/3 w-64 h-64 bg-gradient-to-r from-cyan-400/15 to-blue-600/15 rounded-full blur-2xl animate-gradient-float animation-delay-4000" />
-        <div className="absolute bottom-1/3 right-1/3 w-56 h-56 bg-gradient-to-r from-red-400/15 to-pink-600/15 rounded-full blur-2xl animate-gradient-float animation-delay-5000" />
+        <div
+          className={`absolute top-1/3 left-1/3 w-64 h-64 bg-gradient-to-r ${gradients[4]}/15 rounded-full blur-2xl animate-gradient-float animation-delay-4000`}
+        />
+        <div
+          className={`absolute bottom-1/3 right-1/3 w-56 h-56 bg-gradient-to-r ${gradients[5]}/15 rounded-full blur-2xl animate-gradient-float animation-delay-5000`}
+        />
       </div>
 
       {/* Enhanced gradient mesh overlay */}
@@ -115,19 +133,19 @@ export function HeroSection() {
         }}
       />
 
-      {/* Enhanced floating gradient elements */}
+      {/* Enhanced floating gradient elements with stable values */}
       <div className="absolute inset-0 pointer-events-none z-1">
-        {Array.from({ length: 25 }).map((_, i) => (
+        {floatingElements.map((element) => (
           <div
-            key={i}
-            className={`absolute rounded-full bg-gradient-to-r ${gradients[i % gradients.length]} opacity-15 animate-gradient-float`}
+            key={element.id}
+            className={`absolute rounded-full bg-gradient-to-r ${element.gradient} opacity-15 animate-gradient-float`}
             style={{
-              width: `${15 + Math.random() * 30}px`,
-              height: `${15 + Math.random() * 30}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 10}s`,
-              animationDuration: `${6 + Math.random() * 12}s`,
+              width: `${element.width}px`,
+              height: `${element.height}px`,
+              left: `${element.left}%`,
+              top: `${element.top}%`,
+              animationDelay: `${element.animationDelay}s`,
+              animationDuration: `${element.animationDuration}s`,
             }}
           />
         ))}
@@ -136,22 +154,55 @@ export function HeroSection() {
       {/* Main Content */}
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
         <div className="text-center max-w-6xl mx-auto">
-          {/* Enhanced Gradient Icon */}
+          {/* CLICKABLE THEME CHANGER - Enhanced Gradient Icon */}
           <div className="relative mb-12">
-            <div className="w-40 h-40 mx-auto relative">
-              <div className={`absolute inset-0 bg-gradient-to-r ${gradients[gradientIndex]} rounded-full animate-spin-slow shadow-lg`} />
-              <div
-                className={`absolute inset-2 bg-gradient-to-r ${
-                  gradients[(gradientIndex + 2) % gradients.length]
-                } rounded-full animate-spin-reverse shadow-lg`}
-              />
-              <div className="absolute inset-4 bg-gradient-to-r from-white to-gray-100 rounded-full flex items-center justify-center shadow-inner">
-                <Palette className={`w-16 h-16 bg-gradient-to-r ${textGradients[gradientIndex]} bg-clip-text text-transparent`} />
+            <div className="w-40 h-40 mx-auto relative group">
+              {/* Main clickable area */}
+              <button
+                onClick={handleThemeChange}
+                disabled={isThemeChanging}
+                className={`w-full h-full relative cursor-pointer transition-all duration-500 group ${
+                  isThemeChanging ? "scale-110 animate-pulse" : "hover:scale-110"
+                }`}
+                title={`Click to switch to ${allThemes[(themeIndex + 1) % allThemes.length].name} theme!`}
+              >
+                <div
+                  className={`absolute inset-0 bg-gradient-to-r ${gradients[gradientIndex]} rounded-full animate-spin-slow shadow-lg ${
+                    isThemeChanging ? "animate-ping" : ""
+                  }`}
+                />
+                <div
+                  className={`absolute inset-2 bg-gradient-to-r ${
+                    gradients[(gradientIndex + 2) % gradients.length]
+                  } rounded-full animate-spin-reverse shadow-lg`}
+                />
+                <div className="absolute inset-4 bg-gradient-to-r from-white to-gray-100 rounded-full flex items-center justify-center shadow-inner">
+                  <Palette
+                    className={`w-16 h-16 bg-gradient-to-r ${textGradients[gradientIndex]} bg-clip-text text-transparent ${
+                      isThemeChanging ? "animate-spin" : ""
+                    }`}
+                  />
+                </div>
+
+                {/* Theme change indicator */}
+                {isThemeChanging && <div className="absolute inset-0 bg-white/20 rounded-full animate-pulse" />}
+
+                {/* Enhanced glow effect */}
+                <div
+                  className={`absolute inset-0 bg-gradient-to-r ${
+                    gradients[gradientIndex]
+                  } rounded-full blur-xl opacity-50 animate-gradient-pulse ${isThemeChanging ? "opacity-80" : "group-hover:opacity-70"}`}
+                />
+              </button>
+
+              {/* Theme name tooltip */}
+              <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <div className={`px-6 py-3 bg-gradient-to-r ${currentTheme.accent} rounded-full shadow-lg border border-white/20`}>
+                  <span className="text-white font-bold text-lg whitespace-nowrap">
+                    {isThemeChanging ? "Switching..." : `Click for ${allThemes[(themeIndex + 1) % allThemes.length].name}!`}
+                  </span>
+                </div>
               </div>
-              {/* Enhanced glow effect */}
-              <div
-                className={`absolute inset-0 bg-gradient-to-r ${gradients[gradientIndex]} rounded-full blur-xl opacity-50 animate-gradient-pulse`}
-              />
             </div>
           </div>
 
@@ -183,15 +234,19 @@ export function HeroSection() {
           {/* Enhanced Subtitle with Better Text Colors */}
           <p className="text-3xl md:text-4xl lg:text-5xl font-bold mb-16 drop-shadow-lg">
             <span
-              className="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent animate-gradient-shift font-black"
-              style={{ backgroundSize: "200% 200%", textShadow: "0 2px 4px rgba(255, 255, 255, 0.9)" }}
+              className={`bg-gradient-to-r ${
+                textGradients[(gradientIndex + 2) % textGradients.length]
+              } bg-clip-text text-transparent animate-gradient-shift font-black`}
+              style={{ backgroundSize: "200% 200%" }}
             >
               Where colors collide and creativity
             </span>
             <br />
             <span
-              className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent animate-gradient-shift font-black"
-              style={{ textShadow: "0 2px 4px rgba(255, 255, 255, 0.9)" }}
+              className={`bg-gradient-to-r ${
+                textGradients[(gradientIndex + 3) % textGradients.length]
+              } bg-clip-text text-transparent animate-gradient-shift font-black`}
+              style={{ backgroundSize: "200% 200%" }}
             >
               {" "}
               explodes with pure magic
@@ -232,7 +287,10 @@ export function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-24">
             <button
               className={`group relative overflow-hidden bg-gradient-to-r ${gradients[gradientIndex]} hover:scale-110 px-12 py-6 rounded-full font-bold text-xl transition-all duration-500 hover:shadow-2xl flex items-center gap-4 border-2 border-white/20`}
-              onClick={() => setGradientIndex((prev) => (prev + 1) % gradients.length)}
+              onClick={() => {
+                const nextIndex = (gradientIndex + 1) % gradients.length;
+                setGradientIndex(nextIndex);
+              }}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <span className="relative z-10 text-gray-900 font-black" style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)" }}>
@@ -266,8 +324,10 @@ export function HeroSection() {
           {/* Enhanced Gradient Palette Showcase with Better Spacing */}
           <div className="mb-32">
             <h3
-              className="text-3xl font-bold bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent mb-8 font-black"
-              style={{ textShadow: "0 2px 4px rgba(255, 255, 255, 0.9)" }}
+              className={`text-3xl font-bold bg-gradient-to-r ${
+                textGradients[(gradientIndex + 4) % textGradients.length]
+              } bg-clip-text text-transparent mb-8 font-black animate-gradient-shift`}
+              style={{ backgroundSize: "200% 200%" }}
             >
               Interactive Gradient Palette
             </h3>

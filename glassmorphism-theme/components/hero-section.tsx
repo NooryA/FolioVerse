@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Code, Palette, Rocket, Globe, ChevronDown, Sparkles } from "lucide-react";
 
@@ -16,7 +16,34 @@ export function HeroSection() {
 
   const [currentRole, setCurrentRole] = useState(0);
 
-  const roles = ["Creative Developer", "UI/UX Designer", "Frontend Architect", "Digital Artist"];
+  const roles = [
+    { text: "Creative Developer", gradient: "from-cyan-300 via-blue-400 to-indigo-500" },
+    { text: "UI/UX Designer", gradient: "from-fuchsia-300 via-pink-400 to-rose-500" },
+    { text: "Frontend Architect", gradient: "from-lime-300 via-green-400 to-emerald-500" },
+    { text: "Digital Artist", gradient: "from-orange-300 via-red-400 to-pink-500" },
+  ];
+
+  // Generate fixed positions for floating shapes
+  const [floatingShapes] = useState(() => {
+    return [...Array(12)].map((_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: 60 + Math.random() * 40,
+      clipPath: (() => {
+        const shapes = [
+          "polygon(50% 0%, 0% 100%, 100% 100%)",
+          "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)",
+          "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)",
+          "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+          "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
+        ];
+        return shapes[Math.floor(Math.random() * shapes.length)];
+      })(),
+      duration: 8 + Math.random() * 4,
+      delay: Math.random() * 2,
+    }));
+  });
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,35 +70,29 @@ export function HeroSection() {
 
   return (
     <section ref={containerRef} className="min-h-screen relative overflow-hidden flex items-center justify-center pt-24">
-      {/* Floating Geometric Shapes */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(15)].map((_, i) => (
+      {/* Fixed Floating Geometric Shapes */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {floatingShapes.map((shape) => (
           <motion.div
-            key={i}
-            className="absolute w-20 h-20 glass-floating opacity-30"
+            key={shape.id}
+            className="absolute glass-floating opacity-20"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              clipPath: (() => {
-                const shapes = [
-                  "polygon(50% 0%, 0% 100%, 100% 100%)",
-                  "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)",
-                  "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)",
-                  "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
-                  "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
-                ];
-                return shapes[Math.floor(Math.random() * shapes.length)];
-              })(),
+              left: `${shape.x}%`,
+              top: `${shape.y}%`,
+              width: `${shape.size}px`,
+              height: `${shape.size}px`,
+              clipPath: shape.clipPath,
             }}
             animate={{
-              rotate: [0, 360],
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.7, 0.3],
+              y: [0, -15, 0],
+              rotate: [0, 5, -5, 0],
+              scale: [1, 1.05, 1],
             }}
             transition={{
-              duration: 10 + i * 2,
+              duration: shape.duration,
               repeat: Infinity,
-              ease: "linear",
+              ease: "easeInOut",
+              delay: shape.delay,
             }}
           />
         ))}
@@ -139,25 +160,93 @@ export function HeroSection() {
             John Doe
           </motion.h1>
 
-          {/* Dynamic Role */}
+          {/* Premium Dynamic Role Display */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
             className="mb-8"
           >
-            <div className="text-2xl md:text-3xl text-white/90 font-light mb-2">I'm a passionate</div>
-            <div className="text-3xl md:text-4xl font-bold h-16 flex items-center justify-center">
-              <motion.span
-                key={currentRole}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400"
-              >
-                {roles[currentRole]}
-              </motion.span>
+            <div className="text-2xl md:text-3xl text-white/90 font-light mb-4">I'm a passionate</div>
+
+            {/* Premium Role Container */}
+            <div className="relative h-24 flex items-center justify-center">
+              {/* Glass Background Container */}
+              <div className="absolute inset-0 glass-premium rounded-3xl overflow-hidden">
+                {/* Shimmer Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-shimmer-wave"></div>
+
+                {/* Inner Glow */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent"></div>
+              </div>
+
+              {/* Role Text with Premium Animation */}
+              <div className="relative z-10 px-8 py-4">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentRole}
+                    initial={{
+                      opacity: 0,
+                      y: 30,
+                      scale: 0.8,
+                      filter: "blur(10px)",
+                    }}
+                    animate={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                      filter: "blur(0px)",
+                    }}
+                    exit={{
+                      opacity: 0,
+                      y: -30,
+                      scale: 1.1,
+                      filter: "blur(10px)",
+                    }}
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.23, 1, 0.32, 1],
+                    }}
+                    className="relative"
+                  >
+                    {/* Main Text */}
+                    <div
+                      className={`text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r ${roles[currentRole].gradient} bg-clip-text text-transparent font-['Orbitron']`}
+                    >
+                      {roles[currentRole].text}
+                    </div>
+
+                    {/* Text Glow Effect */}
+                    <div
+                      className={`absolute inset-0 text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r ${roles[currentRole].gradient} bg-clip-text text-transparent font-['Orbitron'] opacity-60 blur-sm`}
+                      aria-hidden="true"
+                    >
+                      {roles[currentRole].text}
+                    </div>
+
+                    {/* Sparkle Effects */}
+                    <div className="absolute -top-2 -right-2">
+                      <motion.div
+                        animate={{
+                          scale: [1, 1.2, 1],
+                          rotate: [0, 180, 360],
+                          opacity: [0.8, 1, 0.8],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut",
+                        }}
+                      >
+                        <Sparkles className="w-6 h-6 text-yellow-400/80" />
+                      </motion.div>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+
+              {/* Premium Border Effect */}
+              <div className="absolute inset-0 rounded-3xl border-2 border-transparent bg-gradient-to-r from-white/20 via-white/40 to-white/20 bg-clip-border opacity-40"></div>
             </div>
           </motion.div>
 

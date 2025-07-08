@@ -5,51 +5,33 @@
 @tailwind utilities;
 
 /* ==================== */
-/* ROOT VARIABLES - GAME WORLD THEME */
+/* GLOBAL STYLES & RESET */
 /* ==================== */
+
 :root {
-  /* Primary Game Colors */
-  --game-bg-primary: #0a0a0f;
+  --game-bg-primary: #0f0f1a;
   --game-bg-secondary: #1a1a2e;
-  --game-bg-tertiary: #16213e;
-
-  /* Fantasy Color Palette */
-  --game-gold: #ffd700;
-  --game-gold-dark: #cc8400;
-  --game-silver: #c0c0c0;
-  --game-bronze: #cd7f32;
-
-  /* Magical Colors */
-  --game-magic-blue: #4169e1;
-  --game-magic-purple: #8a2be2;
-  --game-magic-green: #32cd32;
-  --game-magic-red: #dc143c;
-
-  /* UI Element Colors */
+  --game-bg-accent: #2d3748;
+  --game-panel-bg: rgba(26, 26, 46, 0.8);
+  --game-window: linear-gradient(145deg, #1a1a2e 0%, #2d3748 50%, #1a1a2e 100%);
   --game-border-primary: #4a5568;
+  --game-border-secondary: #2d3748;
   --game-border-magic: #8a2be2;
   --game-border-gold: #ffd700;
-
-  /* Text Colors */
-  --game-text-primary: #ffffff;
-  --game-text-secondary: #e2e8f0;
+  --game-text-primary: #e2e8f0;
+  --game-text-secondary: #cbd5e0;
   --game-text-muted: #a0aec0;
   --game-text-gold: #ffd700;
-
-  /* Shadow Effects */
-  --game-shadow-glow: 0 0 20px rgba(138, 43, 226, 0.5);
-  --game-shadow-gold: 0 0 15px rgba(255, 215, 0, 0.3);
-  --game-shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.6);
-
-  /* Game Panel Gradients */
-  --game-panel-bg: linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #1a1a2e 100%);
-  --game-panel-border: linear-gradient(45deg, #4a5568, #8a2be2, #4a5568);
-  --game-button-bg: linear-gradient(145deg, #2d3748 0%, #4a5568 50%, #2d3748 100%);
+  --game-magic-purple: #8a2be2;
+  --game-magic-blue: #4169e1;
+  --game-magic-green: #32cd32;
+  --game-gold: #ffd700;
+  --game-gold-dark: #b8860b;
+  --game-shadow: rgba(0, 0, 0, 0.8);
+  --game-glow: rgba(138, 43, 226, 0.3);
+  --navbar-height: 40px; /* Reduced from 50px for ultra-compact navbar */
 }
 
-/* ==================== */
-/* BASE STYLES */
-/* ==================== */
 * {
   margin: 0;
   padding: 0;
@@ -58,7 +40,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  font-size: 16px;
 }
 
 body {
@@ -68,22 +50,43 @@ body {
   line-height: 1.6;
   overflow-x: hidden;
   background-image: radial-gradient(circle at 20% 50%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(65, 105, 225, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 40% 80%, rgba(255, 215, 0, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 80% 20%, rgba(255, 215, 0, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 40% 80%, rgba(65, 105, 225, 0.1) 0%, transparent 50%);
   background-attachment: fixed;
+  background-size: 100% 100%;
+  min-height: 100vh;
+}
+
+/* ==================== */
+/* SECTION LAYOUT FIXES */
+/* ==================== */
+
+.game-section {
+  min-height: 100vh;
+  padding: calc(var(--navbar-height) + 40px) 0 60px 0; /* Top padding accounts for navbar */
+  position: relative;
+}
+
+.game-section:first-child {
+  padding-top: var(--navbar-height); /* Hero section with exact navbar height */
+}
+
+.game-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* ==================== */
 /* GAME UI COMPONENTS */
 /* ==================== */
 
-/* Game Panel Base */
 .game-panel {
   background: var(--game-panel-bg);
-  border: 2px solid;
-  border-image: var(--game-panel-border) 1;
-  border-radius: 8px;
-  box-shadow: var(--game-shadow-inner), var(--game-shadow-glow);
+  border: 2px solid var(--game-border-primary);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px var(--game-shadow);
   position: relative;
   overflow: hidden;
 }
@@ -95,8 +98,7 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--game-gold), transparent);
-  opacity: 0.6;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
 }
 
 .game-panel::after {
@@ -106,49 +108,47 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent, var(--game-magic-purple), transparent);
-  opacity: 0.4;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
 }
 
-/* Game Window */
 .game-window {
-  background: linear-gradient(145deg, #0f0f1a 0%, #1a1a2e 30%, #16213e 70%, #0f0f1a 100%);
+  background: var(--game-window);
   border: 3px solid var(--game-border-primary);
   border-radius: 12px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1), inset 0 -1px 0 rgba(0, 0, 0, 0.5);
-  position: relative;
+  box-shadow: 0 0 30px var(--game-shadow), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   overflow: hidden;
 }
 
 .game-window::before {
   content: "";
   position: absolute;
-  top: -2px;
-  left: -2px;
-  right: -2px;
-  bottom: -2px;
-  background: var(--game-panel-border);
-  border-radius: 12px;
-  z-index: -1;
-  opacity: 0.8;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--game-border-magic), transparent);
+  opacity: 0.6;
 }
 
-/* Game Button Styles */
+/* ==================== */
+/* BUTTON STYLES */
+/* ==================== */
+
 .game-btn {
-  background: var(--game-button-bg);
+  background: linear-gradient(145deg, var(--game-bg-secondary) 0%, var(--game-bg-accent) 100%);
   border: 2px solid var(--game-border-primary);
-  border-radius: 6px;
+  border-radius: 8px;
   color: var(--game-text-primary);
+  cursor: pointer;
   font-family: "Cinzel", serif;
   font-weight: 600;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  padding: 10px 18px;
   position: relative;
-  overflow: hidden;
+  transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .game-btn::before {
@@ -200,7 +200,10 @@ body {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 215, 0, 0.6);
 }
 
-/* Game Input Fields */
+/* ==================== */
+/* GAME INPUT FIELDS */
+/* ==================== */
+
 .game-input {
   background: linear-gradient(145deg, #0f0f1a 0%, #1a1a2e 100%);
   border: 2px solid var(--game-border-primary);
@@ -223,7 +226,10 @@ body {
   font-style: italic;
 }
 
-/* Progress Bars */
+/* ==================== */
+/* PROGRESS BARS */
+/* ==================== */
+
 .game-progress {
   background: #1a1a2e;
   border: 1px solid var(--game-border-primary);
@@ -572,18 +578,6 @@ body {
 /* UTILITY CLASSES */
 /* ==================== */
 
-.game-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.game-section {
-  min-height: 100vh;
-  padding: 60px 0;
-  position: relative;
-}
-
 .game-grid {
   display: grid;
   gap: 20px;
@@ -639,6 +633,10 @@ body {
     width: 100px;
     height: 100px;
   }
+
+  .game-section {
+    padding: calc(var(--navbar-height) + 20px) 0 40px 0;
+  }
 }
 
 @media (max-width: 480px) {
@@ -647,11 +645,15 @@ body {
   }
 
   .game-section {
-    padding: 40px 0;
+    padding: calc(var(--navbar-height) + 20px) 0 30px 0;
   }
 
   .game-btn {
     padding: 6px 12px;
     font-size: 0.9rem;
+  }
+
+  .game-container {
+    padding: 0 12px;
   }
 }

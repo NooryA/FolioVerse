@@ -62,27 +62,31 @@ export function Navigation() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
-            {/* Logo Section */}
+            {/* Logo Section - Fixed Width */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="flex items-center gap-4"
+              className="flex items-center gap-4 min-w-0 flex-shrink-0"
             >
               <div className="relative">
-                <div className="glass-premium w-12 h-12 rounded-2xl flex items-center justify-center glass-shimmer-premium">
+                <motion.div
+                  className="glass-premium w-12 h-12 rounded-2xl flex items-center justify-center glass-shimmer-premium"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
                   <Sparkles className="w-6 h-6 text-blue-400" />
-                </div>
+                </motion.div>
                 <div className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-green-400 to-blue-400 rounded-full animate-pulse" />
               </div>
-              <div className="hidden md:block">
-                <div className="text-lg font-bold glass-text-glow-premium font-['Orbitron']">Glassmorphism Portfolio</div>
-                <div className="text-xs text-white/60">Creative Developer</div>
+              <div className="hidden sm:block min-w-0">
+                <div className="text-lg font-bold glass-text-glow-premium font-['Orbitron'] truncate">Glassmorphism Portfolio</div>
+                <div className="text-xs text-white/60 truncate">Creative Developer</div>
               </div>
             </motion.div>
 
-            {/* Desktop Navigation Items */}
-            <div className="hidden md:flex items-center space-x-2">
+            {/* Desktop Navigation Items - Centered */}
+            <div className="hidden lg:flex items-center justify-center space-x-1 flex-1 max-w-2xl mx-8">
               {navItems.map((item, index) => (
                 <motion.button
                   key={item.id}
@@ -90,27 +94,56 @@ export function Navigation() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
                   onClick={() => scrollToSection(item.id)}
-                  className={`glass-button-premium px-6 py-3 rounded-2xl flex items-center space-x-2 transition-all duration-300 ${
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`glass-button-premium px-4 py-2.5 rounded-2xl flex items-center space-x-2 transition-all duration-300 text-sm font-medium ${
                     activeSection === item.id ? "glass-glow-primary border-blue-400/50 scale-105" : "hover:glass-glow-secondary"
                   }`}
                 >
-                  <item.icon className="w-5 h-5" />
-                  <span className="font-medium">{item.label}</span>
+                  <item.icon className="w-4 h-4" />
+                  <span>{item.label}</span>
                 </motion.button>
               ))}
             </div>
 
-            {/* CTA Button */}
-            <motion.button
+            {/* Medium Screen Navigation - Compact */}
+            <div className="hidden md:flex lg:hidden items-center space-x-1 flex-1 justify-center mx-4">
+              {navItems.map((item, index) => (
+                <motion.button
+                  key={item.id}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                  onClick={() => scrollToSection(item.id)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`glass-button-premium p-2.5 rounded-xl flex items-center justify-center transition-all duration-300 ${
+                    activeSection === item.id ? "glass-glow-primary border-blue-400/50 scale-105" : "hover:glass-glow-secondary"
+                  }`}
+                  title={item.label}
+                >
+                  <item.icon className="w-5 h-5" />
+                </motion.button>
+              ))}
+            </div>
+
+            {/* CTA Button - Fixed Width */}
+            <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              onClick={() => scrollToSection("contact")}
-              className="hidden lg:flex glass-button-premium glass-glow-accent px-6 py-3 rounded-2xl items-center space-x-2"
+              className="hidden lg:flex items-center flex-shrink-0"
             >
-              <span className="font-medium">Let's Connect</span>
-              <MessageCircle className="w-5 h-5" />
-            </motion.button>
+              <motion.button
+                onClick={() => scrollToSection("contact")}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="glass-button-premium glass-glow-accent px-5 py-2.5 rounded-2xl flex items-center space-x-2 text-sm font-medium"
+              >
+                <span>Let's Connect</span>
+                <MessageCircle className="w-4 h-4" />
+              </motion.button>
+            </motion.div>
 
             {/* Mobile Menu Button */}
             <motion.button
@@ -118,7 +151,9 @@ export function Navigation() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.4 }}
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden glass-premium p-3 rounded-2xl hover:glass-glow-primary transition-all duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="md:hidden glass-premium p-3 rounded-2xl hover:glass-glow-primary transition-all duration-300 flex-shrink-0"
             >
               {isOpen ? <X className="w-6 h-6 text-white" /> : <Menu className="w-6 h-6 text-white" />}
             </motion.button>
@@ -157,7 +192,7 @@ export function Navigation() {
               transition={{ type: "spring", damping: 20, stiffness: 300 }}
               className="absolute right-0 top-0 h-full w-80 glass-card-premium glass-particles border-l border-white/20"
             >
-              <div className="p-6">
+              <div className="p-6 h-full flex flex-col">
                 {/* Menu Header */}
                 <div className="flex items-center justify-between mb-8">
                   <div className="flex items-center gap-3">
@@ -169,16 +204,18 @@ export function Navigation() {
                       <div className="text-xs text-white/60">Navigation</div>
                     </div>
                   </div>
-                  <button
+                  <motion.button
                     onClick={() => setIsOpen(false)}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     className="glass-premium p-2 rounded-xl hover:glass-glow-primary transition-all duration-300"
                   >
                     <X className="w-5 h-5 text-white" />
-                  </button>
+                  </motion.button>
                 </div>
 
                 {/* Navigation Items */}
-                <div className="space-y-4 mb-8">
+                <div className="space-y-3 mb-8">
                   {navItems.map((item, index) => (
                     <motion.button
                       key={item.id}
@@ -186,6 +223,8 @@ export function Navigation() {
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: index * 0.1 }}
                       onClick={() => scrollToSection(item.id)}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
                       className={`w-full glass-button-premium p-4 rounded-2xl flex items-center space-x-3 transition-all duration-300 ${
                         activeSection === item.id ? "glass-glow-primary border-blue-400/50" : "hover:glass-glow-secondary"
                       }`}
@@ -223,16 +262,20 @@ export function Navigation() {
                 </div>
 
                 {/* CTA Button */}
-                <motion.button
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: 0.5 }}
-                  onClick={() => scrollToSection("contact")}
-                  className="w-full glass-button-premium glass-glow-accent p-4 rounded-2xl flex items-center justify-center space-x-2"
-                >
-                  <span className="font-medium">Let's Connect</span>
-                  <MessageCircle className="w-5 h-5" />
-                </motion.button>
+                <div className="mt-auto">
+                  <motion.button
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.5 }}
+                    onClick={() => scrollToSection("contact")}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full glass-button-premium glass-glow-accent p-4 rounded-2xl flex items-center justify-center space-x-2"
+                  >
+                    <span className="font-medium">Let's Connect</span>
+                    <MessageCircle className="w-5 h-5" />
+                  </motion.button>
+                </div>
               </div>
             </motion.div>
           </motion.div>

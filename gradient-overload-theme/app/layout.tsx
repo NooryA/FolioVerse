@@ -1,27 +1,24 @@
-import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import './globals.css'
-import { ThemeProvider } from '@/components/theme-provider'
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider as GradientThemeProvider } from "@/components/theme-context";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: 'Gradient Overload Portfolio',
-  description: 'A gradient overload themed portfolio',
-}
+  title: "Gradient Overload Portfolio",
+  description: "A gradient overload themed portfolio",
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider>
-          {children}
+          <GradientThemeProvider>{children}</GradientThemeProvider>
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

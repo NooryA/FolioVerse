@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Mail, Phone, MapPin, Send, Star, Heart, Coffee, Code, Palette, Sparkles, MessageCircle, User } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter, Globe, MessageCircle, Star, Heart, Coffee } from "lucide-react";
+import { useTheme } from "./theme-context";
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
@@ -11,15 +12,93 @@ export function ContactSection() {
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const { currentTheme, gradientIndex, themeIndex } = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // Use theme colors from context
+  const gradients = currentTheme.gradients;
+  const textGradients = currentTheme.textGradients;
+
+  // Generate stable random values for floating elements
+  const floatingElements = useMemo(() => {
+    return Array.from({ length: 18 }).map((_, i) => ({
+      id: i,
+      gradient: gradients[i % gradients.length],
+      width: 6 + Math.random() * 14,
+      height: 6 + Math.random() * 14,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      animationDelay: Math.random() * 15,
+      animationDuration: 12 + Math.random() * 24,
+    }));
+  }, [gradients, themeIndex]); // Re-generate when theme changes
+
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: "Email",
+      value: "hello@gradient-portfolio.com",
+      gradient: "from-pink-500 to-purple-600",
+      link: "mailto:hello@gradient-portfolio.com",
+    },
+    {
+      icon: Phone,
+      label: "Phone",
+      value: "+1 (555) 123-4567",
+      gradient: "from-blue-500 to-cyan-600",
+      link: "tel:+15551234567",
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: "San Francisco, CA",
+      gradient: "from-green-500 to-teal-600",
+      link: "https://maps.google.com/?q=San+Francisco,+CA",
+    },
+    {
+      icon: Globe,
+      label: "Website",
+      value: "gradient-portfolio.com",
+      gradient: "from-orange-500 to-red-600",
+      link: "https://gradient-portfolio.com",
+    },
+  ];
+
+  const socialLinks = [
+    {
+      icon: Github,
+      label: "GitHub",
+      url: "https://github.com/username",
+      gradient: "from-gray-700 to-gray-900",
+      hoverGradient: "from-gray-600 to-gray-800",
+    },
+    {
+      icon: Linkedin,
+      label: "LinkedIn",
+      url: "https://linkedin.com/in/username",
+      gradient: "from-blue-600 to-blue-800",
+      hoverGradient: "from-blue-500 to-blue-700",
+    },
+    {
+      icon: Twitter,
+      label: "Twitter",
+      url: "https://twitter.com/username",
+      gradient: "from-sky-500 to-sky-700",
+      hoverGradient: "from-sky-400 to-sky-600",
+    },
+    {
+      icon: MessageCircle,
+      label: "Discord",
+      url: "https://discord.com/users/username",
+      gradient: "from-indigo-600 to-purple-700",
+      hoverGradient: "from-indigo-500 to-purple-600",
+    },
+  ];
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,404 +106,302 @@ export function ContactSection() {
 
     // Simulate form submission
     setTimeout(() => {
-      setSubmitted(true);
+      setSubmitStatus("success");
       setIsSubmitting(false);
       setFormData({ name: "", email: "", subject: "", message: "" });
 
       // Reset success message after 3 seconds
       setTimeout(() => {
-        setSubmitted(false);
+        setSubmitStatus("idle");
       }, 3000);
-    }, 1500);
+    }, 2000);
   };
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
 
   if (!mounted) return null;
 
   return (
-    <section id="contact" className="relative py-32 px-4 overflow-hidden">
-      {/* Enhanced Background Effects */}
+    <section id="contact" className="py-32 relative overflow-hidden">
+      {/* Enhanced Background with Gradient Layers */}
       <div className="absolute inset-0 z-0">
-        <div className="gradient-animated-3 absolute inset-0 opacity-15" />
-        <div className="gradient-animated-1 absolute inset-0 opacity-12" />
+        {/* Animated gradient orbs */}
+        <div
+          className={`absolute top-20 left-10 w-80 h-80 bg-gradient-to-r ${gradients[0]}/20 rounded-full blur-3xl animate-gradient-float animation-delay-0`}
+        />
+        <div
+          className={`absolute top-32 right-20 w-64 h-64 bg-gradient-to-r ${gradients[1]}/20 rounded-full blur-3xl animate-gradient-float animation-delay-4000`}
+        />
+        <div
+          className={`absolute bottom-20 left-32 w-72 h-72 bg-gradient-to-r ${gradients[2]}/20 rounded-full blur-3xl animate-gradient-float animation-delay-8000`}
+        />
+        <div
+          className={`absolute bottom-32 right-16 w-88 h-88 bg-gradient-to-r ${gradients[3]}/20 rounded-full blur-3xl animate-gradient-float animation-delay-12000`}
+        />
+      </div>
 
-        {/* Enhanced floating gradient shapes */}
-        {Array.from({ length: 20 }).map((_, i) => (
+      {/* Enhanced floating gradient elements with stable values */}
+      <div className="absolute inset-0 pointer-events-none z-1">
+        {floatingElements.map((element) => (
           <div
-            key={i}
-            className={`absolute opacity-8 animate-gradient-float ${
-              i % 5 === 0
-                ? "gradient-primary"
-                : i % 5 === 1
-                ? "gradient-secondary"
-                : i % 5 === 2
-                ? "gradient-accent"
-                : i % 5 === 3
-                ? "gradient-rainbow-1"
-                : "gradient-rainbow-2"
-            }`}
+            key={element.id}
+            className={`absolute rounded-full bg-gradient-to-r ${element.gradient} opacity-6 animate-gradient-float`}
             style={{
-              width: `${40 + Math.random() * 80}px`,
-              height: `${40 + Math.random() * 80}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              borderRadius: Math.random() > 0.5 ? "50%" : "20%",
-              animationDelay: `${Math.random() * 12}s`,
-              animationDuration: `${10 + Math.random() * 15}s`,
-              filter: "blur(2px)",
+              width: `${element.width}px`,
+              height: `${element.height}px`,
+              left: `${element.left}%`,
+              top: `${element.top}%`,
+              animationDelay: `${element.animationDelay}s`,
+              animationDuration: `${element.animationDuration}s`,
             }}
           />
         ))}
-
-        {/* Enhanced radial gradient overlays */}
-        <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-radial from-pink-500/20 via-purple-500/10 to-transparent rounded-full blur-3xl animate-gradient-float" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-radial from-blue-500/20 via-cyan-500/10 to-transparent rounded-full blur-3xl animate-gradient-float animation-delay-2000" />
-        </div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto">
+      <div className="relative z-10 max-w-7xl mx-auto px-4">
         {/* Enhanced Section Header */}
         <div className="text-center mb-20">
-          <div className="inline-block mb-8">
-            <div className="w-24 h-24 rounded-full gradient-rainbow-2 p-1 animate-gradient-rotate shadow-lg">
-              <div className="w-full h-full bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/20">
-                <MessageCircle className="w-12 h-12 text-gradient-rainbow animate-gradient-bounce" />
-              </div>
-            </div>
-          </div>
-
-          <h2 className="text-7xl md:text-9xl lg:text-[8rem] font-black mb-8 text-gradient-rainbow animate-gradient-shift leading-none">
-            CONTACT
-          </h2>
-
-          <p className="text-3xl md:text-4xl font-bold max-w-5xl mx-auto leading-relaxed">
-            <span
-              className="bg-gradient-to-r from-gray-800 via-gray-700 to-gray-900 bg-clip-text text-transparent animate-gradient-shift font-black"
-              style={{ backgroundSize: "200% 200%", textShadow: "0 2px 4px rgba(255, 255, 255, 0.9)" }}
-            >
-              Ready to create something
+          <h2 className="text-6xl md:text-7xl font-black mb-8">
+            <span className={`bg-gradient-to-r ${textGradients[gradientIndex]} bg-clip-text text-transparent animate-gradient-shift`}>
+              Get In Touch
             </span>
-            <br />
-            <span className="text-gradient-2 animate-gradient-pulse font-black"> extraordinary </span>
+          </h2>
+          <div className="w-32 h-1 bg-gradient-to-r from-pink-500 to-purple-500 mx-auto mb-8 rounded-full"></div>
+          <p className="text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed">
             <span
-              className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 bg-clip-text text-transparent animate-gradient-shift font-black"
-              style={{ backgroundSize: "200% 200%", textShadow: "0 2px 4px rgba(255, 255, 255, 0.9)" }}
+              className={`font-semibold bg-gradient-to-r ${
+                textGradients[(gradientIndex + 1) % textGradients.length]
+              } bg-clip-text text-transparent font-black animate-gradient-shift`}
+              style={{ backgroundSize: "200% 200%" }}
             >
-              together? Let's make it happen!
+              Ready to create something amazing together? Let's turn your vision into a colorful reality!
             </span>
           </p>
         </div>
 
-        {/* Enhanced Main Content */}
         <div className="grid lg:grid-cols-2 gap-16 mb-20">
-          {/* Enhanced Contact Form */}
-          <div className="space-y-10">
-            <div className="card-gradient hover-scale-gradient border border-white/20 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-purple-500/5 to-blue-500/5" />
+          {/* Contact Form */}
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20 shadow-lg">
+            <div className="mb-8">
+              <h3
+                className={`text-3xl font-bold mb-4 bg-gradient-to-r ${
+                  textGradients[(gradientIndex + 2) % textGradients.length]
+                } bg-clip-text text-transparent font-black animate-gradient-shift`}
+                style={{ backgroundSize: "200% 200%" }}
+              >
+                Send a Message
+              </h3>
+              <p
+                className={`bg-gradient-to-r ${
+                  textGradients[(gradientIndex + 3) % textGradients.length]
+                } bg-clip-text text-transparent font-medium`}
+              >
+                Fill out the form below and I'll get back to you within 24 hours!
+              </p>
+            </div>
 
-              <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-purple-600 flex items-center justify-center shadow-lg border border-white/20">
-                    <Mail className="w-8 h-8 text-gray-900" style={{ filter: "drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8))" }} />
-                  </div>
-                  <h3 className="text-4xl font-bold bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-                    Send Me a Message
-                  </h3>
-                </div>
-
-                {submitted && (
-                  <div className="mb-8 p-6 bg-gradient-to-r from-green-500/20 via-teal-500/20 to-cyan-500/20 rounded-2xl border-2 border-green-400/30 backdrop-blur-sm">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-r from-green-500 to-teal-500 flex items-center justify-center">
-                        <Sparkles
-                          className="w-6 h-6 text-gray-900 animate-spin"
-                          style={{ filter: "drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8))" }}
-                        />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-xl bg-gradient-to-r from-green-400 to-teal-400 bg-clip-text text-transparent">
-                          Message Sent Successfully!
-                        </h4>
-                        <p className="bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent font-bold">
-                          Thanks for reaching out! I'll get back to you soon.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-3">
-                      <label className="block text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                        Your Name
-                      </label>
-                      <div className="relative">
-                        <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-purple-400" />
-                        <input
-                          type="text"
-                          name="name"
-                          value={formData.name}
-                          onChange={handleChange}
-                          placeholder="Enter your name"
-                          className="w-full pl-14 pr-6 py-5 bg-gradient-to-r from-white/90 via-white/95 to-white/90 backdrop-blur-sm rounded-2xl border-2 border-white/20 focus:border-purple-400 focus:outline-none text-lg font-medium placeholder-gray-500 transition-all duration-300 hover:border-white/30 text-gray-800"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div className="space-y-3">
-                      <label className="block text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                        Your Email
-                      </label>
-                      <div className="relative">
-                        <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-blue-400" />
-                        <input
-                          type="email"
-                          name="email"
-                          value={formData.email}
-                          onChange={handleChange}
-                          placeholder="Enter your email"
-                          className="w-full pl-14 pr-6 py-5 bg-gradient-to-r from-white/90 via-white/95 to-white/90 backdrop-blur-sm rounded-2xl border-2 border-white/20 focus:border-blue-400 focus:outline-none text-lg font-medium placeholder-gray-500 transition-all duration-300 hover:border-white/30 text-gray-800"
-                          required
-                        />
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <label className="block text-xl font-bold bg-gradient-to-r from-green-400 to-teal-400 bg-clip-text text-transparent">
-                      Subject
-                    </label>
-                    <div className="relative">
-                      <Sparkles className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-green-400" />
-                      <input
-                        type="text"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        placeholder="What's this about?"
-                        className="w-full pl-14 pr-6 py-5 bg-gradient-to-r from-white/90 via-white/95 to-white/90 backdrop-blur-sm rounded-2xl border-2 border-white/20 focus:border-green-400 focus:outline-none text-lg font-medium placeholder-gray-500 transition-all duration-300 hover:border-white/30 text-gray-800"
-                        required
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <label className="block text-xl font-bold bg-gradient-to-r from-red-400 to-pink-400 bg-clip-text text-transparent">
-                      Message
-                    </label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleChange}
-                      placeholder="Tell me about your project..."
-                      rows={6}
-                      className="w-full px-6 py-5 bg-gradient-to-r from-white/90 via-white/95 to-white/90 backdrop-blur-sm rounded-2xl border-2 border-white/20 focus:border-red-400 focus:outline-none text-lg font-medium placeholder-gray-500 transition-all duration-300 hover:border-white/30 resize-none text-gray-800"
-                      required
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full btn-gradient gradient-rainbow-1 font-black text-2xl px-12 py-6 rounded-full hover-scale-gradient shadow-gradient-1 border-2 border-white/20 flex items-center justify-center gap-4 relative overflow-hidden group"
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-bold mb-2 text-gray-800"
+                    style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.6)" }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-8 h-8 border-4 border-gray-800/30 border-t-gray-800 rounded-full animate-spin" />
-                        <span
-                          className="relative z-10 text-gray-900 font-black"
-                          style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)" }}
-                        >
-                          Sending...
-                        </span>
-                      </>
-                    ) : (
-                      <>
-                        <Send className="w-8 h-8 group-hover:translate-x-2 transition-transform duration-300 relative z-10 text-gray-900" />
-                        <span
-                          className="relative z-10 text-gray-900 font-black"
-                          style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)" }}
-                        >
-                          Send Message
-                        </span>
-                      </>
-                    )}
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-
-          {/* Enhanced Contact Info */}
-          <div className="space-y-10">
-            {/* Enhanced Contact Details */}
-            <div className="card-gradient hover-scale-gradient border border-white/20 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-cyan-500/5 to-teal-500/5" />
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-blue-500 to-cyan-600 flex items-center justify-center shadow-lg border border-white/20">
-                    <Phone className="w-8 h-8 text-gray-900" style={{ filter: "drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8))" }} />
-                  </div>
-                  <h3 className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
-                    Let's Connect
-                  </h3>
-                </div>
-
-                <div className="space-y-8">
-                  {[
-                    {
-                      icon: Mail,
-                      title: "Email",
-                      value: "hello@gradientfolio.com",
-                      gradient: "from-pink-500 to-purple-600",
-                      textGradient: "from-pink-400 to-purple-400",
-                    },
-                    {
-                      icon: Phone,
-                      title: "Phone",
-                      value: "+1 (555) 123-4567",
-                      gradient: "from-blue-500 to-cyan-600",
-                      textGradient: "from-blue-400 to-cyan-400",
-                    },
-                    {
-                      icon: MapPin,
-                      title: "Location",
-                      value: "San Francisco, CA",
-                      gradient: "from-green-500 to-teal-600",
-                      textGradient: "from-green-400 to-teal-400",
-                    },
-                  ].map((contact, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center gap-6 p-6 glass-gradient rounded-2xl hover:scale-105 transition-all duration-300 border border-white/20"
-                    >
-                      <div
-                        className={`w-16 h-16 rounded-full bg-gradient-to-r ${contact.gradient} flex items-center justify-center shadow-lg border border-white/20`}
-                      >
-                        <contact.icon
-                          className="w-8 h-8 text-gray-900"
-                          style={{ filter: "drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8))" }}
-                        />
-                      </div>
-                      <div>
-                        <h4 className={`text-xl font-bold mb-2 bg-gradient-to-r ${contact.textGradient} bg-clip-text text-transparent`}>
-                          {contact.title}
-                        </h4>
-                        <p
-                          className="text-lg bg-gradient-to-r from-gray-700 to-gray-800 bg-clip-text text-transparent font-medium"
-                          style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.6)" }}
-                        >
-                          {contact.value}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Enhanced Fun Stats */}
-            <div className="card-gradient hover-scale-gradient border border-white/20 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-red-500/5" />
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-4 mb-8">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center shadow-lg border border-white/20">
-                    <Star className="w-8 h-8 text-gray-900" style={{ filter: "drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8))" }} />
-                  </div>
-                  <h3 className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-                    Fun Facts
-                  </h3>
-                </div>
-
-                <div className="grid grid-cols-2 gap-6">
-                  {[
-                    {
-                      icon: Coffee,
-                      label: "Coffee Cups",
-                      value: "∞",
-                      gradient: "from-amber-500 to-orange-600",
-                      textGradient: "from-amber-400 to-orange-400",
-                    },
-                    {
-                      icon: Code,
-                      label: "Lines of Code",
-                      value: "100k+",
-                      gradient: "from-green-500 to-teal-600",
-                      textGradient: "from-green-400 to-teal-400",
-                    },
-                    {
-                      icon: Palette,
-                      label: "Gradients Created",
-                      value: "500+",
-                      gradient: "from-pink-500 to-purple-600",
-                      textGradient: "from-pink-400 to-purple-400",
-                    },
-                    {
-                      icon: Heart,
-                      label: "Happy Clients",
-                      value: "50+",
-                      gradient: "from-red-500 to-pink-600",
-                      textGradient: "from-red-400 to-pink-400",
-                    },
-                  ].map((stat, index) => (
-                    <div
-                      key={index}
-                      className="text-center p-6 glass-gradient rounded-2xl hover:scale-105 transition-all duration-300 border border-white/20"
-                    >
-                      <div
-                        className={`w-16 h-16 rounded-full bg-gradient-to-r ${stat.gradient} mx-auto mb-4 flex items-center justify-center shadow-lg border border-white/20`}
-                      >
-                        <stat.icon
-                          className="w-8 h-8 text-gray-900"
-                          style={{ filter: "drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8))" }}
-                        />
-                      </div>
-                      <div className={`text-3xl font-black mb-2 bg-gradient-to-r ${stat.textGradient} bg-clip-text text-transparent`}>
-                        {stat.value}
-                      </div>
-                      <div
-                        className="text-base font-bold bg-gradient-to-r from-gray-700 to-gray-800 bg-clip-text text-transparent"
-                        style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.6)" }}
-                      >
-                        {stat.label}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* Enhanced Response Time */}
-            <div className="card-gradient hover-scale-gradient text-center border border-white/20 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 via-teal-500/5 to-cyan-500/5" />
-
-              <div className="relative z-10">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-r from-green-500 to-teal-600 mx-auto mb-6 flex items-center justify-center shadow-lg border border-white/20">
-                  <Sparkles
-                    className="w-10 h-10 text-gray-900 animate-pulse"
-                    style={{ filter: "drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8))" }}
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 rounded-xl bg-white/90 backdrop-blur-sm border border-white/20 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 text-gray-800 placeholder-gray-500"
+                    placeholder="Your name"
                   />
                 </div>
-                <h3 className="text-3xl font-bold mb-4 bg-gradient-to-r from-green-400 to-teal-400 bg-clip-text text-transparent">
-                  Quick Response
-                </h3>
-                <p
-                  className="text-xl leading-relaxed bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 bg-clip-text text-transparent font-bold"
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-bold mb-2 text-gray-800"
+                    style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.6)" }}
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 rounded-xl bg-white/90 backdrop-blur-sm border border-white/20 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 text-gray-800 placeholder-gray-500"
+                    placeholder="your@email.com"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-bold mb-2 text-gray-800"
                   style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.6)" }}
                 >
-                  I typically respond to messages within <span className="font-bold text-gradient-2">24 hours</span>. Let's bring your
-                  colorful ideas to life!
-                </p>
+                  Subject
+                </label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 rounded-xl bg-white/90 backdrop-blur-sm border border-white/20 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 text-gray-800 placeholder-gray-500"
+                  placeholder="What's this about?"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-bold mb-2 text-gray-800"
+                  style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.6)" }}
+                >
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows={6}
+                  className="w-full px-4 py-3 rounded-xl bg-white/90 backdrop-blur-sm border border-white/20 focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20 transition-all duration-300 text-gray-800 placeholder-gray-500 resize-none"
+                  placeholder="Tell me about your project..."
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full bg-gradient-to-r ${gradients[gradientIndex]} hover:scale-105 disabled:scale-100 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 flex items-center justify-center gap-3 border border-white/20`}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                    <span className="text-gray-900 font-black" style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)" }}>
+                      Sending...
+                    </span>
+                  </>
+                ) : submitStatus === "success" ? (
+                  <>
+                    <Heart className="w-5 h-5 text-gray-900" />
+                    <span className="text-gray-900 font-black" style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)" }}>
+                      Message Sent!
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5 text-gray-900" />
+                    <span className="text-gray-900 font-black" style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)" }}>
+                      Send Message
+                    </span>
+                  </>
+                )}
+              </button>
+            </form>
+          </div>
+
+          {/* Contact Info & Social Links */}
+          <div className="space-y-8">
+            {/* Contact Information */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20 shadow-lg">
+              <h3
+                className={`text-3xl font-bold mb-8 bg-gradient-to-r ${
+                  textGradients[(gradientIndex + 4) % textGradients.length]
+                } bg-clip-text text-transparent font-black animate-gradient-shift`}
+                style={{ backgroundSize: "200% 200%" }}
+              >
+                Contact Information
+              </h3>
+              <div className="space-y-6">
+                {contactInfo.map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.link}
+                    className="group flex items-center gap-4 p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:border-white/40 transition-all duration-300 hover:scale-105 shadow-lg"
+                  >
+                    <div
+                      className={`w-12 h-12 rounded-full bg-gradient-to-r ${item.gradient} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}
+                    >
+                      <item.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-gray-700" style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.6)" }}>
+                        {item.label}
+                      </p>
+                      <p className="font-bold text-lg text-gray-800" style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)" }}>
+                        {item.value}
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20 shadow-lg">
+              <h3
+                className={`text-3xl font-bold mb-8 bg-gradient-to-r ${
+                  textGradients[(gradientIndex + 5) % textGradients.length]
+                } bg-clip-text text-transparent font-black animate-gradient-shift`}
+                style={{ backgroundSize: "200% 200%" }}
+              >
+                Let's Connect
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                {socialLinks.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`group flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r ${social.gradient} hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border border-white/20`}
+                  >
+                    <social.icon className="w-6 h-6 text-white group-hover:scale-110 transition-transform duration-300" />
+                    <span className="font-bold text-white group-hover:text-white transition-colors duration-300">{social.label}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Fun Stats */}
+            <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20 shadow-lg">
+              <h3
+                className={`text-3xl font-bold mb-8 bg-gradient-to-r ${
+                  textGradients[(gradientIndex + 6) % textGradients.length]
+                } bg-clip-text text-transparent font-black animate-gradient-shift`}
+                style={{ backgroundSize: "200% 200%" }}
+              >
+                Fun Facts
+              </h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center p-4 bg-gradient-to-r from-pink-500 to-purple-600 rounded-xl shadow-lg">
+                  <Coffee className="w-8 h-8 text-white mx-auto mb-2" />
+                  <div className="text-2xl font-black text-white">500+</div>
+                  <div className="text-sm font-semibold text-white/80">Cups of Coffee</div>
+                </div>
+                <div className="text-center p-4 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-xl shadow-lg">
+                  <Star className="w-8 h-8 text-white mx-auto mb-2" />
+                  <div className="text-2xl font-black text-white">24/7</div>
+                  <div className="text-sm font-semibold text-white/80">Response Time</div>
+                </div>
               </div>
             </div>
           </div>
@@ -432,42 +409,89 @@ export function ContactSection() {
 
         {/* Enhanced Call to Action */}
         <div className="text-center">
-          <div className="card-gradient hover-scale-gradient max-w-4xl mx-auto border border-white/20 relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-rainbow-500/5 via-rainbow-600/5 to-rainbow-700/5" />
-
-            <div className="relative z-10">
-              <div className="w-24 h-24 rounded-full gradient-rainbow-1 mx-auto mb-8 flex items-center justify-center shadow-lg border border-white/20">
-                <Palette
-                  className="w-12 h-12 text-gray-900 animate-gradient-bounce"
-                  style={{ filter: "drop-shadow(0 1px 1px rgba(255, 255, 255, 0.8))" }}
-                />
-              </div>
-              <h3 className="text-6xl font-black text-gradient-rainbow mb-8 leading-tight">Ready to Paint the Web?</h3>
-              <p
-                className="text-3xl mb-12 leading-relaxed bg-gradient-to-r from-gray-700 via-gray-800 to-gray-700 bg-clip-text text-transparent font-bold"
-                style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.6)" }}
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-12 border border-white/20 shadow-lg">
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <Heart className="w-8 h-8 text-pink-500 animate-pulse" />
+              <h3
+                className={`text-3xl font-bold bg-gradient-to-r ${
+                  textGradients[(gradientIndex + 7) % textGradients.length]
+                } bg-clip-text text-transparent font-black animate-gradient-shift`}
+                style={{ backgroundSize: "200% 200%" }}
               >
-                Whether you need a stunning website, a colorful dashboard, or just want to chat about gradients, I'm here to help make your
-                vision a reality!
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <button className="btn-gradient gradient-rainbow-1 font-black text-2xl px-16 py-6 rounded-full hover-scale-gradient shadow-gradient-1 border-2 border-white/20 relative group overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <span className="relative z-10 text-gray-900 font-black" style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)" }}>
-                    Start a Project
-                  </span>
-                </button>
-                <button className="btn-gradient gradient-rainbow-2 font-black text-2xl px-16 py-6 rounded-full hover-scale-gradient shadow-gradient-2 border-2 border-white/20 relative group overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/10 via-white/20 to-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                  <span className="relative z-10 text-gray-900 font-black" style={{ textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)" }}>
-                    Schedule a Call
-                  </span>
-                </button>
-              </div>
+                Let's Create Magic Together!
+              </h3>
+              <Heart className="w-8 h-8 text-pink-500 animate-pulse" />
+            </div>
+            <p
+              className={`text-xl mb-8 bg-gradient-to-r ${
+                textGradients[(gradientIndex + 8) % textGradients.length]
+              } bg-clip-text text-transparent font-medium`}
+            >
+              I'm always excited to work on new projects and collaborate with amazing people. Whether you have a question, a project idea,
+              or just want to say hi, I'd love to hear from you!
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="bg-gradient-to-r from-pink-500 to-purple-600 hover:scale-105 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl border border-white/20">
+                <span className="text-white">Schedule a Call</span>
+              </button>
+              <button className="bg-gradient-to-r from-blue-500 to-cyan-600 hover:scale-105 px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 shadow-lg hover:shadow-xl border border-white/20">
+                <span className="text-white">View My Work</span>
+              </button>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Enhanced CSS Animations */}
+      <style jsx>{`
+        @keyframes gradient-shift {
+          0%,
+          100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+
+        @keyframes gradient-float {
+          0%,
+          100% {
+            transform: translateY(0px) rotate(0deg);
+          }
+          33% {
+            transform: translateY(-15px) rotate(120deg);
+          }
+          66% {
+            transform: translateY(8px) rotate(240deg);
+          }
+        }
+
+        .animate-gradient-shift {
+          animation: gradient-shift 4s ease infinite;
+          background-size: 200% 200%;
+        }
+
+        .animate-gradient-float {
+          animation: gradient-float 18s ease-in-out infinite;
+        }
+
+        .animation-delay-0 {
+          animation-delay: 0s;
+        }
+
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+
+        .animation-delay-8000 {
+          animation-delay: 8s;
+        }
+
+        .animation-delay-12000 {
+          animation-delay: 12s;
+        }
+      `}</style>
     </section>
   );
 }

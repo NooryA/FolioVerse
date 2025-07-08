@@ -20,28 +20,6 @@ const ShieldIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const ScrollIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-    />
-  </svg>
-);
-
-const MapIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
-    />
-  </svg>
-);
-
 const CrownIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
     <path d="M5 16L3 5l4.5 4L12 4l4.5 5L21 5l-2 11H5z" />
@@ -65,23 +43,26 @@ const TavernIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const BagIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-    <path d="M7 4V2c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v2h4c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h4zm2 0h6V2H9v2z" />
-  </svg>
-);
-
 const CloseIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
   </svg>
 );
 
+const ScrollIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+    />
+  </svg>
+);
+
 export default function Navigation() {
   const [activeSection, setActiveSection] = useState("hero");
   const [isQuestLogOpen, setIsQuestLogOpen] = useState(false);
-  const [isInventoryOpen, setIsInventoryOpen] = useState(false);
-  const [isCharacterSheetOpen, setIsCharacterSheetOpen] = useState(false);
   const [playerStats, setPlayerStats] = useState({
     level: 47,
     health: 85,
@@ -104,39 +85,47 @@ export default function Navigation() {
     {
       id: 1,
       title: "The Portfolio Quest",
-      description: "Showcase legendary achievements to attract worthy allies",
+      description: "Showcase legendary achievements to attract worthy allies and demonstrate mastery of the coding arts.",
       progress: 95,
       reward: "New Alliance",
       type: "main",
+      difficulty: "Legendary",
+      location: "Digital Realm",
+      timeRemaining: "2 days",
     },
     {
       id: 2,
       title: "Master the Dark Arts",
-      description: "Learn advanced JavaScript sorcery and TypeScript enchantments",
+      description: "Learn advanced JavaScript sorcery and TypeScript enchantments to unlock powerful development abilities.",
       progress: 87,
       reward: "Wizard Status",
       type: "skill",
+      difficulty: "Epic",
+      location: "Code Academy",
+      timeRemaining: "1 week",
     },
     {
       id: 3,
       title: "Build the Ultimate Fortress",
-      description: "Create an impregnable full-stack application",
+      description: "Create an impregnable full-stack application with modern architecture and defensive measures.",
       progress: 73,
       reward: "Fortress Blueprint",
       type: "project",
+      difficulty: "Epic",
+      location: "Development Labs",
+      timeRemaining: "3 weeks",
     },
-  ];
-
-  // Inventory items
-  const inventoryItems = [
-    { id: 1, name: "JavaScript Grimoire", icon: "📜", rarity: "legendary", type: "Knowledge" },
-    { id: 2, name: "React Crown", icon: "👑", rarity: "epic", type: "Framework" },
-    { id: 3, name: "Node.js Staff", icon: "🪄", rarity: "epic", type: "Backend" },
-    { id: 4, name: "TypeScript Shield", icon: "🛡️", rarity: "rare", type: "Protection" },
-    { id: 5, name: "Git Sword", icon: "⚔️", rarity: "epic", type: "Version Control" },
-    { id: 6, name: "Docker Container", icon: "📦", rarity: "rare", type: "Deployment" },
-    { id: 7, name: "AWS Cloud Boots", icon: "☁️", rarity: "legendary", type: "Infrastructure" },
-    { id: 8, name: "VS Code Cloak", icon: "🧙‍♂️", rarity: "epic", type: "Editor" },
+    {
+      id: 4,
+      title: "Networking Guild Challenge",
+      description: "Connect with fellow developers and expand your professional network across the realm.",
+      progress: 45,
+      reward: "Guild Membership",
+      type: "social",
+      difficulty: "Rare",
+      location: "Social Hubs",
+      timeRemaining: "Ongoing",
+    },
   ];
 
   // Scroll detection for active section
@@ -162,14 +151,14 @@ export default function Navigation() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Auto-update stats for immersion
+  // Auto-update stats for immersion (client-side only)
   useEffect(() => {
     const interval = setInterval(() => {
       setPlayerStats((prev) => ({
         ...prev,
-        health: Math.min(100, prev.health + Math.random() * 2),
-        mana: Math.min(100, prev.mana + Math.random() * 3),
-        experience: Math.min(100, prev.experience + Math.random() * 0.5),
+        health: Math.min(100, prev.health + 1.5),
+        mana: Math.min(100, prev.mana + 2),
+        experience: Math.min(100, prev.experience + 0.3),
       }));
     }, 5000);
 
@@ -183,113 +172,72 @@ export default function Navigation() {
     }
   };
 
-  const getRarityColor = (rarity: string) => {
-    switch (rarity) {
-      case "legendary":
-        return "border-yellow-500 bg-yellow-500/20";
-      case "epic":
-        return "border-purple-500 bg-purple-500/20";
-      case "rare":
-        return "border-blue-500 bg-blue-500/20";
-      default:
-        return "border-gray-500 bg-gray-500/20";
-    }
-  };
-
   return (
     <>
-      {/* Main Game HUD */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900/95 via-gray-900/90 to-gray-900/95 backdrop-blur-lg border-b-2 border-purple-500/30">
-        <div className="game-container">
-          <div className="flex items-center justify-between py-4">
-            {/* Player Character Info */}
-            <div className="flex items-center gap-4">
-              <div className="character-portrait w-16 h-16">
-                <CrownIcon className="w-8 h-8 text-yellow-500" />
+      {/* Clean Fixed Navigation */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900/95 via-gray-900/90 to-gray-900/95 backdrop-blur-lg border-b border-purple-500/30">
+        <div className="container mx-auto px-4">
+          {/* Single Row - Main Navigation */}
+          <div className="flex items-center justify-between py-2">
+            {/* Left: Character Info */}
+            <div className="flex items-center gap-3">
+              <div className="character-portrait w-10 h-10 flex items-center justify-center">
+                <CrownIcon className="w-5 h-5 text-yellow-500" />
               </div>
               <div>
-                <h3 className="text-lg font-bold text-yellow-500">{playerStats.name}</h3>
-                <p className="text-sm text-gray-300">Level {playerStats.level} Developer</p>
+                <h3 className="text-sm font-bold text-yellow-500">{playerStats.name}</h3>
+                <div className="flex items-center gap-3 text-xs">
+                  <span className="text-gray-300">Level {playerStats.level}</span>
+                  <div className="hidden md:flex items-center gap-2">
+                    <span className="text-red-400">HP {Math.round(playerStats.health)}</span>
+                    <span className="text-blue-400">MP {Math.round(playerStats.mana)}</span>
+                    <span className="text-yellow-400">XP {Math.round(playerStats.experience)}%</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            {/* World Map Navigation */}
-            <div className="hidden md:flex items-center gap-2">
+            {/* Center: Navigation Buttons */}
+            <div className="flex items-center gap-2">
               {worldLocations.map((location) => (
                 <button
                   key={location.id}
                   onClick={() => scrollToSection(location.id)}
-                  className={`group relative px-4 py-2 rounded-lg border-2 transition-all duration-300 ${
+                  className={`px-3 py-1.5 rounded-lg border transition-all duration-300 ${
                     activeSection === location.id
                       ? "border-yellow-500 bg-yellow-500/20 text-yellow-400"
-                      : "border-purple-500/30 text-gray-300 hover:border-purple-500/60 hover:bg-purple-500/10"
+                      : "border-purple-500/30 text-gray-300 hover:border-purple-500/50"
                   }`}
                 >
-                  <div className="flex items-center gap-2">
-                    <location.icon className="w-5 h-5" />
-                    <div className="text-left">
-                      <div className="text-sm font-bold">{location.name}</div>
-                      <div className="text-xs opacity-75">{location.location}</div>
-                    </div>
+                  <div className="flex items-center gap-1.5">
+                    <location.icon className="w-4 h-4" />
+                    <span className="text-sm font-medium hidden lg:block">{location.name}</span>
                   </div>
-
-                  {activeSection === location.id && <div className="absolute inset-0 rounded-lg bg-yellow-500/20 animate-pulse" />}
                 </button>
               ))}
             </div>
 
-            {/* Game Menu Icons */}
+            {/* Right: Actions & Gold */}
             <div className="flex items-center gap-3">
-              <button onClick={() => setIsQuestLogOpen(true)} className="game-btn p-3 relative" title="Quest Log">
-                <ScrollIcon className="w-6 h-6" />
-                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs flex items-center justify-center">
+              <button
+                onClick={() => {
+                  console.log("Quest Log clicked!");
+                  setIsQuestLogOpen(true);
+                }}
+                className="p-2 rounded-lg border border-purple-500/30 hover:bg-purple-500/20 transition-colors relative"
+                title="Quest Log"
+              >
+                <ScrollIcon className="w-4 h-4 text-purple-400" />
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 rounded-full text-xs flex items-center justify-center font-bold text-white">
                   {activeQuests.length}
                 </span>
+                {isQuestLogOpen && <span className="absolute -bottom-8 left-0 text-xs text-green-400 whitespace-nowrap">MODAL OPEN</span>}
               </button>
 
-              <button onClick={() => setIsInventoryOpen(true)} className="game-btn p-3" title="Inventory">
-                <BagIcon className="w-6 h-6" />
-              </button>
-
-              <button onClick={() => setIsCharacterSheetOpen(true)} className="game-btn p-3" title="Character Sheet">
-                <BookIcon className="w-6 h-6" />
-              </button>
-            </div>
-          </div>
-
-          {/* Player Stats HUD */}
-          <div className="flex items-center gap-6 pb-4">
-            {/* Health Bar */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-red-400 font-bold">HP</span>
-              <div className="game-progress w-32">
-                <div className="game-progress-bar health-bar" style={{ width: `${playerStats.health}%` }} />
+              <div className="flex items-center gap-2 bg-black/50 px-3 py-1 rounded-lg border border-yellow-500/30">
+                <span className="text-sm">💰</span>
+                <span className="text-sm font-bold text-yellow-400">{playerStats.gold.toLocaleString()}</span>
               </div>
-              <span className="text-sm text-white">{Math.round(playerStats.health)}/100</span>
-            </div>
-
-            {/* Mana Bar */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-blue-400 font-bold">MP</span>
-              <div className="game-progress w-32">
-                <div className="game-progress-bar mana-bar" style={{ width: `${playerStats.mana}%` }} />
-              </div>
-              <span className="text-sm text-white">{Math.round(playerStats.mana)}/100</span>
-            </div>
-
-            {/* Experience Bar */}
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-yellow-400 font-bold">XP</span>
-              <div className="game-progress w-40">
-                <div className="game-progress-bar experience-bar" style={{ width: `${playerStats.experience}%` }} />
-              </div>
-              <span className="text-sm text-white">{Math.round(playerStats.experience)}%</span>
-            </div>
-
-            {/* Gold */}
-            <div className="flex items-center gap-2 ml-auto">
-              <span className="text-2xl">💰</span>
-              <span className="text-lg font-bold text-yellow-400">{playerStats.gold.toLocaleString()}</span>
             </div>
           </div>
         </div>
@@ -297,182 +245,129 @@ export default function Navigation() {
 
       {/* Quest Log Modal */}
       {isQuestLogOpen && (
-        <div className="fixed inset-0 z-60 bg-black/80 flex items-center justify-center p-4">
-          <div className="game-window max-w-2xl w-full max-h-[80vh] overflow-hidden">
+        <div
+          className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setIsQuestLogOpen(false)}
+        >
+          <div
+            className="bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 border-2 border-purple-500/50 rounded-lg shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between p-6 border-b border-purple-500/30">
-              <h2 className="game-title text-2xl">Quest Log</h2>
-              <button onClick={() => setIsQuestLogOpen(false)} className="game-btn p-2">
+              <div className="flex items-center gap-3">
+                <ScrollIcon className="w-6 h-6 text-purple-400" />
+                <h2 className="game-title text-2xl">Active Quests</h2>
+                <span className="px-2 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-bold">{activeQuests.length}</span>
+              </div>
+              <button onClick={() => setIsQuestLogOpen(false)} className="game-btn p-2 hover:bg-red-500/20 transition-colors duration-200">
                 <CloseIcon className="w-6 h-6" />
               </button>
             </div>
 
-            <div className="p-6 space-y-4 max-h-96 overflow-y-auto">
+            <div className="p-6 space-y-6 max-h-96 overflow-y-auto">
               {activeQuests.map((quest) => (
-                <div key={quest.id} className="quest-item">
-                  <div className="flex items-start justify-between mb-2">
-                    <h3 className="quest-title">{quest.title}</h3>
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-bold ${
-                        quest.type === "main"
-                          ? "bg-red-500/20 text-red-400 border border-red-500/30"
-                          : quest.type === "skill"
-                          ? "bg-blue-500/20 text-blue-400 border border-blue-500/30"
-                          : "bg-green-500/20 text-green-400 border border-green-500/30"
-                      }`}
-                    >
-                      {quest.type}
-                    </span>
-                  </div>
-                  <p className="quest-description">{quest.description}</p>
-                  <div className="mt-3">
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm text-gray-400">Progress</span>
-                      <span className="text-sm text-white">{quest.progress}%</span>
+                <div
+                  key={quest.id}
+                  className="quest-item border-2 border-purple-500/30 rounded-lg p-4 bg-gradient-to-r from-gray-900/50 to-purple-900/20"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="quest-title text-xl font-bold text-yellow-400">{quest.title}</h3>
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs font-bold border ${
+                            quest.type === "main"
+                              ? "bg-red-500/20 text-red-400 border-red-500/30"
+                              : quest.type === "skill"
+                              ? "bg-blue-500/20 text-blue-400 border-blue-500/30"
+                              : quest.type === "project"
+                              ? "bg-green-500/20 text-green-400 border-green-500/30"
+                              : "bg-purple-500/20 text-purple-400 border-purple-500/30"
+                          }`}
+                        >
+                          {quest.type.toUpperCase()}
+                        </span>
+                        <span
+                          className={`px-2 py-1 rounded text-xs font-bold ${
+                            quest.difficulty === "Legendary"
+                              ? "bg-yellow-500/20 text-yellow-400"
+                              : quest.difficulty === "Epic"
+                              ? "bg-purple-500/20 text-purple-400"
+                              : "bg-blue-500/20 text-blue-400"
+                          }`}
+                        >
+                          {quest.difficulty}
+                        </span>
+                      </div>
+
+                      <p className="quest-description text-gray-300 mb-3 leading-relaxed">{quest.description}</p>
+
+                      <div className="grid grid-cols-2 gap-4 mb-3 text-sm">
+                        <div className="flex items-center gap-2">
+                          <span className="text-gray-400">📍 Location:</span>
+                          <span className="text-white">{quest.location}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-gray-400">⏰ Time:</span>
+                          <span className="text-white">{quest.timeRemaining}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div className="game-progress">
-                      <div className="game-progress-bar" style={{ width: `${quest.progress}%` }} />
+                  </div>
+
+                  <div className="space-y-3">
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm text-gray-400 font-medium">Quest Progress</span>
+                        <span className="text-sm text-white font-bold">{quest.progress}%</span>
+                      </div>
+                      <div className="game-progress h-3 rounded-full">
+                        <div
+                          className={`game-progress-bar h-full rounded-full transition-all duration-500 ${
+                            quest.progress >= 90
+                              ? "bg-green-500"
+                              : quest.progress >= 70
+                              ? "bg-yellow-500"
+                              : quest.progress >= 50
+                              ? "bg-orange-500"
+                              : "bg-red-500"
+                          }`}
+                          style={{ width: `${quest.progress}%` }}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2">
+                        <span className="text-sm text-gray-400">🏆 Reward:</span>
+                        <span className="text-yellow-400 font-bold">{quest.reward}</span>
+                      </div>
+
+                      <button className="px-4 py-2 bg-purple-600/30 hover:bg-purple-600/50 border border-purple-500/50 rounded-lg text-white font-medium transition-colors duration-200">
+                        View Details
+                      </button>
                     </div>
                   </div>
-                  <p className="quest-reward">🏆 Reward: {quest.reward}</p>
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      )}
 
-      {/* Inventory Modal */}
-      {isInventoryOpen && (
-        <div className="fixed inset-0 z-60 bg-black/80 flex items-center justify-center p-4">
-          <div className="game-window max-w-4xl w-full max-h-[80vh] overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-purple-500/30">
-              <h2 className="game-title text-2xl">Inventory</h2>
-              <button onClick={() => setIsInventoryOpen(false)} className="game-btn p-2">
-                <CloseIcon className="w-6 h-6" />
-              </button>
-            </div>
-
-            <div className="p-6">
-              <div className="grid grid-cols-8 gap-4">
-                {inventoryItems.map((item) => (
-                  <div
-                    key={item.id}
-                    className={`inventory-slot ${item.rarity} group cursor-pointer relative`}
-                    title={`${item.name} (${item.type})`}
-                  >
-                    <span className="text-3xl">{item.icon}</span>
-
-                    {/* Tooltip */}
-                    <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 p-2 bg-black/90 border border-purple-500/50 rounded text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                      <div className="font-bold text-yellow-400">{item.name}</div>
-                      <div className="text-gray-300">{item.type}</div>
-                      <div
-                        className={`text-xs ${
-                          item.rarity === "legendary" ? "text-yellow-500" : item.rarity === "epic" ? "text-purple-500" : "text-blue-500"
-                        }`}
-                      >
-                        {item.rarity}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-
-                {/* Empty slots */}
-                {Array.from({ length: 16 }).map((_, i) => (
-                  <div key={`empty-${i}`} className="inventory-slot opacity-50" />
-                ))}
+            <div className="p-6 border-t border-purple-500/30 bg-gradient-to-r from-gray-900/50 to-purple-900/20">
+              <div className="flex items-center justify-between">
+                <div className="text-sm text-gray-400">
+                  <span className="font-medium">{activeQuests.filter((q) => q.progress >= 90).length}</span> quests near completion
+                </div>
+                <button
+                  onClick={() => setIsQuestLogOpen(false)}
+                  className="px-6 py-2 bg-yellow-600/30 hover:bg-yellow-600/50 border border-yellow-500/50 rounded-lg text-yellow-400 font-bold transition-colors duration-200"
+                >
+                  Continue Adventure
+                </button>
               </div>
             </div>
           </div>
         </div>
       )}
-
-      {/* Character Sheet Modal */}
-      {isCharacterSheetOpen && (
-        <div className="fixed inset-0 z-60 bg-black/80 flex items-center justify-center p-4">
-          <div className="game-window max-w-3xl w-full max-h-[80vh] overflow-hidden">
-            <div className="flex items-center justify-between p-6 border-b border-purple-500/30">
-              <h2 className="game-title text-2xl">Character Sheet</h2>
-              <button onClick={() => setIsCharacterSheetOpen(false)} className="game-btn p-2">
-                <CloseIcon className="w-6 h-6" />
-              </button>
-            </div>
-
-            <div className="p-6 space-y-6">
-              {/* Character Overview */}
-              <div className="flex items-start gap-6">
-                <div className="character-portrait w-32 h-32">
-                  <CrownIcon className="w-16 h-16 text-yellow-500" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-3xl font-bold text-yellow-500 mb-2">{playerStats.name}</h3>
-                  <p className="text-lg text-gray-300 mb-4">Level {playerStats.level} Full-Stack Developer</p>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="game-stat">
-                      <div className="game-stat-label">Strength</div>
-                      <div className="game-stat-value">94</div>
-                    </div>
-                    <div className="game-stat">
-                      <div className="game-stat-label">Intelligence</div>
-                      <div className="game-stat-value">97</div>
-                    </div>
-                    <div className="game-stat">
-                      <div className="game-stat-label">Dexterity</div>
-                      <div className="game-stat-value">91</div>
-                    </div>
-                    <div className="game-stat">
-                      <div className="game-stat-label">Wisdom</div>
-                      <div className="game-stat-value">89</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Skills */}
-              <div>
-                <h4 className="text-xl font-bold text-white mb-4">Master Skills</h4>
-                <div className="grid grid-cols-2 gap-3">
-                  {[
-                    { name: "JavaScript Mastery", level: 95 },
-                    { name: "React Sorcery", level: 92 },
-                    { name: "Node.js Arts", level: 89 },
-                    { name: "TypeScript Magic", level: 87 },
-                    { name: "Database Alchemy", level: 85 },
-                    { name: "Cloud Engineering", level: 83 },
-                  ].map((skill, index) => (
-                    <div key={index} className="game-stat">
-                      <div className="game-stat-label">{skill.name}</div>
-                      <div className="game-progress mt-1">
-                        <div className="game-progress-bar" style={{ width: `${skill.level}%` }} />
-                      </div>
-                      <div className="text-sm text-white mt-1">{skill.level}%</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Mobile Game Menu */}
-      <div className="md:hidden fixed bottom-4 left-4 right-4 z-50">
-        <div className="game-window p-4">
-          <div className="grid grid-cols-4 gap-2">
-            {worldLocations.map((location) => (
-              <button
-                key={location.id}
-                onClick={() => scrollToSection(location.id)}
-                className={`game-btn p-3 text-center ${activeSection === location.id ? "game-btn-primary" : ""}`}
-              >
-                <location.icon className="w-5 h-5 mx-auto mb-1" />
-                <div className="text-xs">{location.name}</div>
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
     </>
   );
 }

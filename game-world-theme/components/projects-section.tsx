@@ -67,215 +67,263 @@ const UsersIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
+const CloseIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+  </svg>
+);
+
 export default function ProjectsSection() {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedQuest, setSelectedQuest] = useState<string | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
 
-  // Epic Completed Quests (Projects)
+  // Completed quests data
   const completedQuests = [
     {
       id: "ecommerce-platform",
-      title: "The E-Commerce Empire",
-      subtitle: "A Legendary Trading Platform Quest",
+      title: "The Merchant's Empire",
+      subtitle: "E-commerce Platform Adventure",
       category: "main",
       difficulty: "legendary",
       status: "completed",
       completionDate: "2024",
-      duration: "6 months",
-      icon: "🏛️",
+      duration: "8 months",
+      icon: "🛍️",
       description:
-        "Built a comprehensive e-commerce platform handling thousands of transactions daily with advanced features like real-time inventory, payment processing, and admin analytics.",
-      technologies: ["React", "Next.js", "TypeScript", "Node.js", "PostgreSQL", "Stripe", "Redis"],
+        "Built a comprehensive e-commerce platform with advanced features including inventory management, payment processing, user authentication, and admin dashboard. Implemented modern design patterns and optimized for performance.",
+      technologies: ["React", "Node.js", "MongoDB", "Stripe", "AWS", "Docker", "Redis"],
       achievements: [
-        "Scalability Master - Handled 10K+ concurrent users",
-        "Performance Champion - 98 Lighthouse score",
-        "Security Guardian - Zero security vulnerabilities",
-        "User Experience Sage - 4.9/5 user rating",
+        "Commerce Master - 10K+ transactions processed",
+        "Security Guardian - Zero security breaches",
+        "Performance Wizard - 2s load time achieved",
+        "UX Champion - 95% user satisfaction",
       ],
       loot: {
         xp: 15000,
         gold: 2500,
-        items: ["Advanced React Crown", "PostgreSQL Sword", "Stripe Payment Shield"],
+        items: ["Golden Shopping Cart", "Merchant's Seal", "Payment Gateway Key"],
       },
       party: [
-        { name: "Lead Developer", role: "Quest Leader", avatar: "🧙‍♂️" },
-        { name: "UI Designer", role: "Visual Enchanter", avatar: "🎨" },
-        { name: "Backend Engineer", role: "System Architect", avatar: "🏰" },
+        { name: "Frontend Dev", role: "UI/UX Specialist", avatar: "🎨" },
+        { name: "Backend Dev", role: "API Architect", avatar: "⚙️" },
+        { name: "DevOps", role: "Cloud Warrior", avatar: "☁️" },
       ],
       stats: {
         linesOfCode: 25000,
-        componentsBuilt: 85,
-        apisCreated: 42,
-        testsWritten: 350,
+        usersServed: 5000,
+        transactionsProcessed: 12000,
+        uptime: 99.9,
       },
       challenges: [
-        "Implemented complex payment flows with multiple providers",
-        "Optimized database queries for high-traffic scenarios",
-        "Built real-time inventory management system",
-        "Created comprehensive admin dashboard",
+        "Integrated complex payment gateway systems",
+        "Built scalable inventory management system",
+        "Implemented real-time order tracking",
+        "Created responsive cross-platform design",
       ],
     },
     {
-      id: "ai-dashboard",
-      title: "The AI Analytics Citadel",
-      subtitle: "Machine Learning Mastery Quest",
+      id: "task-management",
+      title: "The Productivity Crusade",
+      subtitle: "Task Management System Quest",
       category: "main",
-      difficulty: "epic",
+      difficulty: "rare",
       status: "completed",
       completionDate: "2024",
       duration: "4 months",
-      icon: "🤖",
+      icon: "📋",
       description:
-        "Developed an AI-powered analytics dashboard with machine learning predictions, real-time data visualization, and intelligent insights for business decision making.",
-      technologies: ["Python", "TensorFlow", "React", "D3.js", "FastAPI", "MongoDB", "Docker"],
+        "Developed a sophisticated task management application with team collaboration features, real-time updates, project timelines, and advanced analytics dashboard.",
+      technologies: ["Vue.js", "Express.js", "PostgreSQL", "Socket.io", "JWT", "D3.js"],
       achievements: [
-        "AI Whisperer - 95% prediction accuracy",
-        "Data Visualizer - Interactive chart mastery",
-        "Real-time Specialist - Live data streaming",
-        "ML Model Master - 5 trained models deployed",
+        "Task Master - 50K+ tasks completed",
+        "Team Leader - 500+ teams managed",
+        "Analytics Guru - Advanced reporting system",
+        "Real-time Champion - Live collaboration features",
       ],
       loot: {
         xp: 12000,
-        gold: 2000,
-        items: ["Neural Network Staff", "Data Visualization Orb", "Python Spellbook"],
+        gold: 1800,
+        items: ["Productivity Crown", "Team Coordinator Badge", "Analytics Crystal"],
       },
       party: [
-        { name: "ML Engineer", role: "Data Wizard", avatar: "🧠" },
-        { name: "Frontend Dev", role: "Chart Sculptor", avatar: "📊" },
-        { name: "DevOps", role: "Deployment Sage", avatar: "🚀" },
+        { name: "Project Manager", role: "Quest Coordinator", avatar: "📊" },
+        { name: "UX Designer", role: "Interface Crafter", avatar: "🎯" },
+        { name: "QA Tester", role: "Bug Hunter", avatar: "🔍" },
       ],
       stats: {
         linesOfCode: 18000,
-        modelsTrained: 5,
-        chartsCreated: 23,
-        dataPointsProcessed: 1000000,
+        usersServed: 2500,
+        tasksCompleted: 50000,
+        uptime: 99.5,
       },
       challenges: [
-        "Integrated multiple ML models for different predictions",
-        "Built responsive data visualization components",
-        "Implemented real-time data streaming",
-        "Optimized model inference performance",
+        "Built real-time collaboration system",
+        "Implemented complex permission system",
+        "Created advanced analytics dashboard",
+        "Designed intuitive drag-and-drop interface",
       ],
     },
     {
-      id: "mobile-banking",
-      title: "The Digital Vault Conquest",
-      subtitle: "Secure Banking App Adventure",
+      id: "learning-platform",
+      title: "The Knowledge Seeker's Journey",
+      subtitle: "Educational Platform Adventure",
       category: "side",
       difficulty: "epic",
       status: "completed",
       completionDate: "2023",
-      duration: "5 months",
-      icon: "🏦",
+      duration: "6 months",
+      icon: "📚",
       description:
-        "Created a secure mobile banking application with biometric authentication, real-time transactions, and comprehensive financial management tools.",
-      technologies: ["React Native", "Node.js", "Express", "PostgreSQL", "JWT", "WebSockets"],
+        "Created an interactive learning platform with course management, video streaming, progress tracking, and gamification elements to enhance user engagement.",
+      technologies: ["React", "Django", "PostgreSQL", "AWS S3", "WebRTC", "Stripe"],
       achievements: [
-        "Security Fortress - Bank-level encryption",
-        "Mobile Master - Cross-platform perfection",
-        "Real-time Champion - Instant notifications",
-        "UX Excellence - 4.8/5 app store rating",
+        "Knowledge Master - 100+ courses created",
+        "Student Success - 95% completion rate",
+        "Video Streaming Pioneer - HD quality delivery",
+        "Gamification Expert - Badge system implementation",
       ],
       loot: {
-        xp: 10000,
-        gold: 1800,
-        items: ["Security Shield Elite", "Mobile Development Crown", "JWT Token Blade"],
+        xp: 13500,
+        gold: 2000,
+        items: ["Wisdom Staff", "Learning Compass", "Achievement Badge"],
       },
       party: [
-        { name: "Mobile Dev", role: "App Architect", avatar: "📱" },
-        { name: "Security Expert", role: "Encryption Guardian", avatar: "🔐" },
-        { name: "UI/UX Designer", role: "Experience Crafter", avatar: "✨" },
+        { name: "Educational Designer", role: "Content Strategist", avatar: "📖" },
+        { name: "Video Engineer", role: "Stream Master", avatar: "🎬" },
+        { name: "Data Analyst", role: "Progress Tracker", avatar: "📈" },
       ],
       stats: {
         linesOfCode: 22000,
-        screensDesigned: 45,
-        securityTests: 120,
-        performanceScore: 96,
+        usersServed: 3500,
+        coursesCreated: 120,
+        uptime: 99.7,
       },
       challenges: [
-        "Implemented biometric authentication system",
-        "Built secure transaction processing",
-        "Created intuitive financial management UI",
-        "Optimized for various device sizes",
+        "Implemented adaptive learning algorithms",
+        "Built scalable video streaming system",
+        "Created comprehensive progress tracking",
+        "Designed engaging gamification system",
       ],
     },
     {
-      id: "game-platform",
-      title: "The Gaming Realm Portal",
-      subtitle: "Multiplayer Platform Epic",
+      id: "weather-app",
+      title: "The Storm Chaser's Tool",
+      subtitle: "Weather Prediction Quest",
+      category: "side",
+      difficulty: "rare",
+      status: "completed",
+      completionDate: "2023",
+      duration: "2 months",
+      icon: "🌦️",
+      description:
+        "Developed a comprehensive weather application with real-time forecasts, interactive maps, severe weather alerts, and detailed meteorological data visualization.",
+      technologies: ["React Native", "OpenWeatherMap API", "MapBox", "Chart.js", "Push Notifications"],
+      achievements: [
+        "Weather Wizard - 99% accuracy predictions",
+        "Storm Hunter - Severe weather alert system",
+        "Map Master - Interactive weather visualization",
+        "Mobile Champion - Cross-platform compatibility",
+      ],
+      loot: {
+        xp: 8000,
+        gold: 1200,
+        items: ["Weather Crystal", "Storm Detector", "Forecast Scroll"],
+      },
+      party: [
+        { name: "Data Scientist", role: "Weather Analyst", avatar: "🔬" },
+        { name: "Mobile Dev", role: "App Creator", avatar: "📱" },
+        { name: "UI Designer", role: "Visual Storyteller", avatar: "🎨" },
+      ],
+      stats: {
+        linesOfCode: 12000,
+        usersServed: 8000,
+        forecastsDelivered: 100000,
+        uptime: 99.8,
+      },
+      challenges: [
+        "Integrated multiple weather APIs",
+        "Built real-time data synchronization",
+        "Created interactive weather maps",
+        "Implemented push notification system",
+      ],
+    },
+    {
+      id: "fitness-tracker",
+      title: "The Wellness Warrior",
+      subtitle: "Health & Fitness Quest",
+      category: "side",
+      difficulty: "epic",
+      status: "completed",
+      completionDate: "2024",
+      duration: "5 months",
+      icon: "💪",
+      description:
+        "Built a comprehensive fitness tracking application with workout planning, nutrition tracking, progress analytics, and social features for motivation.",
+      technologies: ["Flutter", "Firebase", "Node.js", "MongoDB", "ML Kit", "Chart.js"],
+      achievements: [
+        "Fitness Guru - 10K+ workouts logged",
+        "Nutrition Master - Meal planning system",
+        "Progress Tracker - Advanced analytics",
+        "Community Builder - Social features",
+      ],
+      loot: {
+        xp: 11000,
+        gold: 1600,
+        items: ["Strength Gauntlets", "Nutrition Guide", "Progress Medal"],
+      },
+      party: [
+        { name: "Fitness Coach", role: "Workout Planner", avatar: "🏋️" },
+        { name: "Nutritionist", role: "Diet Advisor", avatar: "🥗" },
+        { name: "ML Engineer", role: "Data Wizard", avatar: "🧠" },
+      ],
+      stats: {
+        linesOfCode: 20000,
+        usersServed: 4000,
+        workoutsLogged: 15000,
+        uptime: 99.6,
+      },
+      challenges: [
+        "Built machine learning recommendation system",
+        "Implemented wearable device integration",
+        "Created comprehensive analytics dashboard",
+        "Designed motivational social features",
+      ],
+    },
+    {
+      id: "crypto-wallet",
+      title: "The Digital Treasure Vault",
+      subtitle: "Cryptocurrency Wallet Adventure",
       category: "epic",
       difficulty: "legendary",
       status: "completed",
-      completionDate: "2023",
-      duration: "8 months",
-      icon: "🎮",
+      completionDate: "2024",
+      duration: "9 months",
+      icon: "₿",
       description:
-        "Developed a comprehensive gaming platform with multiplayer capabilities, user profiles, leaderboards, and real-time chat functionality.",
-      technologies: ["Unity", "C#", "Socket.io", "Redis", "MySQL", "WebGL", "Three.js"],
+        "Developed a secure cryptocurrency wallet with multi-chain support, DeFi integration, portfolio tracking, and advanced security features including hardware wallet support.",
+      technologies: ["React", "Web3.js", "Solidity", "Node.js", "PostgreSQL", "Redis", "Docker"],
       achievements: [
-        "Game Master - 5 complete games launched",
-        "Multiplayer Architect - 1000+ concurrent players",
-        "Performance Optimizer - 60fps guaranteed",
-        "Community Builder - 10K+ active users",
+        "Crypto Master - Multi-chain wallet support",
+        "Security Champion - Zero security incidents",
+        "DeFi Pioneer - Decentralized finance integration",
+        "Portfolio Wizard - Advanced tracking system",
       ],
       loot: {
         xp: 18000,
         gold: 3000,
-        items: ["Unity Master License", "Multiplayer Crown", "Performance Optimization Gem"],
+        items: ["Digital Vault Key", "Blockchain Crown", "DeFi Compass"],
       },
       party: [
-        { name: "Game Developer", role: "Realm Creator", avatar: "🎲" },
-        { name: "3D Artist", role: "World Builder", avatar: "🎨" },
-        { name: "Network Engineer", role: "Connection Master", avatar: "🌐" },
+        { name: "Blockchain Dev", role: "Smart Contract Wizard", avatar: "⛓️" },
+        { name: "Security Expert", role: "Crypto Guardian", avatar: "🔒" },
+        { name: "DeFi Specialist", role: "Protocol Master", avatar: "🏛️" },
       ],
       stats: {
         linesOfCode: 35000,
-        gamesCreated: 5,
-        playersServed: 10000,
-        uptime: 99.9,
-      },
-      challenges: [
-        "Built scalable multiplayer architecture",
-        "Optimized 3D graphics for web browsers",
-        "Implemented real-time leaderboards",
-        "Created engaging user progression system",
-      ],
-    },
-    {
-      id: "blockchain-wallet",
-      title: "The Crypto Vault Guardian",
-      subtitle: "Blockchain Security Quest",
-      category: "side",
-      difficulty: "rare",
-      status: "completed",
-      completionDate: "2024",
-      duration: "3 months",
-      icon: "⛓️",
-      description:
-        "Built a secure cryptocurrency wallet with multi-chain support, DeFi integrations, and advanced security features including hardware wallet support.",
-      technologies: ["Solidity", "Web3.js", "React", "Ethers.js", "IPFS", "MetaMask"],
-      achievements: [
-        "Blockchain Specialist - Multi-chain mastery",
-        "Security Expert - Hardware wallet integration",
-        "DeFi Pioneer - Protocol integrations",
-        "Smart Contract Auditor - Zero vulnerabilities",
-      ],
-      loot: {
-        xp: 8000,
-        gold: 1500,
-        items: ["Blockchain Crown", "Smart Contract Scroll", "Crypto Security Shield"],
-      },
-      party: [
-        { name: "Blockchain Dev", role: "Chain Whisperer", avatar: "⛓️" },
-        { name: "Security Auditor", role: "Vulnerability Hunter", avatar: "🔍" },
-        { name: "Frontend Dev", role: "Interface Crafter", avatar: "💎" },
-      ],
-      stats: {
-        linesOfCode: 12000,
-        smartContracts: 8,
-        chainsSupported: 5,
-        securityAudits: 15,
+        usersServed: 1500,
+        transactionVolume: 5000000,
+        uptime: 99.95,
       },
       challenges: [
         "Integrated multiple blockchain networks",
@@ -365,18 +413,8 @@ export default function ProjectsSection() {
     }
   };
 
-  // Floating quest completion animation
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => setIsAnimating(false), 2000);
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <section id="projects" className="relative min-h-screen py-20 bg-gradient-to-br from-gray-900 via-purple-900/30 to-blue-900/30">
+    <section id="projects" className="game-section relative bg-gradient-to-br from-gray-900 via-purple-900/30 to-blue-900/30">
       {/* Epic Background Effects */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating trophies and achievements */}
@@ -385,23 +423,15 @@ export default function ProjectsSection() {
             key={i}
             className="absolute animate-float opacity-20"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 10}s`,
-              animationDuration: `${8 + Math.random() * 8}s`,
+              left: `${(i * 23) % 100}%`,
+              top: `${(i * 37) % 100}%`,
+              animationDelay: `${(i % 20) * 0.5}s`,
+              animationDuration: `${8 + (i % 8)}s`,
             }}
           >
-            <div className="text-3xl">{["🏆", "⚔️", "🛡️", "👑", "💎", "🎯", "🔥", "⚡"][Math.floor(Math.random() * 8)]}</div>
+            <div className="text-3xl">{["🏆", "⚔️", "🛡️", "👑", "💎", "🎯", "🔥", "⚡"][i % 8]}</div>
           </div>
         ))}
-
-        {/* Quest completion effects */}
-        {isAnimating && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-level-up">
-            <div className="text-6xl">🎉</div>
-            <div className="text-yellow-400 font-bold text-xl mt-2">QUEST COMPLETED!</div>
-          </div>
-        )}
       </div>
 
       <div className="game-container relative z-10">
@@ -470,10 +500,7 @@ export default function ProjectsSection() {
           {filteredQuests.map((quest, index) => (
             <div
               key={quest.id}
-              className={`group cursor-pointer transition-all duration-500 hover:scale-105 ${
-                selectedQuest === quest.id ? "scale-105 z-10" : ""
-              }`}
-              onClick={() => setSelectedQuest(selectedQuest === quest.id ? null : quest.id)}
+              className="group transition-all duration-500 hover:scale-105 relative z-10"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Quest Card */}
@@ -539,17 +566,24 @@ export default function ProjectsSection() {
                   </div>
                 </div>
 
-                {/* Expand Button */}
-                <div className="text-center">
-                  <button className="game-btn game-btn-primary w-full">
-                    {selectedQuest === quest.id ? "Hide Details" : "View Quest Log"}
+                {/* View Quest Log Button */}
+                <div className="text-center relative z-20">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedQuest(quest.id);
+                      setIsModalOpen(true);
+                    }}
+                    className="game-btn game-btn-primary w-full hover:bg-purple-600/50 transition-colors duration-200 relative z-30"
+                  >
+                    View Quest Log
                     <EyeIcon className="w-5 h-5" />
                   </button>
                 </div>
 
                 {/* Rarity Glow Effect */}
                 <div
-                  className={`absolute inset-0 opacity-20 bg-gradient-to-r ${
+                  className={`absolute inset-0 opacity-20 bg-gradient-to-r pointer-events-none ${
                     quest.difficulty === "legendary"
                       ? "from-yellow-500/30 via-orange-500/30 to-red-500/30"
                       : quest.difficulty === "epic"
@@ -562,101 +596,179 @@ export default function ProjectsSection() {
           ))}
         </div>
 
-        {/* Detailed Quest Log Modal */}
-        {selectedQuest && (
-          <div className="game-window p-8 mb-12">
-            {(() => {
-              const quest = completedQuests.find((q) => q.id === selectedQuest);
-              if (!quest) return null;
+        {/* Quest Details Modal */}
+        {isModalOpen && selectedQuest && (
+          <div
+            className="fixed inset-0 z-[9999] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+            onClick={() => setIsModalOpen(false)}
+          >
+            <div
+              className="bg-gradient-to-br from-gray-900 via-purple-900/20 to-gray-900 border-2 border-purple-500/50 rounded-lg shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {(() => {
+                const quest = completedQuests.find((q) => q.id === selectedQuest);
+                if (!quest) return null;
 
-              return (
-                <div className="space-y-8">
-                  {/* Detailed Quest Header */}
-                  <div className="text-center">
-                    <div className="character-portrait w-24 h-24 mx-auto mb-4">
-                      <span className="text-6xl">{quest.icon}</span>
-                    </div>
-                    <h3 className="text-4xl font-bold text-white mb-2">{quest.title}</h3>
-                    <p className="text-xl text-purple-300 mb-4">{quest.subtitle}</p>
-                    <div className="flex items-center justify-center gap-4">
-                      <span className={`px-4 py-2 rounded-full font-bold ${getRarityColor(quest.difficulty)}`}>
-                        {getDifficultyIcon(quest.difficulty)} {quest.difficulty.toUpperCase()} QUEST
-                      </span>
-                      <span className="px-4 py-2 bg-green-500/20 text-green-400 rounded-full font-bold">
-                        ✓ COMPLETED {quest.completionDate}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="grid lg:grid-cols-2 gap-8">
-                    {/* Achievements & Challenges */}
-                    <div>
-                      <h4 className="text-2xl font-bold text-yellow-400 mb-4">🏅 Achievements Unlocked</h4>
-                      <div className="space-y-3 mb-8">
-                        {quest.achievements.map((achievement, index) => (
-                          <div key={index} className="flex items-center gap-3 p-3 bg-green-500/20 border border-green-500/30 rounded-lg">
-                            <TrophyIcon className="w-6 h-6 text-yellow-500" />
-                            <span className="text-green-400 font-medium">{achievement}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <h4 className="text-2xl font-bold text-yellow-400 mb-4">⚔️ Challenges Conquered</h4>
-                      <div className="space-y-3">
-                        {quest.challenges.map((challenge, index) => (
-                          <div key={index} className="flex items-start gap-3 p-3 bg-red-500/20 border border-red-500/30 rounded-lg">
-                            <SwordIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" />
-                            <span className="text-red-300">{challenge}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Party & Stats */}
-                    <div>
-                      <h4 className="text-2xl font-bold text-yellow-400 mb-4">👥 Quest Party</h4>
-                      <div className="space-y-3 mb-8">
-                        {quest.party.map((member, index) => (
-                          <div key={index} className="flex items-center gap-4 p-3 bg-blue-500/20 border border-blue-500/30 rounded-lg">
-                            <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
-                              <span className="text-2xl">{member.avatar}</span>
-                            </div>
-                            <div>
-                              <div className="text-white font-bold">{member.name}</div>
-                              <div className="text-blue-300 text-sm">{member.role}</div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      <h4 className="text-2xl font-bold text-yellow-400 mb-4">📊 Quest Statistics</h4>
-                      <div className="grid grid-cols-2 gap-4">
-                        {Object.entries(quest.stats).map(([stat, value]) => (
-                          <div key={stat} className="game-stat">
-                            <div className="game-stat-label capitalize">{stat.replace(/([A-Z])/g, " $1").trim()}</div>
-                            <div className="game-stat-value text-cyan-400">{value.toLocaleString()}</div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Legendary Loot */}
-                  <div>
-                    <h4 className="text-2xl font-bold text-yellow-400 mb-4 text-center">💎 Legendary Loot Acquired</h4>
-                    <div className="grid md:grid-cols-3 gap-4">
-                      {quest.loot.items.map((item, index) => (
-                        <div key={index} className="game-panel p-4 text-center">
-                          <div className="text-4xl mb-2">⚡</div>
-                          <h5 className="font-bold text-purple-400">{item}</h5>
-                          <div className="text-xs text-gray-400 mt-2">Legendary Item</div>
+                return (
+                  <>
+                    {/* Modal Header */}
+                    <div className="flex items-center justify-between p-6 border-b border-purple-500/30">
+                      <div className="flex items-center gap-4">
+                        <div className="character-portrait w-16 h-16">
+                          <span className="text-4xl">{quest.icon}</span>
                         </div>
-                      ))}
+                        <div>
+                          <h3 className="text-2xl font-bold text-white">{quest.title}</h3>
+                          <p className="text-purple-300">{quest.subtitle}</p>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full font-bold ${getRarityColor(quest.difficulty)}`}>
+                          {getDifficultyIcon(quest.difficulty)} {quest.difficulty.toUpperCase()}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => setIsModalOpen(false)}
+                        className="p-2 rounded-lg border border-purple-500/30 hover:bg-red-500/20 transition-colors duration-200"
+                      >
+                        <CloseIcon className="w-6 h-6 text-gray-400 hover:text-red-400" />
+                      </button>
                     </div>
-                  </div>
-                </div>
-              );
-            })()}
+
+                    {/* Modal Content */}
+                    <div className="p-6 max-h-[70vh] overflow-y-auto">
+                      <div className="space-y-8">
+                        {/* Quest Description */}
+                        <div className="text-center">
+                          <p className="text-lg text-gray-300 leading-relaxed max-w-4xl mx-auto">{quest.description}</p>
+                          <div className="flex items-center justify-center gap-4 mt-4">
+                            <span className="px-4 py-2 bg-green-500/20 text-green-400 rounded-full font-bold">
+                              ✓ COMPLETED {quest.completionDate}
+                            </span>
+                            <span className="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-full font-bold">
+                              📅 Duration: {quest.duration}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="grid lg:grid-cols-2 gap-8">
+                          {/* Achievements & Challenges */}
+                          <div>
+                            <h4 className="text-2xl font-bold text-yellow-400 mb-4">🏅 Achievements Unlocked</h4>
+                            <div className="space-y-3 mb-8">
+                              {quest.achievements.map((achievement, index) => (
+                                <div
+                                  key={index}
+                                  className="flex items-center gap-3 p-3 bg-green-500/20 border border-green-500/30 rounded-lg"
+                                >
+                                  <TrophyIcon className="w-6 h-6 text-yellow-500 flex-shrink-0" />
+                                  <span className="text-green-400 font-medium">{achievement}</span>
+                                </div>
+                              ))}
+                            </div>
+
+                            <h4 className="text-2xl font-bold text-yellow-400 mb-4">⚔️ Challenges Conquered</h4>
+                            <div className="space-y-3">
+                              {quest.challenges.map((challenge, index) => (
+                                <div key={index} className="flex items-start gap-3 p-3 bg-red-500/20 border border-red-500/30 rounded-lg">
+                                  <SwordIcon className="w-5 h-5 text-red-500 mt-1 flex-shrink-0" />
+                                  <span className="text-red-300">{challenge}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Party & Stats */}
+                          <div>
+                            <h4 className="text-2xl font-bold text-yellow-400 mb-4">👥 Quest Party</h4>
+                            <div className="space-y-3 mb-8">
+                              {quest.party.map((member, index) => (
+                                <div
+                                  key={index}
+                                  className="flex items-center gap-4 p-3 bg-blue-500/20 border border-blue-500/30 rounded-lg"
+                                >
+                                  <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center">
+                                    <span className="text-2xl">{member.avatar}</span>
+                                  </div>
+                                  <div>
+                                    <div className="text-white font-bold">{member.name}</div>
+                                    <div className="text-blue-300 text-sm">{member.role}</div>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+
+                            <h4 className="text-2xl font-bold text-yellow-400 mb-4">📊 Quest Statistics</h4>
+                            <div className="grid grid-cols-2 gap-4">
+                              {Object.entries(quest.stats).map(([stat, value]) => (
+                                <div key={stat} className="game-stat">
+                                  <div className="game-stat-label capitalize">{stat.replace(/([A-Z])/g, " $1").trim()}</div>
+                                  <div className="game-stat-value text-cyan-400">{value.toLocaleString()}</div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Technology Stack */}
+                        <div>
+                          <h4 className="text-2xl font-bold text-yellow-400 mb-4 text-center">⚙️ Technologies Mastered</h4>
+                          <div className="flex flex-wrap justify-center gap-3">
+                            {quest.technologies.map((tech, techIndex) => (
+                              <span
+                                key={techIndex}
+                                className="px-4 py-2 bg-blue-500/20 text-blue-400 rounded-full text-sm border border-blue-500/30 font-medium"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Legendary Loot */}
+                        <div>
+                          <h4 className="text-2xl font-bold text-yellow-400 mb-4 text-center">💎 Legendary Loot Acquired</h4>
+                          <div className="grid md:grid-cols-3 gap-4">
+                            {quest.loot.items.map((item, index) => (
+                              <div key={index} className="game-panel p-4 text-center">
+                                <div className="text-4xl mb-2">⚡</div>
+                                <h5 className="font-bold text-purple-400">{item}</h5>
+                                <div className="text-xs text-gray-400 mt-2">Legendary Item</div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Modal Footer */}
+                    <div className="p-6 border-t border-purple-500/30 bg-gradient-to-r from-gray-900/50 to-purple-900/20">
+                      <div className="flex items-center justify-between">
+                        <div className="grid grid-cols-3 gap-6">
+                          <div className="game-stat">
+                            <div className="game-stat-label">XP Gained</div>
+                            <div className="game-stat-value text-green-500">{quest.loot.xp.toLocaleString()}</div>
+                          </div>
+                          <div className="game-stat">
+                            <div className="game-stat-label">Gold Earned</div>
+                            <div className="game-stat-value text-yellow-500">{quest.loot.gold.toLocaleString()}</div>
+                          </div>
+                          <div className="game-stat">
+                            <div className="game-stat-label">Items Found</div>
+                            <div className="game-stat-value text-purple-500">{quest.loot.items.length}</div>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => setIsModalOpen(false)}
+                          className="px-6 py-2 bg-yellow-600/30 hover:bg-yellow-600/50 border border-yellow-500/50 rounded-lg text-yellow-400 font-bold transition-colors duration-200"
+                        >
+                          Continue Adventure
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                );
+              })()}
+            </div>
           </div>
         )}
 

@@ -169,7 +169,7 @@ export default function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900/40 to-blue-900/40"
+      className="game-section relative flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900/40 to-blue-900/40"
     >
       {/* Mystical Background Effects */}
       <div className="absolute inset-0">
@@ -179,10 +179,10 @@ export default function HeroSection() {
             key={i}
             className="absolute animate-float opacity-30"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 4}s`,
+              left: `${(i * 17) % 100}%`,
+              top: `${(i * 23) % 100}%`,
+              animationDelay: `${(i % 10) * 0.5}s`,
+              animationDuration: `${3 + (i % 4)}s`,
             }}
           >
             <div className="w-2 h-2 bg-purple-400 rounded-full animate-sparkle" />
@@ -195,13 +195,13 @@ export default function HeroSection() {
             key={i}
             className="absolute text-purple-400/20 font-bold text-2xl animate-float"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 8}s`,
-              animationDuration: `${6 + Math.random() * 6}s`,
+              left: `${(i * 31) % 100}%`,
+              top: `${(i * 37) % 100}%`,
+              animationDelay: `${(i % 16) * 0.5}s`,
+              animationDuration: `${6 + (i % 6)}s`,
             }}
           >
-            {["⚡", "🔮", "✨", "🌟", "💫", "🔥", "❄️", "🌪️"][Math.floor(Math.random() * 8)]}
+            {["⚡", "🔮", "✨", "🌟", "💫", "🔥", "❄️", "🌪️"][i % 8]}
           </div>
         ))}
       </div>
