@@ -36,6 +36,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Force page to start from top */
+  scroll-restoration: manual;
 }
 
 body {
@@ -44,6 +46,9 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   line-height: 1.6;
   overflow-x: hidden;
+  /* Ensure page starts from top */
+  position: relative;
+  min-height: 100vh;
 }
 
 /* Liquid Animations */

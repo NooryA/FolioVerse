@@ -10,6 +10,12 @@ export function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Ensure page starts from the very top
+    if (typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
     setMounted(true);
   }, []);
 
@@ -34,7 +40,196 @@ export function HeroSection() {
     return () => document.removeEventListener("click", handleClick);
   }, []);
 
-  if (!mounted) return <div>Loading...</div>;
+  if (!mounted) {
+    return (
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-50 via-cyan-50 to-blue-50">
+        {/* Animated Background Blobs */}
+        <div className="absolute inset-0">
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute rounded-full opacity-40"
+              style={{
+                left: `${10 + i * 20}%`,
+                top: `${10 + i * 15}%`,
+                width: `${150 + i * 50}px`,
+                height: `${150 + i * 50}px`,
+                background: `linear-gradient(${45 + i * 72}deg, 
+                  rgba(6, 182, 212, 0.3) 0%, 
+                  rgba(139, 92, 246, 0.3) 50%, 
+                  rgba(59, 130, 246, 0.3) 100%)`,
+                filter: `blur(${30 + i * 10}px)`,
+              }}
+              animate={{
+                x: [0, 30, -20, 0],
+                y: [0, -20, 25, 0],
+                scale: [1, 1.2, 0.8, 1],
+                rotate: [0, 360],
+              }}
+              transition={{
+                duration: 8 + i * 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Main Loading Animation */}
+        <div className="relative z-10 text-center">
+          {/* Central Liquid Orb */}
+          <motion.div
+            className="relative w-32 h-32 mx-auto mb-8"
+            animate={{
+              scale: [1, 1.1, 1],
+              rotate: [0, 360],
+            }}
+            transition={{
+              scale: { duration: 2, repeat: Infinity, ease: "easeInOut" },
+              rotate: { duration: 8, repeat: Infinity, ease: "linear" },
+            }}
+          >
+            {/* Main Orb */}
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 rounded-full shadow-2xl">
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 rounded-full"
+                animate={{
+                  opacity: [0.8, 1, 0.8],
+                  scale: [1, 1.05, 1],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+            </div>
+
+            {/* Inner Glass Effect */}
+            <div className="absolute inset-4 bg-white/30 backdrop-blur-sm rounded-full border border-white/50 flex items-center justify-center">
+              <motion.div animate={{ rotate: -360 }} transition={{ duration: 6, repeat: Infinity, ease: "linear" }}>
+                <Droplets className="w-12 h-12 text-white drop-shadow-lg" />
+              </motion.div>
+            </div>
+
+            {/* Orbiting Particles */}
+            {[...Array(6)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-3 h-3 rounded-full"
+                style={{
+                  background: `linear-gradient(45deg, 
+                    rgba(6, 182, 212, 0.8) 0%, 
+                    rgba(139, 92, 246, 0.8) 100%)`,
+                  top: "50%",
+                  left: "50%",
+                  transformOrigin: `0 ${50 + i * 8}px`,
+                }}
+                animate={{ rotate: 360 }}
+                transition={{
+                  duration: 4 + i * 0.5,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+            ))}
+
+            {/* Pulsing Ring */}
+            <motion.div
+              className="absolute -inset-4 border-4 border-cyan-300/50 rounded-full"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.5, 0.2, 0.5],
+              }}
+              transition={{
+                duration: 2.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+          </motion.div>
+
+          {/* Loading Text */}
+          <motion.div className="space-y-4" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}>
+            <motion.h1
+              className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 bg-clip-text text-transparent"
+              animate={{
+                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              Liquid UI
+            </motion.h1>
+
+            <motion.p
+              className="text-xl text-gray-600 font-medium"
+              animate={{
+                opacity: [0.7, 1, 0.7],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              Initializing liquid experience...
+            </motion.p>
+
+            {/* Liquid Dots */}
+            <div className="flex justify-center gap-2 mt-6">
+              {[...Array(3)].map((_, i) => (
+                <motion.div
+                  key={i}
+                  className="w-3 h-3 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full"
+                  animate={{
+                    y: [0, -10, 0],
+                    scale: [1, 1.2, 1],
+                    opacity: [0.5, 1, 0.5],
+                  }}
+                  transition={{
+                    duration: 1.5,
+                    repeat: Infinity,
+                    delay: i * 0.3,
+                    ease: "easeInOut",
+                  }}
+                />
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Floating Particles */}
+          <div className="absolute inset-0">
+            {[...Array(15)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-2 h-2 bg-cyan-400/40 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                }}
+                animate={{
+                  y: [0, -40, 0],
+                  x: [0, Math.random() * 20 - 10, 0],
+                  scale: [1, 1.5, 1],
+                  opacity: [0.4, 0.8, 0.4],
+                }}
+                transition={{
+                  duration: 4 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                  ease: "easeInOut",
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <section
@@ -332,58 +527,6 @@ export function HeroSection() {
                 </div>
               </motion.div>
             ))}
-          </motion.div>
-
-          {/* Additional Features */}
-          <motion.div
-            className="bg-white/60 backdrop-blur-lg border border-white/50 rounded-3xl p-12 max-w-4xl mx-auto shadow-lg"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.6 }}
-          >
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">Why Choose Liquid UI?</h2>
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Waves className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">Fluid by Nature</h3>
-                    <p className="text-gray-600">Every element flows seamlessly with natural motion</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Sparkles className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">Magical Interactions</h3>
-                    <p className="text-gray-600">Delightful animations that engage and inspire</p>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Zap className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">Lightning Fast</h3>
-                    <p className="text-gray-600">Optimized performance without compromising beauty</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-4">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-400 to-cyan-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Globe className="w-4 h-4 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-800 mb-2">Universal Design</h3>
-                    <p className="text-gray-600">Works beautifully across all devices and screens</p>
-                  </div>
-                </div>
-              </div>
-            </div>
           </motion.div>
         </motion.div>
       </div>

@@ -4,12 +4,149 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Home, User, FolderOpen, Mail, Droplets, Menu, X, Sparkles } from "lucide-react";
 
+// Liquid Loading Component
+function LiquidLoader() {
+  return (
+    <div className="relative flex items-center gap-1 px-2 py-1">
+      {/* Liquid Background Blob */}
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-blue-500/10 to-purple-500/10 rounded-full blur-sm"
+        animate={{
+          scale: [1, 1.2, 1],
+          rotate: [0, 180, 360],
+        }}
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      {/* Animated Liquid Drops */}
+      <div className="relative flex items-center gap-1">
+        {[...Array(3)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="relative"
+            animate={{
+              y: [0, -6, 0],
+            }}
+            transition={{
+              duration: 1.5,
+              repeat: Infinity,
+              delay: i * 0.3,
+              ease: "easeInOut",
+            }}
+          >
+            <motion.div
+              className="w-2 h-2 bg-gradient-to-br from-cyan-400 via-blue-500 to-purple-500 rounded-full relative overflow-hidden"
+              animate={{
+                scale: [1, 1.3, 1],
+                rotate: [0, 360],
+              }}
+              transition={{
+                scale: {
+                  duration: 1.5,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                  ease: "easeInOut",
+                },
+                rotate: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "linear",
+                },
+              }}
+            >
+              {/* Inner liquid shimmer */}
+              <motion.div
+                className="absolute inset-0 bg-white/30 rounded-full"
+                animate={{
+                  scale: [0, 1, 0],
+                  opacity: [0, 0.8, 0],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  delay: i * 0.3,
+                  ease: "easeInOut",
+                }}
+              />
+            </motion.div>
+
+            {/* Liquid trail effect */}
+            <motion.div
+              className="absolute top-full left-1/2 w-0.5 bg-gradient-to-b from-cyan-400/50 to-transparent rounded-full"
+              style={{ height: "4px", marginLeft: "-1px" }}
+              animate={{
+                opacity: [0, 1, 0],
+                scaleY: [0, 1, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                delay: i * 0.3 + 0.2,
+                ease: "easeInOut",
+              }}
+            />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Syncing text with liquid gradient */}
+      <motion.div
+        className="ml-2 text-xs font-medium relative"
+        animate={{
+          opacity: [0.6, 1, 0.6],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <motion.span
+          className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent"
+          animate={{
+            backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          Syncing
+        </motion.span>
+
+        {/* Floating particle */}
+        <motion.div
+          className="absolute -top-1 -right-1 w-1 h-1 bg-cyan-400 rounded-full"
+          animate={{
+            y: [0, -3, 0],
+            x: [0, 2, 0],
+            scale: [0, 1, 0],
+            opacity: [0, 1, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </motion.div>
+    </div>
+  );
+}
+
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [activeSection, setActiveSection] = useState("home");
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [wavePhase, setWavePhase] = useState(0);
+  const [currentTime, setCurrentTime] = useState<string>("");
+  const [isClient, setIsClient] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
   const navItems = [
@@ -44,6 +181,13 @@ export function Navigation() {
   ];
 
   useEffect(() => {
+    // Mark as client-side after hydration
+    setIsClient(true);
+
+    const updateTime = () => {
+      setCurrentTime(new Date().toLocaleTimeString());
+    };
+
     const handleScroll = () => {
       setScrollY(window.scrollY);
     };
@@ -62,6 +206,11 @@ export function Navigation() {
       setWavePhase((prev) => (prev + 1) % 360);
     };
 
+    // Initialize time immediately after mount
+    updateTime();
+
+    // Set up intervals
+    const timeInterval = setInterval(updateTime, 1000);
     const waveInterval = setInterval(waveAnimation, 50);
 
     window.addEventListener("scroll", handleScroll);
@@ -71,6 +220,7 @@ export function Navigation() {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousemove", handleMouseMove);
       clearInterval(waveInterval);
+      clearInterval(timeInterval);
     };
   }, []);
 
@@ -263,7 +413,7 @@ export function Navigation() {
 
               <div className="text-sm">
                 <div className="text-gray-700 font-medium">Liquid Active</div>
-                <div className="text-gray-500">{new Date().toLocaleTimeString()}</div>
+                <div className="text-gray-500">{isClient ? currentTime : <LiquidLoader />}</div>
               </div>
             </div>
 
