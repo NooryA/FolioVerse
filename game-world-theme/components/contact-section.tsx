@@ -2,7 +2,24 @@
 
 import { useState, useEffect } from "react";
 
-// Inline SVG Icons
+// Guild Hall Icons
+const TavernIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M8 2l1.5 4h5L16 2h1l-1.5 4h2.5c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V8c0-1.1.9-2 2-2h2.5L7 2h1zm3 16c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z" />
+  </svg>
+);
+
+const QuestIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+    />
+  </svg>
+);
+
 const MailIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path
@@ -25,45 +42,20 @@ const MessageIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const SendIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+const CrownIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M5 16L3 5l4.5 4L12 4l4.5 5L21 5l-2 11H5z" />
   </svg>
 );
 
-const CheckIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-  </svg>
-);
-
-const MapPinIcon = ({ className }: { className?: string }) => (
+const LinkIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+      d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
     />
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-  </svg>
-);
-
-const ClockIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-  </svg>
-);
-
-const TrophyIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-    <path d="M6 2v6h3v8c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2V8h3V2H6zm14 2v2c0 1.1-.9 2-2 2h-1v1c0 1.1-.9 2-2 2s-2-.9-2-2V8H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h16z" />
-  </svg>
-);
-
-const ZapIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
   </svg>
 );
 
@@ -74,365 +66,528 @@ const StarIcon = ({ className }: { className?: string }) => (
 );
 
 export default function ContactSection() {
+  const [selectedNPC, setSelectedNPC] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    playerName: "",
+    name: "",
     email: "",
-    questType: "",
-    guildRank: "",
+    questType: "collaboration",
     message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [questComplete, setQuestComplete] = useState(false);
-  const [onlineStatus, setOnlineStatus] = useState("Online");
+  const [questSubmitted, setQuestSubmitted] = useState(false);
+  const [tavernActivity, setTavernActivity] = useState("bustling");
 
-  const questTypes = [
-    { id: "collaboration", name: "Collaboration Quest", reward: "Epic Partnership", difficulty: "Legendary" },
-    { id: "freelance", name: "Freelance Mission", reward: "Gold Coins", difficulty: "Epic" },
-    { id: "consultation", name: "Strategy Consultation", reward: "Wisdom Points", difficulty: "Rare" },
-    { id: "mentoring", name: "Training Quest", reward: "Knowledge Orb", difficulty: "Common" },
-    { id: "speaking", name: "Guild Presentation", reward: "Fame Points", difficulty: "Epic" },
+  // Tavern NPCs & Quest Givers
+  const tavernNPCs = [
+    {
+      id: "guild-master",
+      name: "Alex the Guild Master",
+      title: "Legendary Full-Stack Archmage",
+      avatar: "🧙‍♂️",
+      status: "active",
+      specialty: "Epic Development Quests",
+      description:
+        "The legendary guild master who has conquered countless digital realms. Seeks worthy allies for epic development adventures.",
+      questTypes: ["Full-Stack Development", "Technical Leadership", "System Architecture", "Mentoring"],
+      dialogue: "Greetings, brave adventurer! I sense great potential in you. What epic quest shall we embark upon together?",
+      availability: "Always ready for new adventures",
+      experience: "8+ Years",
+      completedQuests: 150,
+      rating: 5.0,
+    },
+    {
+      id: "project-coordinator",
+      name: "Sarah the Quest Coordinator",
+      title: "Project Management Sage",
+      avatar: "📋",
+      status: "active",
+      specialty: "Project Organization & Strategy",
+      description:
+        "A wise coordinator who ensures all quests run smoothly and efficiently. Expert in organizing complex multi-party adventures.",
+      questTypes: ["Project Management", "Team Coordination", "Strategic Planning", "Agile Development"],
+      dialogue: "Welcome to our guild! I can help organize your quest requirements and ensure a successful adventure.",
+      availability: "Available for strategic planning",
+      experience: "6+ Years",
+      completedQuests: 89,
+      rating: 4.9,
+    },
+    {
+      id: "mentor-sage",
+      name: "Marcus the Mentor Sage",
+      title: "Knowledge Guardian",
+      avatar: "🎓",
+      status: "active",
+      specialty: "Teaching & Knowledge Transfer",
+      description:
+        "A patient teacher who guides newcomers through their first quests. Specializes in knowledge sharing and skill development.",
+      questTypes: ["Code Reviews", "Technical Mentoring", "Best Practices", "Skill Development"],
+      dialogue: "Ah, a new seeker of knowledge! I'd be honored to guide you on your learning journey.",
+      availability: "Open for mentoring sessions",
+      experience: "5+ Years Teaching",
+      completedQuests: 200,
+      rating: 5.0,
+    },
   ];
 
-  const guildInfo = [
+  // Available Quests/Services
+  const availableQuests = [
     {
-      icon: MailIcon,
-      title: "Direct Message",
-      value: "gamedev@questmail.com",
-      description: "Best for quick communications",
-      status: "Online",
+      id: "epic-development",
+      title: "Epic Development Quest",
+      difficulty: "legendary",
+      description: "Full-scale application development with modern technologies",
+      duration: "3-6 months",
+      reward: "Legendary Application + Ongoing Support",
+      requirements: ["Clear vision", "Dedicated timeline", "Collaborative spirit"],
+      icon: "⚔️",
     },
     {
-      icon: MapPinIcon,
-      title: "Guild Location",
-      value: "Digital Realm, Cloud City",
-      description: "Remote adventures worldwide",
-      status: "Active",
+      id: "consultation-mission",
+      title: "Technical Consultation Mission",
+      difficulty: "epic",
+      description: "Strategic technical guidance and architecture planning",
+      duration: "1-2 weeks",
+      reward: "Comprehensive Technical Roadmap",
+      requirements: ["Technical challenges", "Open to recommendations", "Implementation goals"],
+      icon: "🧠",
     },
     {
-      icon: ClockIcon,
-      title: "Response Time",
-      value: "< 24 hours",
-      description: "Usually much faster!",
-      status: "Fast",
+      id: "mentoring-journey",
+      title: "Developer Mentoring Journey",
+      difficulty: "rare",
+      description: "Personalized guidance for skill development and career growth",
+      duration: "Ongoing",
+      reward: "Enhanced Skills + Career Advancement",
+      requirements: ["Learning commitment", "Regular sessions", "Growth mindset"],
+      icon: "🎓",
     },
     {
-      icon: TrophyIcon,
-      title: "Success Rate",
-      value: "98% Quest Completion",
-      description: "High-quality delivery guaranteed",
-      status: "Legendary",
+      id: "code-review-service",
+      title: "Code Review & Optimization",
+      difficulty: "uncommon",
+      description: "Expert code analysis and performance improvements",
+      duration: "1 week",
+      reward: "Optimized Codebase + Best Practices Guide",
+      requirements: ["Existing codebase", "Improvement goals", "Technical documentation"],
+      icon: "🔍",
     },
   ];
 
-  const socialGuilds = [
-    { name: "Twitter Guild", icon: "🐦", handle: "@gamedevpro", members: "5.2K" },
-    { name: "LinkedIn Alliance", icon: "💼", handle: "/in/gamedevpro", members: "12.8K" },
-    { name: "GitHub Codebase", icon: "🐙", handle: "@gamedevpro", members: "3.1K" },
-    { name: "Discord Server", icon: "🎮", handle: "GameDev#1337", members: "8.7K" },
+  // Social Guild Connections
+  const guildConnections = [
+    { name: "GitHub Guild", icon: "💻", url: "#", description: "Code repositories and open source contributions" },
+    { name: "LinkedIn Alliance", icon: "💼", url: "#", description: "Professional network and career updates" },
+    { name: "Twitter Fellowship", icon: "🐦", url: "#", description: "Daily insights and tech discussions" },
+    { name: "Discord Server", icon: "🎮", url: "#", description: "Real-time chat and community discussions" },
   ];
+
+  // Tavern atmosphere updates
+  useEffect(() => {
+    const activities = ["bustling", "lively", "peaceful", "mysterious"];
+    const interval = setInterval(() => {
+      setTavernActivity(activities[Math.floor(Math.random() * activities.length)]);
+    }, 8000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
+    }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleQuestSubmission = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     // Simulate quest submission
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    setIsSubmitting(false);
+    setQuestSubmitted(true);
+
+    // Reset form after a delay
     setTimeout(() => {
-      setIsSubmitting(false);
-      setQuestComplete(true);
-      setFormData({
-        playerName: "",
-        email: "",
-        questType: "",
-        guildRank: "",
-        message: "",
-      });
-    }, 2000);
+      setQuestSubmitted(false);
+      setFormData({ name: "", email: "", questType: "collaboration", message: "" });
+    }, 5000);
   };
 
-  useEffect(() => {
-    const statuses = ["Online", "In Battle", "Coding", "Available"];
-    const interval = setInterval(() => {
-      setOnlineStatus(statuses[Math.floor(Math.random() * statuses.length)]);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const getQuestDifficultyColor = (difficulty: string) => {
+  const getRarityColor = (difficulty: string) => {
     switch (difficulty) {
-      case "Legendary":
-        return "text-yellow-400 border-yellow-400";
-      case "Epic":
-        return "text-purple-400 border-purple-400";
-      case "Rare":
-        return "text-blue-400 border-blue-400";
-      case "Common":
-        return "text-green-400 border-green-400";
+      case "legendary":
+        return "border-yellow-500 bg-yellow-500/20 text-yellow-400";
+      case "epic":
+        return "border-purple-500 bg-purple-500/20 text-purple-400";
+      case "rare":
+        return "border-blue-500 bg-blue-500/20 text-blue-400";
       default:
-        return "text-gray-400 border-gray-400";
+        return "border-gray-500 bg-gray-500/20 text-gray-400";
     }
   };
 
   return (
-    <section className="game-section game-bg-pattern bg-gradient-to-b from-indigo-900/50 to-purple-900/50">
-      <div className="game-container">
-        {/* Section Header */}
-        <div className="game-text-center mb-16">
-          <div className="game-badge game-badge-online mb-6">
-            <MessageIcon className="w-5 h-5" />
-            Quest Board
+    <section id="contact" className="relative min-h-screen py-20 bg-gradient-to-br from-amber-900/20 via-orange-900/30 to-red-900/20">
+      {/* Tavern Atmosphere Effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Floating candles and mystical elements */}
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute animate-float opacity-30"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 10}s`,
+              animationDuration: `${6 + Math.random() * 8}s`,
+            }}
+          >
+            <div className="text-2xl">{["🕯️", "🍺", "📜", "⚔️", "🛡️", "💰", "🔮", "📚"][Math.floor(Math.random() * 8)]}</div>
           </div>
-          <h2 className="game-heading text-5xl md:text-7xl mb-6 game-text-gradient">JOIN MY GUILD</h2>
-          <p className="text-xl text-purple-300 max-w-3xl mx-auto">
-            Ready to embark on an epic development quest? Send me a message and let's create something legendary together!
+        ))}
+
+        {/* Tavern ambiance particles */}
+        {Array.from({ length: 30 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute animate-sparkle opacity-20"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 5}s`,
+              animationDuration: `${3 + Math.random() * 4}s`,
+            }}
+          >
+            <div className="w-1 h-1 bg-yellow-400 rounded-full" />
+          </div>
+        ))}
+      </div>
+
+      <div className="game-container relative z-10">
+        {/* Guild Hall Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-full mb-8">
+            <TavernIcon className="w-6 h-6 text-amber-500" />
+            <span className="text-amber-400 font-bold">THE GUILD HALL & TAVERN</span>
+          </div>
+
+          <h2 className="game-title text-5xl md:text-7xl mb-6">Recruit Your Party</h2>
+
+          <p className="text-xl text-amber-300 max-w-3xl mx-auto mb-8">
+            Welcome to the legendary Guild Hall! Here, brave adventurers gather to form parties, share quests, and embark on epic
+            development journeys. The tavern is {tavernActivity} tonight - perfect for recruiting new allies and starting grand adventures.
           </p>
+
+          {/* Tavern Status */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-full">
+            <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+            <span className="text-green-400 font-bold">Tavern Open - NPCs Available</span>
+          </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-12 mb-16">
-          {/* Quest Form */}
-          <div className="lg:col-span-2">
-            <div className="game-card game-card-neon">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                  <SendIcon className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="game-heading text-2xl game-text-neon">New Quest Request</h3>
-                  <p className="text-purple-300">Fill out the form to start your adventure</p>
-                </div>
-              </div>
+        {/* Tavern NPCs */}
+        <div className="mb-16">
+          <h3 className="text-3xl font-bold text-white text-center mb-8">🏰 Meet the Guild Members</h3>
 
-              {questComplete ? (
-                <div className="game-text-center py-12">
-                  <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-6 game-hover-glow">
-                    <CheckIcon className="w-10 h-10 text-white" />
-                  </div>
-                  <h4 className="game-heading text-2xl text-white mb-4">Quest Accepted!</h4>
-                  <p className="text-purple-300 mb-6">
-                    🎉 Your quest has been successfully submitted to the guild master. Expect a response within 24 hours!
-                  </p>
-                  <div className="bg-green-400/10 border border-green-400/30 rounded-lg p-4 mb-6">
-                    <p className="text-green-400 font-semibold">+500 XP gained for quest submission!</p>
-                  </div>
-                  <button onClick={() => setQuestComplete(false)} className="game-btn game-btn-secondary">
-                    Submit Another Quest
-                  </button>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="game-form-group">
-                      <label className="game-form-label">Player Name *</label>
-                      <input
-                        type="text"
-                        name="playerName"
-                        value={formData.playerName}
-                        onChange={handleInputChange}
-                        className="game-form-input"
-                        placeholder="Enter your player name"
-                        required
-                      />
+          <div className="grid lg:grid-cols-3 gap-8">
+            {tavernNPCs.map((npc) => (
+              <div
+                key={npc.id}
+                className={`group cursor-pointer transition-all duration-500 ${selectedNPC === npc.id ? "scale-105" : "hover:scale-102"}`}
+                onClick={() => setSelectedNPC(selectedNPC === npc.id ? null : npc.id)}
+              >
+                <div
+                  className={`game-window p-6 h-full border-2 ${
+                    selectedNPC === npc.id
+                      ? "border-amber-500/50 shadow-2xl shadow-amber-500/30"
+                      : "border-amber-500/30 hover:border-amber-500/50"
+                  }`}
+                >
+                  {/* NPC Portrait */}
+                  <div className="text-center mb-6">
+                    <div className="character-portrait w-20 h-20 mx-auto mb-4 animate-float">
+                      <span className="text-5xl">{npc.avatar}</span>
                     </div>
-                    <div className="game-form-group">
-                      <label className="game-form-label">Email Address *</label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleInputChange}
-                        className="game-form-input"
-                        placeholder="your@email.com"
-                        required
-                      />
+
+                    <h4 className="text-xl font-bold text-white mb-1">{npc.name}</h4>
+                    <p className="text-amber-400 mb-2">{npc.title}</p>
+
+                    <div className="inline-flex items-center gap-2 px-3 py-1 bg-green-500/20 border border-green-500/30 rounded-full">
+                      <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                      <span className="text-green-400 text-sm font-bold">{npc.status.toUpperCase()}</span>
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="game-form-group">
-                      <label className="game-form-label">Quest Type *</label>
-                      <select name="questType" value={formData.questType} onChange={handleInputChange} className="game-form-input" required>
-                        <option value="">Select your quest</option>
-                        {questTypes.map((quest) => (
-                          <option key={quest.id} value={quest.id}>
-                            {quest.name} - {quest.difficulty}
-                          </option>
+                  {/* NPC Details */}
+                  <div className="space-y-4">
+                    <div>
+                      <h5 className="text-lg font-bold text-amber-400 mb-2">Specialty</h5>
+                      <p className="text-gray-300 text-sm">{npc.specialty}</p>
+                    </div>
+
+                    <div>
+                      <h5 className="text-lg font-bold text-amber-400 mb-2">Services Offered</h5>
+                      <div className="flex flex-wrap gap-1">
+                        {npc.questTypes.slice(0, 2).map((type, index) => (
+                          <span key={index} className="px-2 py-1 bg-blue-500/20 text-blue-400 rounded text-xs">
+                            {type}
+                          </span>
                         ))}
-                      </select>
+                        {npc.questTypes.length > 2 && (
+                          <span className="px-2 py-1 bg-gray-500/20 text-gray-400 rounded text-xs">+{npc.questTypes.length - 2} more</span>
+                        )}
+                      </div>
                     </div>
-                    <div className="game-form-group">
-                      <label className="game-form-label">Guild Rank</label>
-                      <select name="guildRank" value={formData.guildRank} onChange={handleInputChange} className="game-form-input">
-                        <option value="">Select your rank</option>
-                        <option value="novice">Novice Developer</option>
-                        <option value="apprentice">Apprentice Coder</option>
-                        <option value="journeyman">Journeyman Engineer</option>
-                        <option value="expert">Expert Architect</option>
-                        <option value="master">Master Developer</option>
-                        <option value="grandmaster">Grandmaster</option>
-                      </select>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="game-stat">
+                        <div className="game-stat-label text-xs">Quests</div>
+                        <div className="game-stat-value text-sm text-green-500">{npc.completedQuests}</div>
+                      </div>
+                      <div className="game-stat">
+                        <div className="game-stat-label text-xs">Rating</div>
+                        <div className="game-stat-value text-sm text-yellow-500">⭐ {npc.rating}</div>
+                      </div>
                     </div>
                   </div>
 
-                  <div className="game-form-group">
-                    <label className="game-form-label">Quest Details *</label>
-                    <textarea
-                      name="message"
-                      value={formData.message}
-                      onChange={handleInputChange}
-                      className="game-form-input min-h-[120px] resize-none"
-                      placeholder="Describe your quest objectives, requirements, timeline, and any special challenges you're facing..."
-                      rows={6}
-                      required
-                    />
-                  </div>
+                  {/* Expanded NPC Info */}
+                  {selectedNPC === npc.id && (
+                    <div className="mt-6 pt-6 border-t border-amber-500/30 animate-level-up">
+                      <div className="space-y-4">
+                        <div>
+                          <h5 className="text-lg font-bold text-amber-400 mb-2">💬 Dialogue</h5>
+                          <p className="text-gray-300 italic text-sm leading-relaxed">"{npc.dialogue}"</p>
+                        </div>
 
-                  {/* Quest Preview */}
-                  {formData.questType && (
-                    <div className="bg-purple-500/10 border border-purple-400/30 rounded-lg p-4">
-                      {(() => {
-                        const selectedQuest = questTypes.find((q) => q.id === formData.questType);
-                        return selectedQuest ? (
-                          <div className="flex items-center justify-between">
-                            <div>
-                              <h4 className="text-purple-400 font-semibold">Selected Quest:</h4>
-                              <p className="text-white">{selectedQuest.name}</p>
-                            </div>
-                            <div className="text-right">
-                              <div
-                                className={`px-3 py-1 rounded border text-xs font-bold ${getQuestDifficultyColor(
-                                  selectedQuest.difficulty
-                                )}`}
-                              >
-                                {selectedQuest.difficulty}
+                        <div>
+                          <h5 className="text-lg font-bold text-amber-400 mb-2">🎯 All Services</h5>
+                          <div className="grid grid-cols-1 gap-2">
+                            {npc.questTypes.map((type, index) => (
+                              <div key={index} className="flex items-center gap-2 p-2 bg-blue-500/20 border border-blue-500/30 rounded">
+                                <StarIcon className="w-4 h-4 text-yellow-500" />
+                                <span className="text-blue-300 text-sm">{type}</span>
                               </div>
-                              <p className="text-purple-300 text-sm mt-1">Reward: {selectedQuest.reward}</p>
-                            </div>
+                            ))}
                           </div>
-                        ) : null;
-                      })()}
+                        </div>
+
+                        <div className="text-center">
+                          <div className="text-sm text-green-400 font-bold">{npc.availability}</div>
+                          <div className="text-xs text-gray-400">{npc.experience} Experience</div>
+                        </div>
+                      </div>
                     </div>
                   )}
-
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className={`w-full game-btn game-btn-primary py-4 ${isSubmitting ? "opacity-75 cursor-not-allowed" : ""}`}
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center justify-center gap-2">
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        Submitting Quest...
-                      </span>
-                    ) : (
-                      <span className="flex items-center justify-center gap-2">
-                        <SendIcon className="w-5 h-5" />
-                        Submit Quest
-                      </span>
-                    )}
-                  </button>
-                </form>
-              )}
-            </div>
-          </div>
-
-          {/* Guild Information */}
-          <div className="space-y-8">
-            {/* Player Status */}
-            <div className="game-card game-card-pink">
-              <div className="game-text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white font-bold text-xl">
-                  GM
                 </div>
-                <h3 className="game-heading text-xl game-text-neon mb-2">Guild Master</h3>
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="text-green-400 font-semibold">{onlineStatus}</span>
-                </div>
-                <p className="text-purple-300 text-sm">Ready to lead epic development quests and create legendary digital experiences!</p>
-              </div>
-            </div>
-
-            {/* Guild Contact Info */}
-            <div className="game-card">
-              <h3 className="game-heading text-xl game-text-neon mb-6">Guild Information</h3>
-              <div className="space-y-4">
-                {guildInfo.map((info, index) => (
-                  <div key={index} className="flex items-start gap-4 p-3 bg-black/40 rounded-lg border border-purple-500/30">
-                    <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <info.icon className="w-5 h-5 text-white" />
-                    </div>
-                    <div>
-                      <h4 className="text-white font-semibold">{info.title}</h4>
-                      <p className="text-purple-300 font-medium">{info.value}</p>
-                      <p className="text-gray-400 text-sm">{info.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Social Guilds */}
-            <div className="game-card game-card-cyan">
-              <h3 className="game-heading text-xl game-text-neon mb-6">Allied Guilds</h3>
-              <div className="space-y-3">
-                {socialGuilds.map((guild, index) => (
-                  <button
-                    key={index}
-                    className="w-full flex items-center gap-3 p-3 bg-black/40 rounded-lg border border-cyan-500/30 hover:bg-cyan-500/10 transition-all game-hover-scale"
-                  >
-                    <span className="text-2xl">{guild.icon}</span>
-                    <div className="flex-1 text-left">
-                      <div className="text-white font-semibold">{guild.name}</div>
-                      <div className="text-cyan-300 text-sm">{guild.handle}</div>
-                    </div>
-                    <div className="text-cyan-400 text-sm">{guild.members}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Quest Rewards */}
-        <div className="mb-16">
-          <h3 className="game-heading text-3xl game-text-center game-text-neon mb-12">Quest Rewards</h3>
-          <div className="game-grid md:grid-cols-5 gap-6">
-            {questTypes.map((quest, index) => (
-              <div key={index} className="game-card game-text-center game-hover-glow">
-                <div
-                  className={`w-12 h-12 mx-auto mb-4 rounded-full flex items-center justify-center border-2 ${getQuestDifficultyColor(
-                    quest.difficulty
-                  )}`}
-                >
-                  <TrophyIcon className="w-6 h-6" />
-                </div>
-                <h4 className="text-white font-semibold text-sm mb-2">{quest.name}</h4>
-                <div className={`px-2 py-1 rounded text-xs font-bold border ${getQuestDifficultyColor(quest.difficulty)} mb-2`}>
-                  {quest.difficulty}
-                </div>
-                <p className="text-purple-300 text-xs">{quest.reward}</p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Final Call to Action */}
-        <div className="game-text-center">
-          <div className="game-card game-card-neon max-w-2xl mx-auto">
-            <ZapIcon className="w-16 h-16 mx-auto mb-6 text-purple-400 game-hover-float" />
-            <h3 className="game-heading text-3xl mb-4 game-text-gradient">Ready to Start Your Epic Quest?</h3>
-            <p className="text-xl text-purple-200 mb-8">
-              Join the guild of legendary developers and let's create digital magic that will be remembered for ages!
+        {/* Quest Board */}
+        <div className="mb-16">
+          <h3 className="text-3xl font-bold text-white text-center mb-8">📋 Available Quests</h3>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {availableQuests.map((quest) => (
+              <div key={quest.id} className="game-panel p-6 text-center">
+                <div className="text-4xl mb-4">{quest.icon}</div>
+
+                <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 ${getRarityColor(quest.difficulty)}`}>
+                  {quest.difficulty.toUpperCase()}
+                </div>
+
+                <h4 className="text-lg font-bold text-white mb-2">{quest.title}</h4>
+                <p className="text-sm text-gray-400 mb-4 leading-relaxed">{quest.description}</p>
+
+                <div className="space-y-2 text-xs">
+                  <div className="flex justify-between">
+                    <span className="text-gray-400">Duration:</span>
+                    <span className="text-amber-400">{quest.duration}</span>
+                  </div>
+                  <div className="text-green-400 font-bold">🎁 {quest.reward}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Quest Submission Form */}
+        <div className="grid lg:grid-cols-2 gap-12 mb-16">
+          {/* Quest Request Form */}
+          <div className="game-window p-8">
+            <h3 className="text-2xl font-bold text-white mb-6 text-center">🗡️ Submit Your Quest Request</h3>
+
+            {questSubmitted ? (
+              <div className="text-center py-12 animate-quest-complete">
+                <div className="text-6xl mb-4">🎉</div>
+                <h4 className="text-2xl font-bold text-green-400 mb-4">Quest Registered!</h4>
+                <p className="text-green-300 mb-6">
+                  Your quest has been added to the guild registry. A guild member will review your request and reach out within 24 hours to
+                  discuss the adventure details.
+                </p>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-full">
+                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                  <span className="text-green-400 font-bold">Quest Pending Review</span>
+                </div>
+              </div>
+            ) : (
+              <form onSubmit={handleQuestSubmission} className="space-y-6">
+                <div>
+                  <label className="block text-amber-400 font-bold mb-2">Adventurer Name *</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="game-input w-full"
+                    placeholder="Enter your name, brave adventurer..."
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-amber-400 font-bold mb-2">Communication Crystal *</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="game-input w-full"
+                    placeholder="your.email@domain.com"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-amber-400 font-bold mb-2">Quest Type *</label>
+                  <select name="questType" value={formData.questType} onChange={handleInputChange} className="game-input w-full" required>
+                    <option value="collaboration">Epic Development Quest</option>
+                    <option value="consultation">Technical Consultation</option>
+                    <option value="mentoring">Mentoring Journey</option>
+                    <option value="code-review">Code Review Mission</option>
+                    <option value="other">Custom Adventure</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-amber-400 font-bold mb-2">Quest Details *</label>
+                  <textarea
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    rows={5}
+                    className="game-input w-full resize-none"
+                    placeholder="Describe your quest, the challenges you face, your goals, and what kind of party member you're seeking..."
+                    required
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full game-btn game-btn-gold py-4 ${isSubmitting ? "opacity-50 cursor-not-allowed" : ""}`}
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-5 h-5 border-2 border-black/30 border-t-black rounded-full animate-spin" />
+                      Submitting Quest...
+                    </div>
+                  ) : (
+                    <div className="flex items-center justify-center gap-2">
+                      <QuestIcon className="w-5 h-5" />
+                      Submit Quest Request
+                    </div>
+                  )}
+                </button>
+              </form>
+            )}
+          </div>
+
+          {/* Guild Connections & Alternative Contact */}
+          <div className="space-y-8">
+            {/* Direct Communication */}
+            <div className="game-window p-8">
+              <h3 className="text-2xl font-bold text-white mb-6 text-center">💬 Direct Communication</h3>
+
+              <div className="space-y-4">
+                <a href="mailto:contact@alexdev.com" className="game-btn game-btn-primary w-full flex items-center justify-center gap-2">
+                  <MailIcon className="w-5 h-5" />
+                  Send Magical Message
+                </a>
+
+                <button className="game-btn w-full flex items-center justify-center gap-2">
+                  <MessageIcon className="w-5 h-5" />
+                  Schedule Strategy Meeting
+                </button>
+
+                <div className="text-center py-4">
+                  <div className="text-amber-400 font-bold mb-2">⏰ Guild Hours</div>
+                  <div className="text-gray-300 text-sm">Monday - Friday: 9 AM - 6 PM PST</div>
+                  <div className="text-gray-300 text-sm">Response Time: Within 24 hours</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Guild Network */}
+            <div className="game-window p-8">
+              <h3 className="text-2xl font-bold text-white mb-6 text-center">🌐 Guild Network</h3>
+
+              <div className="space-y-4">
+                {guildConnections.map((connection, index) => (
+                  <a
+                    key={index}
+                    href={connection.url}
+                    className="flex items-center gap-4 p-4 bg-gray-500/20 border border-gray-500/30 rounded-lg hover:border-gray-500/50 transition-all group"
+                  >
+                    <div className="text-3xl">{connection.icon}</div>
+                    <div>
+                      <div className="font-bold text-white group-hover:text-amber-400 transition-colors">{connection.name}</div>
+                      <div className="text-sm text-gray-400">{connection.description}</div>
+                    </div>
+                    <LinkIcon className="w-5 h-5 text-gray-400 ml-auto group-hover:text-amber-400 transition-colors" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tavern Keeper's Message */}
+        <div className="text-center">
+          <div className="game-window max-w-3xl mx-auto p-8">
+            <div className="character-portrait w-24 h-24 mx-auto mb-6 animate-float">
+              <span className="text-6xl">🧙‍♂️</span>
+            </div>
+
+            <h3 className="text-3xl font-bold text-white mb-4">Message from the Guild Master</h3>
+            <p className="text-lg text-amber-300 mb-8 leading-relaxed">
+              "Welcome, brave soul! Whether you seek to embark on a grand development quest, need strategic guidance for your current
+              adventure, or wish to learn the ancient arts of code, our guild stands ready to assist. Together, we shall forge legendary
+              digital experiences and conquer the most challenging technical realms!"
             </p>
-            <div className="flex items-center justify-center gap-2 text-green-400 mb-6">
-              <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="font-semibold">Guild Master is Online - Ready for Adventure!</span>
+
+            <div className="flex items-center justify-center gap-6 mb-8">
+              <div className="game-stat">
+                <div className="game-stat-label">Guild Level</div>
+                <div className="game-stat-value text-amber-500">Master</div>
+              </div>
+              <div className="game-stat">
+                <div className="game-stat-label">Success Rate</div>
+                <div className="game-stat-value text-green-500">98%</div>
+              </div>
+              <div className="game-stat">
+                <div className="game-stat-label">Response Time</div>
+                <div className="game-stat-value text-blue-500">&lt; 24h</div>
+              </div>
+            </div>
+
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-full">
+              <CrownIcon className="w-6 h-6 text-amber-500" />
+              <span className="text-amber-400 font-bold">Ready to Begin Your Adventure</span>
             </div>
           </div>
         </div>

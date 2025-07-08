@@ -119,7 +119,7 @@ export function HeroSection() {
       dimensions: "Sub-second Loading",
       price: "Speed Consulting",
       description: "The art of making web applications lightning-fast while maintaining rich functionality and visual appeal.",
-      image: "https://images.unsplash.com/photo-1609440720952-15d4cfeaa89c?w=800&h=750&fit=crop",
+      image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&h=600&fit=crop",
       likes: 267,
       views: 934,
     },

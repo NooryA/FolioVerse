@@ -34,6 +34,32 @@
   --border-gradient-1: linear-gradient(90deg, #ff6b6b, #4ecdc4);
   --border-gradient-2: linear-gradient(45deg, #667eea, #764ba2);
   --border-gradient-3: linear-gradient(135deg, #f093fb, #f5576c);
+
+  /* Section blending gradients */
+  --section-blend-1: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 107, 107, 0.1) 25%,
+    rgba(78, 205, 196, 0.1) 50%,
+    rgba(102, 126, 234, 0.1) 75%,
+    transparent 100%
+  );
+  --section-blend-2: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(102, 126, 234, 0.1) 25%,
+    rgba(118, 75, 162, 0.1) 50%,
+    rgba(240, 147, 251, 0.1) 75%,
+    transparent 100%
+  );
+  --section-blend-3: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(240, 147, 251, 0.1) 25%,
+    rgba(245, 87, 108, 0.1) 50%,
+    rgba(255, 107, 107, 0.1) 75%,
+    transparent 100%
+  );
 }
 
 /* Dark theme overrides */
@@ -58,6 +84,341 @@ body {
   background: var(--gradient-dark);
   color: white;
   overflow-x: hidden;
+}
+
+/* Navigation Styles */
+.gradient-nav-logo {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.gradient-nav-logo:hover {
+  transform: scale(1.05);
+}
+
+.gradient-glow-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(255, 107, 107, 0.3) 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-nav-logo:hover .gradient-glow-effect {
+  opacity: 1;
+}
+
+.gradient-nav-item {
+  position: relative;
+  border-radius: 50px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.gradient-nav-item:hover {
+  transform: translateY(-2px);
+}
+
+.gradient-cta-btn {
+  position: relative;
+  padding: 12px 24px;
+  border-radius: 50px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.gradient-cta-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-primary);
+  border-radius: 50px;
+  transition: all 0.3s ease;
+}
+
+.gradient-cta-btn:hover .gradient-cta-bg {
+  background: var(--gradient-secondary);
+  transform: scale(1.05);
+}
+
+.gradient-cta-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.gradient-cta-glow {
+  position: absolute;
+  inset: -4px;
+  background: var(--gradient-primary);
+  border-radius: 50px;
+  opacity: 0;
+  filter: blur(8px);
+  transition: opacity 0.3s ease;
+}
+
+.gradient-cta-btn:hover .gradient-cta-glow {
+  opacity: 0.6;
+}
+
+.gradient-mobile-btn {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.gradient-mobile-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-primary);
+  border-radius: 12px;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+
+.gradient-mobile-btn:hover .gradient-mobile-bg {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.gradient-nav-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: opacity 0.3s ease;
+}
+
+.gradient-nav-border-inner {
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-primary);
+  opacity: 0.6;
+}
+
+.gradient-mobile-menu {
+  position: fixed;
+  top: 0;
+  right: -100%;
+  width: 100%;
+  max-width: 400px;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  z-index: 40;
+  transition: right 0.3s ease;
+  padding: 80px 24px 24px;
+}
+
+.gradient-mobile-menu-open {
+  right: 0;
+}
+
+.gradient-mobile-bg-effect {
+  position: absolute;
+  inset: 0;
+  background: var(--animated-gradient-1);
+  opacity: 0.1;
+  animation: gradient-shift 15s ease infinite;
+}
+
+.gradient-mobile-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gradient-mobile-item {
+  position: relative;
+  display: block;
+  padding: 16px 24px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(50px);
+  animation: slideIn 0.5s ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+.gradient-mobile-item-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-mobile-item:hover .gradient-mobile-item-bg {
+  opacity: 1;
+}
+
+.gradient-mobile-item-text {
+  position: relative;
+  z-index: 2;
+}
+
+.gradient-mobile-item-glow {
+  position: absolute;
+  inset: -4px;
+  background: var(--gradient-primary);
+  border-radius: 20px;
+  opacity: 0;
+  filter: blur(12px);
+  transition: opacity 0.3s ease;
+}
+
+.gradient-mobile-item:hover .gradient-mobile-item-glow {
+  opacity: 0.4;
+}
+
+.gradient-mobile-cta {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.gradient-mobile-cta-btn {
+  position: relative;
+  width: 100%;
+  padding: 16px 24px;
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 16px;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.gradient-mobile-cta-bg {
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-secondary);
+  border-radius: 16px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gradient-mobile-cta-btn:hover .gradient-mobile-cta-bg {
+  opacity: 1;
+}
+
+.gradient-mobile-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 30;
+  transition: opacity 0.3s ease;
+}
+
+/* Section Blending Styles */
+.section-blend-top {
+  position: relative;
+}
+
+.section-blend-top::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: var(--section-blend-1);
+  pointer-events: none;
+}
+
+.section-blend-middle {
+  position: relative;
+}
+
+.section-blend-middle::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: var(--section-blend-2);
+  pointer-events: none;
+}
+
+.section-blend-middle::after {
+  content: "";
+  position: absolute;
+  bottom: -100px;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: var(--section-blend-2);
+  pointer-events: none;
+}
+
+.section-blend-bottom {
+  position: relative;
+}
+
+.section-blend-bottom::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: var(--section-blend-3);
+  pointer-events: none;
+}
+
+/* Enhanced gradient blending for smooth transitions */
+.gradient-section-transition {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(255, 107, 107, 0.05) 10%,
+    rgba(78, 205, 196, 0.05) 20%,
+    rgba(102, 126, 234, 0.05) 30%,
+    rgba(118, 75, 162, 0.05) 40%,
+    rgba(240, 147, 251, 0.05) 50%,
+    rgba(245, 87, 108, 0.05) 60%,
+    rgba(255, 107, 107, 0.05) 70%,
+    rgba(78, 205, 196, 0.05) 80%,
+    rgba(102, 126, 234, 0.05) 90%,
+    transparent 100%
+  );
+  background-size: 100% 200px;
+  background-repeat: no-repeat;
 }
 
 /* Gradient Utility Classes */
@@ -289,6 +650,17 @@ body {
   }
 }
 
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* Animation classes */
 .animate-gradient-shift {
   animation: gradient-shift 4s ease infinite;
@@ -474,4 +846,88 @@ body {
   border-radius: 4px;
   background-size: 400% 400%;
   animation: gradient-shift 3s ease infinite;
+}
+
+/* Full page gradient overlay for seamless blending */
+.page-gradient-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    0deg,
+    transparent 0%,
+    rgba(255, 107, 107, 0.02) 25%,
+    rgba(78, 205, 196, 0.02) 50%,
+    rgba(102, 126, 234, 0.02) 75%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Section specific gradient backgrounds */
+.hero-gradient-bg {
+  background: radial-gradient(circle at 20% 20%, rgba(255, 107, 107, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 70%, rgba(102, 126, 234, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(240, 147, 251, 0.3) 0%, transparent 50%), var(--animated-gradient-1);
+  background-size: 400% 400%;
+  animation: gradient-shift 20s ease infinite;
+}
+
+.about-gradient-bg {
+  background: radial-gradient(circle at 30% 30%, rgba(102, 126, 234, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(118, 75, 162, 0.2) 0%, transparent 50%), var(--animated-gradient-2);
+  background-size: 400% 400%;
+  animation: gradient-shift 25s ease infinite;
+}
+
+.projects-gradient-bg {
+  background: radial-gradient(circle at 60% 20%, rgba(240, 147, 251, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(245, 87, 108, 0.2) 0%, transparent 50%), var(--animated-gradient-3);
+  background-size: 400% 400%;
+  animation: gradient-shift 30s ease infinite;
+}
+
+.contact-gradient-bg {
+  background: radial-gradient(circle at 40% 40%, rgba(255, 107, 107, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.2) 0%, transparent 50%), var(--animated-gradient-1);
+  background-size: 400% 400%;
+  animation: gradient-shift 35s ease infinite;
+}
+
+/* Smooth section transitions */
+.section-transition {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.1) 10%,
+    rgba(0, 0, 0, 0.2) 20%,
+    rgba(0, 0, 0, 0.1) 80%,
+    rgba(0, 0, 0, 0.05) 90%,
+    transparent 100%
+  );
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+/* Enhanced mobile responsiveness */
+@media (max-width: 768px) {
+  .gradient-mobile-menu {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .card-gradient {
+    padding: 16px;
+  }
+
+  .btn-gradient {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
 }

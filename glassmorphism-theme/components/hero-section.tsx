@@ -1,154 +1,311 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Sparkles, ArrowRight, Star, Heart, Zap } from "lucide-react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { Code, Palette, Rocket, Globe, ChevronDown, Sparkles } from "lucide-react";
 
 export function HeroSection() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isVisible, setIsVisible] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"],
+  });
+
+  const y = useTransform(scrollYProgress, [0, 1], [0, -200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  const [currentRole, setCurrentRole] = useState(0);
+
+  const roles = ["Creative Developer", "UI/UX Designer", "Frontend Architect", "Digital Artist"];
 
   useEffect(() => {
-    setIsVisible(true);
-
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    const interval = setInterval(() => {
+      setCurrentRole((prev) => (prev + 1) % roles.length);
+    }, 3000);
+    return () => clearInterval(interval);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const skills = [
+    { name: "React", icon: "⚛️" },
+    { name: "TypeScript", icon: "🔷" },
+    { name: "Node.js", icon: "🟢" },
+    { name: "Design", icon: "🎨" },
+    { name: "MongoDB", icon: "🍃" },
+    { name: "Next.js", icon: "▲" },
+  ];
+
+  const stats = [
+    { value: "100+", label: "Projects", icon: "🚀" },
+    { value: "50+", label: "Clients", icon: "🤝" },
+    { value: "5+", label: "Years", icon: "📅" },
+    { value: "99%", label: "Success", icon: "✨" },
+  ];
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Floating Glass Orbs */}
+    <section ref={containerRef} className="min-h-screen relative overflow-hidden flex items-center justify-center pt-24">
+      {/* Floating Geometric Shapes */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(15)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-20 h-20 glass-floating opacity-30"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              clipPath: (() => {
+                const shapes = [
+                  "polygon(50% 0%, 0% 100%, 100% 100%)",
+                  "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)",
+                  "polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%)",
+                  "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+                  "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
+                ];
+                return shapes[Math.floor(Math.random() * shapes.length)];
+              })(),
+            }}
+            animate={{
+              rotate: [0, 360],
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.7, 0.3],
+            }}
+            transition={{
+              duration: 10 + i * 2,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Corner Icons */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="glass-subtle w-32 h-32 rounded-full absolute top-20 left-20 glass-float opacity-30" />
-        <div className="glass-subtle w-24 h-24 rounded-full absolute top-40 right-32 glass-float-delayed opacity-20" />
-        <div className="glass-subtle w-40 h-40 rounded-full absolute bottom-40 left-32 glass-float opacity-25" />
-        <div className="glass-subtle w-28 h-28 rounded-full absolute bottom-20 right-20 glass-float-delayed opacity-30" />
+        <motion.div
+          className="absolute top-10 left-10 glass-premium p-6 rounded-3xl"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        >
+          <Code className="w-8 h-8 text-blue-400" />
+        </motion.div>
+        <motion.div
+          className="absolute top-10 right-10 glass-premium p-6 rounded-3xl"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
+        >
+          <Palette className="w-8 h-8 text-purple-400" />
+        </motion.div>
+        <motion.div
+          className="absolute bottom-10 left-10 glass-premium p-6 rounded-3xl"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+        >
+          <Rocket className="w-8 h-8 text-pink-400" />
+        </motion.div>
+        <motion.div
+          className="absolute bottom-10 right-10 glass-premium p-6 rounded-3xl"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+        >
+          <Globe className="w-8 h-8 text-cyan-400" />
+        </motion.div>
       </div>
 
-      {/* Mouse Follower */}
-      <div
-        className="absolute w-96 h-96 pointer-events-none opacity-20"
-        style={{
-          left: mousePosition.x - 192,
-          top: mousePosition.y - 192,
-          background: "radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)",
-          transition: "all 0.3s ease",
-        }}
-      />
-
-      <div className="max-w-6xl mx-auto px-6 sm:px-8 relative z-10">
-        <div className="text-center">
-          {/* Main Glass Card */}
-          <div
-            className={`glass-card max-w-4xl mx-auto transition-all duration-1000 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+      <motion.div style={{ y, opacity }} className="text-center z-10 max-w-6xl mx-auto px-4">
+        {/* Main Content */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="glass-card-premium glass-particles mb-12 glass-shimmer-premium"
+        >
+          {/* Greeting */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="flex items-center justify-center gap-3 mb-8"
           >
-            {/* Floating Icons */}
-            <div className="absolute -top-4 -left-4 glass-subtle w-12 h-12 rounded-full flex items-center justify-center glass-float">
-              <Sparkles className="w-6 h-6 text-white" />
-            </div>
-            <div className="absolute -top-4 -right-4 glass-subtle w-12 h-12 rounded-full flex items-center justify-center glass-float-delayed">
-              <Star className="w-6 h-6 text-white" />
-            </div>
-            <div className="absolute -bottom-4 -left-4 glass-subtle w-12 h-12 rounded-full flex items-center justify-center glass-float">
-              <Heart className="w-6 h-6 text-white" />
-            </div>
-            <div className="absolute -bottom-4 -right-4 glass-subtle w-12 h-12 rounded-full flex items-center justify-center glass-float-delayed">
-              <Zap className="w-6 h-6 text-white" />
-            </div>
+            <Sparkles className="w-6 h-6 text-yellow-400" />
+            <span className="text-lg text-white/80 font-medium">Welcome to my digital universe</span>
+            <Sparkles className="w-6 h-6 text-yellow-400" />
+          </motion.div>
 
-            {/* Content */}
-            <div className="space-y-8">
-              {/* Greeting */}
-              <div className="space-y-2">
-                <p className="text-lg font-light text-white/80">Hello, I'm</p>
-                <h1 className="text-5xl md:text-7xl font-display font-bold glass-text-glow">Your Name</h1>
-              </div>
+          {/* Name and Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="text-6xl md:text-8xl lg:text-9xl font-bold glass-text-glow-premium mb-6 font-['Orbitron'] leading-tight"
+          >
+            John Doe
+          </motion.h1>
 
-              {/* Title with Shimmer Effect */}
-              <div className="glass-shimmer">
-                <h2 className="text-2xl md:text-3xl font-medium text-white/90 font-display">Creative Developer & Designer</h2>
-              </div>
-
-              {/* Description */}
-              <p className="text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
-                I craft beautiful digital experiences that blend stunning design with cutting-edge technology. Specializing in modern web
-                applications, interactive interfaces, and user-centered design.
-              </p>
-
-              {/* Glass Divider */}
-              <div className="glass-divider" />
-
-              {/* Skills Floating Cards */}
-              <div className="flex flex-wrap justify-center gap-4 mb-8">
-                {["React", "TypeScript", "Next.js", "Figma", "Tailwind"].map((skill, index) => (
-                  <div
-                    key={skill}
-                    className="glass-subtle px-4 py-2 rounded-full text-sm text-white/80 glass-float"
-                    style={{ animationDelay: `${index * 0.2}s` }}
-                  >
-                    {skill}
-                  </div>
-                ))}
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <button onClick={() => scrollToSection("work")} className="glass-button-primary flex items-center space-x-2 glass-glow">
-                  <span>View My Work</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-
-                <button onClick={() => scrollToSection("contact")} className="glass-button-secondary flex items-center space-x-2">
-                  <span>Get In Touch</span>
-                  <Sparkles className="w-4 h-4" />
-                </button>
-              </div>
+          {/* Dynamic Role */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="mb-8"
+          >
+            <div className="text-2xl md:text-3xl text-white/90 font-light mb-2">I'm a passionate</div>
+            <div className="text-3xl md:text-4xl font-bold h-16 flex items-center justify-center">
+              <motion.span
+                key={currentRole}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5 }}
+                className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400"
+              >
+                {roles[currentRole]}
+              </motion.span>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Stats Row */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto mt-12">
-            <div className="glass-light text-center p-6 rounded-2xl glass-float">
-              <div className="text-2xl font-bold glass-text">5+</div>
-              <div className="text-sm text-white/70">Years</div>
-            </div>
-            <div className="glass-light text-center p-6 rounded-2xl glass-float-delayed">
-              <div className="text-2xl font-bold glass-text">50+</div>
-              <div className="text-sm text-white/70">Projects</div>
-            </div>
-            <div className="glass-light text-center p-6 rounded-2xl glass-float">
-              <div className="text-2xl font-bold glass-text">∞</div>
-              <div className="text-sm text-white/70">Coffee</div>
-            </div>
-            <div className="glass-light text-center p-6 rounded-2xl glass-float-delayed">
-              <div className="text-2xl font-bold glass-text">100%</div>
-              <div className="text-sm text-white/70">Passion</div>
-            </div>
-          </div>
+          {/* Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="text-xl md:text-2xl text-white/80 leading-relaxed mb-8 max-w-4xl mx-auto"
+          >
+            Creating stunning digital experiences with cutting-edge technology,
+            <br className="hidden md:block" />
+            beautiful design, and seamless user interactions.
+          </motion.p>
 
-          {/* Scroll Indicator */}
-          <div className="mt-16 glass-subtle inline-block px-4 py-2 rounded-full">
-            <div className="flex items-center space-x-2 text-white/60">
-              <span className="text-sm">Scroll to explore</span>
-              <div className="w-4 h-6 border border-white/30 rounded-full flex justify-center">
-                <div className="w-1 h-2 bg-white/30 rounded-full mt-1 animate-bounce" />
-              </div>
-            </div>
-          </div>
-        </div>
+          {/* Skills Showcase */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-wrap justify-center gap-4 mb-8"
+          >
+            {skills.map((skill, index) => (
+              <motion.div
+                key={skill.name}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.1, y: -5 }}
+                className="glass-premium px-4 py-3 rounded-2xl glass-shimmer-premium hover:glass-glow-primary transition-all duration-300 cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <span className="text-2xl">{skill.icon}</span>
+                  <span className="text-sm font-medium text-white/90">{skill.name}</span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Call to Action Buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+          >
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" })}
+              className="glass-button-premium glass-glow-primary flex items-center space-x-3 text-lg px-8 py-4"
+            >
+              <span>View My Work</span>
+              <Rocket className="w-6 h-6" />
+            </motion.button>
+
+            <motion.button
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              className="glass-button-premium glass-glow-secondary flex items-center space-x-3 text-lg px-8 py-4"
+            >
+              <span>Get In Touch</span>
+              <Globe className="w-6 h-6" />
+            </motion.button>
+          </motion.div>
+        </motion.div>
+
+        {/* Stats Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.0 }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
+        >
+          {stats.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 1.1 + index * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="glass-card-premium text-center glass-shimmer-premium hover:glass-glow-accent transition-all duration-300 cursor-pointer"
+            >
+              <div className="text-3xl mb-2">{stat.icon}</div>
+              <div className="text-2xl md:text-3xl font-bold glass-text-premium mb-1">{stat.value}</div>
+              <div className="text-sm text-white/70 font-medium">{stat.label}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
+          className="flex flex-col items-center gap-4"
+        >
+          <span className="text-white/60 text-sm font-medium">Scroll to explore</span>
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="glass-premium p-3 rounded-full cursor-pointer hover:glass-glow-primary transition-all duration-300"
+            onClick={() => document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })}
+          >
+            <ChevronDown className="w-6 h-6 text-white/80" />
+          </motion.div>
+        </motion.div>
+      </motion.div>
+
+      {/* Gradient Orbs */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute -top-40 -left-40 w-80 h-80 rounded-full blur-3xl opacity-20"
+          style={{
+            background: "radial-gradient(circle, rgba(59, 130, 246, 0.4), transparent)",
+          }}
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.2, 0.3, 0.2],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute -bottom-40 -right-40 w-80 h-80 rounded-full blur-3xl opacity-20"
+          style={{
+            background: "radial-gradient(circle, rgba(139, 92, 246, 0.4), transparent)",
+          }}
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 10,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
       </div>
+
+      {/* Particle System */}
+      <div className="glass-particles absolute inset-0 pointer-events-none opacity-40"></div>
     </section>
   );
 }

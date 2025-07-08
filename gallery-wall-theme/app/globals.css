@@ -306,6 +306,11 @@ body {
   transition: all 0.3s ease;
 }
 
+.gallery-nav-scrolled {
+  background: rgba(250, 248, 245, 0.98);
+  box-shadow: 0 4px 20px var(--gallery-shadow);
+}
+
 .gallery-nav-container {
   display: flex;
   align-items: center;
@@ -318,16 +323,12 @@ body {
 .gallery-logo {
   font-family: "Playfair Display", serif;
   font-weight: 900;
-  font-size: 1.5rem;
   color: var(--gallery-primary);
   text-decoration: none;
   position: relative;
-}
-
-.gallery-logo::before {
-  content: "🎨";
-  margin-right: 0.5rem;
-  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .gallery-nav-links {
@@ -344,12 +345,18 @@ body {
   transition: all 0.3s ease;
   position: relative;
   padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .gallery-nav-link::before {
   content: "";
   position: absolute;
-  bottom: 0;
+  bottom: -2px;
   left: 50%;
   width: 0;
   height: 2px;
@@ -358,12 +365,25 @@ body {
   transform: translateX(-50%);
 }
 
-.gallery-nav-link:hover {
+.gallery-nav-link:hover,
+.gallery-nav-link.active {
   color: var(--gallery-primary);
 }
 
-.gallery-nav-link:hover::before {
+.gallery-nav-link:hover::before,
+.gallery-nav-link.active::before {
   width: 80%;
+}
+
+.gallery-nav-link.active {
+  color: var(--gallery-accent);
+}
+
+.gallery-hours {
+  text-align: center;
+  padding: 0.5rem;
+  border-left: 2px solid var(--gallery-border);
+  padding-left: 1rem;
 }
 
 .gallery-nav-toggle {
@@ -373,6 +393,114 @@ body {
   color: var(--gallery-primary);
   font-size: 1.5rem;
   cursor: pointer;
+  padding: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.gallery-nav-toggle:hover {
+  color: var(--gallery-accent);
+}
+
+.gallery-mobile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(250, 248, 245, 0.98);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--gallery-border);
+  box-shadow: 0 4px 20px var(--gallery-shadow);
+}
+
+.gallery-mobile-menu-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+.gallery-mobile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  color: var(--gallery-text-medium);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+}
+
+.gallery-mobile-nav-link:hover,
+.gallery-mobile-nav-link.active {
+  color: var(--gallery-primary);
+  background: var(--gallery-highlight);
+}
+
+.gallery-mobile-nav-link.active {
+  color: var(--gallery-accent);
+  border-left: 4px solid var(--gallery-accent);
+}
+
+.gallery-mobile-info {
+  border-top: 1px solid var(--gallery-border);
+  margin-top: 1rem;
+}
+
+.gallery-nav-spotlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gallery-accent), transparent);
+  opacity: 0.3;
+  animation: brushStroke 3s ease-out infinite;
+}
+
+/* Form Elements */
+.gallery-form-input,
+.gallery-form-textarea,
+.gallery-form-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--gallery-border);
+  border-radius: 8px;
+  background: white;
+  color: var(--gallery-text-dark);
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.gallery-form-input:focus,
+.gallery-form-textarea:focus,
+.gallery-form-select:focus {
+  border-color: var(--gallery-accent);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+  background: var(--gallery-bg-light);
+}
+
+.gallery-form-input::placeholder,
+.gallery-form-textarea::placeholder {
+  color: var(--gallery-text-light);
+  opacity: 0.8;
+}
+
+.gallery-form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-family: "Inter", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--gallery-text-light);
 }
 
 /* Buttons */
@@ -587,7 +715,7 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .gallery-nav-links {
     display: none;
   }
@@ -614,6 +742,20 @@ body {
 
   .gallery-controls {
     flex-direction: column;
+  }
+
+  .gallery-hours {
+    display: none;
+  }
+
+  .gallery-nav-container {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery-masonry {
+    columns: 1;
   }
 }
 

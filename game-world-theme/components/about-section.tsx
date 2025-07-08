@@ -2,27 +2,27 @@
 
 import { useState, useEffect } from "react";
 
-// Inline SVG Icons
-const UserIcon = ({ className }: { className?: string }) => (
+// RPG Character Sheet Icons
+const CharacterIcon = ({ className }: { className?: string }) => (
+  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+    <path d="M12 2c2.21 0 4 1.79 4 4 0 2.21-1.79 4-4 4s-4-1.79-4-4c0-2.21 1.79-4 4-4zM21 9v2c0 .55-.45 1-1 1s-1-.45-1-1V9s-1.99-.01-2-.01C16.4 10.68 14.34 12 12 12s-4.4-1.32-5-3C4.01 9 4 9 4 9v2c0 .55-.45 1-1 1s-1-.45-1-1V9c0-1.1.9-2 2-2h3.22c.18-.72.46-1.39.82-2H4c-1.1 0-2 .9-2 2v4c0 1.66 1.34 3 3 3 0 2.76 2.24 5 5 5v4h4v-4c2.76 0 5-2.24 5-5 1.66 0 3-1.34 3-3V9c0-1.1-.9-2-2-2h-4.04c.36.61.64 1.28.82 2H20c1.1 0 2 .9 2 2z" />
+  </svg>
+);
+
+const SkillTreeIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+      d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"
     />
   </svg>
 );
 
 const TrophyIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-    <path d="M6 2v6h3v8c0 1.1.9 2 2 2h2c1.1 0 2-.9 2-2V8h3V2H6zm14 2v2c0 1.1-.9 2-2 2h-1v1c0 1.1-.9 2-2 2s-2-.9-2-2V8H4c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h16z" />
-  </svg>
-);
-
-const StarIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+    <path d="M7 4V2c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v2h1c1.1 0 2 .9 2 2v2c0 1.1-.9 2-2 2h-1v1c0 4.42-3.58 8-8 8s-8-3.58-8-8v-1H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h1zM9 4h6V2H9v2z" />
   </svg>
 );
 
@@ -32,425 +32,680 @@ const ShieldIcon = ({ className }: { className?: string }) => (
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
-      d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
     />
   </svg>
 );
 
-const ZapIcon = ({ className }: { className?: string }) => (
+const BookIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+    />
   </svg>
 );
 
-const CodeIcon = ({ className }: { className?: string }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
-  </svg>
-);
-
-const HeartIcon = ({ className }: { className?: string }) => (
+const StarIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
   </svg>
 );
 
-const FireIcon = ({ className }: { className?: string }) => (
+const BagIcon = ({ className }: { className?: string }) => (
   <svg className={className} fill="currentColor" viewBox="0 0 24 24">
-    <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z" />
+    <path d="M7 4V2c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v2h4c1.1 0 2 .9 2 2v14c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h4zm2 0h6V2H9v2z" />
   </svg>
 );
 
 export default function AboutSection() {
-  const [activeTab, setActiveTab] = useState("profile");
-  const [xpProgress, setXpProgress] = useState(0);
+  const [activeTab, setActiveTab] = useState("character");
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const [selectedEquipment, setSelectedEquipment] = useState<string | null>(null);
+  const [characterLevel, setCharacterLevel] = useState(47);
+  const [skillPoints, setSkillPoints] = useState(15);
 
-  const playerStats = {
-    level: 95,
-    xp: 15742,
-    maxXp: 16000,
-    health: 100,
-    mana: 85,
-    strength: 92,
-    intelligence: 98,
-    agility: 88,
-    wisdom: 95,
+  // Character Stats with progression
+  const characterStats = {
+    core: {
+      level: characterLevel,
+      experience: 127850,
+      maxExperience: 150000,
+      title: "Legendary Full-Stack Archmage",
+      class: "Omniscient Developer",
+      guild: "Code Crafters Alliance",
+    },
+    attributes: {
+      strength: { value: 95, description: "Raw coding power and problem-solving ability" },
+      intelligence: { value: 98, description: "Learning speed and technical comprehension" },
+      dexterity: { value: 91, description: "Code execution speed and debugging skills" },
+      wisdom: { value: 94, description: "Architecture decisions and best practices" },
+      charisma: { value: 89, description: "Team leadership and communication skills" },
+      constitution: { value: 92, description: "Endurance for long coding sessions" },
+    },
+    secondary: {
+      criticalStrike: 23,
+      innovationRate: 87,
+      bugResistance: 94,
+      learningSpeed: 96,
+      teamSynergy: 88,
+    },
   };
 
-  const skills = [
-    {
-      name: "Frontend Development",
-      level: 95,
-      xp: 8500,
-      maxXp: 10000,
-      icon: CodeIcon,
-      color: "purple",
-      description: "Master of React, Vue, and Angular",
+  // Skill Trees with dependencies
+  const skillTrees = {
+    frontend: {
+      name: "Frontend Mastery",
+      icon: "🎨",
+      color: "from-pink-500 to-rose-500",
+      skills: [
+        {
+          id: "react",
+          name: "React Mastery",
+          level: 10,
+          maxLevel: 10,
+          unlocked: true,
+          description: "Advanced React patterns and optimization",
+        },
+        {
+          id: "nextjs",
+          name: "Next.js Sorcery",
+          level: 9,
+          maxLevel: 10,
+          unlocked: true,
+          description: "Full-stack React framework mastery",
+        },
+        {
+          id: "typescript",
+          name: "TypeScript Magic",
+          level: 8,
+          maxLevel: 10,
+          unlocked: true,
+          description: "Type-safe development practices",
+        },
+        { id: "css", name: "CSS Wizardry", level: 10, maxLevel: 10, unlocked: true, description: "Advanced styling and animations" },
+        { id: "responsive", name: "Responsive Design", level: 9, maxLevel: 10, unlocked: true, description: "Multi-device optimization" },
+        {
+          id: "performance",
+          name: "Performance Optimization",
+          level: 8,
+          maxLevel: 10,
+          unlocked: true,
+          description: "Speed and efficiency mastery",
+        },
+      ],
     },
-    {
-      name: "Backend Development",
-      level: 88,
-      xp: 7200,
-      maxXp: 8000,
-      icon: ShieldIcon,
-      color: "blue",
-      description: "Node.js, Python, and database wizardry",
+    backend: {
+      name: "Backend Engineering",
+      icon: "🏰",
+      color: "from-blue-500 to-indigo-500",
+      skills: [
+        {
+          id: "nodejs",
+          name: "Node.js Architecture",
+          level: 9,
+          maxLevel: 10,
+          unlocked: true,
+          description: "Server-side JavaScript mastery",
+        },
+        { id: "databases", name: "Database Alchemy", level: 8, maxLevel: 10, unlocked: true, description: "SQL and NoSQL optimization" },
+        { id: "apis", name: "API Design", level: 10, maxLevel: 10, unlocked: true, description: "RESTful and GraphQL expertise" },
+        {
+          id: "microservices",
+          name: "Microservices",
+          level: 7,
+          maxLevel: 10,
+          unlocked: true,
+          description: "Distributed system architecture",
+        },
+        {
+          id: "security",
+          name: "Security Fortification",
+          level: 8,
+          maxLevel: 10,
+          unlocked: true,
+          description: "Application security practices",
+        },
+        { id: "scaling", name: "Scalability Engineering", level: 7, maxLevel: 10, unlocked: true, description: "High-performance systems" },
+      ],
     },
-    {
-      name: "Game Development",
-      level: 82,
-      xp: 6500,
-      maxXp: 8000,
-      icon: ZapIcon,
-      color: "yellow",
-      description: "Unity, Unreal Engine, and WebGL magic",
+    devops: {
+      name: "DevOps Mastery",
+      icon: "⚙️",
+      color: "from-green-500 to-emerald-500",
+      skills: [
+        {
+          id: "docker",
+          name: "Container Magic",
+          level: 8,
+          maxLevel: 10,
+          unlocked: true,
+          description: "Containerization and orchestration",
+        },
+        { id: "kubernetes", name: "Kubernetes Mastery", level: 6, maxLevel: 10, unlocked: true, description: "Container orchestration" },
+        { id: "cicd", name: "CI/CD Pipelines", level: 9, maxLevel: 10, unlocked: true, description: "Automated deployment processes" },
+        {
+          id: "monitoring",
+          name: "System Monitoring",
+          level: 7,
+          maxLevel: 10,
+          unlocked: true,
+          description: "Performance and health tracking",
+        },
+        { id: "cloud", name: "Cloud Architecture", level: 8, maxLevel: 10, unlocked: true, description: "AWS, Azure, GCP mastery" },
+        {
+          id: "infrastructure",
+          name: "Infrastructure as Code",
+          level: 6,
+          maxLevel: 10,
+          unlocked: true,
+          description: "Terraform and CloudFormation",
+        },
+      ],
     },
-    {
-      name: "UI/UX Design",
-      level: 90,
-      xp: 7800,
-      maxXp: 9000,
-      icon: HeartIcon,
-      color: "pink",
-      description: "Creating beautiful and intuitive experiences",
-    },
-  ];
+  };
 
+  // Equipment/Tools with rarity and stats
+  const equipment = {
+    weapon: {
+      name: "Legendary VS Code",
+      rarity: "legendary",
+      icon: "⚔️",
+      stats: { productivity: "+45%", accuracy: "+35%", speed: "+25%" },
+      description: "A mythical code editor forged in the flames of Microsoft's workshops",
+    },
+    armor: {
+      name: "TypeScript Shield",
+      rarity: "epic",
+      icon: "🛡️",
+      stats: { bugResistance: "+40%", codeQuality: "+30%" },
+      description: "Provides exceptional protection against runtime errors",
+    },
+    boots: {
+      name: "Docker Cloud Boots",
+      rarity: "epic",
+      icon: "👢",
+      stats: { deployment: "+50%", scalability: "+35%" },
+      description: "Grants the power to walk across any cloud infrastructure",
+    },
+    accessory: {
+      name: "GitHub Crown",
+      rarity: "legendary",
+      icon: "👑",
+      stats: { collaboration: "+60%", reputation: "+40%" },
+      description: "Symbol of open-source mastery and community leadership",
+    },
+  };
+
+  // Achievements with tiers
   const achievements = [
-    {
-      title: "Code Master",
-      description: "Written over 100,000 lines of code",
-      rarity: "Legendary",
-      icon: CodeIcon,
-      unlocked: true,
-      date: "2024",
-    },
-    {
-      title: "Bug Slayer",
-      description: "Defeated 1,000+ bugs in combat",
-      rarity: "Epic",
-      icon: ShieldIcon,
-      unlocked: true,
-      date: "2023",
-    },
-    {
-      title: "Team Commander",
-      description: "Led 10+ successful development quests",
-      rarity: "Rare",
-      icon: TrophyIcon,
-      unlocked: true,
-      date: "2023",
-    },
-    {
-      title: "Innovation Pioneer",
-      description: "Discovered new technology combinations",
-      rarity: "Epic",
-      icon: StarIcon,
-      unlocked: true,
-      date: "2024",
-    },
-    {
-      title: "Performance Optimizer",
-      description: "Achieved 99+ performance scores",
-      rarity: "Legendary",
-      icon: ZapIcon,
-      unlocked: true,
-      date: "2024",
-    },
-    {
-      title: "Master Builder",
-      description: "Constructed 50+ digital realms",
-      rarity: "Epic",
-      icon: FireIcon,
-      unlocked: false,
-      date: "2024",
-    },
+    { id: "commits", name: "Code Warrior", tier: "legendary", icon: "⚔️", description: "Made 10,000+ commits", progress: 100 },
+    { id: "projects", name: "Project Master", tier: "epic", icon: "🏆", description: "Completed 100+ projects", progress: 100 },
+    { id: "mentoring", name: "Mentor Supreme", tier: "rare", icon: "🎓", description: "Mentored 50+ developers", progress: 85 },
+    { id: "opensource", name: "Open Source Hero", tier: "epic", icon: "🌟", description: "1000+ GitHub stars", progress: 92 },
+    { id: "languages", name: "Polyglot Programmer", tier: "rare", icon: "📚", description: "Mastered 10+ languages", progress: 100 },
+    { id: "architecture", name: "System Architect", tier: "legendary", icon: "🏗️", description: "Designed 20+ systems", progress: 88 },
   ];
 
-  const gameStats = [
-    { label: "Years Playing", value: "5+", icon: TrophyIcon },
-    { label: "Projects Completed", value: "42", icon: StarIcon },
-    { label: "Technologies Mastered", value: "25+", icon: ZapIcon },
-    { label: "Team Victories", value: "15", icon: ShieldIcon },
-  ];
+  // Character Lore/Background
+  const characterLore = {
+    origin: "Born in the digital realm of Silicon Valley, forged through countless coding battles and late-night debugging sessions.",
+    journey:
+      "From humble beginnings with HTML and CSS, ascended through the ranks by mastering JavaScript, conquering React, and eventually achieving full-stack enlightenment.",
+    currentQuest: "Leading epic projects that push the boundaries of web development while mentoring the next generation of code warriors.",
+    specialization: "Wielding the ancient arts of both frontend enchantments and backend sorcery with equal mastery.",
+    philosophy: "Code with purpose, build with passion, and always leave the codebase better than you found it.",
+  };
 
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setXpProgress((prev) => (prev + 1) % 101);
-    }, 50);
-    return () => clearInterval(timer);
-  }, []);
+  const tabs = [
+    { id: "character", name: "Character Profile", icon: CharacterIcon },
+    { id: "skills", name: "Skill Trees", icon: SkillTreeIcon },
+    { id: "equipment", name: "Equipment", icon: BagIcon },
+    { id: "achievements", name: "Achievements", icon: TrophyIcon },
+    { id: "lore", name: "Character Lore", icon: BookIcon },
+  ];
 
   const getRarityColor = (rarity: string) => {
     switch (rarity) {
-      case "Legendary":
-        return "text-yellow-400 border-yellow-400";
-      case "Epic":
-        return "text-purple-400 border-purple-400";
-      case "Rare":
-        return "text-blue-400 border-blue-400";
+      case "legendary":
+        return "border-yellow-500 bg-yellow-500/20 text-yellow-400";
+      case "epic":
+        return "border-purple-500 bg-purple-500/20 text-purple-400";
+      case "rare":
+        return "border-blue-500 bg-blue-500/20 text-blue-400";
       default:
-        return "text-gray-400 border-gray-400";
+        return "border-gray-500 bg-gray-500/20 text-gray-400";
     }
   };
 
-  const getSkillColor = (color: string) => {
-    switch (color) {
-      case "purple":
-        return "from-purple-500 to-purple-600";
-      case "blue":
-        return "from-blue-500 to-blue-600";
-      case "yellow":
-        return "from-yellow-500 to-yellow-600";
-      case "pink":
-        return "from-pink-500 to-pink-600";
-      default:
-        return "from-purple-500 to-purple-600";
-    }
+  const getStatColor = (value: number) => {
+    if (value >= 95) return "text-yellow-500";
+    if (value >= 90) return "text-green-500";
+    if (value >= 85) return "text-blue-500";
+    return "text-gray-400";
   };
+
+  // Auto-level progression simulation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCharacterLevel((prev) => {
+        const newLevel = prev + 1;
+        if (newLevel > 50) return 45; // Reset cycle
+        return newLevel;
+      });
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <section className="game-section game-bg-pattern bg-gradient-to-b from-indigo-900/50 to-purple-900/50">
-      <div className="game-container">
-        {/* Section Header */}
-        <div className="game-text-center mb-16">
-          <div className="game-badge game-badge-online mb-6">
-            <UserIcon className="w-5 h-5" />
-            Player Profile
+    <section id="about" className="relative min-h-screen py-20 bg-gradient-to-br from-gray-900 via-purple-900/20 to-blue-900/20">
+      {/* Mystical Background Effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Floating magical orbs */}
+        {Array.from({ length: 30 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute animate-float opacity-20"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 8}s`,
+              animationDuration: `${6 + Math.random() * 6}s`,
+            }}
+          >
+            <div className="w-3 h-3 bg-purple-400 rounded-full animate-glow" />
           </div>
-          <h2 className="game-heading text-5xl md:text-7xl mb-6 game-text-gradient">CHARACTER STATS</h2>
+        ))}
+      </div>
+
+      <div className="game-container relative z-10">
+        {/* Character Sheet Header */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/30 rounded-full mb-8">
+            <CharacterIcon className="w-6 h-6 text-purple-400" />
+            <span className="text-purple-400 font-bold">CHARACTER SHEET</span>
+          </div>
+
+          <h2 className="game-title text-5xl md:text-7xl mb-6">The Archmage Profile</h2>
+
           <p className="text-xl text-purple-300 max-w-3xl mx-auto">
-            Dive into my developer journey through the lens of an RPG character. Each skill represents years of grinding and leveling up in
-            the world of code.
+            Explore the complete character profile, skill progression, achievements, and legendary equipment of a master developer who has
+            conquered the digital realms.
           </p>
         </div>
 
-        {/* Player Profile Card */}
-        <div className="game-card game-card-neon mb-12 max-w-4xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 items-center">
-            {/* Character Avatar */}
-            <div className="game-text-center">
-              <div className="relative inline-block mb-6">
-                <div className="w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-4xl mx-auto border-4 border-purple-400 shadow-lg shadow-purple-500/50">
-                  GD
-                </div>
-                <div className="absolute -top-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">⚡</span>
-                </div>
-              </div>
-              <h3 className="game-heading text-3xl mb-2 game-text-neon">Game Developer</h3>
-              <p className="text-purple-300 mb-4">Level {playerStats.level} • Legendary Class</p>
-
-              {/* XP Bar */}
-              <div className="game-progress mb-4">
-                <div
-                  className="game-progress-bar transition-all duration-1000"
-                  style={{ width: `${(playerStats.xp / playerStats.maxXp) * 100}%` }}
-                ></div>
-              </div>
-              <p className="text-sm text-gray-400">
-                {playerStats.xp.toLocaleString()} / {playerStats.maxXp.toLocaleString()} XP
-              </p>
-            </div>
-
-            {/* Character Stats */}
-            <div className="space-y-4">
-              {[
-                { name: "Strength", value: playerStats.strength, color: "red" },
-                { name: "Intelligence", value: playerStats.intelligence, color: "blue" },
-                { name: "Agility", value: playerStats.agility, color: "green" },
-                { name: "Wisdom", value: playerStats.wisdom, color: "purple" },
-              ].map((stat, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <span className="text-white font-semibold game-heading">{stat.name}</span>
-                  <div className="flex items-center gap-4">
-                    <div className="w-32 h-4 bg-gray-800 rounded-full overflow-hidden">
-                      <div
-                        className={`h-full bg-gradient-to-r from-${stat.color}-500 to-${stat.color}-600 rounded-full transition-all duration-1000`}
-                        style={{ width: `${stat.value}%` }}
-                      ></div>
-                    </div>
-                    <span className="text-white font-bold w-8">{stat.value}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+        {/* Character Sheet Tabs */}
+        <div className="game-window p-8">
+          {/* Tab Navigation */}
+          <div className="flex flex-wrap gap-2 mb-8 p-2 bg-black/50 rounded-lg">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex items-center gap-2 px-4 py-3 rounded-lg font-bold transition-all ${
+                  activeTab === tab.id
+                    ? "bg-gradient-to-r from-yellow-500 to-orange-500 text-black"
+                    : "bg-gray-700/50 text-gray-300 hover:bg-gray-600/50"
+                }`}
+              >
+                <tab.icon className="w-5 h-5" />
+                <span className="hidden sm:inline">{tab.name}</span>
+              </button>
+            ))}
           </div>
-        </div>
 
-        {/* Tab Navigation */}
-        <div className="flex justify-center gap-4 mb-12">
-          {[
-            { id: "profile", label: "Player Story", icon: UserIcon },
-            { id: "skills", label: "Skill Tree", icon: ZapIcon },
-            { id: "achievements", label: "Achievements", icon: TrophyIcon },
-          ].map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className={`game-btn px-6 py-3 flex items-center gap-2 ${activeTab === tab.id ? "game-btn-primary" : "game-btn-secondary"}`}
-            >
-              <tab.icon className="w-5 h-5" />
-              {tab.label}
-            </button>
-          ))}
-        </div>
-
-        {/* Tab Content */}
-        <div className="max-w-6xl mx-auto">
-          {activeTab === "profile" && (
-            <div className="game-grid game-grid-2 mb-12">
-              <div className="game-card game-card-pink">
-                <h3 className="game-heading text-2xl mb-6 game-text-neon">Origin Story</h3>
-                <div className="space-y-4 text-purple-200">
-                  <p>
-                    My journey began in the mystical realm of code, where I first discovered the ancient art of programming. Starting as a
-                    humble novice with basic HTML spells, I gradually unlocked the secrets of JavaScript sorcery and CSS enchantments.
-                  </p>
-                  <p>
-                    Through countless battles with bugs and epic quests to deliver projects, I've evolved from a simple code warrior to a
-                    legendary developer capable of wielding multiple programming languages and frameworks.
-                  </p>
-                  <p>
-                    Today, I continue my adventure, exploring new technologies, mentoring fellow adventurers, and building digital worlds
-                    that inspire and delight users across the gaming multiverse.
-                  </p>
-                </div>
-              </div>
-
-              <div className="game-card game-card-cyan">
-                <h3 className="game-heading text-2xl mb-6 game-text-neon">Current Quest</h3>
-                <div className="space-y-6">
-                  <div className="bg-black/40 rounded-lg p-4 border border-cyan-500/30">
-                    <h4 className="font-bold text-cyan-400 mb-2">⚡ Active Mission</h4>
-                    <p className="text-purple-200">Building next-generation web experiences with cutting-edge technologies</p>
-                  </div>
-
-                  <div className="bg-black/40 rounded-lg p-4 border border-purple-500/30">
-                    <h4 className="font-bold text-purple-400 mb-2">🎯 Current Objective</h4>
-                    <p className="text-purple-200">Mastering AI integration and exploring the metaverse development realm</p>
-                  </div>
-
-                  <div className="bg-black/40 rounded-lg p-4 border border-pink-500/30">
-                    <h4 className="font-bold text-pink-400 mb-2">🌟 Ultimate Goal</h4>
-                    <p className="text-purple-200">Creating immersive digital experiences that bridge reality and gaming</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === "skills" && (
-            <div className="space-y-8 mb-12">
-              <h3 className="game-heading text-3xl game-text-center game-text-neon">Skill Tree</h3>
-              <div className="game-grid game-grid-2">
-                {skills.map((skill, index) => (
-                  <div key={index} className="game-card game-hover-glow">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div
-                        className={`w-12 h-12 bg-gradient-to-r ${getSkillColor(skill.color)} rounded-lg flex items-center justify-center`}
-                      >
-                        <skill.icon className="w-6 h-6 text-white" />
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="game-heading text-xl text-white mb-1">{skill.name}</h4>
-                        <p className="text-purple-300 text-sm">{skill.description}</p>
-                      </div>
+          {/* Tab Content */}
+          <div className="min-h-[600px]">
+            {/* Character Profile Tab */}
+            {activeTab === "character" && (
+              <div className="grid lg:grid-cols-3 gap-8">
+                {/* Character Portrait & Basic Info */}
+                <div className="lg:col-span-1">
+                  <div className="text-center mb-8">
+                    <div className="character-portrait w-40 h-40 mx-auto mb-6 animate-float">
+                      <span className="text-8xl">🧙‍♂️</span>
                     </div>
 
+                    <h3 className="text-3xl font-bold text-white mb-2">Code Archmage</h3>
+                    <p className="text-xl text-yellow-400 mb-4">{characterStats.core.title}</p>
+
+                    <div className="space-y-2">
+                      <div
+                        className={`inline-block px-4 py-2 rounded-full text-sm font-bold border-yellow-500/50 bg-yellow-500/20 text-yellow-400`}
+                      >
+                        Level {characterStats.core.level}
+                      </div>
+                      <div className="text-purple-300">{characterStats.core.class}</div>
+                      <div className="text-sm text-gray-400">{characterStats.core.guild}</div>
+                    </div>
+                  </div>
+
+                  {/* Experience Progress */}
+                  <div className="mb-8">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-white font-bold">Level {skill.level}</span>
-                      <span className="text-purple-300 text-sm">
-                        {skill.xp.toLocaleString()} / {skill.maxXp.toLocaleString()} XP
+                      <span className="text-sm font-bold text-purple-400">Experience</span>
+                      <span className="text-sm text-white">
+                        {characterStats.core.experience.toLocaleString()} / {characterStats.core.maxExperience.toLocaleString()}
                       </span>
                     </div>
-
-                    <div className="game-progress">
+                    <div className="game-progress h-6">
                       <div
-                        className={`game-progress-bar bg-gradient-to-r ${getSkillColor(skill.color)}`}
-                        style={{ width: `${(skill.xp / skill.maxXp) * 100}%` }}
-                      ></div>
+                        className="game-progress-bar experience-bar"
+                        style={{ width: `${(characterStats.core.experience / characterStats.core.maxExperience) * 100}%` }}
+                      />
+                    </div>
+                    <div className="text-center mt-2">
+                      <span className="text-xs text-yellow-400">
+                        {((characterStats.core.experience / characterStats.core.maxExperience) * 100).toFixed(1)}% to next level
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Quick Stats */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="game-stat">
+                      <div className="game-stat-label">Skill Points</div>
+                      <div className="game-stat-value text-green-500">{skillPoints}</div>
+                    </div>
+                    <div className="game-stat">
+                      <div className="game-stat-label">Active Projects</div>
+                      <div className="game-stat-value text-blue-500">12</div>
+                    </div>
+                    <div className="game-stat">
+                      <div className="game-stat-label">Mentored</div>
+                      <div className="game-stat-value text-purple-500">47</div>
+                    </div>
+                    <div className="game-stat">
+                      <div className="game-stat-label">GitHub Stars</div>
+                      <div className="game-stat-value text-yellow-500">1.2K</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Character Attributes */}
+                <div className="lg:col-span-2">
+                  <h3 className="text-2xl font-bold text-white mb-6">Core Attributes</h3>
+
+                  <div className="grid md:grid-cols-2 gap-6 mb-8">
+                    {Object.entries(characterStats.attributes).map(([attr, data]) => (
+                      <div key={attr} className="game-stat">
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="game-stat-label capitalize text-lg">{attr}</span>
+                          <span className={`game-stat-value text-2xl ${getStatColor(data.value)}`}>{data.value}</span>
+                        </div>
+                        <div className="game-progress h-4 mb-2">
+                          <div className="game-progress-bar" style={{ width: `${data.value}%` }} />
+                        </div>
+                        <p className="text-sm text-gray-400">{data.description}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Secondary Stats */}
+                  <h4 className="text-xl font-bold text-white mb-4">Combat Statistics</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {Object.entries(characterStats.secondary).map(([stat, value]) => (
+                      <div key={stat} className="game-stat">
+                        <div className="game-stat-label capitalize">{stat.replace(/([A-Z])/g, " $1").trim()}</div>
+                        <div className="game-stat-value text-green-500">{value}%</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Skill Trees Tab */}
+            {activeTab === "skills" && (
+              <div className="space-y-8">
+                <div className="text-center mb-8">
+                  <h3 className="text-3xl font-bold text-white mb-4">Mastery Skill Trees</h3>
+                  <p className="text-purple-300 mb-4">Explore the advanced skill progressions across different development domains</p>
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/20 border border-green-500/30 rounded-lg">
+                    <span className="text-green-400 font-bold">Available Skill Points: {skillPoints}</span>
+                  </div>
+                </div>
+
+                {Object.entries(skillTrees).map(([treeId, tree]) => (
+                  <div key={treeId} className="game-panel p-6">
+                    <div className="flex items-center gap-3 mb-6">
+                      <span className="text-3xl">{tree.icon}</span>
+                      <h4 className="text-2xl font-bold text-white">{tree.name}</h4>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {tree.skills.map((skill) => (
+                        <div
+                          key={skill.id}
+                          className={`relative p-4 border-2 rounded-lg cursor-pointer transition-all ${
+                            skill.unlocked
+                              ? "border-green-500/50 bg-green-500/10 hover:border-green-500/70"
+                              : "border-gray-600/50 bg-gray-600/10 opacity-50"
+                          }`}
+                          onMouseEnter={() => setHoveredSkill(skill.id)}
+                          onMouseLeave={() => setHoveredSkill(null)}
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <h5 className="font-bold text-white">{skill.name}</h5>
+                            <span className="text-sm text-green-400">
+                              {skill.level}/{skill.maxLevel}
+                            </span>
+                          </div>
+
+                          <div className="game-progress h-2 mb-3">
+                            <div
+                              className="game-progress-bar bg-gradient-to-r from-green-500 to-blue-500"
+                              style={{ width: `${(skill.level / skill.maxLevel) * 100}%` }}
+                            />
+                          </div>
+
+                          <p className="text-xs text-gray-400">{skill.description}</p>
+
+                          {/* Skill Tooltip */}
+                          {hoveredSkill === skill.id && (
+                            <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 p-3 bg-black/90 border border-purple-500/50 rounded text-sm whitespace-nowrap z-10">
+                              <div className="font-bold text-green-400">{skill.name}</div>
+                              <div className="text-gray-300">
+                                Level {skill.level}/{skill.maxLevel}
+                              </div>
+                              <div className="text-yellow-400">
+                                {skill.level === skill.maxLevel ? "MASTERED" : `Next: ${skill.level + 1}/${skill.maxLevel}`}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ))}
                     </div>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
 
-          {activeTab === "achievements" && (
-            <div className="space-y-8 mb-12">
-              <h3 className="game-heading text-3xl game-text-center game-text-neon">Hall of Fame</h3>
-              <div className="game-grid game-grid-3">
-                {achievements.map((achievement, index) => (
-                  <div
-                    key={index}
-                    className={`game-card transition-all duration-300 ${
-                      achievement.unlocked ? "game-hover-scale border-2 " + getRarityColor(achievement.rarity) : "opacity-50 grayscale"
-                    }`}
-                  >
-                    <div className="game-text-center">
+            {/* Equipment Tab */}
+            {activeTab === "equipment" && (
+              <div className="grid lg:grid-cols-2 gap-8">
+                {/* Equipment Slots */}
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6">Equipped Gear</h3>
+
+                  <div className="space-y-4">
+                    {Object.entries(equipment).map(([slot, item]) => (
                       <div
-                        className={`w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center ${
-                          achievement.unlocked ? `bg-gradient-to-r ${getSkillColor(achievement.rarity.toLowerCase())}` : "bg-gray-600"
+                        key={slot}
+                        className={`game-panel p-4 cursor-pointer transition-all ${
+                          selectedEquipment === slot ? "border-yellow-500/50" : "border-purple-500/30"
                         }`}
+                        onClick={() => setSelectedEquipment(slot)}
                       >
-                        <achievement.icon className="w-8 h-8 text-white" />
+                        <div className="flex items-center gap-4">
+                          <div className={`inventory-slot ${item.rarity} w-16 h-16`}>
+                            <span className="text-3xl">{item.icon}</span>
+                          </div>
+
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h4 className="font-bold text-white">{item.name}</h4>
+                              <span className={`px-2 py-1 rounded text-xs font-bold ${getRarityColor(item.rarity)}`}>{item.rarity}</span>
+                            </div>
+                            <p className="text-sm text-gray-400 mb-2">{item.description}</p>
+
+                            <div className="flex gap-2">
+                              {Object.entries(item.stats).map(([stat, value]) => (
+                                <span key={stat} className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">
+                                  {stat}: {value}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Equipment Details */}
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6">Equipment Details</h3>
+
+                  {selectedEquipment ? (
+                    <div className="game-panel p-6">
+                      {(() => {
+                        const item = equipment[selectedEquipment as keyof typeof equipment];
+                        return (
+                          <>
+                            <div className="text-center mb-6">
+                              <div className={`inventory-slot ${item.rarity} w-24 h-24 mx-auto mb-4`}>
+                                <span className="text-5xl">{item.icon}</span>
+                              </div>
+                              <h4 className="text-2xl font-bold text-white mb-2">{item.name}</h4>
+                              <span className={`px-3 py-1 rounded-full text-sm font-bold ${getRarityColor(item.rarity)}`}>
+                                {item.rarity.toUpperCase()}
+                              </span>
+                            </div>
+
+                            <div className="space-y-4">
+                              <div>
+                                <h5 className="text-lg font-bold text-yellow-400 mb-2">Description</h5>
+                                <p className="text-gray-300">{item.description}</p>
+                              </div>
+
+                              <div>
+                                <h5 className="text-lg font-bold text-yellow-400 mb-2">Stats Bonus</h5>
+                                <div className="grid grid-cols-1 gap-2">
+                                  {Object.entries(item.stats).map(([stat, value]) => (
+                                    <div key={stat} className="flex justify-between items-center p-2 bg-black/50 rounded">
+                                      <span className="capitalize text-gray-300">{stat}</span>
+                                      <span className="text-green-400 font-bold">{value}</span>
+                                    </div>
+                                  ))}
+                                </div>
+                              </div>
+
+                              <div className="text-center pt-4">
+                                <button className="game-btn game-btn-primary">Upgrade Equipment</button>
+                              </div>
+                            </div>
+                          </>
+                        );
+                      })()}
+                    </div>
+                  ) : (
+                    <div className="game-panel p-6 text-center">
+                      <div className="text-6xl mb-4">⚡</div>
+                      <h4 className="text-xl font-bold text-white mb-2">Select Equipment</h4>
+                      <p className="text-gray-400">Click on any equipped item to view detailed stats and upgrade options</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Achievements Tab */}
+            {activeTab === "achievements" && (
+              <div>
+                <div className="text-center mb-8">
+                  <h3 className="text-3xl font-bold text-white mb-4">Hall of Achievements</h3>
+                  <p className="text-purple-300">Legendary accomplishments earned through dedication and mastery</p>
+                </div>
+
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {achievements.map((achievement) => (
+                    <div key={achievement.id} className="game-panel p-6 text-center">
+                      <div className="text-4xl mb-4">{achievement.icon}</div>
+
+                      <div className={`inline-block px-3 py-1 rounded-full text-xs font-bold mb-3 ${getRarityColor(achievement.tier)}`}>
+                        {achievement.tier.toUpperCase()}
                       </div>
 
-                      <h4
-                        className={`game-heading text-lg mb-2 ${
-                          achievement.unlocked ? getRarityColor(achievement.rarity) : "text-gray-400"
-                        }`}
-                      >
-                        {achievement.title}
-                      </h4>
+                      <h4 className="text-lg font-bold text-white mb-2">{achievement.name}</h4>
+                      <p className="text-sm text-gray-400 mb-4">{achievement.description}</p>
 
-                      <p className="text-purple-200 text-sm mb-3">{achievement.description}</p>
+                      <div className="game-progress h-3 mb-2">
+                        <div className="game-progress-bar" style={{ width: `${achievement.progress}%` }} />
+                      </div>
 
-                      <div className="flex items-center justify-between">
-                        <span className={`text-xs px-2 py-1 rounded border ${getRarityColor(achievement.rarity)}`}>
-                          {achievement.rarity}
-                        </span>
-                        <span className="text-xs text-gray-400">{achievement.date}</span>
+                      <div className="text-sm">
+                        {achievement.progress === 100 ? (
+                          <span className="text-yellow-400 font-bold">COMPLETED ✓</span>
+                        ) : (
+                          <span className="text-blue-400">{achievement.progress}% Complete</span>
+                        )}
                       </div>
                     </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Character Lore Tab */}
+            {activeTab === "lore" && (
+              <div className="max-w-4xl mx-auto">
+                <div className="text-center mb-8">
+                  <h3 className="text-3xl font-bold text-white mb-4">The Legend of the Code Archmage</h3>
+                  <p className="text-purple-300">The epic tale of a developer's journey through the digital realms</p>
+                </div>
+
+                <div className="space-y-8">
+                  <div className="game-panel p-8">
+                    <h4 className="text-2xl font-bold text-yellow-400 mb-4 flex items-center gap-3">
+                      <span>🌟</span> Origin Story
+                    </h4>
+                    <p className="text-lg text-gray-300 leading-relaxed">{characterLore.origin}</p>
                   </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
 
-        {/* Game Stats */}
-        <div className="game-grid game-grid-2 md:grid-cols-4 mb-12">
-          {gameStats.map((stat, index) => (
-            <div key={index} className="game-card game-text-center game-hover-float">
-              <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <stat.icon className="w-6 h-6 text-white" />
-              </div>
-              <div className="game-heading text-3xl text-white mb-2">{stat.value}</div>
-              <div className="text-purple-300">{stat.label}</div>
-            </div>
-          ))}
-        </div>
+                  <div className="game-panel p-8">
+                    <h4 className="text-2xl font-bold text-yellow-400 mb-4 flex items-center gap-3">
+                      <span>⚔️</span> The Journey
+                    </h4>
+                    <p className="text-lg text-gray-300 leading-relaxed">{characterLore.journey}</p>
+                  </div>
 
-        {/* Call to Action */}
-        <div className="game-text-center">
-          <div className="game-card game-card-neon max-w-2xl mx-auto">
-            <h3 className="game-heading text-3xl mb-4 game-text-gradient">Ready to Party Up?</h3>
-            <p className="text-xl text-purple-200 mb-8">
-              Join forces with a legendary developer and let's embark on an epic quest to build something extraordinary!
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="game-btn game-btn-primary">
-                <ZapIcon className="w-5 h-5" />
-                Start Quest
-              </button>
-              <button className="game-btn game-btn-secondary">
-                <TrophyIcon className="w-5 h-5" />
-                View Portfolio
-              </button>
-            </div>
+                  <div className="game-panel p-8">
+                    <h4 className="text-2xl font-bold text-yellow-400 mb-4 flex items-center gap-3">
+                      <span>🎯</span> Current Quest
+                    </h4>
+                    <p className="text-lg text-gray-300 leading-relaxed">{characterLore.currentQuest}</p>
+                  </div>
+
+                  <div className="game-panel p-8">
+                    <h4 className="text-2xl font-bold text-yellow-400 mb-4 flex items-center gap-3">
+                      <span>✨</span> Specialization
+                    </h4>
+                    <p className="text-lg text-gray-300 leading-relaxed">{characterLore.specialization}</p>
+                  </div>
+
+                  <div className="game-panel p-8">
+                    <h4 className="text-2xl font-bold text-yellow-400 mb-4 flex items-center gap-3">
+                      <span>📜</span> Philosophy
+                    </h4>
+                    <p className="text-lg text-gray-300 leading-relaxed italic">"{characterLore.philosophy}"</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

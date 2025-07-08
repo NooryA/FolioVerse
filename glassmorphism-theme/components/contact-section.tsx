@@ -1,283 +1,415 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { Send, Mail, Phone, MapPin, Linkedin, Github, Twitter, Check } from "lucide-react";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  Github,
+  Linkedin,
+  Twitter,
+  Instagram,
+  MessageCircle,
+  Heart,
+  Star,
+  Clock,
+  CheckCircle,
+  Loader2,
+} from "lucide-react";
 
 export function ContactSection() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    subject: "",
     message: "",
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [formStatus, setFormStatus] = useState<"default" | "loading" | "success">("default");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setFormStatus("loading");
 
     // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
+    await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Reset success state after 3 seconds
-      setTimeout(() => setIsSuccess(false), 3000);
-    }, 2000);
+    setFormStatus("success");
+    setFormData({ name: "", email: "", subject: "", message: "" });
+
+    // Reset to default after 3 seconds
+    setTimeout(() => setFormStatus("default"), 3000);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const contactInfo = [
-    { icon: Mail, label: "Email", value: "hello@example.com", color: "rgba(59, 130, 246, 0.3)" },
-    { icon: Phone, label: "Phone", value: "+1 (555) 123-4567", color: "rgba(139, 92, 246, 0.3)" },
-    { icon: MapPin, label: "Location", value: "San Francisco, CA", color: "rgba(236, 72, 153, 0.3)" },
+    {
+      icon: Mail,
+      label: "Email",
+      value: "hello@johndoe.dev",
+      href: "mailto:hello@johndoe.dev",
+      description: "Drop me a line anytime",
+    },
+    {
+      icon: Phone,
+      label: "Phone",
+      value: "+1 (555) 123-4567",
+      href: "tel:+15551234567",
+      description: "Let's have a conversation",
+    },
+    {
+      icon: MapPin,
+      label: "Location",
+      value: "San Francisco, CA",
+      href: "https://maps.google.com",
+      description: "Available for remote work",
+    },
   ];
 
   const socialLinks = [
-    { icon: Github, url: "https://github.com", name: "GitHub" },
-    { icon: Linkedin, url: "https://linkedin.com", name: "LinkedIn" },
-    { icon: Twitter, url: "https://twitter.com", name: "Twitter" },
+    { icon: Github, label: "GitHub", href: "https://github.com", color: "from-gray-400 to-gray-600" },
+    { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com", color: "from-blue-400 to-blue-600" },
+    { icon: Twitter, label: "Twitter", href: "https://twitter.com", color: "from-blue-400 to-blue-500" },
+    { icon: Instagram, label: "Instagram", href: "https://instagram.com", color: "from-pink-400 to-purple-600" },
+  ];
+
+  const quickContactOptions = [
+    { icon: MessageCircle, label: "Quick Chat", action: "Let's have a quick chat about your project!" },
+    { icon: Mail, label: "Email Me", action: "Send me an email with your requirements" },
+    { icon: Phone, label: "Schedule Call", action: "Book a call to discuss your ideas" },
   ];
 
   return (
-    <section id="contact" className="py-20 px-4 relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0">
-        <motion.div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
-          style={{
-            background: "radial-gradient(circle, rgba(59, 130, 246, 0.1), transparent)",
-          }}
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-        {[...Array(5)].map((_, i) => (
+    <section id="contact" className="py-32 px-4 relative overflow-hidden">
+      {/* Floating Message Icons */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[Mail, Send, Heart, Star].map((Icon, index) => (
           <motion.div
-            key={i}
-            className="absolute w-20 h-20 rounded-full glass"
+            key={index}
+            className="absolute glass-premium w-16 h-16 rounded-2xl flex items-center justify-center opacity-20"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              background: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.1)`,
+              left: `${20 + index * 20}%`,
+              top: `${30 + (index % 2) * 40}%`,
             }}
             animate={{
-              y: [0, -30, 0],
-              x: [0, Math.random() * 30 - 15, 0],
+              y: [0, -20, 0],
+              rotate: [0, 10, -10, 0],
+              scale: [1, 1.1, 1],
             }}
             transition={{
-              duration: 5 + Math.random() * 5,
+              duration: 4 + index,
               repeat: Infinity,
               ease: "easeInOut",
-              delay: Math.random() * 5,
             }}
-          />
+          >
+            <Icon className="w-8 h-8 text-white/60" />
+          </motion.div>
         ))}
       </div>
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        {/* Section Title */}
+      <div className="max-w-7xl mx-auto relative z-10">
+        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-20"
         >
-          <h2 className="text-5xl md:text-6xl font-bold glass-text-glow mb-4">Let's Connect</h2>
-          <p className="text-white/70 text-lg max-w-2xl mx-auto">
-            Have a project in mind? I'd love to hear about it. Send me a message and let's create something amazing together.
-          </p>
+          <div className="glass-premium inline-block px-8 py-3 rounded-full glass-shimmer-premium mb-6">
+            <span className="text-sm font-medium text-white/90 flex items-center gap-2">
+              <MessageCircle className="w-4 h-4 text-pink-400" />
+              Get In Touch
+            </span>
+          </div>
+          <h2 className="text-6xl md:text-7xl font-bold glass-text-glow-premium mb-6 font-['Orbitron']">
+            Let's Create
+            <span className="block text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400">Together</span>
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-pink-400 to-purple-400 rounded-full mx-auto"></div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div className="grid lg:grid-cols-2 gap-16 mb-20">
           {/* Contact Form */}
-          <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="glass-card-premium glass-particles"
+          >
+            <div className="mb-8">
+              <h3 className="text-3xl font-bold glass-text-glow-premium mb-4 font-['Orbitron']">Send Message</h3>
+              <p className="text-white/70 leading-relaxed">
+                Ready to bring your vision to life? Let's discuss your project and create something amazing together.
+              </p>
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name Field */}
-              <motion.div whileHover={{ scale: 1.02 }} onFocus={() => setFocusedField("name")} onBlur={() => setFocusedField(null)}>
-                <label className="block text-white/80 mb-2 text-sm font-medium">Your Name</label>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-white/80 text-sm font-medium mb-2">Your Name</label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="glass-input-premium"
+                    placeholder="Enter your name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-white/80 text-sm font-medium mb-2">Email Address</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="glass-input-premium"
+                    placeholder="Enter your email"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-white/80 text-sm font-medium mb-2">Subject</label>
                 <input
                   type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className={`glass-input ${focusedField === "name" ? "glass-glow" : ""}`}
-                  placeholder="John Doe"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
                   required
+                  className="glass-input-premium"
+                  placeholder="What's this about?"
                 />
-              </motion.div>
+              </div>
 
-              {/* Email Field */}
-              <motion.div whileHover={{ scale: 1.02 }} onFocus={() => setFocusedField("email")} onBlur={() => setFocusedField(null)}>
-                <label className="block text-white/80 mb-2 text-sm font-medium">Email Address</label>
-                <input
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className={`glass-input ${focusedField === "email" ? "glass-glow" : ""}`}
-                  placeholder="john@example.com"
-                  required
-                />
-              </motion.div>
-
-              {/* Message Field */}
-              <motion.div whileHover={{ scale: 1.02 }} onFocus={() => setFocusedField("message")} onBlur={() => setFocusedField(null)}>
-                <label className="block text-white/80 mb-2 text-sm font-medium">Message</label>
+              <div>
+                <label className="block text-white/80 text-sm font-medium mb-2">Message</label>
                 <textarea
+                  name="message"
                   value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className={`glass-textarea ${focusedField === "message" ? "glass-glow" : ""}`}
-                  placeholder="Tell me about your project..."
-                  rows={5}
+                  onChange={handleChange}
                   required
+                  rows={6}
+                  className="glass-input-premium resize-none"
+                  placeholder="Tell me about your project..."
                 />
-              </motion.div>
+              </div>
 
-              {/* Submit Button */}
-              <motion.button
-                type="submit"
-                disabled={isSubmitting || isSuccess}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className={`glass-button glass-button-primary w-full flex items-center justify-center gap-2 ${
-                  isSuccess ? "glass-button-secondary" : ""
-                }`}
-              >
-                {isSubmitting ? (
-                  <motion.div
-                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  />
-                ) : isSuccess ? (
-                  <>
-                    <Check className="w-5 h-5" />
-                    Message Sent!
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5" />
-                    Send Message
-                  </>
-                )}
-              </motion.button>
+              <AnimatePresence mode="wait">
+                <motion.button
+                  key={formStatus}
+                  type="submit"
+                  disabled={formStatus === "loading"}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  whileHover={{ scale: formStatus === "default" ? 1.05 : 1 }}
+                  whileTap={{ scale: formStatus === "default" ? 0.95 : 1 }}
+                  className={`w-full glass-button-premium p-4 rounded-2xl flex items-center justify-center space-x-3 transition-all duration-300 ${
+                    formStatus === "loading"
+                      ? "glass-glow-secondary"
+                      : formStatus === "success"
+                      ? "glass-glow-accent"
+                      : "glass-glow-primary"
+                  }`}
+                >
+                  {formStatus === "loading" && (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>Sending...</span>
+                    </>
+                  )}
+                  {formStatus === "success" && (
+                    <>
+                      <CheckCircle className="w-5 h-5" />
+                      <span>Message Sent!</span>
+                    </>
+                  )}
+                  {formStatus === "default" && (
+                    <>
+                      <span>Send Message</span>
+                      <Send className="w-5 h-5" />
+                    </>
+                  )}
+                </motion.button>
+              </AnimatePresence>
             </form>
           </motion.div>
 
-          {/* Contact Info & Social */}
+          {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
             className="space-y-8"
           >
-            {/* Contact Info Cards */}
-            <div className="space-y-4">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={info.label}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05, x: 10 }}
-                  className="glass-card flex items-center gap-4 glass-shimmer"
-                  style={{ background: info.color }}
-                >
-                  <div className="glass p-3 rounded-full">
-                    <info.icon className="w-5 h-5 text-white" />
-                  </div>
-                  <div>
-                    <div className="text-white/60 text-sm">{info.label}</div>
-                    <div className="text-white font-medium">{info.value}</div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Social Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="glass-card"
-            >
-              <h3 className="text-xl font-semibold text-white mb-4">Connect on Social</h3>
-              <div className="flex gap-4">
-                {socialLinks.map((social, index) => (
+            {/* Contact Information */}
+            <div className="glass-card-premium glass-particles">
+              <h3 className="text-3xl font-bold glass-text-glow-premium mb-6 font-['Orbitron']">Contact Info</h3>
+              <div className="space-y-6">
+                {contactInfo.map((info, index) => (
                   <motion.a
-                    key={social.name}
-                    href={social.url}
+                    key={info.label}
+                    href={info.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    initial={{ opacity: 0, scale: 0 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.4 + index * 0.1 }}
-                    whileHover={{ scale: 1.1, y: -5 }}
-                    className="glass-button p-3 rounded-full glass-glow"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.2 }}
+                    viewport={{ once: true }}
+                    whileHover={{ scale: 1.02, x: 5 }}
+                    className="glass-premium p-6 rounded-2xl flex items-center space-x-4 hover:glass-glow-primary transition-all duration-300 cursor-pointer block"
                   >
-                    <social.icon className="w-5 h-5" />
+                    <div className="glass-premium w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-r from-blue-400 to-purple-400">
+                      <info.icon className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-semibold text-white text-lg">{info.label}</div>
+                      <div className="text-white/80 font-medium">{info.value}</div>
+                      <div className="text-white/60 text-sm">{info.description}</div>
+                    </div>
                   </motion.a>
                 ))}
               </div>
-            </motion.div>
+            </div>
 
             {/* Availability Status */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="glass-card glass-shimmer"
+              transition={{ duration: 0.8, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="glass-card-premium glass-particles"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <motion.div
-                  className="w-3 h-3 bg-green-400 rounded-full"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [1, 0.8, 1],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                <span className="text-white font-medium">Available for Projects</span>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <h3 className="text-xl font-bold glass-text-glow-premium font-['Orbitron']">Available for Work</h3>
               </div>
-              <p className="text-white/70 text-sm">
-                I'm currently accepting new projects and collaborations. Let's discuss how we can work together!
+              <p className="text-white/70 mb-4">
+                I'm currently accepting new projects and collaborations. Let's build something amazing together!
               </p>
-            </motion.div>
-
-            {/* Decorative Element */}
-            <motion.div className="relative h-32 overflow-hidden rounded-2xl glass" whileHover={{ scale: 1.02 }}>
-              <motion.div
-                className="absolute inset-0"
-                style={{
-                  background: "linear-gradient(45deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.2))",
-                }}
-                animate={{
-                  backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
-                }}
-                transition={{
-                  duration: 10,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-              />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-white/80 text-lg font-medium">Let's Create Magic ✨</p>
+              <div className="flex items-center gap-2 text-white/60 text-sm">
+                <Clock className="w-4 h-4" />
+                <span>Response time: Usually within 24 hours</span>
               </div>
             </motion.div>
           </motion.div>
         </div>
+
+        {/* Social Media Links */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          viewport={{ once: true }}
+          className="mb-20"
+        >
+          <div className="text-center mb-12">
+            <h3 className="text-4xl font-bold glass-text-glow-premium mb-4 font-['Orbitron']">Connect With Me</h3>
+            <p className="text-white/70 text-lg">Find me on these platforms</p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-2xl mx-auto">
+            {socialLinks.map((social, index) => (
+              <motion.a
+                key={social.label}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05, y: -5 }}
+                className="glass-card-premium text-center glass-shimmer-premium hover:glass-glow-secondary transition-all duration-300 cursor-pointer"
+              >
+                <div
+                  className={`w-16 h-16 rounded-2xl glass-premium flex items-center justify-center bg-gradient-to-r ${social.color} mx-auto mb-4`}
+                >
+                  <social.icon className="w-8 h-8 text-white" />
+                </div>
+                <div className="font-medium text-white">{social.label}</div>
+              </motion.a>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Quick Contact Options */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          viewport={{ once: true }}
+          className="mb-20"
+        >
+          <div className="text-center mb-12">
+            <h3 className="text-4xl font-bold glass-text-glow-premium mb-4 font-['Orbitron']">Quick Actions</h3>
+            <p className="text-white/70 text-lg">Choose your preferred way to connect</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {quickContactOptions.map((option, index) => (
+              <motion.button
+                key={option.label}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2 }}
+                viewport={{ once: true }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="glass-card-premium glass-particles hover:glass-glow-accent transition-all duration-300 text-center p-6"
+              >
+                <div className="glass-premium w-16 h-16 rounded-2xl flex items-center justify-center bg-gradient-to-r from-pink-400 to-purple-400 mx-auto mb-4">
+                  <option.icon className="w-8 h-8 text-white" />
+                </div>
+                <h4 className="text-xl font-bold text-white mb-2">{option.label}</h4>
+                <p className="text-white/70 text-sm">{option.action}</p>
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Final CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center"
+        >
+          <div className="glass-card-premium glass-particles max-w-2xl mx-auto">
+            <h3 className="text-3xl font-bold glass-text-glow-premium mb-4 font-['Orbitron']">Ready to Start Your Project?</h3>
+            <p className="text-white/80 mb-8 leading-relaxed">
+              From concept to completion, I'm here to help bring your digital vision to life. Let's create something extraordinary together!
+              🚀
+            </p>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+              className="glass-button-premium glass-glow-primary flex items-center space-x-2 mx-auto"
+            >
+              <span>Let's Build Something Great</span>
+              <Heart className="w-5 h-5" />
+            </motion.button>
+          </div>
+        </motion.div>
       </div>
+
+      {/* Ambient Particles */}
+      <div className="glass-particles absolute inset-0 pointer-events-none opacity-30"></div>
     </section>
   );
 }

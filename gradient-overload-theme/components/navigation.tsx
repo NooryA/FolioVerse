@@ -37,6 +37,8 @@ export function Navigation() {
     "from-green-400 via-blue-500 to-purple-600",
     "from-yellow-400 via-red-500 to-pink-500",
     "from-blue-600 via-purple-600 to-indigo-700",
+    "from-cyan-400 via-teal-500 to-blue-600",
+    "from-orange-400 via-red-500 to-pink-500",
   ];
 
   useEffect(() => {
@@ -46,7 +48,7 @@ export function Navigation() {
 
     const gradientInterval = setInterval(() => {
       setActiveGradient((prev) => (prev + 1) % gradients.length);
-    }, 3000);
+    }, 2000);
 
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -56,112 +58,157 @@ export function Navigation() {
   }, []);
 
   const navItems = [
-    { name: "Home", href: "#home", gradient: "from-pink-500 to-rose-500" },
-    { name: "About", href: "#about", gradient: "from-purple-500 to-indigo-500" },
-    { name: "Projects", href: "#projects", gradient: "from-blue-500 to-cyan-500" },
-    { name: "Contact", href: "#contact", gradient: "from-green-500 to-emerald-500" },
+    { name: "Home", href: "#home", gradient: "from-pink-600 via-rose-600 to-red-600" },
+    { name: "About", href: "#about", gradient: "from-purple-600 via-violet-600 to-indigo-600" },
+    { name: "Projects", href: "#projects", gradient: "from-blue-600 via-cyan-600 to-teal-600" },
+    { name: "Contact", href: "#contact", gradient: "from-green-600 via-emerald-600 to-cyan-600" },
   ];
+
+  const scrollToSection = (href: string, e: React.MouseEvent) => {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+    setIsOpen(false);
+  };
 
   return (
     <>
-      {/* Main Navigation */}
+      {/* STREAMLINED NAVBAR DESIGN */}
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "bg-black/20 backdrop-blur-xl border-b border-white/10" : "bg-transparent"
+        className={`fixed top-6 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 max-w-2xl w-full mx-auto px-6 ${
+          scrolled ? "top-4" : "top-6"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <div className="gradient-nav-logo group cursor-pointer">
+        {/* Glassmorphic Navigation Container */}
+        <div className="bg-white/10 backdrop-blur-2xl rounded-full border border-white/20 shadow-2xl overflow-hidden">
+          <div className="flex items-center justify-between px-8 py-4">
+            {/* Compact Logo */}
+            <div className="group cursor-pointer">
               <div
-                className={`bg-gradient-to-r ${gradients[activeGradient]} bg-clip-text text-transparent font-bold text-2xl transition-all duration-500 group-hover:scale-110`}
+                className={`bg-gradient-to-r ${gradients[activeGradient]} bg-clip-text text-transparent font-black text-2xl transition-all duration-1000 group-hover:scale-110`}
+                style={{
+                  backgroundSize: "200% 200%",
+                  animation: "gradient-shift 3s ease infinite",
+                  filter: "drop-shadow(0 0 8px rgba(255, 107, 107, 0.4))",
+                }}
               >
-                GradientFolio
+                GF
               </div>
-              <div className="gradient-glow-effect"></div>
             </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-2">
+            {/* Centered Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-1 flex-1 justify-center">
               {navItems.map((item, index) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="gradient-nav-item group relative"
-                  style={{ "--delay": `${index * 0.1}s` } as React.CSSProperties}
+                  onClick={(e) => scrollToSection(item.href, e)}
+                  className="relative group px-6 py-3 rounded-full transition-all duration-300 overflow-hidden"
                 >
-                  <span className="relative z-10 px-6 py-3 font-medium text-white/90 transition-all duration-300 group-hover:text-white">
+                  {/* Hover Background */}
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-r ${item.gradient} opacity-0 group-hover:opacity-20 transition-all duration-300 rounded-full`}
+                  />
+
+                  {/* Dark Text for Better Readability */}
+                  <span
+                    className="relative z-10 font-bold text-lg text-gray-800 transition-all duration-300 group-hover:text-gray-900"
+                    style={{
+                      textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)",
+                    }}
+                  >
                     {item.name}
                   </span>
-                  <div
-                    className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-full bg-gradient-to-r ${item.gradient} blur-sm transform group-hover:scale-110`}
-                  ></div>
-                  <div
-                    className={`absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-full bg-gradient-to-r ${item.gradient} transform group-hover:scale-105`}
-                  ></div>
                 </a>
               ))}
             </div>
 
-            {/* CTA Button */}
-            <div className="hidden md:block">
-              <button className="gradient-cta-btn group">
-                <div className="gradient-cta-bg"></div>
-                <div className="gradient-cta-content">
-                  <SparklesIcon className="w-4 h-4 group-hover:rotate-12 transition-transform" />
-                  <span>Get Started</span>
-                </div>
-                <div className="gradient-cta-glow"></div>
-              </button>
-            </div>
+            {/* Mobile Menu Button (Placeholder to maintain balance) */}
+            <div className="hidden md:block w-12"></div>
 
             {/* Mobile Menu Button */}
-            <button className="md:hidden gradient-mobile-btn" onClick={() => setIsOpen(!isOpen)}>
-              <div className="gradient-mobile-bg"></div>
-              {isOpen ? <XIcon className="w-6 h-6 text-white relative z-10" /> : <MenuIcon className="w-6 h-6 text-white relative z-10" />}
+            <button
+              className="md:hidden relative p-2 rounded-full overflow-hidden transition-all duration-300 hover:scale-110"
+              onClick={() => setIsOpen(!isOpen)}
+              style={{
+                background: `linear-gradient(45deg, ${gradients[activeGradient]
+                  .replace("from-", "")
+                  .replace("via-", "")
+                  .replace("to-", "")
+                  .split(" ")
+                  .join(", ")})`,
+                backgroundSize: "200% 200%",
+                animation: "gradient-shift 3s ease infinite",
+              }}
+            >
+              <div className="absolute inset-0 bg-white/20 opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-full" />
+              {isOpen ? (
+                <XIcon className="w-6 h-6 text-gray-900 relative z-10" />
+              ) : (
+                <MenuIcon className="w-6 h-6 text-gray-900 relative z-10" />
+              )}
             </button>
           </div>
-        </div>
-
-        {/* Animated Border */}
-        <div className={`gradient-nav-border ${scrolled ? "opacity-100" : "opacity-0"}`}>
-          <div className="gradient-nav-border-inner"></div>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
-      <div className={`gradient-mobile-menu ${isOpen ? "gradient-mobile-menu-open" : ""}`}>
-        <div className="gradient-mobile-bg-effect"></div>
-        <div className="gradient-mobile-content">
-          <div className="space-y-8">
-            {navItems.map((item, index) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="gradient-mobile-item group"
-                onClick={() => setIsOpen(false)}
-                style={{ "--delay": `${index * 0.1}s` } as React.CSSProperties}
-              >
-                <div className={`gradient-mobile-item-bg bg-gradient-to-r ${item.gradient}`}></div>
-                <span className="gradient-mobile-item-text">{item.name}</span>
-                <div className="gradient-mobile-item-glow"></div>
-              </a>
-            ))}
-          </div>
+      {/* REDESIGNED Mobile Menu */}
+      <div
+        className={`fixed inset-0 z-40 transition-all duration-500 ${
+          isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+      >
+        {/* Backdrop */}
+        <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
 
-          <div className="gradient-mobile-cta">
-            <button className="gradient-mobile-cta-btn">
-              <div className="gradient-mobile-cta-bg"></div>
-              <span>Start Your Project</span>
-              <SparklesIcon className="w-5 h-5" />
-            </button>
+        {/* Menu Content */}
+        <div
+          className={`absolute top-24 left-1/2 transform -translate-x-1/2 w-80 bg-white/10 backdrop-blur-2xl rounded-3xl border border-white/20 shadow-2xl transition-all duration-500 ${
+            isOpen ? "scale-100 opacity-100" : "scale-95 opacity-0"
+          }`}
+        >
+          <div className="p-8">
+            <div className="space-y-4">
+              {navItems.map((item, index) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => scrollToSection(item.href, e)}
+                  className="block relative group py-4 px-6 rounded-2xl transition-all duration-300"
+                >
+                  <div
+                    className={`absolute inset-0 bg-gradient-to-r ${item.gradient} opacity-0 group-hover:opacity-20 transition-all duration-300 rounded-2xl`}
+                  />
+                  <span
+                    className="relative z-10 text-xl font-bold text-gray-800 group-hover:text-gray-900 transition-colors duration-300"
+                    style={{
+                      textShadow: "0 1px 2px rgba(255, 255, 255, 0.8)",
+                    }}
+                  >
+                    {item.name}
+                  </span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Backdrop */}
-      {isOpen && <div className="gradient-mobile-backdrop" onClick={() => setIsOpen(false)} />}
+      {/* Animation Styles */}
+      <style jsx>{`
+        @keyframes gradient-shift {
+          0%,
+          100% {
+            background-position: 0% 50%;
+          }
+          50% {
+            background-position: 100% 50%;
+          }
+        }
+      `}</style>
     </>
   );
 }
