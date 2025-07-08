@@ -1,4 +1,7 @@
-# 🌟 FolioVerse - Premium Portfolio Theme Collection
+![image](https://github.com/user-attachments/assets/8ffbbf59-e077-4e57-b015-0ff9f936a289)
+
+
+# 🌟 FolioVerse - Portfolio Theme Collection
 
 > A curated collection of stunning, modern portfolio themes built with Next.js, TypeScript, and Tailwind CSS. Each theme represents a unique design philosophy and aesthetic approach.
 
@@ -159,7 +162,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **📚 Documentation** - Check individual theme READMEs
 - **🐛 Issues** - Report bugs via GitHub Issues
-- **💬 Discussions** - Ask questions in GitHub Discussions
 - **📧 Email** - Contact maintainers directly
 
 **Enjoy ❤️**
