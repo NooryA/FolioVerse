@@ -108,7 +108,7 @@ export function HeroSection() {
           <div className="mt-12 text-left max-w-2xl mx-auto">
             <div className="border-l-4 border-blue-500 pl-4 py-2 bg-blue-50/50">
               <p className="font-mono text-sm text-gray-600">
-                // TODO: Replace placeholder content with actual portfolio data
+                // Replace placeholders with your portfolio data: name, projects, and contact
               </p>
               <p className="font-mono text-sm text-gray-600">
                 // Responsive breakpoints: sm(640px), md(768px), lg(1024px)

@@ -30,25 +30,25 @@
 18. **glassmorphism-theme** - Frosted glass effects and transparency
 19. **gradient-overload-theme** - Vibrant gradient-heavy design
 20. **liquid-ui-theme** - Fluid, organic animations and interactions
-21. **magazine-theme** - Editorial magazine-style layout (UNDER CONSTRUCTION)
-22. **minimalist-theme** - Clean, focused minimalist design (UNDER CONSTRUCTION)
-23. **multiverse-tabs-theme** - Multi-dimensional tab navigation (UNDER CONSTRUCTION)
-24. **nature-inspired-theme** - Organic, nature-themed design (UNDER CONSTRUCTION)
-25. **neumorphic-theme** - Soft, tactile skeuomorphic design (UNDER CONSTRUCTION)
-26. **open-source-hero-theme** - Celebrates open source contribution (UNDER CONSTRUCTION)
-27. **operating-system-theme** - OS interface inspired design (UNDER CONSTRUCTION)
-28. **personal-diary-theme** - Personal, intimate diary-style layout (UNDER CONSTRUCTION)
-29. **product-showcase-theme** - Product-focused presentation (UNDER CONSTRUCTION)
-30. **resume-first-theme** - Resume and CV focused design (UNDER CONSTRUCTION)
-31. **sketchbook-theme** - Hand-drawn, sketchy aesthetic (UNDER CONSTRUCTION)
-32. **space-travel-theme** - Cosmic, space exploration themed (UNDER CONSTRUCTION)
-33. **startup-founder-theme** - Entrepreneur and startup focused (UNDER CONSTRUCTION)
-34. **storybook-theme** - Narrative-driven storytelling layout (UNDER CONSTRUCTION)
-35. **techie-dev-theme** - Technical developer portfolio (UNDER CONSTRUCTION)
-36. **time-machine-theme** - Vintage, retro-futuristic design (UNDER CONSTRUCTION)
-37. **tv-channel-theme** - Television broadcast inspired (UNDER CONSTRUCTION)
-38. **vr-metaverse-theme** - Virtual reality and metaverse aesthetic (UNDER CONSTRUCTION)
-39. **wireframe-theme** - Minimalist wireframe-style design (UNDER CONSTRUCTION)
+21. **magazine-theme** - Editorial magazine-style layout
+22. **minimalist-theme** - Clean, focused minimalist design
+23. **multiverse-tabs-theme** - Multi-dimensional tab navigation
+24. **nature-inspired-theme** - Organic, nature-themed design
+25. **neumorphic-theme** - Soft, tactile skeuomorphic design
+26. **open-source-hero-theme** - Celebrates open source contribution
+27. **operating-system-theme** - OS interface inspired design
+28. **personal-diary-theme** - Personal, intimate diary-style layout
+29. **product-showcase-theme** - Product-focused presentation
+30. **resume-first-theme** - Resume and CV focused design
+31. **sketchbook-theme** - Hand-drawn, sketchy aesthetic
+32. **space-travel-theme** - Cosmic, space exploration themed
+33. **startup-founder-theme** - Entrepreneur and startup focused
+34. **storybook-theme** - Narrative-driven storytelling layout
+35. **techie-dev-theme** - Technical developer portfolio
+36. **time-machine-theme** - Vintage, retro-futuristic design
+37. **tv-channel-theme** - Television broadcast inspired
+38. **vr-metaverse-theme** - Virtual reality and metaverse aesthetic
+39. **wireframe-theme** - Minimalist wireframe-style design
 
 </details>
 
@@ -165,5 +165,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **📧 Email** - Contact maintainers directly
 
 **Enjoy ❤️**
-
-</div>

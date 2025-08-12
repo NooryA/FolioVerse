@@ -2226,7 +2226,7 @@ export type { WorkExperience, Education, Certification };`;
                     </div>
                   ) : (
                     <div className="p-4 text-sm text-gray-400">
-                      <p>No results found for "{searchQuery}"</p>
+                      <p>No results found for &quot;{searchQuery}&quot;</p>
                     </div>
                   )}
                 </div>
